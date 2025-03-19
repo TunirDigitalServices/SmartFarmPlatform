@@ -1,0 +1,1290 @@
+13-07-2023 01:19:03 AM - fatal: **Weather cron Select weather today** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:20:00 AM - fatal: **Weather cron Select weather today** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:21:00 AM - fatal: **Weather cron Select weather today** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:22:00 AM - fatal: **Weather cron Select weather today** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:23:00 AM - fatal: **Weather cron Select weather today** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:18:01 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:19:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:24:01 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:25:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:26:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:31:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:32:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:33:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:34:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:35:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:36:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:37:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:38:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:39:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:40:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:41:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:42:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:43:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:44:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:45:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:46:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:47:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:48:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:49:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:50:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:51:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 05:51:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:52:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:53:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:54:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:55:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:56:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:57:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:58:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 12:59:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:00:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:01:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:02:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:03:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:57:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:58:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 01:59:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:00:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:01:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:02:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:03:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:04:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:05:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:06:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:07:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:08:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:09:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:10:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:11:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:12:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:13:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:14:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:15:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:16:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:17:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:18:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:19:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:20:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:21:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:22:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:23:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:24:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:25:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:26:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:27:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:28:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:29:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:30:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:31:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:32:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:33:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:34:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:35:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:36:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:37:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:38:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:39:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:40:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:41:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:42:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:43:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:44:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:45:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:46:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:47:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:48:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:49:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:50:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:51:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:52:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:53:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:54:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:55:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:56:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:57:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:58:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 02:59:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:00:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:01:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:02:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:03:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:04:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:05:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:06:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:07:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:08:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:09:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:10:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:11:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:12:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:13:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:14:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:15:01 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:16:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:17:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:18:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:19:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:20:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:21:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:22:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:23:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:24:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:25:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:26:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:27:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:28:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:29:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:30:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:31:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:32:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:33:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:34:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:35:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:36:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:37:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+13-07-2023 03:38:00 PM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:13:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:14:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:15:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:16:01 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:17:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:18:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:19:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:20:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:21:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:22:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:23:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:24:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:25:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:26:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:27:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:28:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:29:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:30:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:31:01 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:32:01 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:32:01 AM - fatal: **Calcul cron ** TypeError: Cannot read properties of undefined (reading 'status')
+17-07-2023 01:33:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:33:00 AM - fatal: **Calcul cron ** TypeError: Cannot read properties of undefined (reading 'status')
+17-07-2023 01:34:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:34:00 AM - fatal: **Calcul cron ** TypeError: Cannot read properties of undefined (reading 'status')
+17-07-2023 01:35:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:36:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:37:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:38:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+17-07-2023 01:39:00 AM - fatal: **Calcul cron ** Error: connect ECONNREFUSED 127.0.0.1:3306
+18-07-2023 02:54:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+18-07-2023 02:55:00 PM - fatal: **Calcul cron ** Error: connect ENETUNREACH 51.222.29.46:3306
+18-07-2023 02:56:22 PM - fatal: **Calcul cron ** TypeError: Cannot read properties of undefined (reading 'status')
+18-07-2023 03:08:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+18-07-2023 03:09:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+18-07-2023 03:10:09 PM - fatal: **Calcul cron ** Error: connect ECONNABORTED 51.222.29.46:3306
+18-07-2023 03:11:00 PM - fatal: **Calcul cron ** Error: connect ENETUNREACH 51.222.29.46:3306
+18-07-2023 03:12:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+18-07-2023 04:39:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:13 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:14 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:15 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:41:15 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:15 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:16 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:17 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:18 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:18 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:41:18 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:18 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:18 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:18 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:41:19 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:19 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:19 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:19 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:19 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:20 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:20 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:20 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:20 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:21 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:28 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:29 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:29 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:29 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:29 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:29 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:29 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:30 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:30 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:30 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:30 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:31 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:31 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:32 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:32 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:33 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:41:33 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:41:34 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:50:03 PM - fatal: **Calcul cron ** Error: ER_CON_COUNT_ERROR: Too many connections
+18-07-2023 04:50:25 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:50:30 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:50:31 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:50:31 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:51:00 PM - info: sensor_id ->158 field_id -> 129success
+18-07-2023 04:51:01 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:51:01 PM - info: sensor_id ->150 field_id -> 128success
+18-07-2023 04:51:02 PM - fatal: **Calcul cron ** Error: ER_CON_COUNT_ERROR: Too many connections
+18-07-2023 04:52:02 PM - fatal: **Calcul cron ** Error: ER_CON_COUNT_ERROR: Too many connections
+18-07-2023 04:52:19 PM - info: sensor_id ->181 field_id -> 190success
+18-07-2023 04:52:20 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:52:20 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 04:52:23 PM - info: sensor_id ->158 field_id -> 129success
+18-07-2023 04:52:25 PM - info: sensor_id ->122 field_id -> 60success
+18-07-2023 04:52:28 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:52:28 PM - info: sensor_id ->179 field_id -> 182success
+18-07-2023 04:52:30 PM - info: sensor_id ->91 field_id -> 74success
+18-07-2023 04:52:31 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:52:33 PM - info: sensor_id ->132 field_id -> 107success
+18-07-2023 04:52:34 PM - info: sensor_id ->165 field_id -> 108success
+18-07-2023 04:52:34 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:52:36 PM - info: sensor_id ->150 field_id -> 128success
+18-07-2023 04:52:43 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:52:45 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:53:02 PM - fatal: **Calcul cron ** ReferenceError: res is not defined
+18-07-2023 04:53:14 PM - info: sensor_id ->145 field_id -> 116success
+18-07-2023 04:53:22 PM - info: sensor_id ->157 field_id -> 137success
+18-07-2023 04:53:26 PM - info: sensor_id ->176 field_id -> 180success
+18-07-2023 04:53:26 PM - info: sensor_id ->165 field_id -> 108success
+18-07-2023 04:53:28 PM - info: sensor_id ->91 field_id -> 74success
+18-07-2023 04:53:30 PM - info: sensor_id ->181 field_id -> 190success
+18-07-2023 04:53:33 PM - info: sensor_id ->146 field_id -> 118success
+18-07-2023 04:53:34 PM - info: sensor_id ->175 field_id -> 179success
+18-07-2023 04:53:35 PM - info: sensor_id ->158 field_id -> 129success
+18-07-2023 04:53:35 PM - info: sensor_id ->177 field_id -> 174success
+18-07-2023 04:53:35 PM - info: sensor_id ->171 field_id -> 134success
+18-07-2023 04:53:37 PM - info: sensor_id ->141 field_id -> 125success
+18-07-2023 04:53:38 PM - info: sensor_id ->179 field_id -> 182success
+18-07-2023 04:53:40 PM - info: sensor_id ->170 field_id -> 133success
+18-07-2023 04:53:41 PM - info: sensor_id ->132 field_id -> 107success
+18-07-2023 04:53:42 PM - info: sensor_id ->178 field_id -> 181success
+18-07-2023 04:53:44 PM - info: sensor_id ->150 field_id -> 128success
+18-07-2023 04:53:45 PM - info: sensor_id ->144 field_id -> 126success
+18-07-2023 04:53:47 PM - info: sensor_id ->151 field_id -> 123success
+18-07-2023 04:53:47 PM - info: sensor_id ->139 field_id -> 110success
+18-07-2023 05:08:03 PM - fatal: **Calcul cron ** Error: ER_CON_COUNT_ERROR: Too many connections
+18-07-2023 05:09:01 PM - fatal: **Calcul cron ** Error: ER_CON_COUNT_ERROR: Too many connections
+21-07-2023 11:58:05 AM - info: Fri Jul 21 2023 11:58:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 11:58:05 AM - info: Fri Jul 21 2023 11:58:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 11:58:05 AM - info: Fri Jul 21 2023 11:58:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 11:58:05 AM - info: Fri Jul 21 2023 11:58:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:05 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:05 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:06 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:06 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:07 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:00:07 PM - info: Fri Jul 21 2023 12:00:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:05 PM - info: Fri Jul 21 2023 12:03:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:06 PM - info: Fri Jul 21 2023 12:03:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:06 PM - info: Fri Jul 21 2023 12:03:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:06 PM - info: Fri Jul 21 2023 12:03:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:07 PM - info: Fri Jul 21 2023 12:03:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:07 PM - info: Fri Jul 21 2023 12:03:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:21 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:21 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:22 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:22 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:23 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:24 PM - info: Fri Jul 21 2023 12:03:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:25 PM - info: Fri Jul 21 2023 12:03:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:03:25 PM - info: Fri Jul 21 2023 12:03:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:05 PM - info: Fri Jul 21 2023 12:04:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:06 PM - info: Fri Jul 21 2023 12:04:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:06 PM - info: Fri Jul 21 2023 12:04:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:07 PM - info: Fri Jul 21 2023 12:04:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:07 PM - info: Fri Jul 21 2023 12:04:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:07 PM - info: Fri Jul 21 2023 12:04:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:17 PM - info: Fri Jul 21 2023 12:04:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:17 PM - info: Fri Jul 21 2023 12:04:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:18 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:18 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:18 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 12:04:19 PM - info: Fri Jul 21 2023 12:04:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:25 PM - info: Fri Jul 21 2023 13:33:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:26 PM - info: Fri Jul 21 2023 13:33:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:26 PM - info: Fri Jul 21 2023 13:33:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:26 PM - info: Fri Jul 21 2023 13:33:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:26 PM - info: Fri Jul 21 2023 13:33:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:26 PM - info: Fri Jul 21 2023 13:33:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:47 PM - info: Fri Jul 21 2023 13:33:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:47 PM - info: Fri Jul 21 2023 13:33:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:48 PM - info: Fri Jul 21 2023 13:33:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:50 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:51 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:51 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:51 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:51 PM - info: Fri Jul 21 2023 13:33:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:33:51 PM - info: Fri Jul 21 2023 13:33:47 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:03 PM - info: Fri Jul 21 2023 13:34:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:04 PM - info: Fri Jul 21 2023 13:34:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:04 PM - info: Fri Jul 21 2023 13:34:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:04 PM - info: Fri Jul 21 2023 13:34:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:04 PM - info: Fri Jul 21 2023 13:34:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:04 PM - info: Fri Jul 21 2023 13:34:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:15 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:15 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:15 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:16 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:17 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:18 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:18 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:18 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:34:19 PM - info: Fri Jul 21 2023 13:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:05 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:05 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:06 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:06 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:06 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:06 PM - info: Fri Jul 21 2023 13:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:29 PM - info: Fri Jul 21 2023 13:35:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:29 PM - info: Fri Jul 21 2023 13:35:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:29 PM - info: Fri Jul 21 2023 13:35:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:30 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:32 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:32 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:33 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:33 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:34 PM - info: Fri Jul 21 2023 13:35:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:34 PM - info: Fri Jul 21 2023 13:35:28 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:34 PM - info: Fri Jul 21 2023 13:35:30 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:35 PM - info: Fri Jul 21 2023 13:35:29 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:35 PM - info: Fri Jul 21 2023 13:35:28 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:35 PM - info: Fri Jul 21 2023 13:35:30 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:35:35 PM - info: Fri Jul 21 2023 13:35:30 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:04 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:04 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:04 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:04 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:05 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:36:05 PM - info: Fri Jul 21 2023 13:36:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:37:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:38:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:39:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:40:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:41:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:42:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:43:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:44:00 PM - fatal: **Calcul cron ** Error: connect EHOSTUNREACH 51.222.29.46:3306
+21-07-2023 01:45:00 PM - fatal: **Calcul cron ** Error: connect EHOSTUNREACH 51.222.29.46:3306
+21-07-2023 01:47:28 PM - info: Fri Jul 21 2023 13:47:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:47:36 PM - info: Fri Jul 21 2023 13:47:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:47:36 PM - info: Fri Jul 21 2023 13:47:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:47:37 PM - info: Fri Jul 21 2023 13:47:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:47:37 PM - info: Fri Jul 21 2023 13:47:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:47:37 PM - info: Fri Jul 21 2023 13:47:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:12 PM - info: Fri Jul 21 2023 13:47:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:12 PM - info: Fri Jul 21 2023 13:47:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:13 PM - info: Fri Jul 21 2023 13:47:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:13 PM - info: Fri Jul 21 2023 13:47:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:14 PM - info: Fri Jul 21 2023 13:48:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:48:14 PM - info: Fri Jul 21 2023 13:48:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:08 PM - info: Fri Jul 21 2023 13:49:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:09 PM - info: Fri Jul 21 2023 13:49:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:09 PM - info: Fri Jul 21 2023 13:49:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:09 PM - info: Fri Jul 21 2023 13:49:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:09 PM - info: Fri Jul 21 2023 13:49:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:49:09 PM - info: Fri Jul 21 2023 13:49:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:27 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:28 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:28 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:28 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:28 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:28 PM - info: Fri Jul 21 2023 13:50:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:30 PM - info: Fri Jul 21 2023 13:50:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:33 PM - info: Fri Jul 21 2023 13:50:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:33 PM - info: Fri Jul 21 2023 13:50:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:33 PM - info: Fri Jul 21 2023 13:50:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:35 PM - info: Fri Jul 21 2023 13:50:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:36 PM - info: Fri Jul 21 2023 13:50:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:36 PM - info: Fri Jul 21 2023 13:50:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:51 PM - info: Fri Jul 21 2023 13:50:33 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:52 PM - info: Fri Jul 21 2023 13:50:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:50:52 PM - info: Fri Jul 21 2023 13:50:28 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:53:20 PM - fatal: **Calcul cron ** Error: Packets out of order. Got: 1 Expected: 2
+21-07-2023 01:54:40 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:55:21 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:56:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 01:59:03 PM - info: Fri Jul 21 2023 13:58:51 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:03 PM - info: Fri Jul 21 2023 13:58:51 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:04 PM - info: Fri Jul 21 2023 13:58:52 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:04 PM - info: Fri Jul 21 2023 13:58:52 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:11 PM - info: Fri Jul 21 2023 13:59:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:11 PM - info: Fri Jul 21 2023 13:59:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:51 PM - info: Fri Jul 21 2023 13:59:48 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:52 PM - info: Fri Jul 21 2023 13:59:49 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:52 PM - info: Fri Jul 21 2023 13:59:49 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:52 PM - info: Fri Jul 21 2023 13:59:49 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:52 PM - info: Fri Jul 21 2023 13:59:49 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 01:59:52 PM - info: Fri Jul 21 2023 13:59:49 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:03:19 PM - fatal: **Calcul cron ** Error: Packets out of order. Got: 1 Expected: 2
+21-07-2023 02:04:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 02:06:08 PM - info: Fri Jul 21 2023 14:06:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:08 PM - info: Fri Jul 21 2023 14:06:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:08 PM - info: Fri Jul 21 2023 14:06:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:08 PM - info: Fri Jul 21 2023 14:06:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:10 PM - info: Fri Jul 21 2023 14:06:07 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:10 PM - info: Fri Jul 21 2023 14:06:07 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:16 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:16 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:17 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:17 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:17 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:06:17 PM - info: Fri Jul 21 2023 14:06:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:17 PM - info: Fri Jul 21 2023 14:07:53 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:17 PM - info: Fri Jul 21 2023 14:07:53 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:17 PM - fatal: **Calcul cron ** ReferenceError: res is not defined
+21-07-2023 02:08:17 PM - info: Fri Jul 21 2023 14:07:53 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:17 PM - info: Fri Jul 21 2023 14:07:53 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:17 PM - info: Fri Jul 21 2023 14:07:57 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:18 PM - info: Fri Jul 21 2023 14:07:58 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:20 PM - info: Fri Jul 21 2023 14:07:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:20 PM - info: Fri Jul 21 2023 14:07:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:24 PM - info: Fri Jul 21 2023 14:07:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:27 PM - info: Fri Jul 21 2023 14:08:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:27 PM - info: Fri Jul 21 2023 14:08:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:27 PM - info: Fri Jul 21 2023 14:08:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:27 PM - info: Fri Jul 21 2023 14:08:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:08:27 PM - info: Fri Jul 21 2023 14:07:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:13 PM - info: Fri Jul 21 2023 14:10:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:14 PM - info: Fri Jul 21 2023 14:10:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:14 PM - info: Fri Jul 21 2023 14:10:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:14 PM - info: Fri Jul 21 2023 14:10:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:22 PM - info: Fri Jul 21 2023 14:10:12 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:10:22 PM - info: Fri Jul 21 2023 14:10:12 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:12 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:12 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:12 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:12 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:13 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:11:13 PM - info: Fri Jul 21 2023 14:11:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:14:25 PM - info: Fri Jul 21 2023 14:14:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:14:25 PM - info: Fri Jul 21 2023 14:14:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:14:26 PM - info: Fri Jul 21 2023 14:14:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:14:26 PM - info: Fri Jul 21 2023 14:14:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:19 PM - info: Fri Jul 21 2023 14:15:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:19 PM - info: Fri Jul 21 2023 14:15:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:19 PM - info: Fri Jul 21 2023 14:15:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:19 PM - info: Fri Jul 21 2023 14:15:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:20 PM - info: Fri Jul 21 2023 14:15:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:15:20 PM - info: Fri Jul 21 2023 14:15:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:08 PM - info: Fri Jul 21 2023 14:16:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:08 PM - info: Fri Jul 21 2023 14:16:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:08 PM - info: Fri Jul 21 2023 14:17:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:11 PM - info: Fri Jul 21 2023 14:17:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:11 PM - info: Fri Jul 21 2023 14:17:01 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:16 PM - info: Fri Jul 21 2023 14:17:01 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:16 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:17 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:17 PM - info: Fri Jul 21 2023 14:17:01 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:18 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:19 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:19 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:19 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:19 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:19 PM - info: Fri Jul 21 2023 14:17:02 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:40 PM - info: Fri Jul 21 2023 14:17:32 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:44 PM - info: Fri Jul 21 2023 14:17:38 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:44 PM - info: Fri Jul 21 2023 14:17:38 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:45 PM - info: Fri Jul 21 2023 14:17:38 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:45 PM - info: Fri Jul 21 2023 14:17:38 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:45 PM - info: Fri Jul 21 2023 14:17:39 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:58 PM - info: Fri Jul 21 2023 14:17:54 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:58 PM - info: Fri Jul 21 2023 14:17:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:58 PM - info: Fri Jul 21 2023 14:17:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:58 PM - info: Fri Jul 21 2023 14:17:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:58 PM - info: Fri Jul 21 2023 14:17:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:17:59 PM - info: Fri Jul 21 2023 14:17:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:25 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:27 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:28 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:28 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:30 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:18:30 PM - info: Fri Jul 21 2023 14:18:19 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:25 PM - info: Fri Jul 21 2023 14:26:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:25 PM - info: Fri Jul 21 2023 14:26:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:25 PM - info: Fri Jul 21 2023 14:26:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:25 PM - info: Fri Jul 21 2023 14:26:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:29 PM - info: Fri Jul 21 2023 14:26:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:26:29 PM - info: Fri Jul 21 2023 14:26:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:00 PM - info: Fri Jul 21 2023 14:26:53 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:07 PM - info: Fri Jul 21 2023 14:26:57 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:08 PM - info: Fri Jul 21 2023 14:27:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:08 PM - info: Fri Jul 21 2023 14:27:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:09 PM - info: Fri Jul 21 2023 14:27:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 02:27:09 PM - info: Fri Jul 21 2023 14:27:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:20 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:20 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:21 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:21 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:21 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:21 PM - info: Fri Jul 21 2023 15:30:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:53 PM - info: Fri Jul 21 2023 15:30:44 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:53 PM - info: Fri Jul 21 2023 15:30:44 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:53 PM - info: Fri Jul 21 2023 15:30:44 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:54 PM - info: Fri Jul 21 2023 15:30:44 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:54 PM - info: Fri Jul 21 2023 15:30:44 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:30:55 PM - info: Fri Jul 21 2023 15:30:51 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:29 PM - info: Fri Jul 21 2023 15:31:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:45 PM - info: Fri Jul 21 2023 15:31:41 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:45 PM - info: Fri Jul 21 2023 15:31:41 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:45 PM - info: Fri Jul 21 2023 15:31:41 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:45 PM - info: Fri Jul 21 2023 15:31:41 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:45 PM - info: Fri Jul 21 2023 15:31:41 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:46 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:46 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:46 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:47 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:48 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:48 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:48 PM - info: Fri Jul 21 2023 15:31:42 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:48 PM - info: Fri Jul 21 2023 15:31:43 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:49 PM - info: Fri Jul 21 2023 15:31:43 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:31:49 PM - info: Fri Jul 21 2023 15:31:43 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:02 PM - info: Fri Jul 21 2023 15:31:58 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:02 PM - info: Fri Jul 21 2023 15:31:58 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:02 PM - info: Fri Jul 21 2023 15:31:58 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:03 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:03 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:03 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:04 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:04 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:04 PM - info: Fri Jul 21 2023 15:31:59 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:04 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:05 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:06 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:06 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:06 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:08 PM - info: Fri Jul 21 2023 15:32:00 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:15 PM - info: Fri Jul 21 2023 15:32:13 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:15 PM - info: Fri Jul 21 2023 15:32:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:15 PM - info: Fri Jul 21 2023 15:32:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:15 PM - info: Fri Jul 21 2023 15:32:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:15 PM - info: Fri Jul 21 2023 15:32:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:16 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:17 PM - info: Fri Jul 21 2023 15:32:14 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:18 PM - info: Fri Jul 21 2023 15:32:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:19 PM - info: Fri Jul 21 2023 15:32:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:20 PM - info: Fri Jul 21 2023 15:32:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:27 PM - info: Fri Jul 21 2023 15:32:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:28 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:28 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:29 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:29 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:29 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:32:31 PM - info: Fri Jul 21 2023 15:32:27 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:06 PM - info: Fri Jul 21 2023 15:33:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:07 PM - info: Fri Jul 21 2023 15:33:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:07 PM - info: Fri Jul 21 2023 15:33:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:08 PM - info: Fri Jul 21 2023 15:33:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:08 PM - info: Fri Jul 21 2023 15:33:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:08 PM - info: Fri Jul 21 2023 15:33:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:18 PM - info: Fri Jul 21 2023 15:33:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:19 PM - info: Fri Jul 21 2023 15:33:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:19 PM - info: Fri Jul 21 2023 15:33:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:19 PM - info: Fri Jul 21 2023 15:33:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:19 PM - info: Fri Jul 21 2023 15:33:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:33:19 PM - info: Fri Jul 21 2023 15:33:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:05 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:06 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:06 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:06 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:06 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:06 PM - info: Fri Jul 21 2023 15:34:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:17 PM - info: Fri Jul 21 2023 15:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:18 PM - info: Fri Jul 21 2023 15:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:34:19 PM - info: Fri Jul 21 2023 15:34:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:05 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:05 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:06 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:06 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:06 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:06 PM - info: Fri Jul 21 2023 15:35:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:17 PM - info: Fri Jul 21 2023 15:35:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:18 PM - info: Fri Jul 21 2023 15:35:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:18 PM - info: Fri Jul 21 2023 15:35:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:18 PM - info: Fri Jul 21 2023 15:35:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:18 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:18 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:19 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:19 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:19 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:19 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:20 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:20 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:20 PM - info: Fri Jul 21 2023 15:35:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:20 PM - info: Fri Jul 21 2023 15:35:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:35:21 PM - info: Fri Jul 21 2023 15:35:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:05 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:05 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:06 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:06 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:06 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:06 PM - info: Fri Jul 21 2023 15:36:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:19 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:15 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:36:20 PM - info: Fri Jul 21 2023 15:36:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:06 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:06 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:07 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:07 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:07 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:07 PM - info: Fri Jul 21 2023 15:37:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:25 PM - info: Fri Jul 21 2023 15:37:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:25 PM - info: Fri Jul 21 2023 15:37:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:25 PM - info: Fri Jul 21 2023 15:37:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:25 PM - info: Fri Jul 21 2023 15:37:23 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:25 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:26 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:26 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:26 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:26 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:26 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:27 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:27 PM - info: Fri Jul 21 2023 15:37:24 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:28 PM - info: Fri Jul 21 2023 15:37:25 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:28 PM - info: Fri Jul 21 2023 15:37:25 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:37:28 PM - info: Fri Jul 21 2023 15:37:26 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:04 PM - info: Fri Jul 21 2023 15:38:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:05 PM - info: Fri Jul 21 2023 15:38:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:05 PM - info: Fri Jul 21 2023 15:38:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:05 PM - info: Fri Jul 21 2023 15:38:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:06 PM - info: Fri Jul 21 2023 15:38:03 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:06 PM - info: Fri Jul 21 2023 15:38:04 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:21 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:22 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:22 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:23 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:24 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:38:26 PM - info: Fri Jul 21 2023 15:38:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:19 PM - info: Fri Jul 21 2023 15:39:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:19 PM - info: Fri Jul 21 2023 15:39:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:19 PM - info: Fri Jul 21 2023 15:39:16 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:20 PM - info: Fri Jul 21 2023 15:39:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:20 PM - info: Fri Jul 21 2023 15:39:17 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 03:39:20 PM - info: Fri Jul 21 2023 15:39:18 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:23:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:24:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:25:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:26:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:27:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:28:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:29:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:30:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:31:00 PM - fatal: **Calcul cron ** Error: connect EHOSTUNREACH 51.222.29.46:3306
+21-07-2023 04:32:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:33:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:34:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:35:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:36:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:37:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:38:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:39:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:40:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:41:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:42:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:44:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:46:10 PM - fatal: **Calcul cron ** Error: connect ETIMEDOUT
+21-07-2023 04:47:48 PM - info: Fri Jul 21 2023 16:47:45 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:47:48 PM - info: Fri Jul 21 2023 16:47:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:47:49 PM - info: Fri Jul 21 2023 16:47:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:47:49 PM - info: Fri Jul 21 2023 16:47:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:47:49 PM - info: Fri Jul 21 2023 16:47:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:47:49 PM - info: Fri Jul 21 2023 16:47:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:49 PM - info: Fri Jul 21 2023 16:48:46 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:50 PM - info: Fri Jul 21 2023 16:48:47 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:50 PM - info: Fri Jul 21 2023 16:48:47 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:50 PM - info: Fri Jul 21 2023 16:48:47 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:51 PM - info: Fri Jul 21 2023 16:48:48 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:48:51 PM - info: Fri Jul 21 2023 16:48:48 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:00 PM - info: Fri Jul 21 2023 16:48:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:00 PM - info: Fri Jul 21 2023 16:48:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:00 PM - info: Fri Jul 21 2023 16:48:55 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:01 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:01 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:01 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:01 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:02 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:02 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:02 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:02 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:02 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:03 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:04 PM - info: Fri Jul 21 2023 16:48:56 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 04:49:04 PM - info: Fri Jul 21 2023 16:48:57 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:05 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:07 PM - info: Fri Jul 21 2023 17:10:06 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:22 PM - info: Fri Jul 21 2023 17:10:20 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:23 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:23 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:24 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:24 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:24 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:25 PM - info: Fri Jul 21 2023 17:10:21 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:25 PM - info: Fri Jul 21 2023 17:10:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+21-07-2023 05:10:25 PM - info: Fri Jul 21 2023 17:10:22 GMT+0100 (British Summer Time) Calcul Saved successfully 
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:01:02 PM - fatal: **Weather cron** TypeError: Only absolute URLs are supported
+13-02-2024 04:10:04 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8008&lon=10.18&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:04 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=34.74&lon=10.76&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:06 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.8333&lon=10.6333&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:06 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.6833&lon=10.1&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:08 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=37.2744&lon=9.8739&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:08 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.705&lon=8.965&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:10 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.0381&lon=9.4858&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:11 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8625&lon=10.1956&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:13 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.8814&lon=10.0983&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:13 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.3547&lon=10.5053&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:15 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=32.9333&lon=10.45&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:15 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.7256&lon=9.1817&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:17 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.778&lon=10.8262&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:17 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.5047&lon=11.0622&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:20 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.7531&lon=10.2189&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:20 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.4514&lon=10.7361&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:22 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.4028&lon=10.1433&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:22 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.0819&lon=9.3747&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:24 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8&lon=10.1&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:24 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.1667&lon=8.8333&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:26 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.5011&lon=8.7803&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:27 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=34.4167&lon=8.7833&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:29 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.9197&lon=8.1336&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:29 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.9136036&lon=7.6009356&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:31 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=43.000000&lon=-75.00000&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:31 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8395838&lon=10.1147739&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:33 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=14.7645042&lon=-17.3660286&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:33 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=&lon=&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:36 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=6.816667&lon=-5.283333&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:36 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.167965&lon=8.709579&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:38 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.55&lon=10.8&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:38 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=&lon=&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:40 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.454669&lon=2.686154&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:10:40 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.454669&lon=2.686154&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:03 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8008&lon=10.18&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:03 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=34.74&lon=10.76&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:05 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.8333&lon=10.6333&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:05 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.6833&lon=10.1&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:07 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.705&lon=8.965&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:08 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=37.2744&lon=9.8739&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:10 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.8814&lon=10.0983&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:10 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8625&lon=10.1956&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:12 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=34.4167&lon=8.7833&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:12 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.7256&lon=9.1817&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:14 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=35.0381&lon=9.4858&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:14 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.7531&lon=10.2189&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:17 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.3547&lon=10.5053&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:17 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=32.9333&lon=10.45&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:19 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=36.8&lon=10.1&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:11:19 PM - fatal: **Weather cron** FetchError: request to https://undefined/?lat=33.9197&lon=8.1336&units=metric&appid=undefined failed, reason: getaddrinfo ENOTFOUND undefined
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Sfax
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Tunis
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Kasserine
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Nabeul
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Intilaka
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Mnihla
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Manouba
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Medenine
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Mahdia
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Sousse
+13-02-2024 04:12:02 PM - info: --- IDS farm add in weather_data : Béja
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Ben Arous
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Annaba
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Bizerte
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Kebili
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Tazarka
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Jendouba
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Siliana
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Zaghouan
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Mouzaïa
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Ourgla
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Mouzaïa
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Ariana
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Tataouine
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Sidi Bouzid
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Tozeur
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Gabès
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Gafsa
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Mouzaïa
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Kairouan
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Kef
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Yamoussoukro
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Monastir
+13-02-2024 04:12:03 PM - info: --- IDS farm add in weather_data : Dakar
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 60
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 74
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 108
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 224
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 251
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 116
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 133
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 123
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 180
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 129
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 125
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 173
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 110
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 118
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 137
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 174
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 198
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 111
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 253
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 128
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 107
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 126
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 254
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 252
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 233
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 227
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 181
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 182
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 190
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 134
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 250
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 256
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 201
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 249
+13-02-2024 04:33:03 PM - info: --- IDS farm add in weather_data : 179
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 74
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 60
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 107
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 111
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 126
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 108
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 224
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 249
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 181
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 179
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 190
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 254
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 125
+13-02-2024 04:57:02 PM - info: --- IDS farm add in weather_data : 227
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 252
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 123
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 253
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 182
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 129
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 118
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 137
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 256
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 201
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 133
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 134
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 110
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 116
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 198
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 250
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 173
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 128
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 174
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 233
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 251
+13-02-2024 04:57:03 PM - info: --- IDS farm add in weather_data : 180
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 60
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 74
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 107
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 108
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 123
+27-02-2024 01:35:02 AM - info: --- IDS fields add in weather_data : 125
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 116
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 224
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 129
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 128
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 133
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 251
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 111
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 118
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 126
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 233
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 110
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 134
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 137
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 190
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 182
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 173
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 201
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 181
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 252
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 180
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 174
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 249
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 198
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 250
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 227
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 254
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 179
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 256
+27-02-2024 01:35:03 AM - info: --- IDS fields add in weather_data : 253

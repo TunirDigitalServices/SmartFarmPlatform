@@ -1,0 +1,221 @@
+.MainContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin-top: -25px;
+}
+.sideBar {
+  box-shadow: 0px 0px 10px 3px #dcdcdc;
+}
+.Container {
+  width: 100%;
+}
+.statsBox{
+  transition : all .5s ;
+}
+.statsBox:hover{
+  background-color:#f6f6f6;
+  cursor: pointer;
+  
+}
+.statsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+}
+.themeWrapper {
+  width: 50%;
+  padding: 20px;
+}
+@media (max-width: 500px) {
+  .SBWrapper {
+    flex: 100%;
+    flex-wrap: wrap;
+  }
+  .StatBox {
+    flex: 100%;
+  }
+  .MainContainer {
+    flex: 100%;
+    flex-wrap: wrap;
+  }
+  .sideBar {
+    flex: 100%;
+  }
+  .sensor {
+    flex: 100%;
+  }
+  .sensorWrapper {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 1000px) {
+  .themeWrapper {
+    flex: 100%;
+  }
+}
+.SBWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f6f6f6;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 1px #dcdcdc;
+}
+.StatBox {
+  width: 30%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 5px;
+  margin: 10px;
+}
+.StatBox p {
+  padding: 0;
+  margin: 0;
+}
+.StatBox:hover,
+.sensor:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 3px #dcdcdc;
+}
+.SBHeader {
+  height: 25%;
+  font-size: large;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -5px;
+}
+.SBBody {
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+.critical {
+  color: tomato;
+}
+.optimal {
+  color: mediumseagreen;
+}
+.full {
+  color: dodgerblue;
+}
+.gMapCanvas {
+  overflow: "hidden";
+  background: "none";
+}
+.map {
+  padding: 20px;
+}
+.iFrame {
+  width: 100%;
+  height: 500px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 1px #dcdcdc;
+}
+.sensor * {
+  margin: 0px;
+  padding: 0px;
+}
+.sensorWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0px 20px;
+}
+.sensor {
+  width: 30%;
+  display: block;
+  background-color: #f6f6f6;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 1px #dcdcdc;
+  padding: 10px;
+  margin: 20px 0px;
+  box-sizing: border-box;
+}
+.sensorHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.sensorNameWrapper {
+  max-width: 70%;
+  text-overflow: ellipsis;
+}
+.sensorInfo {
+  display: flex;
+  flex-direction: row;
+  max-width: 30%;
+}
+.sensorInfo div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50%;
+}
+.plantWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.plant {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.ProgressBarWrapper {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+}
+.ProgressBarWrapper p {
+  margin-right: 10px;
+}
+.ProgressBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.Segment1 {
+  margin-top: 5px;
+  padding-top: 15px;
+  width: 32.66%;
+  height: 15px;
+  background-image: linear-gradient(to right, #dc143c, #adff2f);
+}
+.Segment2 {
+  margin-top: 5px;
+  padding-top: 15px;
+  width: 32.66%;
+  height: 15px;
+  background-image: linear-gradient(to right, #adff2f, #20b2aa);
+}
+.Segment3 {
+  margin-top: 5px;
+  padding-top: 15px;
+  width: 32.66%;
+  height: 15px;
+  background-image: linear-gradient(to right, #20b2aa, DodgerBlue);
+}
+.Marker {
+  position: absolute;
+  margin-left: -7px;
+}
+.sensorFooter {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
