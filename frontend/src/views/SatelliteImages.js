@@ -117,10 +117,47 @@ const SatelliteImages = () => {
 
     setDates(ascendingDates);
   }, []);
+
+  const formatDate = (dateString) => {
+    // Parse the input date string using Moment.js
+    const parsedDate = moment(dateString, 'D MMM YYYY');
+    
+    // Format the date in the desired format (YYYY-MM-DD)
+    const formattedDate = parsedDate.format('YYYY-MM-DD');
+    
+    return formattedDate;
+  };
+
   const handleDateClick = (date) => {
     setSelectedDate(date);
     const filteredData = satellitesImages.filter(data => moment(data.created_at).format('D MMM YYYY') === date && data.field_id === selectedField[0].Id);
     setSelectedImages(filteredData);
+    const formattedDate = formatDate(date);
+    const currentDate = moment();
+    const twoDaysAgo = moment().subtract(1, 'days');
+  
+    if (moment(formattedDate).isBefore(twoDaysAgo, 'day')) {
+      try {
+        const fieldId = selectedField[0].Id
+        const userId = JSON.parse(localStorage.getItem('user')).id
+        const apiUrl = `/satellite-images/${userId}/${fieldId}/${formattedDate}`
+        api.get(apiUrl)
+          .then((response) => {
+            const fetchedData = response.data.imagesData
+            console.log(fetchedData)
+          })
+          .catch((error) => {
+            console.error('API error:', error);
+          })
+      
+    } catch (error) {
+      console.error('API error:', error);
+
+    }
+  
+    } else {
+      console.log('Formatted date is not before 1 days ago.');
+    }
   };
   const getSelectedField = (e) => {
     const selectedId = e.target.value;
@@ -159,38 +196,32 @@ const SatelliteImages = () => {
       <Container className="main-content-container p-3 border bg-light rounded">
         <Row>
           <Col lg='8' md="12" sm="12">
-            {/* <Row className="border-bottom pt-3">
-              {dates.map((date, index) => (
-                <Col lg="2" key={index}>
-                  <p
-                    onClick={
-                      selectedField.length > 0
-                        ? () => handleDateClick(date)
-                        : undefined
-                    }
-                    style={{
-                      border: '1px solid #ebebeb',
-                      fontSize: 12,
-                      textAlign: 'center',
-                      borderRadius: 6,
-                      padding: 3,
-                      background: selectedDate === date ? '#8ad3dd' : 'transparent',
-                      cursor: selectedField.length > 0 ? 'pointer' : 'not-allowed',
-                    }}
-                  >
-                    {date}
-                  </p>
-                </Col>
-              ))}
-            </Row> */}
             <Row className="pt-4">
+            <Col lg='8' md="12" sm="12" className="py-2 d-md-block d-lg-none">
+        {/* Select input on mobile view */}
+        <Card className="mt-0" style={{ height: "100%" }} >
+          <CardHeader className="border-bottom">
+            <FormSelect value={selectedField} onChange={getSelectedField}>
+              <option value="">{t('select_field')}</option>
+              {
+                fields.map(field => {
+                  return (
+                    <option key={field.Id} value={field.Id}>{field.title}</option>
+
+                  )
+                })
+              }
+            </FormSelect>
+          </CardHeader>
+        </Card>
+      </Col>
               <Col lg='12' md="12" sm="12">
                 <SatteliteMap farms={farms} data={selectedField} satellitesImages={selectedImages} selectedData={dataDisplayed} drawn={polygonDisplayed} draw={mapConfig.draw} edit={mapConfig.edit} zoom={coords.zoom} center={coords.center} fromAction={coords.fromAction} />
               </Col>
             </Row>
           </Col>
 
-          <Col lg='4' md="12" sm="12" className='my-2'>
+          <Col lg='4' md="12" sm="12" className='my-2' >
             <Card className="mt-0" style={{ height: "100%" }}>
               {fields.length === 0
 
@@ -200,7 +231,7 @@ const SatelliteImages = () => {
 
                 :
                 <>
-                  <CardHeader className="border-bottom">
+                  <CardHeader className="border-bottom d-none d-lg-block" >
                     <FormSelect value={selectedField} onChange={getSelectedField}>
                       <option value="">{t('select_field')}</option>
                       {

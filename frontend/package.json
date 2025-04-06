@@ -56,9 +56,9 @@
     "sweetalert": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "build:prod": "cross-env REACT_APP_BASENAME=/smartfarm REACT_APP_GAID=UA-115105611-1 npm run build",
-    "build": "cross-env REACT_APP_BASENAME=/smartfarm react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

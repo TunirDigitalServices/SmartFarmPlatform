@@ -3,7 +3,7 @@ const {getSubscriptions, addSubscription, editSubscriptions, deleteSubscriptions
 const {auth} = require('../middelwares/auth.js')
 const {getAllFarms, getFarmsByUser,deleteFarm,getSingleFarm} = require('../controllers/admin/farm.js')
 const {getSensorsByUser,addSensor,editSensor ,getSingleSensor, getSensors, getSingleSensorByCode, editDataMapping, addMapping, deleteDataMapping, getInactiveSensors} = require('../controllers/admin/sensor.js')
-const {getFieldsByUser, getAllFields} = require('../controllers/admin/field.js')
+const {getFieldsByUser, getAllFields, getFieldById, calculSimulation} = require('../controllers/admin/field.js')
 const {getUsers , getSingleUser,deleteUser,addUser,editUser,desactiveUser,activeUser,searchUser,changeOffer,changeRole,editProfil, getExistUsers, getExistUsersSuppliers, changeHasCommand, confirmUser} = require('../controllers/admin/users')
 const {getCropsByUser} = require('../controllers/admin/crops')
 const {addFarm,editFarm} = require('../controllers/common/farm')
@@ -17,7 +17,7 @@ const {getCollectDataWeather, getSearchCollectDataWeather} = require('../control
 
 const { getCitiesWeather, addCitiesWeather } = require('../controllers/admin/citiesweather.js')
 const { addCities, addCrops, getCountries, getSingleCountry, getCitiesByCountry, editCities, deleteCities, getSingleCity, getCrops, deleteCrop, editCrop, getSingleCrop, getSoils, editSoil, deleteSoil, getSingleSoil, addSoils, addIrrigations, getSingleIrrigation, getIrrigations, editIrrigation, deleteIrrigation, addVariety, deleteCropVariety, getVarieties, editVariety, getSingleCropVariety, addCountries, getCities, uploadCropPicture, uploadSoilPicture, uploadVarietyPicture } = require('../controllers/admin/config.js')
-const { getReportsByField, sendSMStoSelectedUser } = require('../controllers/premiumCalcul/calculPremium.js')
+const { getReportsByField, sendSMStoSelectedUser, calculBilanHydriqueByField, EditBilanHydriqueByField } = require('../controllers/premiumCalcul/calculPremium.js')
 const { sendMailSensorState, sendReportByMail } = require('../services/sendMail.js')
 
 
@@ -167,8 +167,11 @@ router.post('/cities/edit-city',auth,editCities)
 router.delete('/cities/delete-city',auth,deleteCities)
 
 router.get('/admin/fields',auth,getAllFields)
+router.get('/admin/fields/:fieldId',auth,getFieldById)
+router.post('/admin/calculSimulation',auth,calculSimulation)
 router.post('/admin/fields/single-field',auth,getReportsByField)
 router.post('/admin/send-sms',auth,sendSMStoSelectedUser)
-
+router.post('/admin/field-sensor-calcul',auth,calculBilanHydriqueByField)
+router.post('/admin/edit-bilan-hydrique',auth,EditBilanHydriqueByField)
 
 module.exports = router;

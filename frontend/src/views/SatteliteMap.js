@@ -224,12 +224,12 @@ const SatteliteMap = ({farms, data, selectedData, _onEdited, draw, edit,drawn ,s
 
     </Box>
      : 
-         <Row style={{marginTop: "20px",marginRight: "0px",marginLeft: "0px" }}>
+         <Row style={{marginTop: "16px",marginRight: "0px",marginLeft: "0px" ,marginBottom: "10px" }}>
         {designationData.length > 0 &&
           Object.keys(designationData[0]).map((item, indx) =>{
             const data = designationData[0][item];
             return(
-              <Col lg="3" md="12" sm="12"   style={{padding: "0px" , display: 'flex',justifyContent: 'center', alignItems: 'center',flexWrap:"wrap"}}>
+              <Col lg="3" md="6" sm="6" xs="6"  style={{padding: "0px" , display: 'flex',justifyContent: 'center', alignItems: 'center',flexWrap:"wrap"}}>
                <div className="m-4 p-0 " style={{ width: "70px", height: "100px", cursor: "pointer" }} onClick={() => handleCardClick(item)}>
           <div className="m-0 p-0">
             <h6 style={{ fontSize: "16px" ,fontWeight:'bold'  }} className="text-center py-2">{data.designation}</h6>

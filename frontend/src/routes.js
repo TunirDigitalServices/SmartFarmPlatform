@@ -62,6 +62,7 @@ import DashboardSupplier from "./supplier/DashboardSupplier";
 import FieldsManagement from "./admin/FieldsManagement";
 import SatelliteImages from "./views/SatelliteImages"
 import SensorSettings from "./views/SensorSettings";
+import CalculSimulation from "./admin/CalculSimulation";
 
 
 
@@ -393,6 +394,11 @@ export default [
     path : "/admin/fields",
     layout : DefaultLayout,
     component :  FieldsManagement
+  },
+  {
+    path : "/admin/calcul-fields/:fieldId",
+    layout : DefaultLayout,
+    component :  CalculSimulation
   },
   {
     path : "/Dashboard-supplier",

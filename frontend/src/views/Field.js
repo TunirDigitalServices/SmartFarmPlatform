@@ -82,7 +82,7 @@ const Field = () => {
 
   }, [])
 
-  console.log(allDataSensor)
+  console.log(resultCalcul)
 
   const fetchData = async () => {
     //TODO GET FROM URL
@@ -167,9 +167,8 @@ const Field = () => {
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
   useEffect(() => {
-    if (sensorCode !== "") {
       const calculDataSensor = async () => {
-        let url = `/calcul/get-sensor-calcul/${sensorCode}`
+        let url = `/calcul/field-calcul/${Uid}`
         if (role === 'ROLE_SUPPLIER') {
           url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
         }
@@ -188,8 +187,8 @@ const Field = () => {
       }
 
       calculDataSensor()
-    }
-  }, [sensorCode])
+    
+  }, [])
 
   const [mappingMv1, setMappingMv1] = useState("")
   const [mappingMv2, setMappingMv2] = useState("")
@@ -287,10 +286,12 @@ const Field = () => {
 
 
   const toHoursAndMinutes = (totalMinutes) => {
-    // const minutes = totalMinutes % 60;
-    const hours = Math.floor(totalMinutes);
+    const minutes = totalMinutes % 60;
+    const hours = Math.floor(totalMinutes / 60);
+    // const hours = Math.floor(totalMinutes);
 
-    return `${hours}h`;
+    // return `${hours}h`;
+     return `${hours}h ${parseFloat(minutes).toFixed(0)}m`;
   }
   // Marker Position Based on Bilan Hydrique
 
@@ -655,6 +656,7 @@ const Field = () => {
   }, [])
 
 
+  console.log(allCalcul)
   useEffect(() => {
     let data = [];
     allCalcul &&

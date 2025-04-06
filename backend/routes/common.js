@@ -19,10 +19,10 @@ const { addDataSensor, getDataSensorsByConnectedUser, getDataSensorsByCode } = r
 const { getCities } = require('../controllers/common/cities.js')
 const { getCropType } = require('../controllers/common/croptype.js')
 const { calculSimulation, deleteSimulation, getSimulationsByConnectedUser, getSingleSimulation, validateSimulation, editSimulation, getAllSimulationsByConnectedUser } = require('../controllers/simulationFree/Simulation.js')
-const { calculBilanHydrique, getCalculSensor, generatePDF, createBulletin, sendSMStoUsers, getAllCalculByUser, getAllCalculByField } = require('../controllers/premiumCalcul/calculPremium.js')
+const { calculBilanHydrique, getCalculSensor, generatePDF, createBulletin, sendSMStoUsers, getAllCalculByUser, getAllCalculByField, calculBilanHydriqueByField } = require('../controllers/premiumCalcul/calculPremium.js')
 const { downloadReport } = require('../reports/report.js')
 const { createHistory, addSensorsHistory, getSensorHistory } = require('../controllers/common/history.js')
-const { addSatelliteImages, getSatelliteImages } = require('../controllers/common/satellite.js')
+const { addSatelliteImages, getSatelliteImages, getSatelliteImagesUrls } = require('../controllers/common/satellite.js')
 
 
 
@@ -152,7 +152,8 @@ router.delete('/simulation/delete-simulation',auth,deleteSimulation)
 
 /***************Sensor Calcul*********************/
 router.post('/calcul/add-sensor-calcul',calculBilanHydrique)
-router.get('/calcul/get-sensor-calcul/:sensorCode',auth,getCalculSensor)
+router.post('/calcul/field-sensor-calcul',calculBilanHydriqueByField)
+router.get('/calcul/get-sensor-calcul',auth,getCalculSensor)
 router.get('/generatePDF',generatePDF)
 router.get('/createBulletin',createBulletin)
 router.post('/send-sms',sendSMStoUsers)
@@ -166,6 +167,6 @@ router.get('/api-external-sensor/:token/:sensorCode',authApiExternal,getCalculSe
 router.post('/api/sattelite-images',getSatteliteImages)
 router.post('/field/add-sattelite-images',auth,addSatelliteImages)
 router.get('/field/get-sattelite-images/:fieldId', auth,getSatelliteImages)
-
+router.get('/satellite-images/:userId/:fieldId/:date',auth,getSatelliteImagesUrls)
 
 module.exports = router;

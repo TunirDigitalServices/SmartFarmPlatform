@@ -85,21 +85,21 @@ app.get('/', (req, res) => {
   res.send('GET request to homepage')
 });
 
-mongoose.set("strictQuery", false);
-mongoose.connect(
-  process.env.MONGO_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: false
-  },
-  (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connected to MongoDB");
-    }
-  }
-);
+// mongoose.set("strictQuery", false);
+// mongoose.connect(
+//   process.env.MONGO_URI,
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: false
+//   },
+//   (err) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("Connected to MongoDB");
+//     }
+//   }
+// );
 
 const port = process.env.PORT;
 app.listen(port, () => {

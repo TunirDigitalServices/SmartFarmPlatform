@@ -899,9 +899,9 @@ const createBulletin = async (req, res) => {
                                 if (result) {
                                     console.log(result)
                                     await new Report({ user_id: dataCalcul.users.id, field_id: dataCalcul.fields.id, filename: filename }).save()
-                                    await addNotifWhenCreateBulletin(dataCalcul.users.id)
+                                   // await addNotifWhenCreateBulletin(dataCalcul.users.id)
                                     // if (phoneNumber && phoneNumber != "") {
-                                    //     await sendSMStoUsers(phoneNumber, irrigNumber, irrigDates, irrigTime)
+                                       //  await sendSMStoUsers(phoneNumber, irrigNumber, irrigDates, irrigTime)
     
                                     // }
                                 }
@@ -960,229 +960,427 @@ const getDataFromApiSensor = async (codeSensor) => {
     return ruMax;
 }
 
-const calculSimulation = async (DataIrrigations, DataCrops, ruPratiqueData, RUmaxData, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, startPlantingDate, dataCrop, rainConfig, latField, lonField, fieldsId, codeSensor) => {
+// const calculSimulation = async (DataIrrigations, DataCrops, ruPratiqueData, RUmaxData, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, startPlantingDate, dataCrop, rainConfig, latField, lonField, fieldsId, codeSensor) => {
+//     let dailyDates = [];
+//     let dailyET0 = [];
+//     await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`, {})
+//         .then((response) => response.json())
+//         .then((jsonData) => {
+//             dailyDates = jsonData.daily.time;
+//             dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
+//         });
+
+//     let surfaceOccup = 0;
+//     let flowByTree = 0;
+//     let sumETC = 0;
+//     let sumIrrig = 0;
+//     let sumNbrIrrig = 0;
+//     let sumRain = 0;
+//     var elements = [];
+
+//     let resultFormule = [];
+//     let ETC = 0;
+//     let RuInitial = 0;
+//     let Pe = 0;
+//     let bilanHydrique = 0;
+//     let firstFormule = 0;
+//     let formule = 0;
+//     let firstFormuleIrrig = 0;
+//     let formuleIrrig = 0;
+//     let dataSoil = 0;
+//     let IrrigationNbr = 0;
+//     let RuMax = 0;
+//     let ruPratique = 0;
+//     if (dataCrop != null && Object.keys(dataCrop).length > 0 && typeof dataCrop.all_kc !== 'undefined' && days > 0 && latField != null && latField != "" && lonField != null && lonField != "") {
+//         ruPratique = Number(ruPratiqueData);
+//         RuMax = Number(RUmaxData) * Number(profondeur);
+//         RuInitial = Number(RUmaxData) * Number(profondeur);
+//         let Epuisement_maximal = (Number(RUmaxData) * Number(profondeur) * Number(ruPratique)) / 100;
+//         let RuMin = Number(RuMax) - Number(Epuisement_maximal);
+//         let rainData = 0;
+//         let prevHourlyBilan = RuInitial;
+//         let rainfall = 0;
+//         let IrrigTime = 0;
+
+//         for (let i = 1; i <= days; i++) {
+//             if (typeof dataCrop.all_kc[i - 1] !== 'undefined') {
+//                 let ET0 = 6;
+//                 let doseByTree = 0;
+//                 let Irrigation = 0;
+
+//                 let date = addDays(startPlantingDate, i - 1);
+//                 var month = date.getMonth();
+//                 var day = date.getDate();
+//                 var year = date.getFullYear();
+
+//                 let currentDate = new Date();
+//                 let dateCurrent = currentDate.getDate();
+//                 currentDate.setDate(currentDate.getDate() + 7);
+//                 var currentMonth = currentDate.getMonth();
+//                 var currentDay = currentDate.getDate();
+//                 var currentYear = currentDate.getFullYear();
+//                 let DateFormat = new Date(date);
+//                 let dateET0 = DateFormat.toISOString().slice(0, 10);
+
+//                 dailyDates.map((dayDate, indx) => {
+//                     if (dateET0 == dayDate) {
+//                         ET0 = dailyET0[indx];
+//                     }
+//                 });
+
+//                 if (DataCrops.length > 0) {
+//                     DataCrops.map((item) => {
+//                         surfaceOccup = item.surface;
+//                     });
+//                 }
+//                 if (DataIrrigations.length > 0) {
+//                     DataIrrigations.map((item) => {
+//                         item.map((value) => {
+//                             flowByTree = Number(value.drippers) * Number(value.flowrate);
+//                         });
+//                     });
+//                 }
+
+//                 if (typeof rainConfig.rainByDay !== 'undefined' && typeof rainConfig.rainByDay[month + "_" + day + "_rain"] !== 'undefined') {
+//                     rainData = rainConfig.rainByDay[month + "_" + day + "_rain"];
+//                 }
+//                 if (typeof rainConfig.rainByDay !== 'undefined' && (typeof rainConfig.rainByDay[month + "_" + day + "_rain"] === 'undefined') && typeof rainConfig.rainByMonth !== 'undefined' && typeof rainConfig.rainByMonth[month + "_rain"] !== 'undefined') {
+//                     rainData = rainConfig.rainByMonth[month + "_rain"];
+//                 }
+
+//                 if (currentMonth == month && day >= dateCurrent && day < currentDay && year == currentYear) {
+//                     // Get weather data
+//                     let sataRainWeather = await getRainFromWeather(latField, lonField);
+//                     let key = year + "-" + ('0' + parseInt(month + 1)).slice(-2) + "-" + ('0' + day).slice(-2);
+
+//                     if (sataRainWeather && typeof sataRainWeather[key] !== 'undefined') {
+//                         rainData = sataRainWeather[key];
+//                     } else {
+//                         rainData = 0;
+//                     }
+//                 }
+
+//                 Pe = Number(rainData) * Number(effPluie) / 100;
+
+//                 let kcValue = 0;
+//                 if (typeof dataCrop.all_kc[i - 1] !== 'undefined') {
+//                     kcValue = dataCrop.all_kc[i - 1].kc;
+//                 }
+//                 ETC = Number(kcValue) * Number(ET0);
+//                 let prevResultBilan = 0;
+
+//                 firstFormule = (Number(RuInitial) + Number(Pe)) - Number(ETC);
+//                 if (i > 1) {
+//                     prevResultBilan = resultFormule[i - 2];
+//                     formuleIrrig = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100);
+//                     formule = (Number(prevResultBilan) + parseInt(Pe)) - (parseFloat(ETC).toFixed(1) + Irrigation);
+//                 }
+//                 firstFormuleIrrig = (Number(RuMax) - Number(firstFormule)) / Number(effIrrig);
+
+//                 if (i === 1) {
+//                     if (firstFormule <= RuMax) {
+//                         bilanHydrique = firstFormule;
+//                     } else {
+//                         bilanHydrique = RuMax;
+//                     }
+//                     if (RuInitial <= RuMin) {
+//                         Irrigation = firstFormuleIrrig;
+//                     } else {
+//                         Irrigation = 0;
+//                     }
+//                 } else {
+//                     if (formule <= RuMax) {
+//                         bilanHydrique = formule;
+//                     } else {
+//                         bilanHydrique = RuMax;
+//                     }
+//                     if (formule <= RuMin) {
+//                         Irrigation = formuleIrrig;
+//                         bilanHydrique = formule + formuleIrrig;
+//                     } else {
+//                         Irrigation = 0;
+//                     }
+//                 }
+
+//                 if (Irrigation == 0) {
+//                     IrrigationNbr = 0;
+//                 } else {
+//                     IrrigationNbr = 1;
+//                     rainfall = Number(flowByTree) / Number(surfaceOccup);
+
+//                     doseByTree = Number(surfaceOccup) * (Number(Irrigation) / 1000);
+//                     // IrrigTime = (Number(doseByTree) / (Number(flowByTree) / 1000)) * 60;
+//                     IrrigTime = Number(Irrigation) / Number(rainfall)
+//                 }
+             
+
+//                 let hourlyBilan = [];
+//                 let requiredIrrigation = 0;
+//                 let hoursToIrrigate = 0;
+
+//                 for (let hour = 0; hour < 24; hour++) {
+//                     // let prevHourlyBilan = hourlyBilan.length > 0 ? hourlyBilan[hourlyBilan.length - 1].value : RuInitial;
+//                     let hourlyETC = ETC / 24;
+//                     let hourlyBilanValue = (prevHourlyBilan + Pe / 24) - hourlyETC;
+                    
+//                     if (hourlyBilanValue <= RuMin) {
+//                        requiredIrrigation = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100)
+//                       Irrigation += requiredIrrigation;
+//                       IrrigationNbr = 1;
+//                      hourlyBilanValue = RuMax;
+//                     hoursToIrrigate = parseFloat(IrrigTime).toFixed(0); 
+//                     }
+
+//                     if(hourlyBilanValue > RuMax){
+//                         hourlyBilanValue = RuMax
+//                     }
+//                     hourlyBilan.push({
+//                         hour: hour,
+//                         value: hourlyBilanValue,
+//                     });
+//                     if (Irrigation > 0) {
+//                         sumNbrIrrig = sumNbrIrrig + IrrigationNbr;
+//                         sumIrrig = sumIrrig + Irrigation;
+//                         rainfall = Number(flowByTree) / Number(surfaceOccup);
+//                         IrrigTime = Number(Irrigation) / Number(rainfall)
+    
+//                     }
+
+//                     prevHourlyBilan = hourlyBilanValue;
+//                 }
+
+//                 resultFormule.push(hourlyBilan);
+//                 if (ETC) {
+//                     sumETC = sumETC + ETC;
+//                 }
+
+               
+
+//                 sumRain = sumRain + rainData;
+
+
+//                 elements.push({
+//                     RUmax: RuMax,
+//                     RUMin: RuMin,
+//                     days: i,
+//                     date: date,
+//                     bilan: hourlyBilan, // Store the hour-specific bilan
+//                     pe: Pe,
+//                     Etc: ETC,
+//                     ET0: ET0,
+//                     rain: rainData,
+//                     kc: kcValue,
+//                     irrigation: Irrigation,
+//                     irrigationNbr: IrrigationNbr,=
+//                     codeSensor: codeSensor,
+//                     irrigationTime: IrrigTime,
+//                 });
+
+//             }
+//         }
+//     }
+
+//     return elements;
+// };
+
+
+const calculSimulation = async (
+    DataIrrigations,
+    DataCrops,
+    ruPratiqueData,
+    RUmaxData,
+    dosePercentage,
+    effPluie,
+    effIrrig,
+    irrigArea,
+    days,
+    profondeur,
+    startPlantingDate,
+    dataCrop,
+    rainConfig,
+    latField,
+    lonField,
+    fieldsId,
+    codeSensor
+  ) => {
     let dailyDates = [];
     let dailyET0 = [];
-    await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`, {})
-        .then((response) => response.json())
-        .then((jsonData) => {
-            dailyDates = jsonData.daily.time;
-            dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
-        });
-
+  
+    // Fetch daily evapotranspiration data
+    await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`,
+      {}
+    )
+      .then((response) => response.json())
+      .then((jsonData) => {
+        dailyDates = jsonData.daily.time;
+        dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
+      });
+  
+    // Initialize variables
     let surfaceOccup = 0;
     let flowByTree = 0;
     let sumETC = 0;
     let sumIrrig = 0;
     let sumNbrIrrig = 0;
     let sumRain = 0;
-    var elements = [];
-
-    let resultFormule = [];
-    let ETC = 0;
-    let RuInitial = 0;
-    let Pe = 0;
-    let bilanHydrique = 0;
-    let firstFormule = 0;
-    let formule = 0;
-    let firstFormuleIrrig = 0;
-    let formuleIrrig = 0;
-    let dataSoil = 0;
-    let IrrigationNbr = 0;
-    let RuMax = 0;
-    let ruPratique = 0;
-    if (dataCrop != null && Object.keys(dataCrop).length > 0 && typeof dataCrop.all_kc !== 'undefined' && days > 0 && latField != null && latField != "" && lonField != null && lonField != "") {
-        ruPratique = Number(ruPratiqueData);
-        RuMax = Number(RUmaxData) * Number(profondeur);
-        RuInitial = Number(RUmaxData) * Number(profondeur);
-        let Epuisement_maximal = (Number(RUmaxData) * Number(profondeur) * Number(ruPratique)) / 100;
-        let RuMin = Number(RuMax) - Number(Epuisement_maximal);
-        let rainData = 0;
-        let prevHourlyBilan = RuInitial;
-        let rainfall = 0;
-        let IrrigTime = 0;
-
-        for (let i = 1; i <= days; i++) {
-            if (typeof dataCrop.all_kc[i - 1] !== 'undefined') {
-                let ET0 = 6;
-                let doseByTree = 0;
-                let Irrigation = 0;
-
-                let date = addDays(startPlantingDate, i - 1);
-                var month = date.getMonth();
-                var day = date.getDate();
-                var year = date.getFullYear();
-
-                let currentDate = new Date();
-                let dateCurrent = currentDate.getDate();
-                currentDate.setDate(currentDate.getDate() + 7);
-                var currentMonth = currentDate.getMonth();
-                var currentDay = currentDate.getDate();
-                var currentYear = currentDate.getFullYear();
-                let DateFormat = new Date(date);
-                let dateET0 = DateFormat.toISOString().slice(0, 10);
-
-                dailyDates.map((dayDate, indx) => {
-                    if (dateET0 == dayDate) {
-                        ET0 = dailyET0[indx];
-                    }
-                });
-
-                if (DataCrops.length > 0) {
-                    DataCrops.map((item) => {
-                        surfaceOccup = item.surface;
-                    });
-                }
-                if (DataIrrigations.length > 0) {
-                    DataIrrigations.map((item) => {
-                        item.map((value) => {
-                            flowByTree = Number(value.drippers) * Number(value.flowrate);
-                        });
-                    });
-                }
-
-                if (typeof rainConfig.rainByDay !== 'undefined' && typeof rainConfig.rainByDay[month + "_" + day + "_rain"] !== 'undefined') {
-                    rainData = rainConfig.rainByDay[month + "_" + day + "_rain"];
-                }
-                if (typeof rainConfig.rainByDay !== 'undefined' && (typeof rainConfig.rainByDay[month + "_" + day + "_rain"] === 'undefined') && typeof rainConfig.rainByMonth !== 'undefined' && typeof rainConfig.rainByMonth[month + "_rain"] !== 'undefined') {
-                    rainData = rainConfig.rainByMonth[month + "_rain"];
-                }
-
-                if (currentMonth == month && day >= dateCurrent && day < currentDay && year == currentYear) {
-                    // Get weather data
-                    let sataRainWeather = await getRainFromWeather(latField, lonField);
-                    let key = year + "-" + ('0' + parseInt(month + 1)).slice(-2) + "-" + ('0' + day).slice(-2);
-
-                    if (sataRainWeather && typeof sataRainWeather[key] !== 'undefined') {
-                        rainData = sataRainWeather[key];
-                    } else {
-                        rainData = 0;
-                    }
-                }
-
-                Pe = Number(rainData) * Number(effPluie) / 100;
-
-                let kcValue = 0;
-                if (typeof dataCrop.all_kc[i - 1] !== 'undefined') {
-                    kcValue = dataCrop.all_kc[i - 1].kc;
-                }
-                ETC = Number(kcValue) * Number(ET0);
-                let prevResultBilan = 0;
-
-                firstFormule = (Number(RuInitial) + Number(Pe)) - Number(ETC);
-                if (i > 1) {
-                    prevResultBilan = resultFormule[i - 2];
-                    formuleIrrig = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100);
-                    formule = (Number(prevResultBilan) + parseInt(Pe)) - (parseFloat(ETC).toFixed(1) + Irrigation);
-                }
-                firstFormuleIrrig = (Number(RuMax) - Number(firstFormule)) / Number(effIrrig);
-
-                if (i === 1) {
-                    if (firstFormule <= RuMax) {
-                        bilanHydrique = firstFormule;
-                    } else {
-                        bilanHydrique = RuMax;
-                    }
-                    if (RuInitial <= RuMin) {
-                        Irrigation = firstFormuleIrrig;
-                    } else {
-                        Irrigation = 0;
-                    }
-                } else {
-                    if (formule <= RuMax) {
-                        bilanHydrique = formule;
-                    } else {
-                        bilanHydrique = RuMax;
-                    }
-                    if (formule <= RuMin) {
-                        Irrigation = formuleIrrig;
-                        bilanHydrique = formule + formuleIrrig;
-                    } else {
-                        Irrigation = 0;
-                    }
-                }
-
-                if (Irrigation == 0) {
-                    IrrigationNbr = 0;
-                } else {
-                    IrrigationNbr = 1;
-                    rainfall = Number(flowByTree) / Number(surfaceOccup);
-
-                    doseByTree = Number(surfaceOccup) * (Number(Irrigation) / 1000);
-                    // IrrigTime = (Number(doseByTree) / (Number(flowByTree) / 1000)) * 60;
-                    IrrigTime = Number(Irrigation) / Number(rainfall)
-                }
-             
-
-                let hourlyBilan = [];
-                let requiredIrrigation = 0;
-                let hoursToIrrigate = 0;
-
-                for (let hour = 0; hour < 24; hour++) {
-                    // let prevHourlyBilan = hourlyBilan.length > 0 ? hourlyBilan[hourlyBilan.length - 1].value : RuInitial;
-                    let hourlyETC = ETC / 24;
-                    let hourlyBilanValue = (prevHourlyBilan + Pe / 24) - hourlyETC;
-                    
-                    if (hourlyBilanValue <= RuMin) {
-                       requiredIrrigation = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100)
-                      Irrigation += requiredIrrigation;
-                      IrrigationNbr = 1;
-                     hourlyBilanValue = RuMax;
-                    hoursToIrrigate = parseFloat(IrrigTime).toFixed(0); 
-                    }
-
-                    if(hourlyBilanValue > RuMax){
-                        hourlyBilanValue = RuMax
-                    }
-                    hourlyBilan.push({
-                        hour: hour,
-                        value: hourlyBilanValue,
-                    });
-                    if (Irrigation > 0) {
-                        sumNbrIrrig = sumNbrIrrig + IrrigationNbr;
-                        sumIrrig = sumIrrig + Irrigation;
-                        rainfall = Number(flowByTree) / Number(surfaceOccup);
-                        IrrigTime = Number(Irrigation) / Number(rainfall)
-    
-                    }
-
-                    prevHourlyBilan = hourlyBilanValue;
-                }
-
-                resultFormule.push(hourlyBilan);
-                if (ETC) {
-                    sumETC = sumETC + ETC;
-                }
-
-               
-
-                sumRain = sumRain + rainData;
-
-
-                elements.push({
-                    RUmax: RuMax,
-                    RUMin: RuMin,
-                    days: i,
-                    date: date,
-                    bilan: hourlyBilan, // Store the hour-specific bilan
-                    pe: Pe,
-                    Etc: ETC,
-                    ET0: ET0,
-                    rain: rainData,
-                    kc: kcValue,
-                    irrigation: Irrigation,
-                    irrigationNbr: IrrigationNbr,
-                    codeSensor: codeSensor,
-                    irrigationTime: IrrigTime,
-                });
-
+    let elements = [];
+  
+    let RuInitial = Number(RUmaxData) * Number(profondeur);
+    let ruPratique = Number(ruPratiqueData);
+    let RuMax = RuInitial;
+    let Epuisement_maximal = (RuMax * ruPratique) / 100;
+    let RuMin = RuMax - Epuisement_maximal;
+    let prevHourlyBilan = RuInitial;
+  
+    if (
+      dataCrop &&
+      Object.keys(dataCrop).length > 0 &&
+      typeof dataCrop.all_kc !== "undefined" &&
+      days > 0 &&
+      latField &&
+      lonField
+    ) {
+      // Main loop for each day
+      for (let i = 1; i <= days; i++) {
+        if (typeof dataCrop.all_kc[i - 1] !== "undefined") {
+          let ET0 = 6;
+          let date = addDays(startPlantingDate, i - 1);
+          let month = date.getMonth();
+          let day = date.getDate();
+          let year = date.getFullYear();
+          let dateET0 = date.toISOString().slice(0, 10);
+  
+          // Retrieve ET0 for the specific day
+          dailyDates.forEach((dayDate, indx) => {
+            if (dateET0 === dayDate) {
+              ET0 = dailyET0[indx];
             }
+          });
+  
+          // Calculate surface occupied and flow by tree
+          if (DataCrops.length > 0) {
+            surfaceOccup = DataCrops[0].surface;
+          }
+          if (DataIrrigations.length > 0) {
+            flowByTree = DataIrrigations[0].reduce((acc, value) => acc + Number(value.drippers) * Number(value.flowrate), 0);
+          }
+  
+          // Get rainfall data
+          let rainData = getRainData(rainConfig, month, day);
+          if (isCurrentWeek(month, day, year)) {
+            let sataRainWeather = await getRainFromWeather(latField, lonField);
+            rainData = sataRainWeather[getFormattedDate(year, month, day)] || 0;
+          }
+  
+          let Pe = (Number(rainData) * Number(effPluie)) / 100;
+          let kcValue = dataCrop.all_kc[i - 1]?.kc || 0;
+          let ETC = kcValue * Number(ET0);
+  
+          let { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime , pluieArrosage } = calculateIrrigation(
+            i,
+            Pe,
+            ETC,
+            RuMax,
+            RuMin,
+            RuInitial,
+            prevHourlyBilan,
+            effIrrig,
+            surfaceOccup,
+            flowByTree
+          );
+  
+          // Update sums
+          sumETC += ETC;
+          sumRain += rainData;
+          sumNbrIrrig += IrrigationNbr;
+          sumIrrig += Irrigation;
+  
+          elements.push({
+            RUmax: RuMax,
+            RUMin: RuMin,
+            days: i,
+            date: date,
+            bilan: bilanHydrique,
+            pe: Pe,
+            Etc: ETC,
+            ET0: ET0,
+            rain: rainData,
+            kc: kcValue,
+            irrigation: Irrigation,
+            irrigationNbr: IrrigationNbr,
+            pluieArrosage : pluieArrosage , 
+            codeSensor: codeSensor,
+            irrigationTime: IrrigTime,
+          });
+  
+          prevHourlyBilan = bilanHydrique[bilanHydrique.length - 1].value;
         }
+      }
+    }
+  
+    return elements;
+  };
+  
+  // Helper functions
+
+  const getRainData = (rainConfig, month, day) => {
+    if (!rainConfig) {
+        // console.log("Rain config is null or undefined, returning default value 0.");
+        return 0;
     }
 
-    return elements;
+    let dayKey = `${month}_${day}_rain`;
+    let monthKey = `${month}_rain`;
+
+    return (
+      (rainConfig.rainByDay && rainConfig.rainByDay[dayKey]) ||
+      (rainConfig.rainByMonth && rainConfig.rainByMonth[monthKey]) ||
+      0
+    );
 };
 
+  
+  const isCurrentWeek = (month, day, year) => {
+    let currentDate = new Date();
+    let dateCurrent = currentDate.getDate();
+    currentDate.setDate(currentDate.getDate() + 7);
+    return currentDate.getMonth() === month && day >= dateCurrent && day < currentDate.getDate() && year === currentDate.getFullYear();
+  };
+  
+  const getFormattedDate = (year, month, day) => {
+    return `${year}-${('0' + (month + 1)).slice(-2)}-${('0' + day).slice(-2)}`;
+  };
+  
+  const calculateIrrigation = (i, Pe, ETC, RuMax, RuMin, RuInitial, prevHourlyBilan, effIrrig, surfaceOccup, flowByTree) => {
+    let bilanHydrique = [];
+    let Irrigation = 0;
+    let IrrigationNbr = 0;
+    let IrrigTime = 0;
+    let formule = (prevHourlyBilan + Pe) - ETC;
+    let formuleIrrig = (RuMax - RuMin) / (effIrrig / 100);
+    let prevResultBilan = i > 1 ? prevHourlyBilan : RuInitial;
+    let pluieArrosage = flowByTree / surfaceOccup
+    for (let hour = 0; hour < 24; hour++) {
+      let hourlyETC = ETC / 24;
+      let hourlyBilanValue = (prevResultBilan + Pe / 24) - hourlyETC;
+  
+      if (hourlyBilanValue <= RuMin) {
+        Irrigation = formuleIrrig;
+        hourlyBilanValue = RuMax;
+        IrrigationNbr = 1;
+        IrrigTime = (Irrigation / pluieArrosage) * 60 ;
+      }
+  
+      hourlyBilanValue = Math.min(hourlyBilanValue, RuMax);
+      bilanHydrique.push({ hour: hour, value: hourlyBilanValue });
+  
+      prevResultBilan = hourlyBilanValue;
+    }
+  
+    return { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime , pluieArrosage };
+  };
+  
 
 
 const getRainFromConfig = async (city_id) => {
@@ -1257,8 +1455,8 @@ const calculBilanHydrique = async (req, res) => {
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
     if (today.getDay() !== 1 || today !== allowedStartTime) {
-        return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
-    }
+     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+}
 
     try {
         const field = new Field()
@@ -1446,10 +1644,401 @@ const calculBilanHydrique = async (req, res) => {
         return res.status(500).json({ type: "danger", message: "error_calcul" });
     }
 
-
-
 }
 
+const calculBilanHydriqueByField = async (req, res) => {
+    const errors = validationResult(req);
+    const { fieldId , userId } = req.body;
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    const allowedStartTime = new Date();
+    allowedStartTime.setHours(2, 0, 0, 0);
+    const allowedEndTime = new Date();
+    allowedEndTime.setHours(3, 0, 0, 0);
+    const today = new Date();
+
+    // Uncomment this section if you want to restrict execution to Mondays only
+    // if (today.getDay() !== 1 || today !== allowedStartTime) {
+    //     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+    // }
+
+    console.log(fieldId);
+    try {
+        const field = await new Field({ 'id': fieldId })
+            .query(qb => qb.where('deleted_at', null).and.whereNotNull('Latitude').and.whereNotNull('Longitude'))
+            .fetch({
+                withRelated: [
+                    // { 'sensors': qb => { qb.where('deleted_at', null).andWhere('synchronized', "1"); } },
+                    { 'crops': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.irrigations': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.croptypes': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.varieties': qb => { qb.where('deleted_at', null); } },
+                    { 'zones': qb => { qb.where('deleted_at', null); } }
+                ],
+                require: false
+            });
+
+        if (field === null) {
+            return res.status(404).json({ type: "danger", message: "no_fields" });
+        }
+
+        let data = JSON.parse(JSON.stringify(field));
+        let allCalculations = [];
+
+        for (let fields of [data]) {
+            let DataCrops = fields.crops;
+            let DataIrrigations = [];
+            let RUmax = 0, effPluie = 0, effIrrig = 0, irrigArea = 0, ruPratique = 0;
+            let dosePercentage = 100;
+            let dataCrop = {};
+            let days = 0;
+            let latField = fields.Latitude;
+            let lonField = fields.Longitude;
+            let dataCalcul = [];
+            let inputs = [];
+            let plantingDate = "";
+            let profondeur = 0;
+            let zoneData = [];
+
+            // Zone
+            if (fields.zones.length > 0) {
+                let soilsData = fields.zones;
+                for (let soils of soilsData) {
+                    RUmax = Number(soils.RUmax);
+                    effPluie = Number(soils.effPluie);
+                    irrigArea = Number(soils.irrigArea);
+                    zoneData.push({
+                        ruPratique: ruPratique,
+                        RUmax: RUmax,
+                        effIrrig: effIrrig,
+                        effPluie: effPluie,
+                        irrigArea: irrigArea,
+                    });
+                }
+            }
+
+            // Crops
+            if (fields.crops.length > 0) {
+                DataIrrigations = DataCrops.map(data => data.irrigations);
+                
+                let cropsData = fields.crops;
+                for (let crops of cropsData) {
+                    days = Number(crops.days);
+                    profondeur = Number(crops.rootDepth);
+                    plantingDate = crops.plantingDate;
+                    ruPratique = Number(crops.practical_fraction);
+                    dataCrop = crops.croptypes;
+                    if (crops.varieties) {
+                        dataCrop = crops.varieties;
+                    }
+                    if (crops.dose_efficiency) {
+                        dosePercentage = Number(crops.dose_efficiency);
+                    }
+                    console.log(crops.croptypes);
+                }
+
+                for (let data of DataCrops) {
+                    let irrigData = data.irrigations;
+                    for (let irrig of irrigData) {
+                        if (irrig.effIrrig) {
+                            effIrrig = Number(irrig.effIrrig);
+                        }
+                    }
+                }
+            }
+
+            // Check if sensors exist
+            // if (fields.sensors && fields.sensors.length > 0) {
+                let farmId = fields.farm_id;
+                const farm = await new Farm({ 'id': farmId }).fetch({ require: false });
+                let city_id = farm ? farm.toJSON().city_id : "";
+
+                let rainConfig = await getRainFromConfig(city_id);
+
+            //     for (let sensors of fields.sensors) {
+            //         let codeSensor = sensors.code;
+            //         let user_id = sensors.user_id;
+            //         if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
+            //             let key = fields.id;
+            //             let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, codeSensor);
+
+            //             dataCalcul.push({
+            //                 user_id: user_id,
+            //                 field_id: key,
+            //                 sensor_id: sensors.id,
+            //                 sensor_code: sensors.code,
+            //                 resultCalcul: resultCalcul
+            //             });
+
+            //             if (resultCalcul.length > 0) {
+            //                 const dateStart = new Date();
+            //                 const dateEnd = new Date(dateStart.getTime());
+            //                 dateEnd.setDate(dateEnd.getDate() + 7);
+            //                 inputs.push({
+            //                     ruPratique: ruPratique,
+            //                     RUmax: RUmax,
+            //                     effPluie: effPluie,
+            //                     effIrrig: effIrrig,
+            //                     irrigArea: irrigArea,
+            //                     profondeur: profondeur,
+            //                     plantingDate: plantingDate
+            //                 });
+
+            //                 let calcData = {
+            //                     user_id: user_id,
+            //                     field_id: sensors.field_id,
+            //                     sensor_id: sensors.id,
+            //                     sensor_code: codeSensor,
+            //                     start_date: dateStart,
+            //                     end_date: dateEnd,
+            //                     result: resultCalcul,
+            //                     inputs: inputs
+            //                 };
+            //                 allCalculations.push(calcData);
+            //                 await new CalculSensor()
+            //                                     .query((qb) => {
+            //                                         qb.select('*');
+            //                                         qb.where({ sensor_id: sensors.id });
+            //                                     }).fetchAll({ require: false })
+            //                                     .then(async dataFromCalcul => {
+            //                                         let r = JSON.parse(JSON.stringify(dataFromCalcul))
+            //                                         if (r.length > 0) {
+
+            //                                             await new CalculSensor({ user_id: user_id, field_id: sensors.field_id, sensor_id: sensors.id, sensor_code: codeSensor, start_date: dateStart, end_date: dateEnd, result: resultCalcul, inputs: inputs }).save()
+            //                                         }
+            //                                         if (r.length == 0) {
+            //                                             await new CalculSensor({ user_id: user_id, field_id: sensors.field_id, sensor_id: sensors.id, sensor_code: codeSensor, start_date: dateStart, end_date: dateEnd, result: resultCalcul, inputs: inputs }).save()
+            //                                         }
+            //                                     }).catch(err => {
+            //                                         console.log(err)
+            //                                         return res.status(500).json({ type: "danger", message: "error_select_calcul" });
+
+            //                                     })
+            //             }
+            //         }
+            //     }
+            // } else { 
+                // If no sensors, still perform the calculation using default or minimal values
+                console.log(days);
+                if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
+                    let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
+                    if (resultCalcul.length > 0) {
+                        const dateStart = new Date();
+                        const dateEnd = new Date(dateStart.getTime());
+                        dateEnd.setDate(dateEnd.getDate() + 7);
+                        inputs.push({
+                            ruPratique: ruPratique,
+                            RUmax: RUmax,
+                            effPluie: effPluie,
+                            effIrrig: effIrrig,
+                            irrigArea: irrigArea,
+                            profondeur: profondeur,
+                            plantingDate: plantingDate
+                        });
+
+                        let calcData = {
+                            user_id: userId,
+                            field_id: fields.id,
+                            sensor_id: null,
+                            sensor_code: null,
+                            start_date: dateStart,
+                            end_date: dateEnd,
+                            result: resultCalcul,
+                            inputs: inputs
+                        };
+                        console.log(resultCalcul)
+                        allCalculations.push(calcData);
+                        await new CalculSensor(calcData).save();
+                    }
+                }
+            }
+        // }
+        if (allCalculations.length > 0) {
+            return res.status(201).json({data : allCalculations});
+        } else {
+            return res.status(200).json({ type: "success", message: "ok" });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ type: "danger", message: "error_calcul" });
+    }
+};
+
+
+
+const EditBilanHydriqueByField = async (req, res) => {
+    const errors = validationResult(req);
+    const { fieldId , RUmax , effPluie , effIrrig , irrigArea , ruPratique ,profondeur } = req.body;
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    const allowedStartTime = new Date();
+    allowedStartTime.setHours(2, 0, 0, 0);
+    const allowedEndTime = new Date();
+    allowedEndTime.setHours(3, 0, 0, 0);
+    const today = new Date();
+
+    // Uncomment this section if you want to restrict execution to Mondays only
+    // if (today.getDay() !== 1 || today !== allowedStartTime) {
+    //     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+    // }
+
+    console.log(fieldId);
+    try {
+        const field = await new Field({ 'id': fieldId })
+            .query(qb => qb.where('deleted_at', null).and.whereNotNull('Latitude').and.whereNotNull('Longitude'))
+            .fetch({
+                withRelated: [
+                    { 'sensors': qb => { qb.where('deleted_at', null).andWhere('synchronized', "1"); } },
+                    { 'crops': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.irrigations': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.croptypes': qb => { qb.where('deleted_at', null); } },
+                    { 'crops.varieties': qb => { qb.where('deleted_at', null); } },
+                    { 'zones': qb => { qb.where('deleted_at', null); } }
+                ],
+                require: false
+            });
+
+        if (field === null) {
+            return res.status(404).json({ type: "danger", message: "no_fields" });
+        }
+
+        let data = JSON.parse(JSON.stringify(field));
+        let allCalculations = [];
+
+        for (let fields of [data]) {
+            let DataCrops = fields.crops;
+            let DataIrrigations = [];
+            let dosePercentage = 100;
+            let dataCrop = {};
+            let days = 0;
+            let latField = fields.Latitude;
+            let lonField = fields.Longitude;
+            let dataCalcul = [];
+            let inputs = [];
+            let plantingDate = "";
+            let zoneData = [];
+
+            // Zone
+            if (fields.zones.length > 0) {
+                let soilsData = fields.zones;
+                    zoneData.push({
+                        ruPratique: ruPratique,
+                        RUmax: RUmax,
+                        effIrrig: effIrrig,
+                        effPluie: effPluie,
+                        irrigArea: irrigArea,
+                    });
+                
+            }
+
+            // Crops
+            if (fields.crops.length > 0) {
+                DataIrrigations = DataCrops.map(data => data.irrigations);
+
+                let cropsData = fields.crops;
+                for (let crops of cropsData) {
+                    days = Number(crops.days);
+                    plantingDate = crops.plantingDate;
+                    dataCrop = crops.croptypes;
+                    if (crops.varieties) {
+                        dataCrop = crops.varieties;
+                    }
+                    if (crops.dose_efficiency) {
+                        dosePercentage = Number(crops.dose_efficiency);
+                    }
+                }
+            }
+
+            if (fields.sensors && fields.sensors.length > 0) {
+                let farmId = fields.farm_id;
+                const farm = await new Farm({ 'id': farmId }).fetch({ require: false });
+                let city_id = farm ? farm.toJSON().city_id : "";
+
+                let rainConfig = await getRainFromConfig(city_id);
+
+                for (let sensors of fields.sensors) {
+                    let codeSensor = sensors.code;
+                    let user_id = sensors.user_id;
+                    if (codeSensor && dataCrop && Object.keys(dataCrop).length > 0 && dataCrop.all_kc && days > 0 && latField && lonField) {
+                        let key = fields.id;
+                        let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, codeSensor);
+
+                        dataCalcul.push({
+                            user_id: user_id,
+                            field_id: key,
+                            sensor_id: sensors.id,
+                            sensor_code: sensors.code,
+                            resultCalcul: resultCalcul
+                        });
+
+                        if (resultCalcul.length > 0) {
+                            const dateStart = new Date();
+                            const dateEnd = new Date(dateStart.getTime());
+                            dateEnd.setDate(dateEnd.getDate() + 7);
+                            inputs.push({
+                                ruPratique: ruPratique,
+                                RUmax: RUmax,
+                                effPluie: effPluie,
+                                effIrrig: effIrrig,
+                                irrigArea: irrigArea,
+                                profondeur: profondeur,
+                                plantingDate: plantingDate
+                            });
+
+                            let calcData = {
+                                user_id: user_id,
+                                field_id: sensors.field_id,
+                                sensor_id: sensors.id,
+                                sensor_code: codeSensor,
+                                start_date: dateStart,
+                                end_date: dateEnd,
+                                result: resultCalcul,
+                                inputs: inputs
+                            };
+
+                            allCalculations.push(calcData);
+
+                            // await new CalculSensor()
+                            //     .query(qb => {
+                            //         qb.select('*');
+                            //         qb.where({ sensor_id: sensors.id });
+                            //     })
+                            //     .fetchAll({ require: false })
+                            //     .then(async dataFromCalcul => {
+                            //         let existingCalcs = JSON.parse(JSON.stringify(dataFromCalcul));
+                            //         if (existingCalcs.length > 0) {
+                            //             // Return immediately if there are existing calculations
+                            //             return res.status(201).json(calcData);
+                            //         } else {
+                            //             // Save new calculations
+                            //             // Uncomment and use this if you want to save the new calculation
+                            //             // await new CalculSensor(calcData).save();
+                            //         }
+                            //     })
+                            //     .catch(err => {
+                            //         console.error(err);
+                            //         return res.status(500).json({ type: "danger", message: "error_select_calcul" });
+                            //     });
+                        }
+                    }
+                }
+            }
+        }
+
+        if (allCalculations.length > 0) {
+            return res.status(201).json({data : allCalculations});
+        } else {
+            return res.status(200).json({ type: "success", message: "ok" });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ type: "danger", message: "error_calcul" });
+    }
+};
 
 
 const sendSMStoUsers = async (phoneNumber, irrigNumber, irrigDates, irrigTime) => {
@@ -1475,7 +2064,8 @@ const sendSMStoUsers = async (phoneNumber, irrigNumber, irrigDates, irrigTime) =
     //         }
 
     //    } 
-    let message = `Il est recommandé de répartir les besoins en eau de votre parcelle sur ${irrigNumber} fois par semaine. Pour la prochaine irrigation, prévoyez les dates suivantes : ${irrigDates.join(", ")} pendant ${irrigationDuration} minutes.`
+    // let message = `Il est recommandé de répartir les besoins en eau de votre parcelle sur ${irrigNumber} fois par semaine. Pour la prochaine irrigation, prévoyez les dates suivantes : ${irrigDates.join(", ")} pendant ${irrigationDuration} minutes.`
+    let message = `Nous vous remercions de votre confiance. Nous vous enverrons bientôt un SMS avec le planning d'arrosage de votre ferme. Merci de votre patience et de votre compréhension.`
     // .في الأسبوع ${arIrrigNumber()} يُنصَح بتوزيع الاحتياجات المائية لقطعة الأرض الخاصة بك   
     // دقيقة ${irrigTime} لمدة ${irrigDate} للري القادم، قم بالتخطيط له في
     try {
@@ -1526,95 +2116,70 @@ const sendSMStoSelectedUser = async (req, res) => {
 
 
 const getCalculSensor = async (req, res) => {
-    if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
-    const uid = req.userUid;
-    let userRole = ""
-    let sensorCode = req.params.sensorCode
+    if (!req.userUid || req.userUid === "") {
+        return res.status(404).json({ type: "danger", message: "no_user" });
+    }
 
-    let user_id = ''
+    const uid = req.userUid;
+    const sensorCode = req.params.sensorCode || ""; // Default to empty string if not provided
+    let user_id = '';
+    let userRole = '';
+
     try {
         const user = await new User({ 'uid': uid, 'deleted_at': null })
-            .fetch({ require: false })
-            .then(async result => {
-                if (result === null) return res.status(404).json({ type: "danger", message: "no_user" });
-                if (result) user_id = result.get("id");
-                if (result) userRole = result.get("role")
-            });
-        if (userRole === "ROLE_ADMIN") {
-            await new CalculSensor()
-                .query((qb) => {
-                    qb.select('*');
-                    qb.where({ sensor_code: sensorCode });
-                    // qb.where({ user_id: user_id });
-                })
-                .fetchAll({ require: false })
-                .then(async result => {
-                    if (result === null) return res.status(404).json({ type: "danger", message: "no_user_calcul" });
-                    let resultCalcul = JSON.parse(JSON.stringify(result))
-                    let todayDate = new Date()
-                    let today = todayDate.toISOString().slice(0, 10)
-                    let filteredResult = [];
-                    let inputsCalcul = [];
+            .fetch({ require: false });
 
-                    resultCalcul.map(calcul => {
-                        let startDate = new Date(calcul.start_date).toISOString().slice(0, 10)
-                        let endDate = new Date(calcul.end_date).toISOString().slice(0, 10)
-                        let resultCalcul = calcul.result
-                        inputsCalcul = calcul.inputs
-                        if (today >= startDate && today <= endDate) {
-                            filteredResult = resultCalcul.filter(result => {
-                                let resultDate = new Date(result.date).toISOString().slice(0, 10)
-                                return startDate <= resultDate && endDate >= resultDate && result.codeSensor == sensorCode
-                            })
-                        }
-                    })
-                    return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul });
-                }).catch(err => {
-                    console.log(err)
-                    return res.status(500).json({ type: "danger", message: "error_get_calcul" });
-                })
-
+        if (user === null) {
+            return res.status(404).json({ type: "danger", message: "no_user" });
         }
-        if (userRole === "ROLE_USER") {
-            await new CalculSensor()
-                .query((qb) => {
-                    qb.select('*');
-                    qb.where({ sensor_code: sensorCode });
-                    qb.where({ user_id: user_id });
-                })
-                .fetchAll({ require: false })
-                .then(async result => {
-                    if (result === null) return res.status(404).json({ type: "danger", message: "no_user_calcul" });
-                    let resultCalcul = JSON.parse(JSON.stringify(result))
-                    let todayDate = new Date()
-                    let today = todayDate.toISOString().slice(0, 10)
-                    let filteredResult = [];
-                    let inputsCalcul = [];
 
-                    resultCalcul.map(calcul => {
-                        let startDate = new Date(calcul.start_date).toISOString().slice(0, 10)
-                        let endDate = new Date(calcul.end_date).toISOString().slice(0, 10)
-                        let resultCalcul = calcul.result
-                        inputsCalcul = calcul.inputs
-                        if (today >= startDate && today <= endDate) {
-                            filteredResult = resultCalcul.filter(result => {
-                                let resultDate = new Date(result.date).toISOString().slice(0, 10)
-                                return startDate <= resultDate && endDate >= resultDate && result.codeSensor == sensorCode
-                            })
-                        }
-                    })
-                    return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul });
-                }).catch(err => {
-                    console.log(err)
-                    return res.status(500).json({ type: "danger", message: "error_get_calcul" });
-                })
+        user_id = user.get("id");
+        userRole = user.get("role");
 
+        const query = new CalculSensor().query((qb) => {
+            qb.select('*');
+            if (sensorCode) {
+                qb.where({ sensor_code: sensorCode });
+            }
+            if (userRole === "ROLE_USER") {
+                qb.where({ user_id: user_id });
+            }
+        });
+
+        const result = await query.fetchAll({ require: false });
+
+        if (result === null || result.length === 0) {
+            return res.status(404).json({ type: "danger", message: "no_user_calcul" });
         }
+
+        let resultCalcul = JSON.parse(JSON.stringify(result));
+        let todayDate = new Date();
+        let today = todayDate.toISOString().slice(0, 10);
+        let filteredResult = [];
+        let inputsCalcul = [];
+
+        resultCalcul.forEach(calcul => {
+            let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
+            let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
+            inputsCalcul = calcul.inputs;
+
+            if (today >= startDate && today <= endDate) {
+                filteredResult = calcul.result.filter(result => {
+                    let resultDate = new Date(result.date).toISOString().slice(0, 10);
+                    return startDate <= resultDate && endDate >= resultDate && (sensorCode === "" || result.codeSensor === sensorCode);
+                });
+            }
+        });
+
+        return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul });
+
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.status(500).json({ type: "danger", message: "error_user" });
     }
-}
+};
+
+
 
 const getAllCalculByUser = async (req, res) => {
     if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
@@ -1741,7 +2306,7 @@ const getAllCalculByField = async (req, res) => {
                     })
 
                 })
-                return res.status(201).json({ calcul: resultCalcul, inputs: inputsCalcul });
+                return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul });
             }).catch(err => {
                 console.log(err)
                 return res.status(500).json({ type: "danger", message: "error_get_calcul" });
@@ -1882,5 +2447,5 @@ const getReportsByField = async (req, res) => {
 }
 
 
-module.exports = { calculBilanHydrique, getCalculSensor, addCalculSensorRecommnd, generatePDF, createBulletin, sendSMStoUsers, getReportsByField, sendSMStoSelectedUser, getAllCalculByUser, getAllCalculByField }
+module.exports = { calculBilanHydrique, getCalculSensor, addCalculSensorRecommnd, generatePDF, createBulletin, sendSMStoUsers, getReportsByField, sendSMStoSelectedUser, getAllCalculByUser, getAllCalculByField , calculBilanHydriqueByField ,EditBilanHydriqueByField}
 

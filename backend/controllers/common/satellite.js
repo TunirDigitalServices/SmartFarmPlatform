@@ -2,7 +2,8 @@ const User = require('../../models/User.js');
 const Field = require('../../models/Field.js');
 const SatelliteImage = require('../../models/Satelliteimage.js');
 const SatelliteData = require('../../models/SatelliteData.js');
-
+const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 
 
@@ -112,16 +113,29 @@ const getSatelliteImages = async (req,res) => {
 } 
 
 
-const getSatelliteImageById = async (req,res) => {
-    try {
-        
-    } catch (error) {
-        
+const getSatelliteImagesUrls = async (req, res) => {
+    const { userId, fieldId, date } = req.params;
+    const folderPath = path.join(__dirname, '../../docs', `user_${userId}`, `field_${fieldId}`, date);
+        console.log(folderPath)
+    // Check if the folder for the provided user ID, field ID, and date exists
+    if (!fs.existsSync(folderPath)) {
+        return res.status(404).json({ message: "No images found for the provided parameters" });
     }
-} 
+
+    try {
+        // Read the files in the folder
+        const fileNames = fs.readdirSync(folderPath);
+
+        // Send the image files as a response
+        return res.status(200).json({ message: "Success", imagesData: fileNames });
+    } catch (error) {
+        console.error("Error reading folder contents:", error);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+}
 
 
 
 
 
-module.exports = {addSatelliteImages , getSatelliteImages , getSatelliteImageById}
+module.exports = {addSatelliteImages , getSatelliteImages , getSatelliteImagesUrls}

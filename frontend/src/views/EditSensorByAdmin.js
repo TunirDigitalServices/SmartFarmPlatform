@@ -9,8 +9,7 @@ import swal from 'sweetalert';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 
-const EditSensorByAdmin = (props) => {
-  // const { lastDataTime, formattedTime, sensorState } = props.location;
+const EditSensorByAdmin = () => {
 
   const params = useParams()
   let id = params.id
@@ -236,7 +235,7 @@ const EditSensorByAdmin = (props) => {
   }
 
 
-
+  console.log(location)
   return (
     <Container fluid className="main-content-container px-4">
       <Link to='/admin/sensors'> Go back</Link>

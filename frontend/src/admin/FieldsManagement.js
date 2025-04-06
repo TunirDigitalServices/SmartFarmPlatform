@@ -14,6 +14,7 @@ import SummarizeIcon from '@mui/icons-material/Summarize';
 import HistoryIcon from '@mui/icons-material/History';
 import PreviewIcon from '@mui/icons-material/Preview';
 import DownloadIcon from '@mui/icons-material/Download';
+import CalculateIcon from '@mui/icons-material/Calculate';
 import AddIcon from '@mui/icons-material/Add';
 import Pagination from '../views/Pagination';
 
@@ -32,6 +33,7 @@ const FieldsManagement = () => {
   const [showRecomnd, setShowRecomnd] = useState(false);
   const [clicked,setClicked] = useState(false)
   const [isGenerated, setIsGenerated] = useState(false)
+  const [calculData, setCalculData] = useState(null)
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShowRecomnd = () => setShowRecomnd(true);
@@ -101,7 +103,24 @@ const FieldsManagement = () => {
       })
   }
 
+  const calculSimulation = async (fieldId,userId) => {
+    try {
+      const response = await api.post('/admin/field-sensor-calcul',{fieldId,userId});
+      const data = await response.data.data; 
+      if (data && data.length > 0) {
+        history.push({
+          pathname: `/admin/calcul-fields/${fieldId}`,
+          state: { calculData: data } 
+        });
+      } else {
+        console.error('No data found');
+      }
+      setCalculData(data); 
+    } catch (error) {
+      console.log(error)
+    }
 
+  }
 
   useEffect(() => {
     getFields()
@@ -235,6 +254,10 @@ const FieldsManagement = () => {
             <Button size="small" variant="contained" disabled={isGenerated} onClick={() => generateReport()} endIcon={<AddIcon />}> Generate Reports</Button>
 
           </Col>
+          {/* <Col lg="3" md="12" sm="12">
+            <Button size="small" variant="contained" disabled={''} onClick={''} endIcon={<AddIcon />}> Test Calcul</Button>
+
+          </Col> */}
         </Row>
         <Card>
           <table className="table mb-0 text-center table-responsive-lg table-hover table-bordered">
@@ -243,6 +266,8 @@ const FieldsManagement = () => {
                 <th scope="col" className="border-0">{t('user')}</th>
 
                 <th scope="col" className="border-0">{t('farms')}</th>
+                <th scope="col" className="border-0">{t('fields')}</th>
+
                 <th scope="col" className="border-0">{t('crop_type')}</th>
                 <th scope="col" className="border-0">{t('crop_variety')}</th>
                 <th scope="col" className="border-0">{t('sensor_code')}</th>
@@ -250,6 +275,7 @@ const FieldsManagement = () => {
                 <th scope="col" className="border-0">{t('History')}</th>
                 <th scope="col" className="border-0">{t('Reports')}</th>
                 <th scope="col" className="border-0">{t('Recommandations')}</th>
+                <th scope="col" className="border-0">{t('Water Balance Simulation')}</th>
 
 
               </tr>
@@ -277,6 +303,7 @@ const FieldsManagement = () => {
                   farms && farms.map(farm => {
                     if (farm.id === field.farm_id) {
                       farmName = farm.name
+                      userId = farm.user_id;
                     }
 
                   })
@@ -286,16 +313,16 @@ const FieldsManagement = () => {
                       sensorCode = sensor.code
                     }
                   })
-                  const farm = farms.find((farm) => farm.id === field.farm_id);
-                  if (farm) {
-                    farmName = farm.name;
-                    userId = farm.user_id;
-                  }
+                  // const farm = farms.find((farm) => farm.id === field.farm_id);
+                  // console.log(farm)
+                  // if (farm) {
+                  //   farmName = farm.name;
+                  // }
                   return (
                     <tr key={field.id}>
                       <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{getUserName(userId)}</td>
                       <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{farmName}</td>
-                      {/* <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{field.name}</td> */}
+                      <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{field.name}</td>
                       <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{croptype}</td>
                       <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{variety}</td>
                       <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{sensorCode}</td>
@@ -319,6 +346,11 @@ const FieldsManagement = () => {
                         <IconButton onClick={() => getSingleFieldRecmnds(field.id, userId)}><SmsIcon /></IconButton>
 
                       </td>
+                      <td>
+
+                        <IconButton onClick={() => calculSimulation(field.id)}><CalculateIcon /></IconButton>
+
+                        </td>
                     </tr>
                   )
                 })
