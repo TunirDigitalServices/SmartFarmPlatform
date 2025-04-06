@@ -17,7 +17,7 @@ COPY . .
 RUN chmod -R 755 /app
 
 # Build the React app for production
-RUN npm run build
+RUN npm run build:prod
 
 # Install serve to serve the build folder
 RUN npm install -g serve
