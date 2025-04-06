@@ -1,0 +1,718 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model calcul_sensor {
+  id          Int       @id @default(autoincrement())
+  user_id     Int?      @db.UnsignedInt
+  sensor_id   Int?      @db.UnsignedInt
+  field_id    Int       @db.UnsignedInt
+  deleted_at  DateTime? @db.Timestamp(0)
+  created_at  DateTime  @default(now()) @db.Timestamp(0)
+  updated_at  DateTime  @default(now()) @db.Timestamp(0)
+  sensor_code String?   @db.VarChar(255)
+  result      Json
+  inputs      Json
+  start_date  DateTime  @db.Date
+  end_date    DateTime  @db.Date
+  field       field     @relation(fields: [field_id], references: [id], onUpdate: Restrict, map: "calcul_sensor_field_id_foreign")
+  sensor      sensor?   @relation(fields: [sensor_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "calcul_sensor_sensor_id_foreign")
+  users       users?    @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "calcul_sensor_user_id_foreign")
+
+  @@index([field_id], map: "calcul_sensor_field_id_foreign")
+  @@index([sensor_id], map: "calcul_sensor_sensor_id_foreign")
+  @@index([user_id], map: "calcul_sensor_user_id_foreign")
+}
+
+model cities_weather {
+  id                Int                        @id @default(autoincrement()) @db.UnsignedInt
+  city_id           Int?                       @db.UnsignedInt
+  year              String?                    @db.VarChar(255)
+  weather_data      Json?
+  weather_data_days Json?
+  is_default        cities_weather_is_default? @default(dbgenerated("0"))
+  rain_data         Json?
+  created_at        DateTime?                  @default(now()) @db.Timestamp(0)
+  deleted_at        DateTime?                  @db.Timestamp(0)
+  updated_at        DateTime?                  @db.Timestamp(0)
+
+  @@index([city_id], map: "cities_weather_city_id_foreign")
+}
+
+model countries {
+  id   Int     @id @default(autoincrement())
+  name String? @db.VarChar(44)
+  iso  String? @db.VarChar(2)
+}
+
+model crop {
+  id                 Int          @id @default(autoincrement()) @db.UnsignedInt
+  uid                String       @default(dbgenerated("(uuid())")) @db.Char(36)
+  field_id           Int          @db.UnsignedInt
+  croptype_id        Int          @db.UnsignedInt
+  previous_type      String?      @db.VarChar(255)
+  growth_date_start  DateTime?    @db.Timestamp(0)
+  growth_date_end    DateTime?    @db.Timestamp(0)
+  ggd_maturity       String?      @db.VarChar(255)
+  days               String?      @db.VarChar(255)
+  growingDate        String?      @db.VarChar(255)
+  plantingDate       String?      @db.VarChar(255)
+  rootDepth          String?      @db.VarChar(255)
+  practical_fraction String?      @db.VarChar(255)
+  density            String?      @db.VarChar(255)
+  ecart_inter        String?      @db.VarChar(255)
+  ecart_intra        String?      @db.VarChar(255)
+  dose_efficiency    String?      @db.VarChar(255)
+  surface            String?      @db.VarChar(255)
+  crop_variety_id    String?      @db.VarChar(255)
+  address            String?      @db.VarChar(255)
+  created_at         DateTime?    @default(now()) @db.Timestamp(0)
+  deleted_at         DateTime?    @db.Timestamp(0)
+  zone_id            Int?         @db.UnsignedInt
+  field              field        @relation(fields: [field_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "crop_field_id_foreign")
+  croptype           croptype     @relation(fields: [croptype_id], references: [id], onUpdate: Restrict, map: "crop_type_id_foreign")
+  zone               zone?        @relation(fields: [zone_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "crop_zone_id_foreign")
+  irrigation         irrigation[]
+
+  @@index([field_id], map: "crop_field_id_foreign")
+  @@index([croptype_id], map: "crop_type_id_foreign")
+  @@index([crop_variety_id], map: "crop_variety_id_foreign")
+  @@index([zone_id], map: "crop_zone_id_foreign")
+}
+
+model crop_variety {
+  id            Int       @id @default(autoincrement())
+  crop_variety  String?   @db.VarChar(255)
+  crop_id       Int?
+  init          String?   @db.VarChar(255)
+  dev           String?   @db.VarChar(255)
+  mid           String?   @db.VarChar(255)
+  late          String?   @db.VarChar(255)
+  total         String?   @db.VarChar(255)
+  kc_init       String?   @db.VarChar(255)
+  kc_dev        String?   @db.VarChar(255)
+  kc_mid        String?   @db.VarChar(255)
+  kc_late       String?   @db.VarChar(255)
+  all_kc        Json?
+  plant_date    DateTime? @db.Date
+  root_min      String?   @db.VarChar(255)
+  root_max      String?   @db.VarChar(255)
+  variety_ar    String?   @db.VarChar(255)
+  variety_en    String?   @db.VarChar(255)
+  variety_photo String?   @db.VarChar(255)
+  deleted_at    DateTime? @db.Timestamp(0)
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
+
+  @@index([crop_id], map: "crop_variety_crop_id_foreign")
+}
+
+model croptype {
+  id                 Int       @id @default(autoincrement()) @db.UnsignedInt
+  uid                String    @default(dbgenerated("(uuid())")) @db.Char(36)
+  crop               String?   @db.VarChar(255)
+  crop_variety       String?   @db.VarChar(255)
+  practical_fraction String?   @db.VarChar(255)
+  init               String?   @db.VarChar(255)
+  dev                String?   @db.VarChar(255)
+  mid                String?   @db.VarChar(255)
+  late               String?   @db.VarChar(255)
+  total              String?   @db.VarChar(255)
+  kc_init            String?   @db.VarChar(255)
+  kc_dev             String?   @db.VarChar(255)
+  kc_mid             String?   @db.VarChar(255)
+  kc_late            String?   @db.VarChar(255)
+  all_kc             Json?
+  plant_date         DateTime? @db.Date
+  root_min           String?   @db.VarChar(255)
+  root_max           String?   @db.VarChar(255)
+  temperature        String?   @db.VarChar(255)
+  hours              String?   @db.VarChar(255)
+  crop_ar            String?   @db.VarChar(255)
+  crop_en            String?   @db.VarChar(255)
+  crop_photo         String?   @db.VarChar(255)
+  created_at         DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at         DateTime? @db.Timestamp(0)
+  crops              crop[]
+}
+
+model data_mapping {
+  id          Int       @id @default(autoincrement())
+  max         Json?
+  min         Json?
+  date        Json?
+  frequency   String?   @db.VarChar(255)
+  simNumber   String?   @db.VarChar(255)
+  simIdentify String?   @db.VarChar(255)
+  created_at  DateTime  @default(now()) @db.Timestamp(0)
+  updated_at  DateTime  @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime? @db.Timestamp(0)
+  sensor_id   Int?
+}
+
+model datasensor {
+  id              Int       @id @default(autoincrement()) @db.UnsignedInt
+  uid             String    @default(dbgenerated("(uuid())")) @db.Char(36)
+  sensor_id       Int?      @db.UnsignedInt
+  user_id         Int?      @db.UnsignedInt
+  field_id        Int?      @db.UnsignedInt
+  time            DateTime? @db.Timestamp(0)
+  code            String    @db.VarChar(255)
+  temperature     String    @db.VarChar(255)
+  humidity        String    @db.VarChar(255)
+  pressure        String    @db.VarChar(255)
+  altitude        String    @db.VarChar(255)
+  mv1             String    @db.VarChar(255)
+  mv2             String    @db.VarChar(255)
+  mv3             String    @db.VarChar(255)
+  charge          String    @db.VarChar(255)
+  adc             String    @db.VarChar(255)
+  ts              String    @db.VarChar(255)
+  solar_radiation Json?
+  evapo           Json?
+  created_at      DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at      DateTime? @db.Timestamp(0)
+  updated_at      DateTime? @db.Timestamp(0)
+  sensor          sensor?   @relation(fields: [sensor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "datasensor_sensor_id_foreign")
+
+  @@index([field_id], map: "datasensor_field_id_foreign")
+  @@index([sensor_id], map: "datasensor_sensor_id_foreign")
+  @@index([user_id], map: "datasensor_user_id_foreign")
+}
+
+model equipment {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  uid        String     @default(dbgenerated("(uuid())")) @db.Char(36)
+  name       String?    @db.VarChar(255)
+  code       String     @db.VarChar(255)
+  farm_id    Int?       @db.UnsignedInt
+  user_id    Int?       @db.UnsignedInt
+  created_at DateTime?  @default(now()) @db.Timestamp(0)
+  deleted_at DateTime?  @db.Timestamp(0)
+  nbr_relays Int?
+  farm       farm?      @relation(fields: [farm_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "equipment_farm_id_foreign")
+  users      users?     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "equipment_user_id_foreign")
+  planning   planning[]
+  relays     relays[]
+
+  @@index([farm_id], map: "equipment_farm_id_foreign")
+  @@index([user_id], map: "equipment_user_id_foreign")
+}
+
+model events {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  field_id   Int       @db.UnsignedInt
+  dose       String?   @db.VarChar(255)
+  time       String?   @db.VarChar(255)
+  start      String?   @db.VarChar(255)
+  end        String?   @db.VarChar(255)
+  title      String?   @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at DateTime? @db.Timestamp(0)
+
+  @@index([field_id], map: "events_field_id_foreign")
+}
+
+model farm {
+  id          Int         @id @default(autoincrement()) @db.UnsignedInt
+  uid         String      @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id     Int         @db.UnsignedInt
+  name        String      @db.VarChar(255)
+  name_group  String?     @db.VarChar(255)
+  description String?     @db.Text
+  city_id     Int?        @db.UnsignedInt
+  address     String?     @db.VarChar(255)
+  created_at  DateTime?   @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime?   @db.Timestamp(0)
+  Latitude    String?     @db.VarChar(255)
+  Longitude   String?     @db.VarChar(255)
+  map_link    String?     @db.VarChar(600)
+  coordinates String?     @db.Text
+  equipment   equipment[]
+  users       users       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "farm_user_id_foreign")
+  field       field[]
+
+  @@index([city_id], map: "farm_city_id_foreign")
+  @@index([user_id], map: "farm_user_id_foreign")
+}
+
+model field {
+  id            Int             @id @default(autoincrement()) @db.UnsignedInt
+  uid           String          @default(dbgenerated("(uuid())")) @db.Char(36)
+  farm_id       Int             @db.UnsignedInt
+  name          String          @db.VarChar(255)
+  description   String?         @db.Text
+  address       String?         @db.VarChar(255)
+  Latitude      String?         @db.VarChar(255)
+  Longitude     String?         @db.VarChar(255)
+  coordinates   String?         @db.Text
+  longueur      String?         @db.VarChar(255)
+  largeur       String?         @db.VarChar(255)
+  created_at    DateTime?       @default(now()) @db.Timestamp(0)
+  deleted_at    DateTime?       @db.Timestamp(0)
+  status        String          @default("Optimal") @db.VarChar(255)
+  calcul_sensor calcul_sensor[]
+  crop          crop[]
+  farm          farm            @relation(fields: [farm_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "field_farm_id_foreign")
+  sensor        sensor[]
+  zone          zone[]
+
+  @@index([farm_id], map: "field_farm_id_foreign")
+}
+
+model irrigation {
+  id                Int             @id @default(autoincrement()) @db.UnsignedInt
+  uid               String          @default(dbgenerated("(uuid())")) @db.Char(36)
+  crop_id           Int?            @db.UnsignedInt
+  address           String?         @db.VarChar(255)
+  created_at        DateTime?       @default(now()) @db.Timestamp(0)
+  deleted_at        DateTime?       @db.Timestamp(0)
+  type              irrigation_type
+  zone_id           Int             @db.UnsignedInt
+  name              String?         @db.VarChar(255)
+  effIrrig          String?         @db.VarChar(255)
+  pivot_shape       String?         @db.VarChar(25)
+  irrigation_syst   String?         @db.VarChar(255)
+  lateral           String?         @db.VarChar(255)
+  irrigated_already String?         @db.VarChar(255)
+  flowrate          String?         @db.VarChar(255)
+  drippers          String?         @db.VarChar(255)
+  pumpType          String?         @db.VarChar(255)
+  drippers_spacing  String?         @db.VarChar(255)
+  pumpFlow          String?         @db.VarChar(255)
+  full_runtime      String?         @db.VarChar(255)
+  pivot_coord       String?         @db.VarChar(255)
+  pivot_length      String?         @db.VarChar(255)
+  lines_number      String?         @db.VarChar(255)
+  crop              crop?           @relation(fields: [crop_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "irrigation_crop_id_foreign")
+
+  @@index([crop_id], map: "irrigation_crop_id_foreign")
+  @@index([zone_id], map: "irrigation_zone_id_foreign")
+}
+
+model irrigationtype {
+  id          Int       @id @default(autoincrement())
+  irrigation  String?   @db.VarChar(255)
+  effIrrig    String?   @db.VarChar(255)
+  pivot_shape String?   @db.VarChar(255)
+  lateral     String?   @db.VarChar(255)
+  deleted_at  DateTime? @db.Timestamp(0)
+}
+
+model knex_migrations {
+  id             Int       @id @default(autoincrement()) @db.UnsignedInt
+  name           String?   @db.VarChar(255)
+  batch          Int?
+  migration_time DateTime? @db.Timestamp(0)
+}
+
+model knex_migrations_lock {
+  index     Int  @id @default(autoincrement()) @db.UnsignedInt
+  is_locked Int?
+}
+
+model lat_lon_cities {
+  id         Int       @id @default(autoincrement())
+  city       String?   @db.VarChar(255)
+  lat        String?   @db.VarChar(255)
+  lon        String?   @db.VarChar(255)
+  country    String?   @db.VarChar(255)
+  iso        String?   @db.VarChar(255)
+  ville      String?   @db.VarChar(255)
+  deleted_at DateTime? @db.Timestamp(0)
+
+  @@index([iso], map: "city_iso_foreign")
+}
+
+model notification {
+  id          Int                       @id @default(autoincrement()) @db.UnsignedInt
+  uid         String                    @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id     Int                       @db.UnsignedInt
+  object      String                    @db.VarChar(255)
+  description String                    @db.Text
+  type        String                    @db.Text
+  is_view     notification_is_view      @default(dbgenerated("0"))
+  mail_sended notification_mail_sended? @default(dbgenerated("0"))
+  created_at  DateTime?                 @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime?                 @db.Timestamp(0)
+  viewed_at   DateTime?                 @db.Timestamp(0)
+  users       users                     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notification_user_id_foreign")
+
+  @@index([user_id], map: "notification_user_id_foreign")
+}
+
+model planning {
+  id           Int        @id @default(autoincrement()) @db.UnsignedInt
+  uid          String     @default(dbgenerated("(uuid())")) @db.Char(36)
+  equipment_id Int?       @db.UnsignedInt
+  user_id      Int?       @db.UnsignedInt
+  start_date   DateTime   @db.Date
+  end_date     DateTime   @db.Date
+  days         Json
+  created_at   DateTime?  @default(now()) @db.Timestamp(0)
+  deleted_at   DateTime?  @db.Timestamp(0)
+  updated_at   DateTime?  @db.Timestamp(0)
+  equipment    equipment? @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "planning_equipment_id_foreign")
+
+  @@index([equipment_id], map: "planning_equipment_id_foreign")
+  @@index([user_id], map: "planning_user_id_foreign")
+}
+
+model questions {
+  id       Int    @id @default(autoincrement())
+  question String @db.VarChar(255)
+  answer   String @db.Text
+}
+
+model recommendation {
+  id          Int                   @id @default(autoincrement()) @db.UnsignedInt
+  uid         String                @default(dbgenerated("(uuid())")) @db.Char(36)
+  title       String                @db.VarChar(255)
+  description String?               @db.Text
+  message     String?               @db.Text
+  user_id     Int                   @db.UnsignedInt
+  farm_id     Int?                  @db.UnsignedInt
+  field_id    Int                   @db.UnsignedInt
+  calcul_id   Int?
+  created_at  DateTime?             @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime?             @db.Timestamp(0)
+  viewed      recommendation_viewed @default(dbgenerated("0"))
+  viewed_at   DateTime?             @db.Timestamp(0)
+  users       users                 @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "recommendation_user_id_foreign")
+
+  @@index([calcul_id], map: "recommendation_calcul_id_foreign")
+  @@index([field_id], map: "recommendation_field_id_foreign")
+  @@index([user_id], map: "recommendation_user_id_foreign")
+}
+
+model relays {
+  id           Int          @id @default(autoincrement()) @db.UnsignedInt
+  uid          String       @default(dbgenerated("(uuid())")) @db.Char(36)
+  port         String?      @db.VarChar(255)
+  name         String?      @db.VarChar(255)
+  state        relays_state @default(dbgenerated("0"))
+  equipment_id Int?         @db.UnsignedInt
+  user_id      Int?         @db.UnsignedInt
+  created_at   DateTime?    @default(now()) @db.Timestamp(0)
+  deleted_at   DateTime?    @db.Timestamp(0)
+  updated_at   DateTime?    @db.Timestamp(0)
+  equipment    equipment?   @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "relays_equipment_id_foreign")
+  users        users?       @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "relays_user_id_foreign")
+
+  @@index([equipment_id], map: "relays_equipment_id_foreign")
+  @@index([user_id], map: "relays_user_id_foreign")
+}
+
+model reports {
+  id         Int       @id @default(autoincrement())
+  field_id   Int?
+  user_id    Int?
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+  deleted_at DateTime? @db.Timestamp(0)
+  filename   String?   @db.VarChar(255)
+}
+
+model satellite_data {
+  id         Int       @id @default(autoincrement())
+  data       Json
+  polygon    Json
+  polygon_id String    @db.VarChar(255)
+  user_id    Int
+  field_id   Int
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+  deleted_at DateTime? @db.Timestamp(0)
+
+  @@index([field_id], map: "satellite_data_field_id_foreign")
+  @@index([user_id], map: "satellite_data_user_id_foreign")
+}
+
+model satellite_image {
+  id         Int       @id @default(autoincrement())
+  data       Json
+  polygon    Json
+  user_id    Int       @db.UnsignedInt
+  field_id   Int       @db.UnsignedInt
+  polygon_id String?   @db.VarChar(255)
+  deleted_at DateTime? @db.Timestamp(0)
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+
+  @@index([field_id], map: "satellite_image_field_id_foreign")
+  @@index([user_id], map: "satellite_image_user_id_foreign")
+}
+
+model sensor {
+  id            Int                  @id @default(autoincrement()) @db.UnsignedInt
+  uid           String               @default(dbgenerated("(uuid())")) @db.Char(36)
+  field_id      Int?                 @db.UnsignedInt
+  user_id       Int?                 @db.UnsignedInt
+  created_at    DateTime?            @default(now()) @db.Timestamp(0)
+  deleted_at    DateTime?            @db.Timestamp(0)
+  code          String               @db.VarChar(255)
+  is_deleted    sensor_is_deleted    @default(dbgenerated("1"))
+  zone_id       Int?                 @db.UnsignedInt
+  Latitude      String?              @db.VarChar(255)
+  Longitude     String?              @db.VarChar(255)
+  synchronized  sensor_synchronized? @default(dbgenerated("0"))
+  supplier_id   Int?                 @db.UnsignedInt
+  calcul_sensor calcul_sensor[]
+  datasensor    datasensor[]
+  field         field?               @relation(fields: [field_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sensor_field_id_foreign")
+  supplier      supplier?            @relation(fields: [supplier_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sensor_supplier_id_foreign")
+  users         users?               @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sensor_user_id_foreign")
+  zone          zone?                @relation(fields: [zone_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sensor_zone_id_foreign")
+
+  @@unique([code, is_deleted, deleted_at], map: "code")
+  @@index([field_id], map: "sensor_field_id_foreign")
+  @@index([supplier_id], map: "sensor_supplier_id_foreign")
+  @@index([user_id], map: "sensor_user_id_foreign")
+  @@index([zone_id], map: "sensor_zone_id_foreign")
+}
+
+model simulation {
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(255)
+  user_id        Int
+  croptype_id    Int
+  city_id        Int
+  soiltype_id    Int
+  cropvariety_id String?   @db.VarChar(255)
+  date           DateTime? @db.Date
+  result         Json?
+  inputs         Json?
+  created_at     DateTime  @default(now()) @db.Timestamp(0)
+  deleted_at     DateTime? @db.Timestamp(0)
+
+  @@index([city_id], map: "simulation_city_id_foreign")
+  @@index([croptype_id], map: "simulation_croptype_id_foreign")
+  @@index([cropvariety_id], map: "simulation_cropvariety_id_foreign")
+  @@index([soiltype_id], map: "simulation_soiltype_id_foreign")
+  @@index([user_id], map: "simulation_user_id_foreign")
+}
+
+model soiltype {
+  id                 Int       @id @default(autoincrement())
+  soil               String?   @db.VarChar(255)
+  fc                 String?   @db.VarChar(255)
+  pwp                String?   @db.VarChar(255)
+  taw                String?   @db.VarChar(255)
+  ru                 String?   @db.VarChar(255)
+  practical_fraction String?   @db.VarChar(255)
+  soil_ar            String?   @db.VarChar(255)
+  soil_en            String?   @db.VarChar(255)
+  soil_photo         String?   @db.VarChar(255)
+  rain_eff           String?   @db.VarChar(255)
+  deleted_at         DateTime? @db.Timestamp(0)
+}
+
+model subscription {
+  id          Int                    @id @default(autoincrement()) @db.UnsignedInt
+  uid         String                 @default(dbgenerated("(uuid())")) @db.Char(36)
+  user_id     Int                    @db.UnsignedInt
+  start       DateTime               @db.Timestamp(0)
+  end         DateTime               @db.Timestamp(0)
+  description String?                @db.Text
+  is_active   subscription_is_active @default(dbgenerated("1"))
+  created_at  DateTime?              @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime?              @db.Timestamp(0)
+  users       users                  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "subscription_user_id_foreign")
+
+  @@index([user_id], map: "subscription_user_id_foreign")
+}
+
+model supplier {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  uid        String    @default(dbgenerated("(uuid())")) @db.Char(36)
+  name       String    @db.VarChar(255)
+  email      String?   @db.VarChar(255)
+  address    String    @db.VarChar(255)
+  city       String    @db.VarChar(255)
+  country    String    @db.VarChar(255)
+  tel        String?   @db.VarChar(255)
+  tel_mobile String    @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at DateTime? @db.Timestamp(0)
+  sensor     sensor[]
+  users      users[]
+}
+
+model timerelays {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  uid        String    @default(dbgenerated("(uuid())")) @db.Char(36)
+  relay_id   Int?
+  start_time DateTime? @db.Time(0)
+  end_time   DateTime? @db.Time(0)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  deleted_at DateTime? @db.Timestamp(0)
+  updated_at DateTime? @db.Timestamp(0)
+}
+
+model users {
+  id                       Int              @id @default(autoincrement()) @db.UnsignedInt
+  uid                      String           @default(dbgenerated("(uuid())")) @db.Char(36)
+  name                     String           @db.VarChar(255)
+  email                    String           @db.VarChar(255)
+  phone_number             String?          @db.VarChar(255)
+  password                 String           @db.VarChar(255)
+  activation_account_token String?          @db.VarChar(255)
+  change_password_token    String?          @db.VarChar(255)
+  offer_type               users_offer_type @default(dbgenerated("1"))
+  role                     users_role       @default(ROLE_USER)
+  is_active                users_is_active  @default(dbgenerated("1"))
+  is_valid                 users_is_valid   @default(dbgenerated("0"))
+  created_at               DateTime?        @default(now()) @db.Timestamp(0)
+  deleted_at               DateTime?        @db.Timestamp(0)
+  address                  String?          @db.VarChar(255)
+  city                     String?          @db.VarChar(255)
+  country                  String?          @db.VarChar(255)
+  zip_code                 String?          @db.VarChar(255)
+  description              String?          @db.Text
+  has_images               users_has_images @default(dbgenerated("0"))
+  upload_file_name         String?          @db.VarChar(255)
+  map_link                 String?          @db.VarChar(255)
+  map_link_details         String?          @db.VarChar(255)
+  supplier_id              Int?             @db.UnsignedInt
+  external_api_token       String?          @db.VarChar(255)
+  last_login               DateTime?        @db.Timestamp(0)
+  calcul_sensor            calcul_sensor[]
+  equipment                equipment[]
+  farm                     farm[]
+  notification             notification[]
+  recommendation           recommendation[]
+  relays                   relays[]
+  sensor                   sensor[]
+  subscription             subscription[]
+  supplier                 supplier?        @relation(fields: [supplier_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_supplier_id_foreign")
+
+  @@index([supplier_id], map: "users_supplier_id_foreign")
+}
+
+model weather_collect_data {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  lat        String?   @db.VarChar(255)
+  lon        String?   @db.VarChar(255)
+  city       String?   @db.VarChar(255)
+  data       String    @db.Text
+  created_at DateTime? @db.Date
+}
+
+model weather_data {
+  id         Int       @id @default(autoincrement()) @db.UnsignedInt
+  lat        String?   @db.VarChar(255)
+  lon        String?   @db.VarChar(255)
+  city       String?   @db.VarChar(255)
+  field_id   Int?
+  data       String    @db.Text
+  created_at DateTime? @db.Date
+  type       String    @db.VarChar(255)
+}
+
+model zone {
+  id          Int          @id @default(autoincrement()) @db.UnsignedInt
+  uid         String       @default(dbgenerated("(uuid())")) @db.Char(36)
+  field_id    Int?         @db.UnsignedInt
+  soiltype_id Int?         @db.UnsignedInt
+  name        String       @db.VarChar(255)
+  source      zone_source? @default(dbgenerated("1"))
+  RUmax       String?      @db.VarChar(255)
+  effPluie    String?      @db.VarChar(255)
+  effIrrig    String?      @db.VarChar(255)
+  ruPratique  String?      @db.VarChar(255)
+  irrigArea   String?      @db.VarChar(255)
+  description String?      @db.Text
+  depth_data  Json?
+  created_at  DateTime?    @default(now()) @db.Timestamp(0)
+  deleted_at  DateTime?    @db.Timestamp(0)
+  crop        crop[]
+  sensor      sensor[]
+  field       field?       @relation(fields: [field_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "zone_field_id_foreign")
+
+  @@index([field_id], map: "zone_field_id_foreign")
+  @@index([soiltype_id], map: "zone_type_id_foreign")
+}
+
+enum relays_state {
+  // 0 @map("0")
+  // 1 @map("1")
+}
+
+enum cities_weather_is_default {
+  default @map("0")
+  personalized @map("1")
+}
+
+enum zone_source {
+  // 1 @map("1")
+  // 2 @map("2")
+}
+
+enum irrigation_type {
+  drip
+  pivot
+  lateral
+  sdi
+  furrow
+  sprinkler
+  Micro_aspersion @map("Micro-aspersion")
+  Goutte
+}
+
+enum notification_is_view {
+  inviewd @map("0")
+  viewed  @map("1")
+}
+
+enum subscription_is_active {
+  incative @map("0")
+  active @map("1")
+}
+
+enum notification_mail_sended {
+  inseded @map("0")
+  sended @map("1")
+}
+
+enum sensor_is_deleted {
+  // 1 @map("1")
+  // 2 @map("2")
+}
+
+enum users_offer_type {
+  // 1 @map("1")
+  // 2 @map("2")
+}
+
+enum users_role {
+  ROLE_ADMIN
+  ROLE_USER
+  ROLE_SUPPLIER
+}
+
+enum users_is_active {
+  active   @map("0")
+  incative @map("1")
+}
+
+enum recommendation_viewed {
+  inviewd @map("0")
+  viewed  @map("1")
+}
+
+enum sensor_synchronized {
+  insyncronized  @map("0")
+  synchronized @map("1")
+}
+
+enum users_is_valid {
+  invalid @map("0")
+  valid   @map("1")
+}
+
+enum users_has_images {
+  hasNotImages @map("0")
+
+  hasImages @map("1")
+}
