@@ -13,9 +13,6 @@ WORKDIR /app
 # Copy the rest of the application files
 COPY . .
 
-# Set file permissions to ensure execution rights
-RUN chmod -R 755 /app
-
 # Build the React app for production
 RUN npm run build
 
