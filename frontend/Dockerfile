@@ -7,12 +7,13 @@ WORKDIR /app
 # Set environment variable to resolve crypto issue
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-RUN npx update-browserslist-db@latest
+
 
 
 # Copy the rest of the application files
 COPY . .
 
+RUN npx update-browserslist-db@latest
 # Set file permissions to ensure execution rights
 # RUN chmod -R 755 /app
 
