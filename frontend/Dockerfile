@@ -13,7 +13,7 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 # Copy the rest of the application files
 COPY . .
 
-RUN npx update-browserslist-db@latest
+# RUN npx update-browserslist-db@latest
 # Set file permissions to ensure execution rights
 # RUN chmod -R 755 /app
 
