@@ -1,0 +1,124 @@
+.statsWrapper {
+  font-size: large;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.themeWrapper {
+  padding: 0 8px 8px 8px;
+  border-radius: 8px;
+  width: 49%;
+}
+.themeWrapper p {
+  margin: 0;
+  padding: 0;
+}
+.themeWrapper i {
+  padding-top: 5px;
+  font-size: 45px;
+}
+@media (max-width: 1200px) {
+  .themeWrapper {
+    flex: 100%;
+  }
+}
+.innerBoxWrapper {
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+.innerBox {
+  display: block;
+  width: 30%;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  box-shadow: 0px 3px 15px 1px #e1e1e1;
+}
+.innerBox h3 {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.innerBox:hover {
+  border: none;
+  box-shadow: 0px 0px 10px 3px #dcdcdc;
+}
+/* Responsive layout - makes a one column-layout instead of a two-column layout */
+@media (max-width: 600px) {
+  .innerBox {
+    flex: 100%;
+  }
+}
+.critical {
+  color: tomato;
+}
+.optimal {
+  color: mediumseagreen;
+}
+.full {
+  color: dodgerblue;
+}
+
+.t1 {
+  background-color: white;
+  border-radius: 8px;
+  width: 125px;
+  height: 125px;
+  position: relative;
+  padding: 5px;
+  display: block;
+}
+.t1 p {
+  padding: 0;
+  margin: 0;
+}
+.t1:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 3px #dcdcdc;
+}
+.t2 {
+  height: 25%;
+  color: tomato;
+  font-size: large;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -5px;
+}
+
+#icon {
+}
+
+.t3 {
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+.language{
+  background-image: url('../images/sprite.png');
+  background-repeat: no-repeat;
+  background-size: 402px 252px;
+}
+.language.fr-fr{
+  background-position: 0 0;
+  width: 16px;
+  height: 13px;
+  display: inline-block;
+}
+.language.en-en{
+background-position: 0 -13px;
+width: 16px;
+height: 13px;
+display: inline-block;
+}

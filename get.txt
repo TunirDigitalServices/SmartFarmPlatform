@@ -1,0 +1,50 @@
+import React,{useState,useEffect} from "react";
+
+
+const Component = ()=>{
+
+//déclaration mte3 var1,var2,var3 fil state nécessaires bech fil react life cycle awel marra maya3tich error (useEffect tsir mba3ed el <h1>{data.var1}</h1>
+//this.state w ComponentDidMount() houma l'équivalent fil react class 
+
+const [data,setData]) = useState({var1:"",var2:"",var3:""});
+
+// avec fetch
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`http://127.0.0.1:9000/path`);
+      const newData = await response.json();
+      setData(newData);
+    };
+    fetchData();
+  }, []);
+
+// avec Axios
+
+useEffect(() => {
+    var axios = require("axios");
+    axios({
+      method: "GET",
+      url:
+        "http://127.0.0.1:9000/path",
+      headers: {
+        Accept: "jsonp"
+      }
+    })
+      .then(function(response) {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }, []);
+
+
+...
+
+
+<h1>{data.var1}</h1>
+<h1>{data.var2}</h1>
+<h1>{data.var3}</h1>
+
