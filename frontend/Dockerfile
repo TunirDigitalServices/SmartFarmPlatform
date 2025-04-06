@@ -15,8 +15,7 @@ COPY . .
 
 # RUN npx update-browserslist-db@latest
 # Set file permissions to ensure execution rights
-# RUN chmod -R 755 /app
-
+RUN chmod -R 755 /app/node_modules/.bin
 # Build the React app for production
 # RUN npm run start
 
