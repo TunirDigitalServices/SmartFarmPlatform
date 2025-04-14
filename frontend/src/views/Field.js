@@ -661,6 +661,8 @@ const Field = () => {
     let data = [];
     allCalcul &&
       allCalcul.forEach((event) => {
+        console.log(event,'event');
+        if (!event.start_date) return
         let startDate = new Date(event.start_date).toISOString().slice(0, 10);
         let endDate = new Date(event.end_date).toISOString().slice(0, 10);
         let resultCalcul = event.result;
