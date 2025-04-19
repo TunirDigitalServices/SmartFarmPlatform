@@ -193,7 +193,7 @@ const calculSimulation = async (res,req) => {
           }
   
           let Pe = (Number(rainData) * Number(effPluie)) / 100;
-          let kcValue = dataCrop.all_kc[i - 1]?.kc || 0;
+          let kcValue = dataCrop.all_kc[i - 1].kc || 0;
           let ETC = kcValue * Number(ET0);
   
           let { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime } = calculateIrrigation(

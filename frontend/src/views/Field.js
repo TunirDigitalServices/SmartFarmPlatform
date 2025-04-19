@@ -82,7 +82,6 @@ const Field = () => {
 
   }, [])
 
-  console.log(resultCalcul)
 
   const fetchData = async () => {
     //TODO GET FROM URL
@@ -164,16 +163,20 @@ const Field = () => {
   useEffect(() => {
     localStorage.setItem('code', sensorCode)
   }, [sensorCode])
+  console.log(sensorCode);
+  
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
   useEffect(() => {
       const calculDataSensor = async () => {
-        let url = `/calcul/field-calcul/${Uid}`
+        console.log(sensorCode)
+        let url = `/calcul/get-sensor-calcul/${sensorCode}`
         if (role === 'ROLE_SUPPLIER') {
           url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
         }
         await api.get(url)
           .then(response => {
+            console.log(response.data)
             let calculResult = response.data.calcul
             let calculInputs = response.data.inputs
 
@@ -188,7 +191,9 @@ const Field = () => {
 
       calculDataSensor()
     
-  }, [])
+  }, [sensorCode])
+
+  console.log(resultCalcul)
 
   const [mappingMv1, setMappingMv1] = useState("")
   const [mappingMv2, setMappingMv2] = useState("")
@@ -599,7 +604,7 @@ const Field = () => {
       await api.post('/field/edit-event', updatedEvent)
         .then(response => {
           if (response.data.type === "success") {
-
+            
             handleEventUpdate(selectedEvent, updatedEvent);
             getEvents()
             setShow(false); // Close the modal 
@@ -656,13 +661,10 @@ const Field = () => {
   }, [])
 
 
-  console.log(allCalcul)
   useEffect(() => {
     let data = [];
     allCalcul &&
       allCalcul.forEach((event) => {
-        console.log(event,'event');
-        if (!event.start_date) return
         let startDate = new Date(event.start_date).toISOString().slice(0, 10);
         let endDate = new Date(event.end_date).toISOString().slice(0, 10);
         let resultCalcul = event.result;
@@ -695,6 +697,7 @@ const Field = () => {
       });
     setEvents(data);
   }, [allCalcul]);
+
   const calculateLeftPosition = (value) => {
     const minValue = 20;
     const maxValue = 80;

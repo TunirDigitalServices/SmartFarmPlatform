@@ -10,6 +10,7 @@ import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 
 const EditSensorByAdmin = () => {
+ 
 
   const params = useParams()
   let id = params.id
@@ -235,7 +236,7 @@ const EditSensorByAdmin = () => {
   }
 
 
-  console.log(location)
+
   return (
     <Container fluid className="main-content-container px-4">
       <Link to='/admin/sensors'> Go back</Link>

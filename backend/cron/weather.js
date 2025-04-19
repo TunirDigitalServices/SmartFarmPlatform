@@ -4,7 +4,7 @@ const Farm = require('../models/Farm.js');
 const logger = require('../logs.js');
 const fetch = require('node-fetch');
 const Field = require('../models/Field.js');
-cron.schedule('* * * * *', function() {
+cron.schedule('30 1 * * *', function() {
     try{
         let date_ob = new Date();
         let dataWeatherToday = [];

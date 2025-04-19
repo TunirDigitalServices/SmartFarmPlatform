@@ -173,6 +173,8 @@ const authApiExternal = async (req, res, next) => {
                                 await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${Lat}&longitude=${Lon}&timezone=GMT&daily=et0_fao_evapotranspiration&daily=precipitation_sum&hourly=direct_radiation,diffuse_radiation,terrestrial_radiation`)
                                 .then((res) => res.json())
                                 .then((jsonData) => {
+                                if(jsonData){
+                                
                                   dailyDates = jsonData.daily.time
                                   dailyET0 = jsonData.daily.et0_fao_evapotranspiration
                                   dailyRain = jsonData.daily.precipitation_sum
@@ -215,6 +217,8 @@ const authApiExternal = async (req, res, next) => {
                                                 })
                                             }
                                
+                                }
+                                 
                                 });
                                 let allDataSensor = [];
 
@@ -251,7 +255,7 @@ const authApiExternal = async (req, res, next) => {
                         }
                     })
                     .catch((error)=> {
-                        return res.status(500).json({ type:"danger", message: "error_get_data" });
+                        return res.status(500).json({ type:"danger", message: error.message });
                     });
                 } else {
                     return res.status(401).json({ type:"danger", message: 'no_sensor' });
