@@ -1,0 +1,28 @@
+.loading-logo {
+    width: 220px;
+    animation: breathingOpacity 2s ease-in-out infinite;
+  }
+  
+  @keyframes breathingOpacity {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6; 
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .cascading-right {
+    margin-right: -50px;
+  }
+
+  @media (max-width: 991.98px) {
+    .cascading-right {
+      margin-right: 0;
+    }
+  }
+  .blurity{
+    backdrop-filter: blur("30px")
+  }

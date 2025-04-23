@@ -18,6 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import logo from "../assets/images/Logo smart farm1.jpg"
+import bechir from "../assets/images/avatars/bechir.jpg"
 import menuItems from '../constants/menuItems';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
@@ -30,9 +31,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import Badge from '@mui/material/Badge';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 import { Outlet } from 'react-router-dom';
+import { Avatar, useMediaQuery } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -117,6 +120,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
     const theme = useTheme();
     const navigate = useNavigate();
+    const location = useLocation();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -165,7 +170,10 @@ export default function MiniDrawer() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose();
+                navigate('/profile')
+            }}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -187,7 +195,7 @@ export default function MiniDrawer() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
+            <MenuItem sx={{ display: "flex", gap: "20px" }}>
                 <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="error">
                         <MailIcon />
@@ -195,7 +203,7 @@ export default function MiniDrawer() {
                 </IconButton>
                 <p>Messages</p>
             </MenuItem>
-            <MenuItem>
+            <MenuItem sx={{ display: "flex", gap: "20px" }}>
                 <IconButton
                     size="large"
                     aria-label="show 17 new notifications"
@@ -217,14 +225,76 @@ export default function MiniDrawer() {
                         aria-haspopup="true"
                         onClick={handleProfileMenuOpen}
                         color="inherit"
-                        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '6px 12px',
+                            borderRadius: '8px',
+                            transition: 'background-color 0.3s',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                            },
+                        }}
                     >
-                        <AccountCircle sx={{ fontSize: 30 }} />
+                        {bechir ? (
+                            <Avatar
+                                alt={bechir}
+                                src={bechir}
+                                sx={{
+                                    width: 40,
+                                    height: 40,
+                                    mr: 1,
+                                    marginRight: "15px"
+                                }}
+
+                            />
+                        ) : (
+                            <AccountCircle
+                                sx={{
+                                    fontSize: 40,
+                                    mr: 1,
+                                    marginRight: "15px"
+                                }}
+                            />
+                        )}
+
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                mr: 1,
+                            }}
+                        >
+
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    // color: 'white',
+                                    fontWeight: 500,
+                                    lineHeight: 1.2,
+                                }}
+                            >
+                                Bachir BEN BRIKA
+                            </Typography>
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    color: 'grey.500',
+                                    fontSize: '0.75rem',
+                                }}
+                            >
+                                Gérant
+                            </Typography>
+
+                        </Box>
+                        <ArrowDropDownIcon />
                     </IconButton>
 
-                    <p>Profile</p>
+                    {/* <p>Profile</p> */}
                 </>
-                <ArrowDropDownIcon />
+                {/* <ArrowDropDownIcon /> */}
             </MenuItem>
         </Menu>
     );
@@ -268,6 +338,7 @@ export default function MiniDrawer() {
         },
     }));
 
+console.log(isMobile,"ismobile");
 
     return (
         <Box>
@@ -277,7 +348,7 @@ export default function MiniDrawer() {
                     sx={{
                         backgroundColor: '#2CA8B8',
                     }}>
-                    <Toolbar>
+                    <Toolbar >
                         <IconButton
                             size="large"
                             edge="start"
@@ -293,14 +364,6 @@ export default function MiniDrawer() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        {/* <Typography
-                            variant="h6"
-                            noWrap
-                            component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
-                        >
-                            MUI
-                        </Typography> */}
                         <Search>
                             <SearchIconWrapper>
                                 <SearchIcon />
@@ -339,6 +402,7 @@ export default function MiniDrawer() {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     padding: '6px 12px',
+                                    marginLeft: "20px",
                                     borderRadius: '8px',
                                     transition: 'background-color 0.3s',
                                     '&:hover': {
@@ -346,9 +410,61 @@ export default function MiniDrawer() {
                                     },
                                 }}
                             >
-                                <AccountCircle sx={{ mr: 0.5 }} />
+                                {bechir ? (
+                                    <Avatar
+                                        alt={bechir}
+                                        src={bechir}
+                                        sx={{
+                                            width: 40,
+                                            height: 40,
+                                            mr: 1,
+                                            marginRight: "15px"
+                                        }}
+
+                                    />
+                                ) : (
+                                    <AccountCircle
+                                        sx={{
+                                            fontSize: 40,
+                                            mr: 1,
+                                            marginRight: "15px"
+                                        }}
+                                    />
+                                )}
+
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
+                                        mr: 1,
+                                    }}
+                                >
+
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: 'white',
+                                            fontWeight: 500,
+                                            lineHeight: 1.2,
+                                        }}
+                                    >
+                                        Bachir BEN BRIKA
+                                    </Typography>
+                                    <Typography
+                                        variant="caption"
+                                        sx={{
+                                            color: 'grey.300',
+                                            fontSize: '0.75rem',
+                                        }}
+                                    >
+                                        Gérant
+                                    </Typography>
+
+                                </Box>
                                 <ArrowDropDownIcon />
                             </IconButton>
+
 
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -387,10 +503,16 @@ export default function MiniDrawer() {
                     {menuItems.map((item) => (
                         <ListItem key={item.name} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
+                                selected={location.pathname === item.path}
+
                                 sx={{
                                     minHeight: 48,
                                     px: 2.5,
                                     justifyContent: open ? 'initial' : 'center',
+                                    backgroundColor: location.pathname === item.path ? 'action.selected' : 'transparent',
+                                    '&:hover': {
+                                        backgroundColor: 'action.hover',
+                                    },
                                 }}
                                 onClick={() => navigate(item.path)}
                             >
