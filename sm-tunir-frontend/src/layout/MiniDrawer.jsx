@@ -327,28 +327,28 @@ export default function MiniDrawer() {
                                 </Badge>
                             </IconButton>
                             <IconButton
-  size="large"
-  edge="end"
-  aria-label="account of current user"
-  aria-controls={menuId}
-  aria-haspopup="true"
-  onClick={handleProfileMenuOpen}
-  color="inherit"
-  sx={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '6px 12px', // or tweak this
-    borderRadius: '8px', // makes it less "eggy"
-    transition: 'background-color 0.3s',
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)', // or use theme palette
-    },
-  }}
->
-  <AccountCircle sx={{ mr: 0.5 }} />
-  <ArrowDropDownIcon />
-</IconButton>
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '6px 12px',
+                                    borderRadius: '8px',
+                                    transition: 'background-color 0.3s',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                                    },
+                                }}
+                            >
+                                <AccountCircle sx={{ mr: 0.5 }} />
+                                <ArrowDropDownIcon />
+                            </IconButton>
 
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
