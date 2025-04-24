@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 export default function auth() {
   return (
      <section class="vh-100" >
-             <div class="container py-5 h-100">
+             {/* <div class="container py-5 h-100">
                <div class="row d-flex justify-content-center align-items-center h-100">
                  <div class="col col-xl-10">
                    <div class="card" style={{ bordeRadius: "1rem" }}>
@@ -42,7 +42,8 @@ export default function auth() {
                    </div>
                  </div>
                </div>
-             </div>
+             </div> */}
+             <Outlet/>
            </section>
   )
 }
