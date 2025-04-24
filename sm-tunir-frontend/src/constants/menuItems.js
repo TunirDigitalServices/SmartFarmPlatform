@@ -14,46 +14,65 @@ const menuItems = [
     name: 'Dashboard',
     path: '/dashboard',
     icon: <DashboardIcon />,
+    roles: ['admin','user','guest'] 
+
   },
   {
     name: 'Fields',
     path: '/fields',
     icon: <AgricultureIcon />,
+    roles: ['admin','user'] ,
+    
+
   },
   {
     name: 'Sensors',
     path: '/sensors',
     icon: <SensorsIcon />,
+    roles: ['admin','guest'] 
+
   },
   {
     name: 'Satellite Images',
     path: '/satellite-images',
     icon: <SatelliteAltIcon />,
+    roles: ['guest'] 
+
   },
   {
     name: 'My Simulations',
     path: '/simulations',
     icon: <SmartToyIcon />,
+    roles: ['admin','user'] 
+
   },
   {
     name: 'Calendar',
     path: '/calendar',
     icon: <EventIcon />,
+    roles: ['guest'] 
+
   },
   {
     name: 'Weather Forecast',
     path: '/weather',
     icon: <CloudIcon />,
+    roles: ['guest'] 
+
   },
   {
     name: 'Fields Settings',
-    path: '/fields/settings',
+    path: '/fields-settings',
     icon: <SettingsIcon />,
+    roles: ['admin'] 
+
   },
   {
     name: 'Sensors Setting',
-    path: '/sensors/settings',
+    path: '/sensors-settings',
     icon: <TuneIcon />,
+    roles: ['admin'] 
+
   },
 ];
 

@@ -14,51 +14,68 @@ const protectedRoutes = [
     name: 'Dashboard',
     path: '/dashboard',
     element: <Dashboard />,
+    roles: ['admin','user','guest'] 
   },
   {
     name: 'Fields',
     path: '/fields',
     element: <Fields />,
+    roles: ['admin','user'] 
+
   },
   {
     name: 'Sensors',
     path: '/sensors',
     element: <Sensors />,
+    roles: ['admin','guest'] 
   },
   {
     name: 'Satellite Images',
     path: '/satellite-images',
     element: <SatelliteImages />,
+    roles: ['guest'] 
+
   },
   {
     name: 'My Simulations',
     path: '/simulations',
     element: <Simulations />,
+    roles: ['admin','user'] 
   },
   {
     name: 'Calendar',
     path: '/calendar',
     element: <Calendar />,
+    roles: ['guest'] 
+
   },
   {
     name: 'Weather Forecast',
     path: '/weather',
     element: <Weather />,
+    roles: ['guest'] 
+
   },
   {
     name: 'Fields Settings',
     path: '/fields-settings',
     element: <FieldSettings />,
+    roles: ['guest'] 
+
   },
   {
     name: 'Sensors Settings',
     path: '/sensors-settings',
     element: <SensorSettings />,
+    roles: ['admin'] 
+
   },
   {
     name: 'Profile',
     path: '/profile',
     element: <Profile />,
+    roles: ['admin'] 
+
   },
 ];
 

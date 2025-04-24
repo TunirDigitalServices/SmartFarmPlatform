@@ -127,6 +127,12 @@ export default function MiniDrawer() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = React.useState(false);
+    const user = JSON.parse(localStorage.getItem('user'));
+    const filteredMenuItems = user
+    ? menuItems.filter(item => item.roles.includes(user.role))
+    : []
+  
+    
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -174,7 +180,7 @@ export default function MiniDrawer() {
                 handleMenuClose();
                 navigate('/profile')
             }}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
         </Menu>
     );
 
@@ -338,7 +344,7 @@ export default function MiniDrawer() {
         },
     }));
 
-console.log(isMobile,"ismobile");
+
 
     return (
         <Box>
@@ -410,7 +416,7 @@ console.log(isMobile,"ismobile");
                                     },
                                 }}
                             >
-                                {bechir ? (
+                                {user ? (
                                     <Avatar
                                         alt={bechir}
                                         src={bechir}
@@ -449,7 +455,7 @@ console.log(isMobile,"ismobile");
                                             lineHeight: 1.2,
                                         }}
                                     >
-                                        Bachir BEN BRIKA
+                                        {user.name}
                                     </Typography>
                                     <Typography
                                         variant="caption"
@@ -458,7 +464,7 @@ console.log(isMobile,"ismobile");
                                             fontSize: '0.75rem',
                                         }}
                                     >
-                                        Gérant
+                                      {user.role}
                                     </Typography>
 
                                 </Box>
@@ -488,7 +494,8 @@ console.log(isMobile,"ismobile");
                 <DrawerHeader
                     sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "space-around",
+                        gap:"20px",
                         alignItems: "center",
                         width: "100%",
                     }}
@@ -500,7 +507,7 @@ console.log(isMobile,"ismobile");
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {menuItems.map((item) => (
+                    {filteredMenuItems.map((item) => (
                         <ListItem key={item.name} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 selected={location.pathname === item.path}
