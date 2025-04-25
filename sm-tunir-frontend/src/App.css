@@ -26,3 +26,6 @@
   .blurity{
     backdrop-filter: blur("30px")
   }
+  .row {
+    --mdb-gutter-x:0 !important;
+  }

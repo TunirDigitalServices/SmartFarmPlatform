@@ -16,7 +16,7 @@ import Privacy from '../pages/auth/Privacy';
 
 
 const fakeAuth = {
-  isAuthenticated: false,
+  isAuthenticated: true,
 };
 function Router() {
   const [user, setUser] = useState(null);

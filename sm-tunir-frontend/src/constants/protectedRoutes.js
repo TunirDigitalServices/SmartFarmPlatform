@@ -7,7 +7,7 @@ import Calendar from '../pages/calendar/Calendar';
 import Weather from '../pages/weatherForecast/WeatherForcast';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import SensorSettings from '../pages/sensorsSettings/SensorsSettings';
-import Profile from '../pages/Profile'
+// import Profile from '../pages/Profile'
 
 const protectedRoutes = [
   {
@@ -70,13 +70,13 @@ const protectedRoutes = [
     roles: ['admin'] 
 
   },
-  {
-    name: 'Profile',
-    path: '/profile',
-    element: <Profile />,
-    roles: ['admin'] 
+  // {
+  //   name: 'Profile',
+  //   path: '/profile',
+  //   element: <Profile />,
+  //   roles: ['admin'] 
 
-  },
+  // },
 ];
 
 export default protectedRoutes;
