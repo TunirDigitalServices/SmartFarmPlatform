@@ -74,7 +74,7 @@ function Router() {
 
           {user ? (
             <Route path="/" element={<App />}>
-              <Route index element={<Navigate to="/dashboard" />} />
+              <Route index element={<Navigate to="/" />} />
               {protectedRoutes.map(({ path, element, roles }) => (
                 <Route
                   key={path}
