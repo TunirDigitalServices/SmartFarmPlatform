@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Container } from 'shards-react'
-import { useHistory } from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap';
+
+import { useNavigate } from 'react-router-dom'
 
 const FilteredNoSensor = ({ filteredFields, crops }) => {
-    const history = useHistory()
+    const navigate=useNavigate()
 
     const [noSensorFields, setNoSensorFields] = useState([]);
     const routeToField = (fieldUid) => {
@@ -12,7 +13,7 @@ const FilteredNoSensor = ({ filteredFields, crops }) => {
                 "Field",
                 fieldUid
             );
-            history.push(`/Fields/${fieldUid}`)
+            navigate(`/Fields/${fieldUid}`)
 
         }
     }

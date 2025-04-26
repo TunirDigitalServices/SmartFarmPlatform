@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  FormSelect,
-  Button,
-  Slider,
-  FormRadio,
-  FormInput
-} from "shards-react";
+
+import { Col, Form } from 'react-bootstrap';
+
 import { useTranslation } from "react-i18next";
 
 
@@ -22,18 +15,18 @@ function LateralForm(props) {
       </Col>
 
       <Col md="12" className="form-group">
-        <FormInput value={props.name} placeholder={t('name')} required onChange={props.handleName} />
+        <Form.Control value={props.name} placeholder={t('name')} required onChange={props.handleName} />
       </Col>
       <Col md="6" className="form-group">
-        <FormSelect 
+        <Form.Select 
         onChange={props.handleLateral}
         >
           <option value="lateral_ns">Lateral NS</option>
           <option value="lateral_ew">Lateral EW</option>
-        </FormSelect>
+        </Form.Select>
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
         type="number"
           value={props.pivot_length}
           placeholder={t('pivot_length')}
@@ -42,7 +35,7 @@ function LateralForm(props) {
         />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
         type="number"
           value={props.flowrate}
           placeholder={t('FlowRate')}
@@ -51,7 +44,7 @@ function LateralForm(props) {
         />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
           value={props.full_runtime}
           placeholder={t('full_run_time')}
           required

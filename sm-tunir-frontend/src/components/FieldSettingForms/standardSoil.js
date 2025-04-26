@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Form, FormSelect, Button, Slider } from "shards-react";
+
+import { Col, Form } from 'react-bootstrap';
+
 import { useTranslation } from "react-i18next";
 
 function StandardSoil(props) {
@@ -43,7 +45,7 @@ function StandardSoil(props) {
         <Col lg='4' md="12" sm="12" className="form-group">
           <div>
             <p style={{ margin: "0px" }}>{t('soil_type')}</p>
-            <FormSelect
+            <Form.Select
               onChange={evt => setState({ ...state, uni: evt.target.value })}
             >
               {state.listSoils.map((item, index) => {
@@ -53,7 +55,7 @@ function StandardSoil(props) {
                   return <option>{item.soil}</option>;
                 }
               })}
-            </FormSelect>
+            </Form.Select>
           </div>
         </Col>
       </>

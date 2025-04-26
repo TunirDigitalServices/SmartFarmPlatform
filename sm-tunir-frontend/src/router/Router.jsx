@@ -7,12 +7,14 @@ import Auth from '../apps/auth'
 import Login from '../pages/auth/Login';
 import logo from "../assets/images/Logo smart farm1.jpg"
 import SignUp from '../pages/auth/SignUp';
-
+import Dashboard from "../components/Simulation/Dashboard"
 import { fakeUsers } from '../constants/fakeUsers';
 import PrivateRoute from './PrivateRouter';
 import ForgotPwd from '../pages/auth/ForgotPwd';
 import Terms from '../pages/auth/Terms';
 import Privacy from '../pages/auth/Privacy';
+import useToken from '../useToken';
+import Overview from '../views/Overview';
 
 
 const fakeAuth = {
@@ -20,44 +22,47 @@ const fakeAuth = {
 };
 function Router() {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
+  localStorage.setItem("RememberMe", false);
+  const { token, setToken } = useToken();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (fakeAuth.isAuthenticated) {
-  //       setUser(fakeUsers[1]);
-  //       setIsLoading(false);
-  //     } else {
-  //       setUser(false);
-  //     }
-  //     setIsLoading(false);
-  //   }, 7000);
-  // }, []);
-  // console.log(user, "user");
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-
     if (storedUser) {
-     
-      setUser(JSON.parse(storedUser));
-      setIsLoading(false);
-    } else {
- 
-      setTimeout(() => {
-        if (fakeAuth.isAuthenticated) {
-          const selectedUser = fakeUsers[0]; 
-   
-          
-          setUser(selectedUser);
-          localStorage.setItem('user', JSON.stringify(selectedUser)); 
-        } else {
-          setUser(false);
-        }
-        setIsLoading(false);
-      }, 1500);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing user from localStorage:', error);
+      }
     }
+    setIsLoading(false);
   }, []);
+
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem('user');
+
+  //   if (storedUser) {
+
+  //     setUser(JSON.parse(storedUser));
+  //     setIsLoading(false);
+  //   } else {
+
+  //     setTimeout(() => {
+  //       if (fakeAuth.isAuthenticated) {
+  //         const selectedUser = fakeUsers[0]; 
+
+
+  //         setUser(selectedUser);
+  //         localStorage.setItem('user', JSON.stringify(selectedUser)); 
+  //       } else {
+  //         setUser(false);
+  //       }
+  //       setIsLoading(false);
+  //     }, 1500);
+  //   }
+  // }, []);
 
   if (isLoading) {
     return (
@@ -74,7 +79,18 @@ function Router() {
 
           {user ? (
             <Route path="/" element={<App />}>
-              <Route index element={<Navigate to="/" />} />
+              <Route
+                index
+                // element={
+                //   user.offre === "1" ? (
+                //     <Navigate to="/dashboard" />
+                //   ) : (
+                //     <Navigate to="/overview" />
+                //   )
+                // }
+                element={user.offre === "1" ? <Dashboard /> : <Overview />}
+
+              />
               {protectedRoutes.map(({ path, element, roles }) => (
                 <Route
                   key={path}
@@ -91,8 +107,8 @@ function Router() {
               <Route index element={<Login />} />
               <Route path="sign-up" element={<SignUp />} />
               <Route path="forget-password" element={<ForgotPwd />} />
-          <Route path="terms" element={<Terms />} />
-          <Route path="Privacy" element={<Privacy />} />
+              <Route path="terms" element={<Terms />} />
+              <Route path="Privacy" element={<Privacy />} />
 
             </Route>
 

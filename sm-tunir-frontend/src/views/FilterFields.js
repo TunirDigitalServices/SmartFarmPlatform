@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, CardBody, Card, CardHeader, FormInput, FormGroup, Form, FormSelect, Button } from 'shards-react'
+import { Container, Row, Col, FormInput, FormSelect } from 'shards-react'
+import { Container, Row, Col, Form } from 'react-bootstrap';
+
 import swal from "sweetalert";
 import api from "../api/api"
 import AllFields from './AllFields';

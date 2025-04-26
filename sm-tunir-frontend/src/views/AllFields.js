@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Container } from 'shards-react'
-import { useHistory } from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'
 import api from '../api/api'
 import moment from 'moment'
 import { useTranslation } from "react-i18next";
 
 const AllFields = ({ filteredFields, sensorsData, crops }) => {
-    const history = useHistory()
+       const navigate = useNavigate()
+    
     const [fieldStatus, setFS] = useState({
         resultState: 0, state: ''
     })
@@ -38,7 +39,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                 "Field",
                 fieldUid
             );
-            history.push(`/Fields/${fieldUid}`)
+            navigate(`/Fields/${fieldUid}`)
             window.location.reload()
         }
     }

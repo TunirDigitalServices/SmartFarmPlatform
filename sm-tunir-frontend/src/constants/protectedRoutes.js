@@ -7,6 +7,7 @@ import Calendar from '../pages/calendar/Calendar';
 import Weather from '../pages/weatherForecast/WeatherForcast';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import SensorSettings from '../pages/sensorsSettings/SensorsSettings';
+import Overview from '../views/Overview';
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -67,6 +68,13 @@ const protectedRoutes = [
     name: 'Sensors Settings',
     path: '/sensors-settings',
     element: <SensorSettings />,
+    roles: ['admin'] 
+
+  },
+  {
+    name: 'Overview',
+    path: '/overview',
+    element: <Overview />,
     roles: ['admin'] 
 
   },

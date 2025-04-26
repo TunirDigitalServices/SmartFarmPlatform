@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  FormSelect,
-  Button,
-  Slider,
-  FormRadio,
-  FormInput
-} from "shards-react";
+
+import { Col, Form } from 'react-bootstrap';
+
 import { useTranslation } from "react-i18next";
 
 function PivotForm(props) {
@@ -18,10 +11,10 @@ function PivotForm(props) {
     <>
       <Col md="12" className="form-group">
         <p style={{ margin: "0px" }}>{t('pivot_shape')}</p>
-        <FormSelect value={props.pivot_shape} onChange={props.handlePivotShape}>
+        <Form.Select value={props.pivot_shape} onChange={props.handlePivotShape}>
           <option value="circular">Circular</option>
           <option value="semi_circular">Semi-Circular</option>
-        </FormSelect>
+        </Form.Select>
       </Col>
       <Col md="12" className="form-group">
         <p style={{ marginBottom: "10px" }}>{t('Irrigation_system_calculations')}</p>
@@ -43,10 +36,10 @@ function PivotForm(props) {
       </Col>
 
       <Col md="12" className="form-group">
-        <FormInput placeholder={t('name')} required onChange={props.handleName} />
+        <Form.Control placeholder={t('name')} required onChange={props.handleName} />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
         type="number"
           value={props.pivot_length}
           placeholder={t('pivot_length')}
@@ -55,7 +48,7 @@ function PivotForm(props) {
         />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
         type="number"
           value={props.pivot_coord}
           placeholder={t('pivot_center_coordinates')}
@@ -64,7 +57,7 @@ function PivotForm(props) {
         />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
         type="number"
           value={props.flowrate}
           placeholder={t('FlowRate')}
@@ -73,7 +66,7 @@ function PivotForm(props) {
         />
       </Col>
       <Col md="6" className="form-group">
-        <FormInput
+        <Form.Control
           value={props.full_runtime}
           placeholder={t('full_run_time')}
           required

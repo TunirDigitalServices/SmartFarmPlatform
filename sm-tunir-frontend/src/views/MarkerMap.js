@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
-import { Button } from 'shards-react'
+import Iconsensor from "../assets/images/smartfarm_capteur.png"
 import api from '../api/api';
 import L from 'leaflet';
 
@@ -47,7 +47,7 @@ export default function Markerwhatever(props) {
     setDraggable(false)
   }
   const Iconsensor = new L.Icon({
-    iconUrl: require('../images/smartfarm_capteur.png'),
+    iconUrl: Iconsensor,
     iconSize: [48, 52],
     iconAnchor: [17, 45],
     popupAnchor: [3, -46]

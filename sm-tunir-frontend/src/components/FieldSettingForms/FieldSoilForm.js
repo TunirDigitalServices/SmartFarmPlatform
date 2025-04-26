@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, FormSelect, Button, Slider, FormInput, FormGroup } from "shards-react";
+
+import {
+  Row,
+  Col,
+  Form,
+  Button
+} from 'react-bootstrap';
+
 import CompositeSoil from "./compositeSoilForm";
 import StandardSoil from "./standardSoil";
 import { useTranslation } from "react-i18next";
@@ -152,7 +159,7 @@ function FieldSoilForm(props) {
             </Col>
             <Col lg='4' md="12" sm="12" className="form-group">
               <p style={{ margin: "0px" }}>{t('soil_zone')}</p>
-              <FormInput
+              <Form.Control
                 value={props.zoneName}
                 placeholder={t('soil_zone')}
                 required
@@ -160,7 +167,7 @@ function FieldSoilForm(props) {
 
               />
                 <p style={{ margin: "0px" }}>{t('soil_type')}</p>
-            <FormSelect
+            <Form.Select
             value={soilData.soilType}
               onChange={handleSoilPick}
             >
@@ -171,13 +178,13 @@ function FieldSoilForm(props) {
                 
                 })
               }
-            </FormSelect>
+            </Form.Select>
 
 
             </Col>       
             <Col lg='4' md="12" sm="12" className="form-group">
               <p style={{ margin: "0px" }}>{t('soil_prop')}</p>
-              <FormSelect
+              <Form.Select
                 onChange={evt => {
                   setOI({ ...otherInfo, type: evt.target.value });
                   props.handleSoilProprety(evt.target.value)
@@ -198,9 +205,9 @@ function FieldSoilForm(props) {
               >
                 <option selected={isStandardSoil}>Standard</option>
                 <option selected={!isStandardSoil}>Composite</option>
-              </FormSelect>
+              </Form.Select>
               <p style={{ margin: "0px" }}>{t('name_field')}</p>
-              <FormSelect
+              <Form.Select
                 value={otherInfo.field_uid}
                 onChange={props.handleUidField}
                 placeholder={t('name_field')}
@@ -209,7 +216,7 @@ function FieldSoilForm(props) {
                 {props.fields.map((item, index) => {
                   return <option value={item.Uid}>{item.title}</option>;
                 })}
-              </FormSelect>
+              </Form.Select>
             </Col>
           </Row>
           <Row form>
@@ -218,20 +225,20 @@ function FieldSoilForm(props) {
           <Row form className="py-2" >
         
             <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%)</p>
-                <FormInput type="number" value={props.effPluie} onChange={e => props.handleEffRain(e.target.value)} id='effPluie' placeholder={t('efficacité_pluie')}
+                <Form.Control type="number" value={props.effPluie} onChange={e => props.handleEffRain(e.target.value)} id='effPluie' placeholder={t('efficacité_pluie')}
                 />
 
-              </FormGroup>
+              </Form.Group>
             </Col>
             <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>RU max (mm/m)</p>
-                <FormInput type="number" value={props.RUmax} onChange={e => props.handleRuMax(e.target.value)} id='ruMax' placeholder="RU max"
+                <Form.Control type="number" value={props.RUmax} onChange={e => props.handleRuMax(e.target.value)} id='ruMax' placeholder="RU max"
                 />
 
-              </FormGroup>
+              </Form.Group>
 
             </Col>
           </Row>

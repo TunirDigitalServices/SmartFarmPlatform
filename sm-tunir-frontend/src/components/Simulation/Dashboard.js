@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Container, Row, Col, Card, CardHeader, CardBody,CardFooter, Form, FormGroup, Nav, NavItem, NavLink, FormInput, FormSelect, Button } from 'shards-react'
 import api from '../../api/api'
 import PageTitle from "../common/PageTitle";
-import { useHistory } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import  DashboardChart from './DashboardChart'
 
 const localizer = momentLocalizer(moment);
@@ -34,7 +34,8 @@ const Dashboard = () => {
             end: new Date()
             }
 ]);
-    const history = useHistory()
+
+    const navigate=useNavigate()
     const [activeSimulations,setActiveSimulations] = useState([])
     const [allSimulations,setAllSimulations] = useState([])
 
@@ -160,7 +161,7 @@ const Dashboard = () => {
                                 </div>
                         </CardBody>
                         <CardFooter className="border-top d-flex justify-content-center align-items-center">
-                            <Button outline onClick={() => history.push('/Calendar') }>{t('see_all')}</Button>
+                            <Button outline onClick={() => navigate('/Calendar') }>{t('see_all')}</Button>
                         </CardFooter>
                     </Card>
                 </Col>

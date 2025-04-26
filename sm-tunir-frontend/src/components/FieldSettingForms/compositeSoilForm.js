@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, FormSelect, Button, Slider } from "shards-react";
+
+import { Row, Col, Form } from 'react-bootstrap';
+
 import { useTranslation } from "react-i18next";
 
 
@@ -83,7 +85,7 @@ function CompositeSoil(props) {
             marginTop: "-25px"
           }}
         >
-          <Slider
+          <Form.Range
             onSlide={value => {
               setState({
                 ...state,
@@ -109,7 +111,7 @@ function CompositeSoil(props) {
       </Col>
       <Col md="6" className="form-group">
         <p style={{ margin: "0px", paddingBottom: 15 }}>{t('organic_matter')}</p>
-        <Slider
+        <Form.Range
           onSlide={value => setState({ ...state, OM: parseFloat(value[0]) })}
           theme="info"
           className="my-4"
@@ -121,7 +123,7 @@ function CompositeSoil(props) {
       </Col>
       <Col md="6" className="form-group">
         <p style={{ margin: "0px", paddingBottom: 15 }}>{t('soil_salinity')}</p>
-        <Slider
+        <Form.Range
           onSlide={value => setState({ ...state, Ecd: parseFloat(value[0]) })}
           theme="info"
           className="my-4"
@@ -133,7 +135,7 @@ function CompositeSoil(props) {
       </Col>
       <Col md="6" className="form-group">
         <p style={{ margin: "0px", paddingBottom: 15 }}>{t('pH')}</p>
-        <Slider
+        <Form.Range
           onSlide={value => {
             setState({ ...state, pH: parseFloat(value[0]) });
           }}

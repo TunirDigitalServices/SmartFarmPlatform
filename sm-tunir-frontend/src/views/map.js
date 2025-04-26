@@ -9,18 +9,20 @@ import L from 'leaflet';
 import MarkerObject from "./MarkerMap"
 import { useRef } from "react";
 import LeafletGeoCoder from "./LeafletGeoCoder";
+import icon from "../assets/images/icons/icon.png"
+import sensor from "../assets/images/icons/sensor.png"
 
 const zoomDefault = 14;
 let centerDefault = [36.806389, 10.181667];
 const myIcon = new L.Icon({
-  iconUrl: require('../images/icons/icon.png'),
+  iconUrl: icon,
   iconSize: [40, 45],
   iconAnchor: [17, 45],
   popupAnchor: [3, -46]
 })
 
 const Iconsensor = new L.Icon({
-  iconUrl: require('../images/icons/sensor.png'),
+  iconUrl: {sensor},
   iconSize: [40, 42],
   iconAnchor: [17, 45],
   popupAnchor: [3, -46]

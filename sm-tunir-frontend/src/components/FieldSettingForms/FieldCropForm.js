@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  FormInput,
-  FormSelect,
-  FormGroup
-} from "shards-react";
+
+import { Row, Col, Form } from 'react-bootstrap';
+
 import api from '../../api/api';
 import { useTranslation } from "react-i18next";
 import { Carousel } from "react-responsive-carousel";
@@ -200,7 +195,7 @@ console.log(otherInfo.density)
           </Col>
           <Col lg='4' md="12" sm="12" className="form-group pt-4">
             <p style={{ margin: "0px" }}>{t('crop_type')}</p>
-            <FormSelect
+            <Form.Select
               onChange={handleCropPick}
               placeholder={t('crop_type')}
               value={otherInfo.type}
@@ -214,23 +209,23 @@ console.log(otherInfo.density)
                   )
                 })
               }
-            </FormSelect>
+            </Form.Select>
 
               <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
-              <FormSelect value={cropData.variety || ""} onChange={handleVarietyPick} id="cropVariety">
+              <Form.Select value={cropData.variety || ""} onChange={handleVarietyPick} id="cropVariety">
                 <option value="">{t('crop_variety')}</option>
                   {
                       cropData.cropVariety.map(variety => (
                           <option value={variety.varietyId}>{variety.variety}</option>
                       ))
                   }
-              </FormSelect>
+              </Form.Select>
               <input type="checkbox" name="Autre" id="check" onClick={() => setChecked(!checked)} /> {t('other')}
                   {
                       checked
                       ?
 
-                      <FormInput 
+                      <Form.Control 
                       value={cropData.variety || ""}
                       placeholder={t('crop_variety')}
                       id="cropVariety"
@@ -244,7 +239,7 @@ console.log(otherInfo.density)
           </Col>   
           < Col lg="4" md="12" sm="12" className="form-group">
             <p style={{ margin: "0px" }}>{t('crop_zone')}</p>
-            <FormSelect
+            <Form.Select
               onChange={props.handleZone}
               placeholder={t('crop_zone')}
             >
@@ -255,9 +250,9 @@ console.log(otherInfo.density)
                   return <option value={item.Uid}>{item.name}</option>
                 })
               }
-            </FormSelect>
+            </Form.Select>
             <p style={{ margin: "0px" }}>{t('crop_field')}</p>
-            <FormSelect
+            <Form.Select
               value={otherInfo.field_uid}
               onChange={props.handleUidField}
               placeholder={t('crop_zone')}
@@ -268,82 +263,82 @@ console.log(otherInfo.density)
                   return <option value={item.Uid}>{item.title}</option>
                 })
               }
-            </FormSelect>
+            </Form.Select>
 
           </Col>     
         </Row>  
         <Row className="py-2">
            {/* <Col lg='4' md="12" sm="12" className="form-group">
             <p style={{ margin: "0px" }}>{t('prev_type')}</p>
-            <FormInput
+            <Form.Control
               onChange={props.handlePrevType}
               placeholder={t('prev_type')}
             />
           </Col> */}
           <Col lg="4" md="12" sm="12">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('depth')} (m)</p>
-              <FormInput type="number" value={props.rootDepth} onChange={e => props.handleRootDepth(e.target.value)} id='z' placeholder={t('depth')}
+              <Form.Control type="number" value={props.rootDepth} onChange={e => props.handleRootDepth(e.target.value)} id='z' placeholder={t('depth')}
               />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="12" sm="12">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('Days')}</p>
 
-              <FormInput type="number" value={props.days} id='days' onChange={e => props.handleDays(e.target.value)} placeholder={t('Days')} />
+              <Form.Control type="number" value={props.days} id='days' onChange={e => props.handleDays(e.target.value)} placeholder={t('Days')} />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="12" sm="12">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('planting_date')}</p>
-              <FormInput type="date" value={props.growingDate} onChange={props.handleGrowingDate} id='days' />
+              <Form.Control type="date" value={props.growingDate} onChange={props.handleGrowingDate} id='days' />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col hidden lg="4" md="12" sm="12">
-            <FormGroup >
+            <Form.Group >
               <p style={{ margin: "0px" }}>{t('growing_season')}</p>
-              <FormInput type="date"  value={props.plantingDate} onChange={e => props.handlePlantingDate(e.target.value)} id='days' />
+              <Form.Control type="date"  value={props.plantingDate} onChange={e => props.handlePlantingDate(e.target.value)} id='days' />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('fraction_pratique')} (%) </p>
-                <FormInput type="number" value={props.ruPratique} onChange={e => props.handleRuPractical(e.target.value)} id='ruPratique' placeholder={t('fraction_pratique')}
+                <Form.Control type="number" value={props.ruPratique} onChange={e => props.handleRuPractical(e.target.value)} id='ruPratique' placeholder={t('fraction_pratique')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
-                <FormInput type="number" value={props.ecartInter} onChange={props.handleEcartInter} id='ecartInter' placeholder={t('ecart_inter')}
+                <Form.Control type="number" value={props.ecartInter} onChange={props.handleEcartInter} id='ecartInter' placeholder={t('ecart_inter')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('ecart_intra')} (m) </p>
-                <FormInput type="number" value={props.ecartIntra} onChange={props.handleEcartIntra} id='ecartIntra' placeholder={t('ecart_intra')}
+                <Form.Control type="number" value={props.ecartIntra} onChange={props.handleEcartIntra} id='ecartIntra' placeholder={t('ecart_intra')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="12" sm="12">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('densité')} (plants/ha)</p>
-                <FormInput type="number" value={otherInfo.density} onChange={props.handleCropDensity} id='densité' placeholder={t('densité')}
+                <Form.Control type="number" value={otherInfo.density} onChange={props.handleCropDensity} id='densité' placeholder={t('densité')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
         </Row>

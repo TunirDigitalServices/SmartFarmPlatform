@@ -1,21 +1,17 @@
 import React, { useState } from "react";
+
 import {
   Container,
   Row,
   Col,
   Card,
-  CardBody,
-  CardHeader,
   Button,
   Nav,
-  NavItem,
-  NavLink,
-  Modal,
-  ModalBody,
-  ModalHeader
-} from "shards-react";
+  Modal
+} from 'react-bootstrap';
+
 import PageTitle from "../components/common/PageTitle";
-import "./../assets/Styles.css";
+import "../assets/styling/Styles.css";
 import "./Styles.css";
 import FieldSetupForm from "../components/FieldSettingForms/FieldSetupForm";
 import FieldSoilForm from "../components/FieldSettingForms/FieldSoilForm";
@@ -1055,7 +1051,7 @@ class AddField extends React.Component {
           return (
             <div>
               <Card small className="h-100">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <div
                     style={{
                       display: "flex",
@@ -1069,8 +1065,8 @@ class AddField extends React.Component {
                     </div>
                   </div>
 
-                </CardHeader>
-                <CardBody className="pt-0">
+                </Card.Header>
+                <Card.Body className="pt-0">
                   <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
@@ -1093,10 +1089,10 @@ class AddField extends React.Component {
                   </div> */}
                   
 
-                </CardBody>
+                </Card.Body>
               </Card>
               <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle} >
-                    <ModalHeader>
+                    <Modal.Header>
                       <Button
                         // theme="success"
                         className="mb-2 mr-1 btn btn-danger"
@@ -1105,8 +1101,8 @@ class AddField extends React.Component {
                       >
                         <i class={`fa fa-times mx-2`}></i>
                       </Button>
-                    </ModalHeader>
-                    <ModalBody>
+                    </Modal.Header>
+                    <Modal.Body>
                       <Row>
                         <Col lg='6' md="12" sm="12">
                           <div
@@ -1160,7 +1156,7 @@ class AddField extends React.Component {
 
                         </Col> */}
                       </Row>
-                    </ModalBody>
+                    </Modal.Body>
                   </Modal>
             </div>
           )
@@ -1168,7 +1164,7 @@ class AddField extends React.Component {
           return (
             <div>
               <Card small className="h-100">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <div
                     style={{
                       display: "flex",
@@ -1179,8 +1175,8 @@ class AddField extends React.Component {
                     <h6 className="m-0">{t('soil_info')}</h6>
                    
                   </div>
-                </CardHeader>
-                <CardBody className="pt-0">
+                </Card.Header>
+                <Card.Body className="pt-0">
                       <Row noGutters className="page-header py-4">
                        <PageTitle
                          sm="4"
@@ -1207,10 +1203,10 @@ class AddField extends React.Component {
                     </Button>
 
                   </div> */}
-                </CardBody>
+                </Card.Body>
               </Card>
                   <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle} >
-                    <ModalHeader>
+                    <Modal.Header>
                     <div
                             style={{
                               display: "flex",
@@ -1240,8 +1236,8 @@ class AddField extends React.Component {
                       
                             
                           </div>
-                    </ModalHeader>
-                    <ModalBody>
+                    </Modal.Header>
+                    <Modal.Body>
                         <div
                           style={{
                             display: "flex",
@@ -1279,7 +1275,7 @@ class AddField extends React.Component {
                           />
                         </div>
                             
-                    </ModalBody>
+                    </Modal.Body>
                   </Modal>
             </div>
           )
@@ -1287,7 +1283,7 @@ class AddField extends React.Component {
           return (
             <div>
               <Card small className="h-100">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <div
                     style={{
                       display: "flex",
@@ -1297,8 +1293,8 @@ class AddField extends React.Component {
                   >
                     <h6 className="m-0">{t('crop_info')}</h6>{" "}
                   </div>
-                </CardHeader>
-                <CardBody className="pt-0">
+                </Card.Header>
+                <Card.Body className="pt-0">
                 <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
@@ -1323,10 +1319,10 @@ class AddField extends React.Component {
 
                   </div> */}
 
-                </CardBody>
+                </Card.Body>
               </Card>
                   <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle}>
-                    <ModalHeader>
+                    <Modal.Header>
                     <div
                             style={{
                               display: "flex",
@@ -1356,8 +1352,8 @@ class AddField extends React.Component {
                             
                           </div>
                    
-                    </ModalHeader>
-                    <ModalBody>
+                    </Modal.Header>
+                    <Modal.Body>
                       <div
                         style={{
                           display: "flex",
@@ -1403,7 +1399,7 @@ class AddField extends React.Component {
                         />
                       </div>
                    
-                    </ModalBody>
+                    </Modal.Body>
                   </Modal>
             </div>
           )
@@ -1411,7 +1407,7 @@ class AddField extends React.Component {
           return (
             <div>
               <Card small className="h-100">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <div
                     style={{
                       display: "flex",
@@ -1421,8 +1417,8 @@ class AddField extends React.Component {
                   >
                     <h6 className="m-0">{t('Irrigation_info')}</h6>{" "}
                   </div>
-                </CardHeader>
-                <CardBody className="pt-0">
+                </Card.Header>
+                <Card.Body className="pt-0">
                 <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
@@ -1445,10 +1441,10 @@ class AddField extends React.Component {
                     </Button>
 
                   </div> */}
-                </CardBody>
+                </Card.Body>
               </Card>
                   <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle}>
-                    <ModalHeader>
+                    <Modal.Header>
                     <div
                             style={{
                               display: "flex",
@@ -1478,8 +1474,8 @@ class AddField extends React.Component {
                       
                             
                           </div>
-                    </ModalHeader>
-                    <ModalBody>
+                    </Modal.Header>
+                    <Modal.Body>
 
                       <div
                         style={{
@@ -1530,7 +1526,7 @@ class AddField extends React.Component {
                         />
                       </div>
                      
-                    </ModalBody>
+                    </Modal.Body>
                   </Modal>
             </div>
           )
@@ -1538,7 +1534,7 @@ class AddField extends React.Component {
           return (
             <div>
               <Card small className="h-100">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <div
                     style={{
                       display: "flex",
@@ -1574,8 +1570,8 @@ class AddField extends React.Component {
                       {t('cancel')}
                     </Button>
                   </div>
-                </CardHeader>
-                <CardBody className="pt-0">
+                </Card.Header>
+                <Card.Body className="pt-0">
                   <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
@@ -1586,13 +1582,13 @@ class AddField extends React.Component {
                   <Row>
                     <Col lg="12" md="12" sm="12" className="mb-4">
                       <Card small>
-                        <CardHeader>{t('active_fields')}</CardHeader>
-                        <CardBody>
+                        <Card.Header>{t('active_fields')}</Card.Header>
+                        <Card.Body>
                           <FieldList
                             Fields={this.getDataFields}
                             FieldsList={this.state.farmsData}
                           />
-                        </CardBody>
+                        </Card.Body>
                       </Card>
                     </Col>
                   </Row>
@@ -1614,7 +1610,7 @@ class AddField extends React.Component {
 
                     />
                   </div>
-                </CardBody>
+                </Card.Body>
               </Card>
             </div>
           )
@@ -1639,22 +1635,22 @@ class AddField extends React.Component {
             <Row className=' d-flex justify-content-center align-items-center py-2'>
               <Col lg='12' md='12' sm='12'>
                 <Nav tabs style={{ paddingBottom: 10 }}>
-                  <NavItem>
-                    <NavLink id="field" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
+                  <Nav.Item>
+                    <Nav.Link id="field" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
                       {t('field_setup')}
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink id="soil" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link id="soil" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
                       {t('soil_info')}
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink id="crop" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink id="irrig" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</NavLink>
-                  </NavItem>
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link id="crop" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link id="irrig" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</Nav.Link>
+                  </Nav.Item>
                 </Nav>
 
               </Col>

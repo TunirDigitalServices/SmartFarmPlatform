@@ -1,8 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { Col } from "shards-react";
-import { useHistory } from "react-router-dom";
+import { Col } from 'react-bootstrap';
+
+
 
 const PageTitle = ({ title, subtitle, className, ...attrs }) => {
   const classes = classNames(
@@ -11,7 +12,7 @@ const PageTitle = ({ title, subtitle, className, ...attrs }) => {
     "text-md-left",
     "mb-sm-0"
   );
-  const history = useHistory();
+ 
 
   return (
     <Col xs="12" sm="4" className={classes} {...attrs}>

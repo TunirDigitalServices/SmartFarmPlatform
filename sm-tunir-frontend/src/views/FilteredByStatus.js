@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Col, Container } from 'shards-react'
+
+import { Container, Row, Col } from 'react-bootstrap';
+
 import api from '../api/api';
 import swal from 'sweetalert';
-import { useHistory } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 const FilteredByStatus = ({ value, filteredByStatus, crops,sensorsData}) => {
@@ -84,7 +86,7 @@ const FilteredByStatus = ({ value, filteredByStatus, crops,sensorsData}) => {
     //     }
 
     //     console.log(fieldsByStatus)
-    const history = useHistory()
+   const navigate = useNavigate()
 
     const routeToField = (fieldUid) => {
         if (fieldUid) {
@@ -92,7 +94,7 @@ const FilteredByStatus = ({ value, filteredByStatus, crops,sensorsData}) => {
                 "Field",
                 fieldUid
             );
-            history.push(`/Fields/${fieldUid}`)
+            navigate(`/Fields/${fieldUid}`)
 
         }
     }
