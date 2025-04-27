@@ -4,10 +4,10 @@ module.exports = {
     development: {
       client: 'mysql',
       connection: {
-        host : "51.83.75.65",
-        user : 'root',
-        password : 'sm@rtF@rms49_',
-        database : "smart_farm",
+        host : process.env.HOST_SQ,
+        user : process.env.USER_SQL,
+        password :  process.env.PASSWORD_SQL,
+        database : process.env.DATABASE_SQL,
         charset: 'utf8'
       },
       pool: { min: 0, max: 100 },
