@@ -315,7 +315,7 @@ const generatePDFReport = async (dataCalcul, fieldInfo, calcul, bilan, irrigatio
                     'nameField': dataCalcul.fields.name,
                     'nameUser': fieldInfo.userName,
                     'phone': fieldInfo.phoneNumber,
-                    'codeSensor': dataCalcul.sensors.code,
+                    'codeSensor': dataCalcul.sensors.code || '-',
                     'Lat': parseFloat(dataCalcul.sensors.Latitude || 0).toFixed(4),
                     'Lon': parseFloat(dataCalcul.sensors.Longitude || 0).toFixed(4),
                     'crop': fieldInfo.cropType,
@@ -466,8 +466,8 @@ const calculSimulation = async (
     )
       .then((response) => response.json())
       .then((jsonData) => {
-        dailyDates = jsonData.daily?.time;
-        dailyET0 = jsonData.daily?.et0_fao_evapotranspiration;
+        dailyDates = (jsonData.daily && jsonData.daily.time) || undefined;
+        dailyET0 = (jsonData.daily && jsonData.daily.et0_fao_evapotranspiration) || undefined;
       });
   
     // Initialize variables
@@ -505,11 +505,14 @@ const calculSimulation = async (
           let dateET0 = date.toISOString().slice(0, 10);
   
           // Retrieve ET0 for the specific day
-          dailyDates?.forEach((dayDate, indx) => {
-            if (dateET0 === dayDate) {
-              ET0 = dailyET0[indx];
-            }
-          });
+          if(dailyDates && dailyET0){
+            dailyDates.forEach((dayDate, indx) => {
+                if (dateET0 === dayDate) {
+                  ET0 = dailyET0[indx];
+                }
+              });
+          }
+     
   
           // Calculate surface occupied and flow by tree
           if (DataCrops.length > 0) {

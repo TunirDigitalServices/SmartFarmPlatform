@@ -1454,9 +1454,9 @@ const calculBilanHydrique = async (req, res) => {
     const allowedEndTime = new Date();
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
-   if (today.getDay() !== 1 || today !== allowedStartTime) {
-     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
-}
+  // if (today.getDay() !== 1 || today !== allowedStartTime) {
+  //   return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+//}
 
     try {
         const field = new Field()

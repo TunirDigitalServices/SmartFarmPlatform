@@ -57,7 +57,7 @@ const FieldsManagement = () => {
 
   const generateReport = async () => {
     setIsGenerated(true)
-    await api.get('/createBulletin')
+    await api.get('/create-report')
       .then(result => {
         if (result) {
           swal({

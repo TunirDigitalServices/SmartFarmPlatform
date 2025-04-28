@@ -152,8 +152,8 @@ router.get('/simulation/single-simulation/:id',auth,getSingleSimulation)
 router.delete('/simulation/delete-simulation',auth,deleteSimulation)
 
 /***************Sensor Calcul*********************/
-router.post('/calcul/add-sensor-calcul',calculBilanHydrique)
-// router.post('/calcul/add-sensor-calcul',calculSensorBilan)
+// router.post('/calcul/add-sensor-calcul',calculBilanHydrique)
+router.post('/calcul/add-sensor-calcul',calculSensorBilan)
 router.post('/calcul/field-sensor-calcul',calculBilanHydriqueByField)
 router.get('/calcul/get-sensor-calcul/:sensorCode',auth,getCalculSensor)
 router.get('/generatePDF',generatePDF)
