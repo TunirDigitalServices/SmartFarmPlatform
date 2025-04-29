@@ -30,6 +30,10 @@ import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import ndvi from "../assets/NDVI.png";
+import ndwi from "../assets/NDWI.png";
+import moisture from "../assets/MOISTURE-INDEX.png";
+import swir from "../assets/SWIR.png";
 
 const SatelliteImages = () => {
   const [coords, setCoords] = useState({
@@ -70,17 +74,25 @@ const SatelliteImages = () => {
     try {
       setLoadingImages(true);
       const fieldId = selectedField[0].Id;
-      const apiUrl = `/field/get-sattelite-images/${fieldId}`;
-      const response = await api.get(apiUrl);
-      
+      let userUid = JSON.parse(localStorage.getItem("user")).id;
+      let coordinates = JSON.parse(selectedField[0].coordinates).map(elem => {
+        return [elem.Long, elem.Lat];
+      });
+
+      const apiUrl = `/add-satellite-images/${userUid}/${fieldId}`;
+      const response = await api.post(apiUrl, {
+        date: selectedDate,
+        coordinates
+      });
+
       // Assuming the backend now returns image URLs
-      const fetchedData = response.data.imagesData.map(image => ({
-        ...image,
-        // Add a preview URL if needed (for thumbnails)
-        previewUrl: image.image_url // or generate thumbnails on backend
-      }));
-      
-      setSatellitesImages(fetchedData);
+      // const fetchedData = response.data.images.map(image => ({
+      //   ...image,
+      //   // Add a preview URL if needed (for thumbnails)
+      //   previewUrl: image.image_url // or generate thumbnails on backend
+      // }));
+
+      setSatellitesImages(response.data.images);
       setLoadingImages(false);
     } catch (error) {
       console.error("API error:", error);
@@ -88,7 +100,7 @@ const SatelliteImages = () => {
     }
   };
 
-  console.log(satellitesImages)
+  console.log(satellitesImages);
   useEffect(() => {
     const getDataFields = async () => {
       await api.get("/field/fields").then(res => {
@@ -123,22 +135,22 @@ const SatelliteImages = () => {
     if (selectedField.length > 0) {
       getSatelliteImages();
     }
-  }, [selectedField]);
+  }, [selectedField, selectedDate]);
 
   const { t, i18n } = useTranslation();
 
-  useEffect(() => {
-    // Generate an array of dates for the next 7 days
-    const next7Days = Array.from({ length: 6 }, (_, index) =>
-      moment()
-        .subtract(index, "days")
-        .format("D MMM YYYY")
-    );
+  // useEffect(() => {
+  //   // Generate an array of dates for the next 7 days
+  //   const next7Days = Array.from({ length: 6 }, (_, index) =>
+  //     moment()
+  //       .subtract(index, "days")
+  //       .format("D MMM YYYY")
+  //   );
 
-    const ascendingDates = next7Days.reverse();
+  //   const ascendingDates = next7Days.reverse();
 
-    setDates(ascendingDates);
-  }, []);
+  //   setDates(ascendingDates);
+  // }, []);
 
   const formatDate = dateString => {
     // Parse the input date string using Moment.js
@@ -150,41 +162,41 @@ const SatelliteImages = () => {
     return formattedDate;
   };
 
-  const handleDateClick = async (date) => {
+  const handleDateClick = async date => {
     setSelectedDate(date);
     const formattedDate = formatDate(date);
-    
+
     // Filter existing images first
-    const filteredData = satellitesImages.filter(
-      data => moment(data.created_at).format("D MMM YYYY") === date
-    );
-    
-    setSelectedImages(filteredData);
-    
+    // const filteredData = satellitesImages.filter(
+    //   data => moment(data.created_at).format("D MMM YYYY") === date
+    // );
+
+    // setSelectedImages(filteredData);
+
     // If no images for this date, fetch from backend
-    if (filteredData.length === 0) {
-      try {
-        setLoadingImages(true);
-        const fieldId = selectedField[0].Id;
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        const apiUrl = `/satellite-images/${userId}/${fieldId}/${formattedDate}`;
-        
-        const response = await api.get(apiUrl);
-        if (response.data.imagesData && response.data.imagesData.length > 0) {
-          const newImages = response.data.imagesData.map(img => ({
-            ...img,
-            previewUrl: img.image_url
-          }));
-          
-          setSatellitesImages(prev => [...prev, ...newImages]);
-          setSelectedImages(newImages);
-        }
-      } catch (error) {
-        console.error("API error:", error);
-      } finally {
-        setLoadingImages(false);
-      }
-    }
+    // if (filteredData.length === 0) {
+    //   try {
+    //     setLoadingImages(true);
+    //     const fieldId = selectedField[0].Id;
+    //     const userId = JSON.parse(localStorage.getItem("user")).id;
+    //     const apiUrl = `/satellite-images/${userId}/${fieldId}/${formattedDate}`;
+
+    //     const response = await api.get(apiUrl);
+    //     if (response.data.imagesData && response.data.imagesData.length > 0) {
+    //       const newImages = response.data.imagesData.map(img => ({
+    //         ...img,
+    //         previewUrl: img.image_url
+    //       }));
+
+    //       setSatellitesImages(prev => [...prev, ...newImages]);
+    //       setSelectedImages(newImages);
+    //     }
+    //   } catch (error) {
+    //     console.error("API error:", error);
+    //   } finally {
+    //     setLoadingImages(false);
+    //   }
+    // }
   };
   const getSelectedField = e => {
     const selectedId = e.target.value;
@@ -193,24 +205,29 @@ const SatelliteImages = () => {
   };
 
   useEffect(() => {
-    const filtredData = satellitesImages.filter(data => {
-      return (
-        moment(data.created_at).format("D MMM YYYY") === selectedDate &&
-        data.field_id === selectedField[0].Id
-      );
-    });
-    setSelectedImages(filtredData);
-  }, [selectedDate, selectedField]);
+    setSelectedImages(satellitesImages);
+  }, [selectedDate, selectedField, satellitesImages]);
 
-  const handleClick = (image) => {
+  const handleClick = image => {
     if (image) {
-      const imageUrl = `http://localhost:8000${image.image_url}`; // Prepend the backend URL
+      const imageUrl = `${process.env.REACT_APP_BASE_URL}${image.image_url}`; // Prepend the backend URL
       setSelectedImageUrl(imageUrl); // Save the full image URL with localhost
       setDataDisplayed(image.data || []); // Save data for the selected image (e.g., coordinates or metadata)
       setPolygonDisplayed(image.polygon || []); // Save polygon data if applicable
     }
   };
-
+  const designationImageMap = {
+    ndvi: "Vegetation index",
+    ndwi: "Irrigation index",
+    moisture: "Nitrogen Map",
+    swir: "Plant Health"
+  };
+  const typeIcons = {
+    ndvi,
+    ndwi,
+    moisture,
+    swir
+  };
 
   const renderImageGallery = () => {
     if (loadingImages) {
@@ -223,60 +240,51 @@ const SatelliteImages = () => {
 
     if (selectedImages.length === 0) {
       return (
-        <div style={{ 
-          color: "#bebebe", 
-          textAlign: "center",
-          padding: "20px"
-        }}>
+        <div style={{ color: "#bebebe", textAlign: "center", padding: "20px" }}>
           <p>{t("Please select a date")}</p>
         </div>
       );
     }
 
     return (
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 200px)",
-        gap: "10px",
-        padding: "10px"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          padding: "10px"
+        }}
+      >
         {selectedImages.map((image, index) => (
-          <div 
-            key={index}
-            onClick={() => handleClick(image)}
+          <div
             style={{
+              border:
+                selectedImageUrl === image.image_url
+                  ? "2px solid #29B2C4"
+                  : "1px solid #ddd",
               cursor: "pointer",
-              border: selectedImageUrl === image.image_url 
-                ? "2px solid #29B2C4" 
-                : "1px solid #ddd",
-              borderRadius: "4px",
-              overflow: "hidden"
+              borderRadius: "4px"
             }}
           >
-            {/* <img 
-              src={image.previewUrl || image.image_url} 
-              alt={`Satellite ${index}`}
+            <div
+              key={index}
+              onClick={() => handleClick(image)}
               style={{
-                width: "100%",
-                height: "80px",
-                objectFit: "cover"
+                textAlign: "center"
               }}
-            /> */}
-            <div style={{
-              padding: "4px",
-              fontSize: "18px",
-              textAlign: "center",
-              textTransform:'uppercase',
-              fontWeight:'bold'
-            }}>
-              {image.type}
+            >
+              <img
+                src={typeIcons[image.type]}
+                alt={image.type}
+                style={{ height: "32px", borderRadius: "50%" }}
+              />
             </div>
+            <p>{designationImageMap[image.type]}</p>
           </div>
         ))}
       </div>
     );
   };
-console.log(selectedImageUrl)
   return (
     <Container fluid className="main-content-container px-3 pb-2">
       <Row className="page-header py-2 mb-4">
@@ -325,7 +333,6 @@ console.log(selectedImageUrl)
                   fromAction={coords.fromAction}
                   selectedImageUrl={selectedImageUrl}
                   renderImageGallery={renderImageGallery}
-
                 />
               </Col>
             </Row>

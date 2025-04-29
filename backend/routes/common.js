@@ -171,6 +171,6 @@ router.post('/api/sattelite-images',getSatteliteImages)
 router.post('/field/add-sattelite-images',auth,addSatelliteImages)
 router.get('/field/get-sattelite-images/:fieldId', auth,getSatelliteImages)
 router.get('/satellite-images/:userId/:fieldId/:date',auth,getSatelliteImagesUrls)
-router.post('/add-satellite-images' ,  addSatelliteImagesSentinel)
+router.post('/add-satellite-images/:userId/:fieldId' ,auth,  addSatelliteImagesSentinel)
 
 module.exports = router;

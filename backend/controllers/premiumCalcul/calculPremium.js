@@ -1440,7 +1440,7 @@ const getRainFromWeather = async (lat, lon) => {
     }
 
 }
-
+// cron calcul
 const calculBilanHydrique = async (req, res) => {
     const errors = validationResult(req);
 
@@ -1454,9 +1454,9 @@ const calculBilanHydrique = async (req, res) => {
     const allowedEndTime = new Date();
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
-  // if (today.getDay() !== 1 || today !== allowedStartTime) {
-  //   return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
-//}
+  if (today.getDay() !== 1 || today !== allowedStartTime) {
+    return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+}
 
     try {
         const field = new Field()
@@ -1645,7 +1645,7 @@ const calculBilanHydrique = async (req, res) => {
     }
 
 }
-
+// admin calcul
 const calculBilanHydriqueByField = async (req, res) => {
     const errors = validationResult(req);
     const { fieldId , userId } = req.body;
@@ -1666,6 +1666,7 @@ const calculBilanHydriqueByField = async (req, res) => {
 
     console.log(fieldId);
     try {
+        savedCalcul = ''
         const field = await new Field({ 'id': fieldId })
             .query(qb => qb.where('deleted_at', null).and.whereNotNull('Latitude').and.whereNotNull('Longitude'))
             .fetch({
@@ -1825,9 +1826,15 @@ const calculBilanHydriqueByField = async (req, res) => {
                 if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
                     let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
                     if (resultCalcul.length > 0) {
-                        const dateStart = new Date();
-                        const dateEnd = new Date(dateStart.getTime());
-                        dateEnd.setDate(dateEnd.getDate() + 7);
+                        const today = new Date();
+                        const day = today.getDay(); // 0 (Sun) to 6 (Sat)
+                        const diffToMonday = (day === 0 ? -6 : 1) - day; // Calculate days to subtract to get Monday
+                    
+                        const start_date = new Date(today);
+                        start_date.setDate(today.getDate() + diffToMonday);
+                    
+                        const end_date = new Date(start_date);
+                        end_date.setDate(start_date.getDate() + 7);
                         inputs.push({
                             ruPratique: ruPratique,
                             RUmax: RUmax,
@@ -1843,20 +1850,20 @@ const calculBilanHydriqueByField = async (req, res) => {
                             field_id: fields.id,
                             sensor_id: null,
                             sensor_code: null,
-                            start_date: dateStart,
-                            end_date: dateEnd,
+                            start_date,
+                            end_date,
                             result: resultCalcul,
                             inputs: inputs
                         };
                         console.log(resultCalcul)
                         allCalculations.push(calcData);
-                        await new CalculSensor(calcData).save();
+                        savedCalcul = await new CalculSensor(calcData).save();
                     }
                 }
             }
         // }
         if (allCalculations.length > 0) {
-            return res.status(201).json({data : allCalculations});
+            return res.status(201).json({data : allCalculations , id : savedCalcul.id});
         } else {
             return res.status(200).json({ type: "success", message: "ok" });
         }
@@ -2114,7 +2121,7 @@ const sendSMStoSelectedUser = async (req, res) => {
     }
 }
 
-
+// user calcul by sensor
 const getCalculSensor = async (req, res) => {
     if (!req.userUid || req.userUid === "") {
         return res.status(404).json({ type: "danger", message: "no_user" });
@@ -2163,8 +2170,9 @@ const getCalculSensor = async (req, res) => {
             let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
             let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
             inputsCalcul = calcul.inputs;
-
+            
             if (today >= startDate && today <= endDate) {
+                console.log('Here is sensor calcul '+ calcul.id)
                 filteredResult = calcul.result.filter(result => {
                     let resultDate = new Date(result.date).toISOString().slice(0, 10);
                     return startDate <= resultDate && endDate >= resultDate && (sensorCode === "" || result.codeSensor === sensorCode);
@@ -2269,11 +2277,12 @@ const getAllCalculByUser = async (req, res) => {
         return res.status(500).json({ type: "danger", message: "error_user" });
     }
 }
-
+// user calcul by field
 const getAllCalculByField = async (req, res) => {
     if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
     const fieldUid = req.params.fieldUid;
     let field_id = ""
+    let calcul_id = ''
     try {
         const user = await new Field({ 'uid': fieldUid, 'deleted_at': null })
             .fetch({ require: false })
@@ -2281,37 +2290,57 @@ const getAllCalculByField = async (req, res) => {
                 if (result === null) return res.status(404).json({ type: "danger", message: "no_field" });
                 if (result) field_id = result.get("id");
             });
-        await new CalculSensor()
-            .query((qb) => {
+            const query = new CalculSensor().query((qb) => {
                 qb.select('*');
-                // qb.where({ sensor_code: sensorCode });
                 qb.where({ field_id });
-            })
-            .fetchAll({ require: false })
-            .then(async result => {
-                if (result === null) return res.status(404).json({ type: "danger", message: "no_user_calcul" });
-                let resultCalcul = JSON.parse(JSON.stringify(result))
-                let todayDate = new Date()
-                let today = todayDate.toISOString().slice(0, 10)
-                let filteredResult = [];
-                let inputsCalcul = [];
+            });
+    
+            const result = await query.fetchAll({ require: false });
+    
+            if (result === null || result.length === 0) {
+                return res.status(404).json({ type: "danger", message: "no_field_calcul" });
+            }
+        
+            let resultCalcul = JSON.parse(JSON.stringify(result));
+            let todayDate = new Date();
+            let today = todayDate.toISOString().slice(0, 10);
+            let filteredResult = [];
+            let inputsCalcul = [];
 
-                resultCalcul.map(calcul => {
-                    let startDate = new Date(calcul.start_date).toISOString().slice(0, 10)
-                    let endDate = new Date(calcul.end_date).toISOString().slice(0, 10)
-                    let resultCalcul = calcul.result
-                    inputsCalcul = calcul.inputs
-                    filteredResult = resultCalcul.filter(result => {
-                        let resultDate = new Date(result.date).toISOString().slice(0, 10)
-                        return startDate <= resultDate && endDate >= resultDate && result.irrigationNbr !== 0
-                    })
 
-                })
-                return res.status(201).json({ calcul: resultCalcul, inputs: inputsCalcul });
-            }).catch(err => {
-                console.log(err)
-                return res.status(500).json({ type: "danger", message: "error_get_calcul" });
-            })
+            let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
+            let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
+            filteredResult = resultCalcul[resultCalcul.length - 1].result.filter(result => {
+                let resultDate = new Date(result.date).toISOString().slice(0, 10);
+                return startDate <= resultDate && endDate >= resultDate;
+            });
+            inputsCalcul = resultCalcul[resultCalcul.length - 1].inputs;
+
+
+            const start_date = new Date(startDate);
+            start_date.setDate(start_date.getDate() - 14);
+        
+            const end_date = new Date(endDate);
+            end_date.setDate(end_date.getDate() - 14);
+
+            resultCalcul.forEach((calcul,index) => {
+                // let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
+                // let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
+ 
+                if (today >= startDate && today <= endDate && index === resultCalcul.length - 1) {
+                    inputsCalcul = calcul.inputs;
+
+                   calcul_id = calcul.id;
+                   console.log(calcul_id,'my id');
+                   
+                    filteredResult = calcul.result.filter(result => {
+                        let resultDate = new Date(result.date).toISOString().slice(0, 10);
+                        return startDate <= resultDate && endDate >= resultDate;
+                    });
+                }
+            });
+    
+            return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul , id : calcul_id });
 
 
     } catch (error) {

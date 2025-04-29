@@ -170,7 +170,7 @@ const Field = () => {
   useEffect(() => {
       const calculDataSensor = async () => {
         console.log(sensorCode)
-        let url = `/calcul/get-sensor-calcul/${sensorCode}`
+        let url = `/calcul/field-calcul/${Uid}`
         if (role === 'ROLE_SUPPLIER') {
           url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
         }
@@ -191,7 +191,7 @@ const Field = () => {
 
       calculDataSensor()
     
-  }, [sensorCode])
+  }, [Uid])
 
   console.log(resultCalcul)
 
@@ -660,40 +660,44 @@ const Field = () => {
     getAllCalculByField()
   }, [])
 
+  console.log(allCalcul);
+  
 
   useEffect(() => {
     let data = [];
     allCalcul &&
       allCalcul.forEach((event) => {
-        let startDate = new Date(event.start_date).toISOString().slice(0, 10);
-        let endDate = new Date(event.end_date).toISOString().slice(0, 10);
-        let resultCalcul = event.result;
-
-        const filteredEvents = resultCalcul.filter((result) => {
-          let resultDate = new Date(result.date).toISOString().slice(0, 10);
-
-          return (
-            result.irrigationNbr === 1 &&
-            resultDate >= startDate &&
-            resultDate < endDate
-          );
-        });
-        filteredEvents &&
-          filteredEvents.forEach((event) => {
-            data.push({
-              title: (
-                <div style={{ fontSize: 11.5 }}>
-                  <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
-                  <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
-                  <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
-                </div>
-              ),
-              allDay: true,
-              start: new Date(event.date),
-              end: new Date(event.date),
-              source: "resultCalcul",
-            });
+        if(event.irrigationNbr === 1){
+          data.push({
+            title: (
+              <div style={{ fontSize: 11.5 }}>
+                <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
+                <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
+                <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
+              </div>
+            ),
+            allDay: true,
+            start: new Date(event.date),
+            end: new Date(event.date),
+            source: "resultCalcul",
           });
+        }
+        // let startDate = new Date(event.start_date).toISOString().slice(0, 10);
+        // let endDate = new Date(event.end_date).toISOString().slice(0, 10);
+        // let resultCalcul = event.result;
+
+        // const filteredEvents = resultCalcul.filter((result) => {
+        //   let resultDate = new Date(result.date).toISOString().slice(0, 10);
+
+        //   return (
+        //     result.irrigationNbr === 1 &&
+        //     resultDate >= startDate &&
+        //     resultDate < endDate
+        //   );
+        // });
+        // filteredEvents && filteredEvents.forEach((event) => {
+            
+          // });
       });
     setEvents(data);
   }, [allCalcul]);
