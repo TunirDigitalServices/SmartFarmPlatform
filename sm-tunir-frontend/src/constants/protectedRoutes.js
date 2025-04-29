@@ -1,5 +1,5 @@
 import Dashboard from '../components/Simulation/Dashboard';
-import Fields from '../pages/fields/fields';
+import Fields from '../views/Field';
 import Sensors from '../pages/sensors/Sensors';
 import SatelliteImages from '../pages/sateliteImages/SateliteImages';
 import Simulations from '../pages/mysimulations/Mysimulations';
@@ -20,9 +20,9 @@ const protectedRoutes = [
   },
   {
     name: 'Fields',
-    path: '/fields',
+    path: '/fields/:id',
     element: <Fields />,
-    roles: ['admin','user'] 
+    roles: ['ROLE_USER','user'] 
 
   },
   {

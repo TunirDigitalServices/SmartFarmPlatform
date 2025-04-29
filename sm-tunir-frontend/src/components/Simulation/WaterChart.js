@@ -1,116 +1,146 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { Col } from 'shards-react';
-import moment from 'moment'; // Import moment library
+import moment from 'moment';
+import 'chartjs-adapter-moment';
+
+// Chart.js v4 component registration
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  LinearScale,
+  TimeScale,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale,
+} from 'chart.js';
+
+ChartJS.register(
+  LineElement,
+  PointElement,
+  LinearScale,
+  TimeScale,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale
+);
 
 const WaterChart = ({ data }) => {
-  const [state, setState] = useState(null);
-  const { t, i18n } = useTranslation();
+  const [chartData, setChartData] = useState(null);
+  const { t } = useTranslation();
   const [ruMax, setRuMax] = useState(0);
   const [ruMin, setRuMin] = useState(0);
-  const getChartData = () => {
-    let labels = [];
-    let dataBilan = [];
-    let RuMax = [];
-    let RuMin = [];
+
+  useEffect(() => {
+    if (!data || data.length === 0) return;
+
+    const labels = [];
+    const dataBilan = [];
+    const ruMaxArr = [];
+    const ruMinArr = [];
 
     for (let i = 1; i < data.length; i++) {
       const hourlyBilan = data[i].bilan;
       for (let j = 0; j < hourlyBilan.length; j++) {
         const hourData = hourlyBilan[j];
-        const date = moment(data[i].dates).add(hourData.hour, 'hours').locale('en').format('MMM DD YYYY HH:mm');
+        const date = moment(data[i].dates).add(hourData.hour, 'hours').toISOString();
         labels.push(date);
         dataBilan.push(parseFloat(hourData.value).toFixed(2));
-        RuMax.push(data[i].RUmax);
-        RuMin.push(data[i].RUmin);
+        ruMaxArr.push(data[i].RUmax);
+        ruMinArr.push(data[i].RUmin);
       }
     }
-    const chartData = {
-      labels: labels,
+
+    setChartData({
+      labels,
       datasets: [
         {
-          label: `${t('water_balance')}`,
-          fill: false,
-          lineTension: 0,
-          backgroundColor: 'rgba(75,192,192,1)',
-          borderColor: '#27A6B7',
-          borderWidth: 2,
+          label: t('water_balance'),
           data: dataBilan,
+          borderColor: '#27A6B7',
+          backgroundColor: 'rgba(75,192,192,0.3)',
+          borderWidth: 2,
+          tension: 0,
         },
         {
-          label: `${t('Ru max (mm)')}`,
-          fill: false,
-          lineTension: 0,
-          backgroundColor: '#32CB8D',
+          label: t('Ru max (mm)'),
+          data: ruMaxArr,
           borderColor: '#32CB8D',
           borderWidth: 1,
-          data: RuMax,
+          tension: 0,
         },
         {
-          label: `${t('Ru min (mm)')}`,
-          fill: false,
-          lineTension: 0,
-          backgroundColor: '#e5331b',
+          label: t('Ru min (mm)'),
+          data: ruMinArr,
           borderColor: '#e5331b',
           borderWidth: 1,
-          data: RuMin,
+          tension: 0,
         },
       ],
-    };
-    setState(chartData);
-    setRuMax(RuMax[0]); // Find max RUmax value
-    setRuMin(RuMin[0]); // Find min RUmin value
+    });
+
+    setRuMax(Math.max(...ruMaxArr));
+    setRuMin(Math.min(...ruMinArr));
+  }, [data, t]);
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: t('water_balance'),
+        font: {
+          size: 14,
+        },
+      },
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+    },
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'hour',
+          displayFormats: {
+            hour: 'DD-MM-YYYY HH:mm',
+          },
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 25,
+        },
+      },
+      y: {
+        beginAtZero: true,
+        suggestedMin: Math.round(ruMin - 10),
+        suggestedMax: ruMax > 100 ? ruMax + 10 : 100,
+      },
+    },
+    elements: {
+      point: {
+        radius: 0,
+      },
+    },
   };
 
-  useEffect(() => {
-    getChartData();
-  }, [data]);
+  if (!chartData) return <div>Loading chart...</div>;
+
 
   return (
-    <Line
-      data={state}
-      options={{
-        title: {
-          display: true,
-          text: `${t('water_balance')}`,
-          fontSize: 14,
-        },
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-                max: ruMax > 100 ? ruMax + 10 : 100,
-                min: Math.round(ruMin - 10),
-              },
-            },
-          ],
-          xAxes: [
-            {
-              type: 'time', // Use a time scale for x-axis
-              time: {
-                unit: 'hour', // Display time in hours
-                stepSize: 1, // Display every hour
-                displayFormats: {
-                  hour: 'DD-MM-YYYY HH:mm', // Format of displayed time
-                },
-              },
-            },
-          ],
-        },
-        elements: {
-          point:{
-              radius: 0
-          }
-      }
-      }}
-    />
-  );
+    <div>
+
+      {chartData && (
+        <Line data={chartData} options={options}  height={263}
+        style={{ height: '100%', width: '80%', margin: '0 auto' }} />
+        )}
+    </div>
+  )
 };
 
 export default WaterChart;

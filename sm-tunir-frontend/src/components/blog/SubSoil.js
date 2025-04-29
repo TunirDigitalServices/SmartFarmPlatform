@@ -1,8 +1,8 @@
 import moment from 'moment';
 import React , {useState,useEffect}from 'react'
 import { Line } from  'react-chartjs-2';
-import { useHistory } from 'react-router-dom';
-import { Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
+
+// import { Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
 import api from '../../api/api';
 import { useTranslation } from "react-i18next";
 
@@ -47,7 +47,7 @@ const SubSoil = ({data,codeSensor}) => {
     },[codeSensor])
 
 
-    const history = useHistory()
+
 
     const [state,setState] = useState(null)
 
@@ -194,52 +194,19 @@ const SubSoil = ({data,codeSensor}) => {
 
   return (
     <div>
-        <Line
-          height={263}
-
-      data={state}
-      style={{
-        height: "100%",
-
-        width: "80%",
-        margin: "0 auto"
-      }}
-      options={options}
-        // {
-        //     title:{
-        //       display:false,
-        //       text:'Subsoil Humidity (%)',
-        //       fontSize:15
-        //     },
-        //     legend:{
-        //       display:false,
-        //       position:'bottom'
-        //     },
-        //      scales: {
-        //         // xAxes: [{
-        //         //     ticks: {
-        //         //         autoSkip: false,
-        //         //         maxRotation: 90,
-        //         //         minRotation: 90
-        //         //     }
-        //         // }],
-        //         yAxes: [{
-        //           ticks: {
-        //             stepSize: 25,
-        //             suggestedMin: 0,
-        //             suggestedMax: 100,
-        //             callback: function(value, index, values) {
-        //               if (value === 0 || value === 25 || value === 50 || value === 75 || value === 100) {
-        //                 return value ;
-        //               }
-        //               return null;
-        //             }
-        //           }
-        //         }]
-        //     }
-        //   }
         
-      />
+      {state && (
+        <Line
+          data={state}
+          options={options}
+          height={263}
+          style={{ height: '100%', width: '80%', margin: '0 auto' }}
+        />
+      )}
+ 
+     
+
+      
     </div>
   )
 }

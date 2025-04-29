@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardHeader,
-  CardFooter,
-  Button,
-  FormSelect,
-  FormInput
-} from "shards-react";
-import "../assets/range-date-picker.css";
+
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  Button, 
+  Form
+} from 'react-bootstrap';
+
+import "../assets/styling/range-date-picker.css";
 import "react-calendar/dist/Calendar.css";
 import PageTitle from "../components/common/PageTitle";
-import "./../assets/Styles.css";
+import "../assets/styling/Styles.css";
 import { sideBarFields } from "../data/sideBarField";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Styles.css";
-import evapo from "../images/evapo.png";
+import evapo from "../assets/images/evapo.png";
 import api from '../api/api';
 import { useTranslation } from "react-i18next";
 import LoadingSpinner from '../components/common/LoadingSpinner'
@@ -31,7 +29,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/nb";
 import momentTimezone from "moment-timezone";
-import { Modal, Form } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import swal from "sweetalert";
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -46,7 +44,8 @@ const Field = () => {
   const Uid = localStorage.getItem("Field");
   const [isLoading, setIsLoading] = useState(true)
   const { t, i18n } = useTranslation();
-  const history = useHistory();
+
+  const navigate=useNavigate()
   const [selectedField, setSelectedField] = useState([]);
   const [sensorCode, setSensorCode] = useState('')
   const [coord, setCoord] = useState({ lat: '37.05002', lon: '11.01442' })
@@ -361,10 +360,10 @@ const Field = () => {
             if (item.irrigations == 0) msg = "NO IRRIGATION FOUNDED"
             return (
               <Card className="mb-4 ">
-                <CardHeader className="border-bottom">
+                <Card.Header className="border-bottom">
                   <h6 className="m-0">{t('field_status')}</h6>
-                </CardHeader>
-                <CardBody className="py-2">
+                </Card.Header>
+                <Card.Body className="py-2">
                   <Row className="border-bottom  bg-light">
                     <Col className="p-0" lg="6" md="12" sm="12">
                       <p className="m-0">{t('crop_type')} : {item.croptypes.crop}</p>
@@ -394,7 +393,7 @@ const Field = () => {
 
                     </Col>
                     <Card className="m-2">
-                      <CardHeader className="border-bottom d-flex flex-wrap justify-content-between align-items-center">
+                      <Card.Header className="border-bottom d-flex flex-wrap justify-content-between align-items-center">
                         <p
                           style={{
                             color: '#0daaa2',
@@ -409,8 +408,8 @@ const Field = () => {
                           <i className="material-icons">&#xe88e;</i> {irrigationNbr === 1 ? `${t('Irrigate')}` : `${t('not_Irrigate')}`}
                         </p>
                         <div>{todayDate.toLocaleDateString()}</div>
-                      </CardHeader>
-                      <CardBody
+                      </Card.Header>
+                      <Card.Body
                         className="pt-0 d-flex flex-column justify-content-around align-items-center"
                         style={{ height: "100%" }}
                       >
@@ -422,7 +421,7 @@ const Field = () => {
                         <Row>
                           <Col lg="12" md="12" sm="12">
                             <Button
-                              onClick={() => history.push(`/recommendations/${selectedField.id}`)}
+                              onClick={() => navigate(`/recommendations/${selectedField.id}`)}
                               theme="info" outline
                               className="mb-2 mr-1"
                             >
@@ -430,10 +429,10 @@ const Field = () => {
                             </Button>
                           </Col>
                         </Row>
-                      </CardBody>
+                      </Card.Body>
                     </Card>
                   </Row>
-                </CardBody>
+                </Card.Body>
               </Card>
             )
           })
@@ -720,13 +719,14 @@ const Field = () => {
       <Row className="border-bottom mb-4">
         <Col lg="12" md="12" sm="12">
           <Row>
+            <div className="d-flex gap-2 container">
             <Col lg="4" md="12" sm="12" className="mb-4">
               {
                 allDataSensor || sensors.length > 0
                   ?
                   <Card fluid style={{ minHeight: "330px" }}>
                     <>
-                      <CardHeader className="border-bottom bg-light">
+                      <Card.Header className="border-bottom bg-light">
                         <div
                           style={{
                             display: "flex",
@@ -737,7 +737,7 @@ const Field = () => {
                           }}
                         >
                           <h6 className="m-0">{t('active_sensors')}</h6>
-                          <FormSelect style={{ width: "50%" }} value={sensorCode} onChange={evt => { setSensorCode(evt.target.value) }}>
+                          <Form.Select style={{ width: "50%" }} value={sensorCode} onChange={evt => { setSensorCode(evt.target.value) }}>
                             <option value="">{t('select_sensor')}</option>
                             {
                               sensors.map((sensor, i) => {
@@ -747,7 +747,7 @@ const Field = () => {
                                 )
                               })
                             }
-                          </FormSelect>
+                          </Form.Select>
 
                         </div>
 
@@ -795,9 +795,9 @@ const Field = () => {
                           }
                           )
                         }
-                      </CardHeader>
+                      </Card.Header>
 
-                      <CardBody className="pt-0">
+                      <Card.Body className="pt-0">
                         <div style={{ paddingTop: 10 }}>
                           {
                             filteredSensors && filteredSensors.map(data => {
@@ -853,10 +853,10 @@ const Field = () => {
                             </h6>
                           })
                         }
-                      </CardBody>
+                      </Card.Body>
 
 
-                      <CardFooter className="border-top">
+                      <Card.Footer className="border-top">
                         <div>
                           <h6 className="m-0" style={{ fontSize: 14 }}>{t('today_weather')}</h6>
                           <div
@@ -914,30 +914,30 @@ const Field = () => {
 
                           </div>
                         </div>
-                      </CardFooter>
+                      </Card.Footer>
                     </>
                   </Card>
                   :
                   <Card fluid style={{ minHeight: "330px" }}>
-                    <CardHeader >
+                    <Card.Header >
 
-                    </CardHeader>
-                    <CardBody>
+                    </Card.Header>
+                    <Card.Body>
                       <h5 style={{ textAlign: 'center', color: '#0daaa2' }}>Please use the app to install/register a sensor.</h5>
 
-                    </CardBody>
+                    </Card.Body>
                   </Card>
               }
             </Col>
             <Col lg="4" md="12" sm="12" className="mb-4">
               <Card fluid style={{ minHeight: "330px" }} >
 
-                <CardHeader className="border-bottom d-flex justify-content-between align-items-center flex-wrap">
+                <Card.Header className="border-bottom d-flex justify-content-between align-items-center flex-wrap">
                   <h6 className="m-0">{t('soil_status')}</h6>
-                  <Button theme="info" outline onClick={() => history.push('/Graphs')}>{t('see_all')}</Button>
+                  <Button theme="info" outline onClick={() => navigate('/Graphs')}>{t('see_all')}</Button>
 
-                </CardHeader>
-                <CardBody className="p-1">
+                </Card.Header>
+                <Card.Body className="p-1">
                   <SubSoil data={allDataSensor} codeSensor={sensorCode} />
                   {
                     filteredSensors && filteredSensors.map(data => {
@@ -1063,39 +1063,41 @@ const Field = () => {
                   }
 
 
-                </CardBody>
+                </Card.Body>
               </Card>
             </Col>
             {recomBasedOnDate()}
-
+            </div>
           </Row>
           <Row>
+            <div className="container">
             <Col lg="12" md="12" sm="12" className="mb-4">
               <Card>
-                <CardBody className="p-0">
+                <Card.Body className="p-0">
 
                   <EvapoChart
 
                     data={chartData}
 
                   />
-                </CardBody>
+                </Card.Body>
               </Card>
 
             </Col>
             <Col lg="12" md="12" sm="12" className="mb-4">
               <Card>
-                <CardBody className="p-0">
+                <Card.Body className="p-0">
 
                   <WaterChart
 
                     data={chartData}
 
                   />
-                </CardBody>
+                </Card.Body>
               </Card>
 
             </Col>
+            </div>
           </Row>
         </Col>
 
@@ -1141,13 +1143,13 @@ const Field = () => {
                     <Row className="d-flex flex-wrap align-items-center justify-content-center" >
                       <Col>
                         <label style={{ fontWeight: "500", textAlign: "center", margin: 4 }} htmlFor="start">{t('start_date')}</label>
-                        <FormInput id="start" type="date" defaultValue={selectedEvent.start.toISOString().slice(0, 10)} />
+                        <Form.Control id="start" type="date" defaultValue={selectedEvent.start.toISOString().slice(0, 10)} />
 
                       </Col>
                       <Col>
                         <label style={{ fontWeight: "500", textAlign: "center", margin: 4 }} htmlFor="end">{t('end_date')}</label>
 
-                        <FormInput id="end" type="date" defaultValue={selectedEvent.end.toISOString().slice(0, 10)} />
+                        <Form.Control id="end" type="date" defaultValue={selectedEvent.end.toISOString().slice(0, 10)} />
 
                       </Col>
                     </Row>
@@ -1170,12 +1172,12 @@ const Field = () => {
                 {/* <div className="m-2 p-2">
                   <h4>Here you can provide your irrigation plan for this day </h4>
                       <label htmlFor="dose">Irrigation Dose (mm) </label>
-                    <FormInput  
+                    <Form.Control  
                         id="dose"
                         placeholder="Irrigation Dose"
                     />
                         <label htmlFor="time">Irrigation Duration (mn)</label>
-                    <FormInput  
+                    <Form.Control  
                         id="time"
                         placeholder="Irrigation Duration"
                     />
@@ -1210,7 +1212,7 @@ const Field = () => {
           </Modal.Header>
           <Modal.Body>
             <label htmlFor="dose">Irrigation Dose (mm) </label>
-            <FormInput
+            <Form.Control
               id="dose"
               placeholder="Irrigation Dose"
               type="number"
@@ -1218,7 +1220,7 @@ const Field = () => {
               onChange={(e) => setDose(e.target.value)}
             />
             <label htmlFor="time">Irrigation Duration (mn)</label>
-            <FormInput
+            <Form.Control
               type="number"
               id="time"
               placeholder="Irrigation Duration"
@@ -1237,7 +1239,7 @@ const Field = () => {
         </Modal>
         <Col lg="12" md="12" sm="12">
           <Card>
-            <CardBody>
+            <Card.Body>
               <Calendar
                 key={events.length}
                 localizer={localizer}
@@ -1262,7 +1264,7 @@ const Field = () => {
                 }}
               />
 
-            </CardBody>
+            </Card.Body>
 
           </Card>
 

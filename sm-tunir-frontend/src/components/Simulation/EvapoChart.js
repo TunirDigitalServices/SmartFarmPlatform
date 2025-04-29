@@ -2,7 +2,7 @@ import moment from 'moment';
 import React , {useState,useEffect}from 'react'
 import { Line } from  'react-chartjs-2';
 import { useTranslation } from "react-i18next";
-import { Col } from 'shards-react';
+// import { Col } from 'shards-react';
 
 
 const EvapoChart = ({data}) => {
@@ -46,28 +46,33 @@ const EvapoChart = ({data}) => {
     },[data])
 
     return (
-      <Line
-      data={state}
-          options={{
-            title:{
-              display:true,
-              text:`${t('ETC')}`,
-              fontSize:14
-            },
-            legend:{
-              display:true,
-              position:'bottom'
-            },
-            scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true,
-                      min: 0
-                  }
-              }]
-          },
-          }}
-      />
+      <div >
+        {state && (
+ <Line
+ data={state}
+     options={{
+       title:{
+         display:true,
+         text:`${t('ETC')}`,
+         fontSize:14
+       },
+       legend:{
+         display:true,
+         position:'bottom'
+       },
+       scales: {
+         yAxes: [{
+             ticks: {
+                 beginAtZero: true,
+                 min: 0
+             }
+         }]
+     },
+     }}
+ />
+        )}
+     
+      </div>
 
   );
 }

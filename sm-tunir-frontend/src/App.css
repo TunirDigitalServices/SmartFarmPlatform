@@ -29,4 +29,13 @@
   .row {
     --mdb-gutter-x:0 !important;
   }
+  .custom-dropdown .dropdown-toggle::after {
+    display: none !important;
+  }
+  
+  .custom-dropdown .dropdown-toggle:hover,
+  .custom-dropdown .dropdown-item:hover {
+    background-color: transparent !important;
+    color: transparent !important;
+  }
   

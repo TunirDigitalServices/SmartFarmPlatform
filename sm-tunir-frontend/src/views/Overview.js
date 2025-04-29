@@ -1448,7 +1448,9 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row className="py-2 d-flex justify-content-start border-bottom align-items-center">
-              <Col lg='4' md="12" sm="12" className="form-group pt-4">
+            <div className="d-flex gap-2 mt-3">
+
+              <Col lg='6' md="12" sm="12" className="form-group ">
                 <p style={{ margin: "0px" }}>{t('crop_type')} *</p>
                 <Form.Select
                   onChange={handleCropPick}
@@ -1495,7 +1497,7 @@ const Overview = (props) => {
                 }
 
               </Col>
-              < Col lg="4" md="12" sm="12" className="form-group">
+              < Col lg="6" md="12" sm="12" className="form-group">
                 <p style={{ margin: "0px" }}>{t('crop_zone')} *</p>
                 <Form.Select
                   value={cropData.zone_uid}
@@ -1531,8 +1533,11 @@ const Overview = (props) => {
                 </Form.Select>
 
               </Col>
+              </div>
             </Row>
             <Row className="py-2">
+            <div className="d-flex gap-2">
+
               <Col lg="4" md="12" sm="12">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('surface')} (m²)</p>
@@ -1561,6 +1566,9 @@ const Overview = (props) => {
                 </Form.Group>
 
               </Col>
+              </div>
+            <div className="d-flex gap-2">
+
               <Col lg="4" md="12" sm="12">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('planting_date')} *</p>
@@ -1587,6 +1595,9 @@ const Overview = (props) => {
                 </Form.Group>
 
               </Col>
+              </div>
+              <div className="d-flex gap-2">
+
               <Col lg="4" md="12" sm="12">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
@@ -1611,6 +1622,8 @@ const Overview = (props) => {
                 </Form.Group>
 
               </Col>
+              </div>
+
             </Row>
           </Form>
         )
@@ -1624,6 +1637,8 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row form>
+            <div className="d-flex gap-2">
+
               <Col md="6" className="form-group">
                 <p style={{ margin: "0px" }}>{t('irrigation_zone')} *</p>
                 <Form.Select
@@ -1664,6 +1679,8 @@ const Overview = (props) => {
                   }
                 </Form.Select>
               </Col>
+              </div>
+              <div className="d-flex gap-2">
 
               <Col md="6" className="form-group">
                 <p style={{ margin: "0px" }}>{t('Irrigation_system_type')} *</p>
@@ -1689,17 +1706,20 @@ const Overview = (props) => {
                   }
                 </Form.Select>
               </Col>
-              <Col lg="4" md="8" sm="8">
+              <Col lg="6" md="8" sm="8">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) *</p>
-                  <Form.Control type="number" value={irrigData.effIrrig} onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
-                    style={{ border: '1px solid #0BAECB' }}
+                  <Form.Control type="number" value={irrigData.effIrrig}  onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
+                    style={{ border: '1px solid #0BAECB',height:41 }}
 
                   />
 
                 </Form.Group>
 
               </Col>
+              </div>
+              <div className="d-flex gap-2">
+
               <Col lg="4" md="8" sm="8">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
@@ -1727,6 +1747,8 @@ const Overview = (props) => {
                 </Form.Group>
 
               </Col>
+              </div>
+
               <Col lg="4" md="8" sm="8">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('irrigated_already')}(h) </p>
@@ -1833,15 +1855,14 @@ const Overview = (props) => {
       {/* Page Header */}
       <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between w-100 flex-nowrap align-items-center border-bottom">
         <PageTitle title={t('overview')} className=" mb-1" />
-        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 " style={{ width: '50px', height: '50px', zIndex: 9999 }}>
-          <Dropdown.Toggle className="d-flex justify-content-center align-items-center " style={{
-            all: 'unset',
-            border: 'none',
-            background: 'none',
-            boxShadow: 'none',
-            outline: 'none',
-
-          }}>
+        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 custom-dropdown" style={{ width: '50px', height: '50px',all:"unset"}}>
+          <Dropdown.Toggle className="d-flex justify-content-center align-items-center "  style={{
+    all: 'unset',
+    border: 'none',
+    background: 'none',
+    boxShadow: 'none',
+    outline: 'none',
+  }}>
             <Button id="TooltipExample" theme="info" className="rounded-circle" style={{ height: 50, width: 50 }} onClick={toggleDropDown}  >
               <i className="material-icons" style={{ fontSize: 30, display: "flex", justifyContent: "center", alignItems: "center", color: "#fff" }}>&#xe145;</i>
               <Tooltip

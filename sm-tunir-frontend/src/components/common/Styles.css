@@ -175,8 +175,8 @@
 }
 .ProgressBarWrapper {
   display: flex;
-  flex-direction: row;
-  height: 40px;
+  /* flex-direction: row; */
+  /* height: 40px; */
 }
 .ProgressBarWrapper p {
   margin-right: 10px;

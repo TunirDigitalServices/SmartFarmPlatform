@@ -123,7 +123,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
               }
           })
             return (
-                <>
+                <div style={{zIndex:1}}>
                  <Polygon color="#28A6B7" key={indx} positions={coordinates}>
                     {/* <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject> */}
               </Polygon> 
@@ -153,7 +153,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
                     )
                     
                   }
-                </>
+                </div>
               )
 
           
