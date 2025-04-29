@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, ButtonGroup, ModalBody, ModalHeader, Row, Col, FormInput, FormGroup, Form, FormSelect, Card, CardHeader, CardBody } from 'shards-react'
+
+import { Button, ButtonGroup, Row, Col, Form } from 'react-bootstrap';
+
 import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
@@ -361,7 +363,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                         <Row form>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('Irrigation_system_type')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={type}
                                     onChange={(e) => setType(e.target.value)}
                                 >
@@ -373,12 +375,12 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                                             return <option selected={false}>{item}</option>;
                                         }
                                     })}
-                                </FormSelect>
+                                </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('crop_type')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={crop}
                                     onChange={(e) => setCrop(e.target.value)}
                                 >
@@ -388,12 +390,12 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                                         ))
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_zone')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={zone}
                                     onChange={(e) => setZone(e.target.value)}
                                 >
@@ -403,46 +405,46 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                                         ))
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
                         </Row>
                     </Form>
                     <Row form>
                                 <Col lg="4" md="12" sm="12">
-                        <FormGroup>
+                        <Form.Group>
                             <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) </p>
-                            <FormInput type="number" value={IrrigationData.effIrrig} onChange={ e => setIrrigationData({effIrrig : e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
+                            <Form.Control type="number" value={IrrigationData.effIrrig} onChange={ e => setIrrigationData({effIrrig : e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
                             />
 
-                        </FormGroup>
+                        </Form.Group>
 
                         </Col>
                        <Col lg="4" md="8" sm="8">
-                        <FormGroup>
+                        <Form.Group>
                             <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
-                            <FormInput value={IrrigationData.pumpType} onChange={ e => setIrrigationData({pumpType : e.target.value })} id='debitReseau' placeholder={t('type_reseau')}
+                            <Form.Control value={IrrigationData.pumpType} onChange={ e => setIrrigationData({pumpType : e.target.value })} id='debitReseau' placeholder={t('type_reseau')}
                             />
 
-                        </FormGroup>
+                        </Form.Group>
 
                         </Col>
                             <Col lg="4" md="12" sm="12">
-                            <FormGroup>
+                            <Form.Group>
                                 <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
-                                <FormInput type="number" value={IrrigationData.pumpFlow} onChange={e => setIrrigationData({pumpFlow : e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
+                                <Form.Control type="number" value={IrrigationData.pumpFlow} onChange={e => setIrrigationData({pumpFlow : e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
                                 />
 
-                            </FormGroup>
+                            </Form.Group>
 
                             </Col>
                             <Col lg="4" md="8" sm="8">
-                                <FormGroup>
+                                <Form.Group>
                                 <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
-                                <FormInput type='number' value={IrrigationData.linesNumber} onChange={e => setIrrigationData({linesNumber :e.target.value})} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                                <Form.Control type='number' value={IrrigationData.linesNumber} onChange={e => setIrrigationData({linesNumber :e.target.value})} id='nbr_ligne' placeholder={t('nbr_ligne')}
                                 />
 
-                                </FormGroup>
+                                </Form.Group>
 
                             </Col>
                         {irrigationMethodForm()}

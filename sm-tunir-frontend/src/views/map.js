@@ -22,7 +22,7 @@ const myIcon = new L.Icon({
 })
 
 const Iconsensor = new L.Icon({
-  iconUrl: {sensor},
+  iconUrl: sensor,
   iconSize: [40, 42],
   iconAnchor: [17, 45],
   popupAnchor: [3, -46]

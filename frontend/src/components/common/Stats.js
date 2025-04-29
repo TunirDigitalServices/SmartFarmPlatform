@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import useToken from '../../useToken'
 import PropTypes from "prop-types";
-import SmallStats from './SmallStats';
+// import SmallStats from './SmallStats';
 
 const Stats = () => {
     

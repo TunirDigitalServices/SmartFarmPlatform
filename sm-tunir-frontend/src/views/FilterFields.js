@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, FormInput, FormSelect } from 'shards-react'
 import { Container, Row, Col, Form } from 'react-bootstrap';
-
 import swal from "sweetalert";
 import api from "../api/api"
 import AllFields from './AllFields';
@@ -89,22 +87,22 @@ const FilterFields = ({ fieldStats, sensorsData, filteredByStatus, crops }) => {
 
 
     return (
-        <Container fluid className="main-content-container px-4 py-4">
-            <Row form className="d-flex justify-content-center">
+        <Container fluid className="main-content-container px-4 py-5">
+            <Row form className="d-flex justify-content-center gap-2 ">
                 <Col lg="4" md="6" sm="6" className="mb-4">
-                    <FormInput value={SearchName} onChange={(e) => setSearchName(e.target.value)} placeholder="Search by Field Name..." className="mb-2" />
+                    <Form.Control value={SearchName} onChange={(e) => setSearchName(e.target.value)} placeholder="Search by Field Name..." className="mb-2 h-100" />
                 </Col>
                 <Col lg="4" md="6" sm="6" className="mb-4">
-                    <FormSelect id='myList' value={value} onChange={(e) => setValue(e.target.value)} className="mb-2">
+                    <Form.Select id='myList' value={value} onChange={(e) => setValue(e.target.value)} className="mb-2 h-100">
                         {
                             selectSearch.map(({ value, label }) => (
                                 <option key={value} value={value}>{label}</option>
                             ))
                         }
-                    </FormSelect>
+                    </Form.Select>
                 </Col>
             </Row>
-            <Row>
+            <Row >
                 {searchMethod()}
             </Row>
         </Container>

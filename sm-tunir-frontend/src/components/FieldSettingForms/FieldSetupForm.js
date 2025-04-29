@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  FormFeedback,
-  FormInput,
-  FormSelect
-} from "shards-react";
+// import {
+//   Row,
+//   Col,
+//   Form,
+//   FormGroup,
+//   FormFeedback,
+//   FormInput,
+//   FormSelect
+// } from "shards-react";
+import {  Row, Col, Form } from 'react-bootstrap';
+
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import api from '../../api/api';
@@ -51,7 +53,7 @@ function FieldSetupForm(props) {
         <Row>
           <Col lg='6' md="12" sm='12' className="form-group">
             <p style={{ margin: "0px" , textAlign:"left"}}>{t('name_field')}</p>
-            <FormInput
+            <Form.Control
               value={props.name}
               placeholder={t('name_field')}
               className={props.nameError =='' ? '' : 'is-invalid'}
@@ -62,7 +64,7 @@ function FieldSetupForm(props) {
           </Col>
           <Col  lg='6' md="12" sm='12'  className="form-group">
             <p style={{ margin: "0px", textAlign:"left" }}>{t('name_farm')}</p>
-            <FormSelect
+            <Form.Select
                 value={props.farm_uid}
                 className={props.farmError =='' ? '' : 'is-invalid'}
                 required
@@ -72,13 +74,13 @@ function FieldSetupForm(props) {
               {data.map((item, index) => {
                 return <option value={item.uid}>{item.name}</option>;
               })}
-            </FormSelect>
+            </Form.Select>
           </Col>
         </Row>
         <Row>
         <Col lg='6' md="12" sm='12' className="form-group">
             <p style={{ margin: "0px" , textAlign:"left"}}>{t('width')}</p>
-            <FormInput
+            <Form.Control
             type="number"
             placeholder={t('width')}
             value={props.width}
@@ -88,7 +90,7 @@ function FieldSetupForm(props) {
           </Col>
           <Col lg='6' md="12" sm='12' className="form-group">
             <p style={{ margin: "0px" , textAlign:"left"}}>{t('length')}</p>
-            <FormInput
+            <Form.Control
             type="number"
             placeholder={t('length')}
             value={props.length}

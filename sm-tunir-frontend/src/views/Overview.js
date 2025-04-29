@@ -15,7 +15,8 @@ import "./Styles.css";
 import LeafletMap from "./map";
 import SignalCellularNodataIcon from "@mui/icons-material/SignalCellularNodata";
 import SignalCellular4BarIcon from "@mui/icons-material/SignalCellular4Bar";
-import { Modal, ProgressBar } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import api from '../api/api';
 import { useTranslation } from "react-i18next";
 import FilterFields from './FilterFields'
@@ -1168,78 +1169,84 @@ const Overview = (props) => {
                 <p style={{ fontSize: '16px', lineHeight: '1.5', margin: '0' }}>"To get started, please provide a name and location for your farm. This will help us to identify and locate your farm accurately."</p>
               </div>
             </Row>
-            <Row>
-              <Col lg="6" md="12" sm="12">
-              <Form.Group controlId="farmName">
-                {/* <p style={{ margin: "0px" }}> {t('name_farm')} *</p> */}
-                <Form.Label>{t('name_farm')} *</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={t('name_farm')}
-                  required
-                  value={farmParams.name}
-                  onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' }}
-                />
-                </Form.Group>
-              </Col>
-              <Col lg="6" md="12" sm="12">
-              <Form.Group controlId="groupName">
-                {/* <p style={{ margin: "0px" }}>{t('group_name')}</p> */}
-                <Form.Label>{t('group_name')}</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={t('group_name')}
-                  value={farmParams.groupName}
-                  onChange={(e) => setFarmParams({ ...farmParams, groupName: e.target.value })}
 
-                />
-                </Form.Group>
-              </Col>
+            <Row >
+              <div className="d-flex gap-2">
+                <Col lg="6" md="12" sm="12" className="">
+                  <Form.Group controlId="farmName">
+                    {/* <p style={{ margin: "0px" }}> {t('name_farm')} *</p> */}
+                    <Form.Label>{t('name_farm')} *</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder={t('name_farm')}
+                      required
+                      value={farmParams.name}
+                      onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
+                      style={{ border: '1px solid #0BAECB' }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col lg="6" md="12" sm="12">
+                  <Form.Group controlId="groupName">
+                    {/* <p style={{ margin: "0px" }}>{t('group_name')}</p> */}
+                    <Form.Label>{t('group_name')}</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder={t('group_name')}
+                      value={farmParams.groupName}
+                      onChange={(e) => setFarmParams({ ...farmParams, groupName: e.target.value })}
+
+                    />
+                  </Form.Group>
+                </Col>
+              </div>
             </Row>
             <Row className="pt-1">
-              
-              <Col lg="6" md="12" sm="12">
-              <Form.Group controlId="country">
-                {/* <p style={{ margin: "0px" }}>{t('select_country')} *</p> */}
-                <Form.Label>{t('select_country')} *</Form.Label>
-                <Form.Select
-                  onChange={handleCountryPick}
-                  value={country}
-                  style={{ border: '1px solid #0BAECB' }}
+              <div className="d-flex gap-2">
 
-                >
-                  {
-                    countries.map(country => {
-                      return (
-                        <option key={country.id} value={country.iso}>{country.name}</option>
-                      )
-                    })
-                  }
-                </Form.Select>
-                </Form.Group>
-              </Col>
-              <Col lg="6" md="12" sm="12">
-              <Form.Group controlId="city">
-                {/* <p style={{ margin: "0px" }}>{t('select_city')} *</p> */}
-                <Form.Label>{t('select_city')} *</Form.Label>
-                <Form.Select
-                  value={farmParams.cityId}
-                  onChange={e => setFarmParams({ ...farmParams, cityId: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' }}
+                <Col lg="6" md="12" sm="12">
+                  <Form.Group controlId="country">
+                    {/* <p style={{ margin: "0px" }}>{t('select_country')} *</p> */}
+                    <Form.Label>{t('select_country')} *</Form.Label>
+                    <Form.Select
+                      onChange={handleCountryPick}
+                      value={country}
+                      style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option selected>{t('select_city')}</option>
-                  {
-                    cities && cities.map(city => {
-                      return (
-                        <option key={city.id} value={city.id}>{city.city}</option>
-                      )
-                    })
-                  }
-                </Form.Select>
-                </Form.Group>
-              </Col>
+                    >
+                      {
+                        countries.map(country => {
+                          return (
+                            <option key={country.id} value={country.iso}>{country.name}</option>
+                          )
+                        })
+                      }
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col lg="6" md="12" sm="12">
+                  <Form.Group controlId="city">
+                    {/* <p style={{ margin: "0px" }}>{t('select_city')} *</p> */}
+                    <Form.Label>{t('select_city')} *</Form.Label>
+                    <Form.Select
+                      value={farmParams.cityId}
+                      onChange={e => setFarmParams({ ...farmParams, cityId: e.target.value })}
+                      style={{ border: '1px solid #0BAECB' }}
+
+                    >
+                      <option selected>{t('select_city')}</option>
+                      {
+                        cities && cities.map(city => {
+                          return (
+                            <option key={city.id} value={city.id}>{city.city}</option>
+                          )
+                        })
+                      }
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </div>
+
             </Row>
 
           </>
@@ -1254,70 +1261,77 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row>
+              <div className="d-flex gap-3">
+                <Col lg='6' md="12" sm='12'>
+                  <Row>
+                    <div className="d-flex gap-2">
 
-              <Col lg='6' md="12" sm='12'>
-                <Row>
-                  <Col lg='6' md="12" sm='12' className="form-group">
-                    <p style={{ margin: "0px", textAlign: "left" }}>{t('name_field')} *</p>
-                    <Form.Control
-                      type="text"
-                      value={dataField.name}
-                      placeholder={t('name_field')}
-                      style={{ border: '1px solid #0BAECB' }}
+                      <Col lg='6' md="12" sm='12' className="form-group">
+                        <p style={{ margin: "0px", textAlign: "left" }}>{t('name_field')} *</p>
+                        <Form.Control
+                          type="text"
+                          value={dataField.name}
+                          placeholder={t('name_field')}
+                          style={{ border: '1px solid #0BAECB', height: '40px' }}
 
-                      // className={props.nameError =='' ? '' : 'is-invalid'}
-                      required
-                      onChange={e => setDataField({ ...dataField, name: e.target.value })}
-                    />
-                    {/* <div className="invalid-feedback" style={{textAlign: "left"}}>{props.nameError}</div> */}
-                  </Col>
-                  <Col lg='6' md="12" sm='12' className="form-group">
-                    <p style={{ margin: "0px", textAlign: "left" }}>{t('name_farm')} *</p>
-                    <Form.Select
-                      value={dataField.farm_uid}
-                      style={{ border: '1px solid #0BAECB' }}
-                      // className={props.farmError =='' ? '' : 'is-invalid'}
-                      required
-                      onChange={e => setDataField({ ...dataField, farm_uid: e.target.value })}
-                    >
-                      <option value="">{t('select_farm')}</option>;
-                      {layerFarm.map((item, index) => {
-                        return <option value={item.uid}>{item.name}</option>;
-                      })}
-                    </Form.Select>
-                  </Col>
+                          // className={props.nameError =='' ? '' : 'is-invalid'}
+                          required
+                          onChange={e => setDataField({ ...dataField, name: e.target.value })}
+                        />
+                        {/* <div className="invalid-feedback" style={{textAlign: "left"}}>{props.nameError}</div> */}
+                      </Col>
+                      <Col lg='6' md="12" sm='12' className="form-group h-100">
+                        <p style={{ margin: "0px", textAlign: "left" }}>{t('name_farm')} *</p>
+                        <Form.Select
+                          value={dataField.farm_uid}
+                          style={{ border: '1px solid #0BAECB', height: '40px' }}
+                          // className={props.farmError =='' ? '' : 'is-invalid'}
+                          required
+                          onChange={e => setDataField({ ...dataField, farm_uid: e.target.value })}
+                        >
+                          <option value="">{t('select_farm')}</option>;
+                          {layerFarm.map((item, index) => {
+                            return <option value={item.uid}>{item.name}</option>;
+                          })}
+                        </Form.Select>
+                      </Col>
+                    </div>
+                  </Row>
+                  <div className="d-flex gap-2">
+                  <Row>
+                  <div className="d-flex gap-2">
+                    
+                    <Col lg='6' md="12" sm='12' className="form-group">
+                      <p style={{ margin: "0px", textAlign: "left" }}>{t('width')} (M)</p>
+                      <Form.Control
+                        style={{ height: '40px' }}
+                        type="number"
+                        placeholder={t('width')}
+                        value={dataField.width}
+                        onChange={e => setDataField({ ...dataField, width: e.target.value })}
+                        required
+                      />
+                    </Col>
+                    <Col lg='6' md="12" sm='12' className="form-group">
+                      <p style={{ margin: "0px", textAlign: "left" }}>{t('length')} (M)</p>
+                      <Form.Control
+                        style={{ height: '40px' }}
 
-                </Row>
-                <Row>
-                  <Col lg='6' md="12" sm='12' className="form-group">
-                    <p style={{ margin: "0px", textAlign: "left" }}>{t('width')} (M)</p>
-                    <Form.Control
-
-                      type="number"
-                      placeholder={t('width')}
-                      value={dataField.width}
-                      onChange={e => setDataField({ ...dataField, width: e.target.value })}
-                      required
-                    />
-                  </Col>
-                  <Col lg='6' md="12" sm='12' className="form-group">
-                    <p style={{ margin: "0px", textAlign: "left" }}>{t('length')} (M)</p>
-                    <Form.Control
-
-                      type="number"
-                      placeholder={t('length')}
-                      value={dataField.length}
-                      onChange={e => setDataField({ ...dataField, length: e.target.value })}
-                      required
-                    />
-                  </Col>
-
-                </Row>
-              </Col>
-              <Col lg='6' md="12" sm='12'>
-                <EditableMap setLayer={setLayer} setCoords={setCoords} />
-              </Col>
-
+                        type="number"
+                        placeholder={t('length')}
+                        value={dataField.length}
+                        onChange={e => setDataField({ ...dataField, length: e.target.value })}
+                        required
+                      />
+                    </Col>
+</div>
+                  </Row>
+                  </div>
+                </Col>
+                <Col lg='6' md="12" sm='12'>
+                  <EditableMap setLayer={setLayer} setCoords={setCoords} />
+                </Col>
+              </div>
             </Row>
 
           </>
@@ -1333,6 +1347,7 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row className="py-2 d-flex justify-content-start border-bottom align-items-center" >
+              <div className="d-flex gap-2">
               <Col lg='4' md="12" sm="12" className="form-group">
                 <p style={{ margin: "0px" }}>{t('soil_zone')} *</p>
                 <Form.Control
@@ -1341,7 +1356,7 @@ const Overview = (props) => {
                   placeholder={t('soil_zone')}
                   required
                   onChange={e => setSoilParams({ ...soilParams, name: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' }}
+                  style={{ border: '1px solid #0BAECB' , height: '40px'}}
 
                 />
                 <p style={{ margin: "0px" }}>{t('soil_type')} *</p>
@@ -1380,7 +1395,7 @@ const Overview = (props) => {
                   value={soilParams.field_uid}
                   onChange={e => setSoilParams({ ...soilParams, field_uid: e.target.value })}
                   placeholder={t('name_field')}
-                  style={{ border: '1px solid #0BAECB' }}
+                  style={{ border: '1px solid #0BAECB' , height: '40px'}}
 
                 >
                   <option value="">{t('select_field')}</option>
@@ -1389,12 +1404,13 @@ const Overview = (props) => {
                   })}
                 </Form.Select>
               </Col>
+              </div>
             </Row>
             <Row form>
               {soilTypeForm()}
             </Row>
             <Row form className="py-2" >
-
+              <div className="d-flex gap-2">
               <Col lg="6" md="12" sm="12">
                 <Form.Group>
                   <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%) *</p>
@@ -1418,6 +1434,7 @@ const Overview = (props) => {
                 </Form.Group>
 
               </Col>
+              </div>
             </Row>
           </Form>
         )
@@ -1771,14 +1788,15 @@ const Overview = (props) => {
     }
   }
   return (
-    <Container fluid className="main-content-container px-3">
+    <Container fluid className="main-content-container px-5" style={{ overflowX: 'hidden', width: '100%', maxWidth: '100%' }}
+    >
       <>
         <Modal size="lg" show={show} onHide={handleClose}>
           <Modal.Header className="d-flex flex-column" >
             <Modal.Title>Farm Configuration</Modal.Title>
             <p style={{ textDecoration: "underline", fontSize: 12, fontWeight: "bold" }}>Each step of this form is dependent on the previous step, so please fill out the fields in the correct order to avoid errors or an incomplete submission.</p>
             <div style={{ width: "100%", height: 25 }}>
-              <ProgressBar animated variant="success" now={percentageComplete} label={`${percentageComplete}%`} />
+              <ProgressBar animated variant="success" now={percentageComplete} />
 
             </div>
 
@@ -1813,10 +1831,17 @@ const Overview = (props) => {
         </Modal>
       </>
       {/* Page Header */}
-      <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between flex-nowrap align-items-center border-bottom">
+      <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between w-100 flex-nowrap align-items-center border-bottom">
         <PageTitle title={t('overview')} className=" mb-1" />
-        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5">
-          <div className="d-flex justify-content-center align-items-center ">
+        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 " style={{ width: '50px', height: '50px', zIndex: 9999 }}>
+          <Dropdown.Toggle className="d-flex justify-content-center align-items-center " style={{
+            all: 'unset',
+            border: 'none',
+            background: 'none',
+            boxShadow: 'none',
+            outline: 'none',
+
+          }}>
             <Button id="TooltipExample" theme="info" className="rounded-circle" style={{ height: 50, width: 50 }} onClick={toggleDropDown}  >
               <i className="material-icons" style={{ fontSize: 30, display: "flex", justifyContent: "center", alignItems: "center", color: "#fff" }}>&#xe145;</i>
               <Tooltip
@@ -1830,20 +1855,20 @@ const Overview = (props) => {
               </Tooltip>
             </Button>
 
-          </div>
+          </Dropdown.Toggle>
           <Dropdown.Menu right style={{ zIndex: "10" }} >
-            <Link to="#" onClick={handleShow}>
+            <Link onClick={handleShow}>
               <Dropdown.Item>
                 {t('farms')}
               </Dropdown.Item>
 
             </Link>
-            <Link to="#" onClick={() => ToAddSensorPage()}>
+            <Link onClick={() => ToAddSensorPage()}>
               <Dropdown.Item>
                 {t('sensors')}
               </Dropdown.Item>
             </Link>
-            <Link to="#" onClick={() => ToWaterBalancePage()}>
+            <Link onClick={() => ToWaterBalancePage()}>
               <Dropdown.Item>
                 {t('water_balance')}
               </Dropdown.Item>
@@ -1852,7 +1877,7 @@ const Overview = (props) => {
         </Dropdown>
       </Row>
       {/* Small Stats Blocks */}
-      <Row className="mt-4">
+      <Row className="mt-4 gap-2">
         <Col lg="4" md="6" sm="6" className="mb-4">
           <p style={{ margin: 0 }}>{t('field_stats')}</p>
           <Card small className="stats-small h-100">
@@ -1861,6 +1886,7 @@ const Overview = (props) => {
                 style={{
                   display: "flex",
                   flexDirection: "row",
+
                   flexWrap: "wrap",
                   width: "100%"
                 }}
@@ -1901,7 +1927,7 @@ const Overview = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col lg="4" md="6" sm="6" className="mb-4">
+        <Col lg="3" md="6" sm="6" className="mb-4">
           <p style={{ margin: 0 }}>{t('sensor_stats')}</p>
           <Card small className="stats-small h-100">
             <Card.Body className="p-2 d-flex justify-content-center align-items-center">

@@ -1,15 +1,17 @@
 import React, { useState , useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  CardBody,
-  CardHeader,
-  FormSelect,
-  FormGroup,
-  FormInput
-} from "shards-react";
+// import {
+//   Row,
+//   Col,
+//   Form,
+//   Card,
+//   CardBody,
+//   CardHeader,
+  
+//   FormGroup,
+
+// } from "shards-react";
+import { Row, Col, Form } from 'react-bootstrap';
+
 import PivotForm from "./pivotForm";
 import LateralForm from "./lateralForm";
 import DripForm from "./dripForm";
@@ -146,7 +148,7 @@ function FieldIrrigationForm(props) {
         <Row form>
           <Col md="6" className="form-group">
             <p style={{ margin: "0px" }}>{t('irrigation_zone')}</p>
-            <FormSelect
+            <Form.Select
             value={props.zone}
             onChange={props.handleZone}
             >
@@ -157,11 +159,11 @@ function FieldIrrigationForm(props) {
                  return <option value={item.Uid}>{item.name}</option>
                 })
               }
-            </FormSelect>
+            </Form.Select>
           </Col>
           <Col md="6" className="form-group">
             <p style={{ margin: "0px" }}>{t('irrigation_crop')}</p>
-            <FormSelect
+            <Form.Select
             value={props.crop}
             onChange={props.handleCrop}
             >
@@ -171,12 +173,12 @@ function FieldIrrigationForm(props) {
                  return <option value={item.Uid}>{item.croptype.crop}</option>
                 })
               }
-            </FormSelect>
+            </Form.Select>
           </Col>
          
           <Col md="6" className="form-group">
             <p style={{ margin: "0px" }}>{t('Irrigation_system_type')}</p>
-            <FormSelect
+            <Form.Select
                 className={props.typeErrorIrrig == '' ? '' : 'is-invalid'}
                 onChange={evt => {
                 handleIrrigPick(evt)
@@ -191,42 +193,42 @@ function FieldIrrigationForm(props) {
                 // }
                 return <option value={item.irrigation} >{t(`${item.irrigation}`)}</option>;
               })}
-            </FormSelect>
+            </Form.Select>
           </Col>
           <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) </p>
-                <FormInput type="number" value={props.effIrrig} onChange={ e => props.handleEffIrrig(e.target.value)} id='effIrrig' placeholder={t('efficience_irrigation')}
+                <Form.Control type="number" value={props.effIrrig} onChange={ e => props.handleEffIrrig(e.target.value)} id='effIrrig' placeholder={t('efficience_irrigation')}
                 />
 
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
-                <FormInput value={props.pumpType} onChange={props.handlePumpType} id='debitReseau' placeholder={t('type_reseau')}
+                <Form.Control value={props.pumpType} onChange={props.handlePumpType} id='debitReseau' placeholder={t('type_reseau')}
                 />
 
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
-                <FormInput type="number" value={props.pumpFlow} onChange={props.handlePumpFlow} id='debitReseau' placeholder={t('debit_reseau')}
+                <Form.Control type="number" value={props.pumpFlow} onChange={props.handlePumpFlow} id='debitReseau' placeholder={t('debit_reseau')}
                 />
 
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="8" sm="8">
-                    <FormGroup>
+                    <Form.Group>
                       <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
-                      <FormInput type='number' value={props.linesNumber} onChange={props.handleLinesNumber} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                      <Form.Control type='number' value={props.linesNumber} onChange={props.handleLinesNumber} id='nbr_ligne' placeholder={t('nbr_ligne')}
                       />
       
-                    </FormGroup>
+                    </Form.Group>
       
                   </Col>
           {irrigationMethodForm()}

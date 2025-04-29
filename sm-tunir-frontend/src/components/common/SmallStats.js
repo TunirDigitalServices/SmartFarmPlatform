@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import shortid from "shortid";
 import "./Styles.css";
-import { withTranslation  } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 
 import Plot from "../../utils/plot";
@@ -12,14 +12,85 @@ class SmallStats extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      farms:[],
-      resultFields:[]
-    }; 
-
+      farms: [],
+      resultFields: []
+    };
     this.canvasRef = React.createRef();
+    this.chartInstance = null;
+
+    // this.canvasRef = React.createRef();
   }
 
+  // componentDidMount() {
+  //   const chartOptions = {
+  //     ...{
+  //       maintainAspectRatio: true,
+  //       responsive: true,
+  //       legend: {
+  //         display: false
+  //       },
+  //       tooltips: {
+  //         enabled: false,
+  //         custom: false
+  //       },
+  //       elements: {
+  //         point: {
+  //           radius: 0
+  //         },
+  //         line: {
+  //           tension: 0.33
+  //         }
+  //       },
+  //       scales: {
+  //         xAxes: [
+  //           {
+  //             gridLines: false,
+  //             ticks: {
+  //               display: false
+  //             }
+  //           }
+  //         ],
+  //         yAxes: [
+  //           {
+  //             gridLines: false,
+  //             scaleLabel: false,
+  //             ticks: {
+  //               display: false,
+  //               isplay: false,
+  //               // Avoid getting the graph line cut of at the top of the canvas.
+  //               // Chart.js bug link: https://github.com/chartjs/Chart.js/issues/4790
+  //               suggestedMax: Math.max(...this.props.chartData[0].data) + 1
+  //             }
+  //           }
+  //         ]
+  //       }
+  //     },
+  //     ...this.props.chartOptions
+  //   };
+
+  //   const chartConfig = {
+  //     ...{
+  //       type: "line",
+  //       data: {
+  //         ...{
+  //           labels: this.props.chartLabels
+  //         },
+  //         ...{
+  //           datasets: this.props.chartData
+  //         }
+  //       },
+  //       options: chartOptions
+  //     },
+  //     ...this.props.chartConfig
+  //   };
+
+  //   new Plot(this.canvasRef.current, chartConfig);
+  // }
   componentDidMount() {
+    if (this.chartInstance) {
+      this.chartInstance.destroy();
+    }
+
     const chartOptions = {
       ...{
         maintainAspectRatio: true,
@@ -82,11 +153,12 @@ class SmallStats extends React.Component {
       ...this.props.chartConfig
     };
 
-    new Plot(this.canvasRef.current, chartConfig);
+    this.chartInstance = new Plot(this.canvasRef.current, chartConfig);
   }
 
 
-  
+
+
   render() {
 
     const { t } = this.props;
@@ -100,7 +172,7 @@ class SmallStats extends React.Component {
       value
       //percentage, increase
     } = this.props;
-    
+
 
 
 
@@ -111,26 +183,26 @@ class SmallStats extends React.Component {
       state === `${t('Critical')}`
         ? "critical"
         : state === `${t('Optimal')}`
-        ? "optimal"
-        : state === `${t('Full')}`
-        ? "full"
-        : null
+          ? "optimal"
+          : state === `${t('Full')}`
+            ? "full"
+            : null
     );
-     const valid = (state) => { 
+    const valid = (state) => {
       switch (state) {
         case `${t('low_batt')}`:
-          case `${t('offline')}`:
-            case `${t('online')}`:
-              return this.props.ToSensorPage()
+        case `${t('offline')}`:
+        case `${t('online')}`:
+          return this.props.ToSensorPage()
         default:
           return this.props.FilterByStatus(state)
       }
     }
 
     return (
-      <div onClick={() => valid(state)} className="statsBox" style={{ width: "33%"}} >
+      <div onClick={() => valid(state)} className="statsBox" style={{ width: "33%" }} >
         <div
-          className={RSBHeader }
+          className={RSBHeader}
           style={{
             height: "75%",
             display: "flex",
@@ -150,11 +222,11 @@ class SmallStats extends React.Component {
               marginBottom: "10px"
             }}
           >
-         
+
           </div>
           <h2 className={RSBHeader}>{value}</h2>
           <span> {state}</span>
-          <p style={{textAlign:"center"}} className={RSBHeader}>{icon}</p>
+          <p style={{ textAlign: "center" }} className={RSBHeader}>{icon}</p>
         </div>
         <canvas
           height={canvasHeight}

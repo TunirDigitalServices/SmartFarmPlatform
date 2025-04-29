@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from 'react'
-import { Button, ButtonGroup, Card, CardBody, CardHeader, ModalBody, ModalHeader, Row, Col, FormInput, FormGroup, Form, FormSelect } from 'shards-react'
+// import { Button, ButtonGroup, Card, CardBody, CardHeader, ModalBody, ModalHeader,  FormInput } from 'shards-react'
 import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
 import RangeDatePicker from '../components/common/RangeDatePicker';
-import {Modal} from "react-bootstrap"
+import {Modal,Form, Row, Col,Button, ButtonGroup} from "react-bootstrap"
 
 
 
@@ -353,7 +353,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                         <Row form>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_field')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={field}
                                     onChange={(e) => setField(e.target.value)}
                                 >
@@ -362,11 +362,11 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                                             <option value={field.Uid}>{field.title}</option>
                                         ))
                                     }
-                                </FormSelect>
+                                </Form.Select>
                             </Col>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_zone')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={zone}
                                     onChange={(e) => setZone(e.target.value)}
                                 >
@@ -375,11 +375,11 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                                             <option value={zone.Uid}>{zone.name}</option>
                                         ))
                                     }
-                                </FormSelect>
+                                </Form.Select>
                             </Col>            
                             <Col lg="6" md="12" sm="12" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('crop_type')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={type}
                                     onChange={(e) => setType(e.target.value)}
                                     
@@ -392,7 +392,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                                     })
                                 }
 
-                                </FormSelect>
+                                </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
                                 {/* <Col lg="6" md="12" sm="12" className="form-group">
@@ -404,9 +404,9 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                                     />
                                 </Col> */}
                             <Col lg="6" md="8" sm="8">
-                                <FormGroup>
+                                <Form.Group>
                                 <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
-                                <FormSelect value={cropData.cropVariety} id="cropVariety" onChange={(e) => setCropData({...cropData , cropVariety :e.target.value})}>
+                                <Form.Select value={cropData.cropVariety} id="cropVariety" onChange={(e) => setCropData({...cropData , cropVariety :e.target.value})}>
                                 <option value="">{t('crop_type')}</option>
                                 {
 
@@ -414,84 +414,84 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                                 <option value={variety.id}>{variety.crop_variety}</option>
                                 ))
                                 }
-                                </FormSelect>
-                                </FormGroup>
+                                </Form.Select>
+                                </Form.Group>
 
                             </Col>
                             <Row>
                             <Col lg="4" md="12" sm="12">
-                <FormGroup>
+                <Form.Group>
                   <p style={{ margin: "0px" }}>{t('surface')} (m²)</p>
-                  <FormInput type="number" value={cropData.surface} onChange={e => setCropData({...cropData,surface :e.target.value})} id='z' placeholder={t('surface')}
+                  <Form.Control type="number" value={cropData.surface} onChange={e => setCropData({...cropData,surface :e.target.value})} id='z' placeholder={t('surface')}
                   />
 
-                </FormGroup>
+                </Form.Group>
 
               </Col>
           <Col lg="4" md="8" sm="8">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('profondeur')} (m)</p>
-              <FormInput type="number" value={cropData.rootDepth} onChange={e => setCropData({...cropData,rootDepth : e.target.value})} id='z' placeholder={t('profondeur')}
+              <Form.Control type="number" value={cropData.rootDepth} onChange={e => setCropData({...cropData,rootDepth : e.target.value})} id='z' placeholder={t('profondeur')}
               />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="8" sm="8">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('Days')}</p>
 
-              <FormInput type="number" value={cropData.days} id='days' onChange={e => setCropData({...cropData,days :  e.target.value})} placeholder={t('Days')} />
+              <Form.Control type="number" value={cropData.days} id='days' onChange={e => setCropData({...cropData,days :  e.target.value})} placeholder={t('Days')} />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="12" sm="12">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('planting_date')}</p>
-              <FormInput type="date" value={cropData.growingDate} onChange={e => setCropData({...cropData,growingDate : e.target.value})} id='days' />
+              <Form.Control type="date" value={cropData.growingDate} onChange={e => setCropData({...cropData,growingDate : e.target.value})} id='days' />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="8" sm="8">
-            <FormGroup>
+            <Form.Group>
               <p style={{ margin: "0px" }}>{t('growing_season')}</p>
-              <FormInput type="date" value={cropData.plantingDate} onChange={e => setCropData({...cropData,plantingDate :  e.target.value})} id='days' />
+              <Form.Control type="date" value={cropData.plantingDate} onChange={e => setCropData({...cropData,plantingDate :  e.target.value})} id='days' />
 
-            </FormGroup>
+            </Form.Group>
 
           </Col>
           <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('fraction_pratique')} (%) </p>
-                <FormInput type="number" value={cropData.ruPratique} onChange={e => setCropData({...cropData,ruPratique :  e.target.value})} id='ruPratique' placeholder={t('fraction_pratique')}
+                <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({...cropData,ruPratique :  e.target.value})} id='ruPratique' placeholder={t('fraction_pratique')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
           <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
-                <FormInput type="number" value={cropData.ecartInter} onChange={e => setCropData({...cropData,ecartInter :  e.target.value})} id='ecartInter' placeholder={t('ecart_inter')}
+                <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({...cropData,ecartInter :  e.target.value})} id='ecartInter' placeholder={t('ecart_inter')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('ecart_intra')} (m) </p>
-                <FormInput type="number" value={cropData.ecartIntra} onChange={e => setCropData({...cropData,ecartIntra:  e.target.value})} id='ecartIntra' placeholder={t('ecart_intra')}
+                <Form.Control type="number" value={cropData.ecartIntra} onChange={e => setCropData({...cropData,ecartIntra:  e.target.value})} id='ecartIntra' placeholder={t('ecart_intra')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>
             <Col lg="4" md="8" sm="8">
-              <FormGroup>
+              <Form.Group>
                 <p style={{ margin: "0px" }}>{t('densité')} (plants/ha)</p>
-                <FormInput type="number" value={cropData.density} onChange={e => setCropData({...cropData,density:  e.target.value})} id='densité' placeholder={t('densité')}
+                <Form.Control type="number" value={cropData.density} onChange={e => setCropData({...cropData,density:  e.target.value})} id='densité' placeholder={t('densité')}
                 />
-              </FormGroup>
+              </Form.Group>
 
             </Col>       
                             </Row>

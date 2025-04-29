@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, Link } from 'react-router-dom'
 import { Container, Row, Col, CardBody, Card, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Tooltip, FormInput, FormSelect, FormGroup, Form } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
-import SmallStats from "../components/common/SmallStats";
+// import SmallStats from "../components/common/SmallStats";
 import "./../assets/Styles.css";
 import "./Styles.css";
 import LeafletMap from "./map";

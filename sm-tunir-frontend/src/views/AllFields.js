@@ -64,9 +64,9 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
         }
     };
     return (
-        <Container>
+        <Container >
 
-            <Row>
+            <Row className='d-flex  flex-wrap justify-content-center gap-4'>
                 {
                     filteredFields.map(field => {
                         let cropT = ''

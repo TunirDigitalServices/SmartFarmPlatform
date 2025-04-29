@@ -1,7 +1,7 @@
 import React , {useEffect} from 'react'
 import { useMap } from "react-leaflet";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import "leaflet-control-geocoder";
 import L from "leaflet";
 
 const LeafletGeoCoder = () => {

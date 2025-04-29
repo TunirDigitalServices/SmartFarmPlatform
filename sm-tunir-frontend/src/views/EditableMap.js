@@ -5,7 +5,7 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import 'leaflet-draw/dist/leaflet.draw';
 import { useMap } from "react-leaflet";
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+import "leaflet-control-geocoder";
 import LeafletGeoCoder from "./LeafletGeoCoder";
 
 const EditableMap = ({ sensorsCoords, setCoords, setLayer }) => {

@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import classNames from "classnames";
-import {
-  InputGroup,
-  DatePicker,
-  InputGroupAddon,
-  InputGroupText
-} from "shards-react";
+// import {
+//   InputGroup,
+//   DatePicker,
+//   InputGroupAddon,
+//   InputGroupText
+// } from "shards-react";
+import { InputGroup, FormControl, InputGroupText } from 'react-bootstrap';
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
-import "../../assets/range-date-picker.css";
+
+import "../../assets/styling/range-date-picker.css";
 
 class RangeDatePicker extends React.Component {
   constructor(props) {
@@ -83,11 +87,11 @@ class RangeDatePicker extends React.Component {
           dropdownMode="select"
           className="text-center"
         />
-        <InputGroupAddon type="append">
-          <InputGroupText>
+        <InputGroup.Text type="append">
+          <InputGroup.Text>
             <i className="material-icons">&#xE916;</i>
-          </InputGroupText>
-        </InputGroupAddon>
+          </InputGroup.Text>
+        </InputGroup.Text>
       </InputGroup>
     );
   }

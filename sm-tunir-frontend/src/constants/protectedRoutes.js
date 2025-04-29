@@ -1,4 +1,4 @@
-import Dashboard from '../pages/dashboard/dashboard';
+import Dashboard from '../components/Simulation/Dashboard';
 import Fields from '../pages/fields/fields';
 import Sensors from '../pages/sensors/Sensors';
 import SatelliteImages from '../pages/sateliteImages/SateliteImages';
@@ -8,6 +8,7 @@ import Weather from '../pages/weatherForecast/WeatherForcast';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import SensorSettings from '../pages/sensorsSettings/SensorsSettings';
 import Overview from '../views/Overview';
+import AdminBoard from '../admin/AdminBoard';
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -76,6 +77,13 @@ const protectedRoutes = [
     path: '/overview',
     element: <Overview />,
     roles: ['admin'] 
+
+  },
+  {
+    name: 'admin Board',
+    path : "/admin/users",
+    element: <AdminBoard />,
+    roles: ['ROLE_ADMIN'] 
 
   },
   // {

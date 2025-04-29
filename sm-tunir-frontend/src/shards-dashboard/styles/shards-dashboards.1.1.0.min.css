@@ -4515,7 +4515,7 @@ html {
   font-weight: 500;
 }
 body {
-  background: #f5f6f8;
+  background: #f5f6f8 !important;
   font-size: 15px;
   font-weight: 500;
 }
@@ -5245,6 +5245,7 @@ a.text-accent:hover {
 }
 .main-content > .main-content-container.container-fluid {
   min-height: calc(100vh - 7.5rem);
+  
 }
 .main-footer {
   height: 3.75rem;

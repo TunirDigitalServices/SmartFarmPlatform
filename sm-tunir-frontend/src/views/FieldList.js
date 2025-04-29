@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Button, ButtonGroup, ModalBody, ModalHeader, Row, Col, FormInput, FormGroup, Form, FormSelect } from 'shards-react'
+// import { Button, ButtonGroup, ModalBody, ModalHeader, Row, Col, FormInput, FormGroup, Form } from 'shards-react'
 import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
-import {Modal} from "react-bootstrap"
+import {Modal, Button, ButtonGroup, Row, Col, Form} from "react-bootstrap"
 import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, ImageOverlay, ScaleControl } from "react-leaflet";
 import useGeoLocation from "../utils/useGeoLocation";
 import LeafletGeoCoder from "./LeafletGeoCoder";
@@ -307,7 +307,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                         <Row form>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_farm')}</p>
-                                <FormSelect
+                                <Form.Select
                                     value={farm}
                                     onChange={(e) => setFarmUid(e.target.value)}
                                     required
@@ -320,11 +320,11 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                                         })
                                     }
                                    
-                                </FormSelect>
+                                </Form.Select>
                             </Col>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_field')}</p>
-                                <FormInput
+                                <Form.Control
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
