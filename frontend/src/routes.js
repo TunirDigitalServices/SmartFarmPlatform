@@ -63,6 +63,7 @@ import FieldsManagement from "./admin/FieldsManagement";
 import SatelliteImages from "./views/SatelliteImages"
 import SensorSettings from "./views/SensorSettings";
 import CalculSimulation from "./admin/CalculSimulation";
+import SatellitePage from "./views/SatellitePage";
 
 
 
@@ -170,6 +171,11 @@ export default [
     path: "/satellite-images",
     layout: DefaultLayout,
     component: SatelliteImages
+  },
+  {
+    path: "/satellite-page",
+    layout: DefaultLayout,
+    component: SatellitePage
   },
   {
     path: "/Calendar",

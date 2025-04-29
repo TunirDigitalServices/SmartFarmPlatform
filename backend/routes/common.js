@@ -22,7 +22,7 @@ const { calculSimulation, deleteSimulation, getSimulationsByConnectedUser, getSi
 const { calculBilanHydrique, getCalculSensor, generatePDF, createBulletin, sendSMStoUsers, getAllCalculByUser, getAllCalculByField } = require('../controllers/premiumCalcul/calculPremium.js')
 const { downloadReport } = require('../reports/report.js')
 const { createHistory, addSensorsHistory, getSensorHistory } = require('../controllers/common/history.js')
-const { addSatelliteImages, getSatelliteImages, getSatelliteImagesUrls } = require('../controllers/common/satellite.js')
+const { addSatelliteImages, getSatelliteImages, getSatelliteImagesUrls, addSatelliteImagesSentinel } = require('../controllers/common/satellite.js')
 
 
 
@@ -167,5 +167,7 @@ router.post('/api/sattelite-images',getSatteliteImages)
 router.post('/field/add-sattelite-images',auth,addSatelliteImages)
 router.get('/field/get-sattelite-images/:fieldId', auth,getSatelliteImages)
 router.get('/satellite-images/:userId/:fieldId/:date',auth,getSatelliteImagesUrls)
+
+router.post('/add-satellite-images/:userId/:fieldId' ,  addSatelliteImagesSentinel)
 
 module.exports = router;
