@@ -15,6 +15,8 @@ import Terms from '../pages/auth/Terms';
 import Privacy from '../pages/auth/Privacy';
 import useToken from '../useToken';
 import Overview from '../views/Overview';
+import NewPassValid from '../pages/auth/NewPassValid';
+import Valid from '../pages/auth/Valid';
 
 
 const fakeAuth = {
@@ -28,17 +30,33 @@ function Router() {
   const { token, setToken } = useToken();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error('Error parsing user from localStorage:', error);
+    const syncUser = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser && storedUser !== "null") {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error('Error parsing user from localStorage:', error);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+  
+    // Initial load
+    syncUser();
+  
+    // Listen for manual updates (e.g., logout)
+    window.addEventListener('user-updated', syncUser);
+  
+    return () => {
+      window.removeEventListener('user-updated', syncUser);
+    };
   }, []);
+  
 
   // useEffect(() => {
   //   const storedUser = localStorage.getItem('user');
@@ -107,6 +125,8 @@ function Router() {
               <Route index element={<Login />} />
               <Route path="sign-up" element={<SignUp />} />
               <Route path="forget-password" element={<ForgotPwd />} />
+              <Route path="/NewPassword/:ToValid" element={<NewPassValid/>} />
+              <Route path='/Valid/:ToValid' element={<Valid/>}/>
               <Route path="terms" element={<Terms />} />
               <Route path="Privacy" element={<Privacy />} />
 

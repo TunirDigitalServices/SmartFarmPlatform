@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col, Card, CardBody, CardHeader, CardFooter, FormGroup, FormInput, ButtonGroup, Button, Modal, ModalHeader, ModalBody, FormSelect } from 'shards-react'
+
+     import { Container, Row, Col, Card, Form, ButtonGroup, Button, Modal } from 'react-bootstrap';
+
 import PageTitle from '../components/common/PageTitle'
 import api from '../../src/api/api'
 import { useTranslation } from 'react-i18next';
 import Pagination from '../views/Pagination';
-import { useHistory } from 'react-router-dom';
+
 import swal from 'sweetalert';
-import sensorImg from "../images/smartfarm_capteur.png"
-import LoadingSpinner from '../components/common/LoadingSpinner'
+// import sensorImg from "../images/smartfarm_capteur.png"
+// import LoadingSpinner from '../components/common/LoadingSpinner'
 import moment from 'moment';
 import { LinearProgress } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 
 const SensorsManagement = () => {
 
-    const history = useHistory()
+    // const history = useHistory()
+    const navigate = useNavigate()
 
     const [toggle, setToggle] = useState(false)
 
@@ -61,65 +65,65 @@ const SensorsManagement = () => {
 
     const sendNotificationEmail = async (userEmail, sensorState, sensorInfo) => {
         try {
-          await api.post('/admin/send-notification-email', {
-            userEmail,
-            sensorState,
-            sensorInfo,
-          });
+            await api.post('/admin/send-notification-email', {
+                userEmail,
+                sensorState,
+                sensorInfo,
+            });
         } catch (error) {
-          console.error('Error sending email notification:', error);
+            console.error('Error sending email notification:', error);
         }
-      };
+    };
 
-      
-      useEffect(() => {
-        if(users.length > 0 ) {
+
+    useEffect(() => {
+        if (users.length > 0) {
             const checkSensor = async () => {
-          
-              try {
-                const response = await api.get('/admin/check-sensor-status');
-                const inactiveSensors = response.data.inactiveSensors;
-                inactiveSensors.forEach(inactiveSensor => {
-                  const sensorCode = inactiveSensor.sensor.code;
-                  let ownerName = '';
-                  let supplierName = ''; // You need to retrieve the owner name based on user_id
-                  const lastDataTime = new Date(inactiveSensor.data.time);
-      
-                  // Additional information from the inactiveSensor object if needed
-                  const sensorId = inactiveSensor.sensor.id;
-                  const supplierId = inactiveSensor.sensor.supplier_id;
-                  users.map(user => {
-                      if (user.id === inactiveSensor.sensor.user_id) {
-                          ownerName = user.name
-                      }
-                  })
-                  existSuppliers.map(user => {
-                      if (user.id === inactiveSensor.sensor.supplier_id) {
-                          supplierName = user.name
-                      }
-                  })
-                 sendNotificationEmail("contact@smartfarm.com.tn", 'Inactive', {
-                    sensorCode,
-                    ownerName,
-                    lastDataTime,
-                    supplierName,
-                });
-              });
-              } catch (error) {
-                console.error(error)
-              }
+
+                try {
+                    const response = await api.get('/admin/check-sensor-status');
+                    const inactiveSensors = response.data.inactiveSensors;
+                    inactiveSensors.forEach(inactiveSensor => {
+                        const sensorCode = inactiveSensor.sensor.code;
+                        let ownerName = '';
+                        let supplierName = ''; // You need to retrieve the owner name based on user_id
+                        const lastDataTime = new Date(inactiveSensor.data.time);
+
+                        // Additional information from the inactiveSensor object if needed
+                        const sensorId = inactiveSensor.sensor.id;
+                        const supplierId = inactiveSensor.sensor.supplier_id;
+                        users.map(user => {
+                            if (user.id === inactiveSensor.sensor.user_id) {
+                                ownerName = user.name
+                            }
+                        })
+                        existSuppliers.map(user => {
+                            if (user.id === inactiveSensor.sensor.supplier_id) {
+                                supplierName = user.name
+                            }
+                        })
+                        sendNotificationEmail("contact@smartfarm.com.tn", 'Inactive', {
+                            sensorCode,
+                            ownerName,
+                            lastDataTime,
+                            supplierName,
+                        });
+                    });
+                } catch (error) {
+                    console.error(error)
+                }
             };
-        
+
             const statusCheckInterval = setInterval(() => {
                 checkSensor();
-              }, 5 * 60 * 1000); // 5 minutes
-          
-              return () => clearInterval(statusCheckInterval);
+            }, 5 * 60 * 1000); // 5 minutes
+
+            return () => clearInterval(statusCheckInterval);
 
         }
 
-      }, [users , existSuppliers])
-      
+    }, [users, existSuppliers])
+
 
 
     const getAllSensors = async () => {
@@ -420,21 +424,21 @@ const SensorsManagement = () => {
                 </Row>
                 <Row form className="d-flex justify-content-center">
                     <Col lg="3" md="12" sm="12" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                     value={SearchCode}
                                     onChange={(e) => setSearchCode(e.target.value)}
                                     id="search"
                                     placeholder="Search By code" />
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                     <Col lg="3" md="12" sm="12" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormSelect onChange={(e) => setSelectedUser(e.target.value)} value={selectedUser}>
+                                <Form.Select onChange={(e) => setSelectedUser(e.target.value)} value={selectedUser}>
                                     {
                                         selectedUser === ""
                                             ?
@@ -452,15 +456,15 @@ const SensorsManagement = () => {
 
                                         })
                                     }
-                                </FormSelect>
+                                </Form.Select>
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                     <Col lg="3" md="12" sm="12" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormSelect onChange={(e) => setSelectedSupplier(e.target.value)} value={selectedSupplier}>
+                                <Form.Select onChange={(e) => setSelectedSupplier(e.target.value)} value={selectedSupplier}>
                                     {
                                         selectedSupplier === ""
                                             ?
@@ -475,14 +479,14 @@ const SensorsManagement = () => {
 
                                         })
                                     }
-                                </FormSelect>
+                                </Form.Select>
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                     <Col lg="3" md="12" sm="12">
-                        <ButtonGroup>
-                            <Button outline onClick={() => history.push('/admin/add-sensor')}>Add Sensor</Button>
+                        <ButtonGroup className='gap-2'>
+                            <Button outline onClick={() => navigate('/admin/add-sensor')}>Add Sensor</Button>
                             <Button outline onClick={() => handleCalculSensor()}>Calcul</Button>
 
                         </ButtonGroup>
@@ -549,7 +553,7 @@ const SensorsManagement = () => {
                                             formattedTime = newTime.format('YYYY-MM-DD HH:mm');
                                             const timeStartDifference = moment(lastDataTime, 'YYYY-MM-DD HH:mm').diff(moment(currentTime), 'seconds');
                                             const timeEndDifference = moment(formattedTime, 'YYYY-MM-DD HH:mm').diff(moment(currentTime), 'seconds');
-                                            const timeEndAfterRange =  timeEndDifference + (15 * 60);
+                                            const timeEndAfterRange = timeEndDifference + (15 * 60);
                                             const sensorState = timeStartDifference < 0 && timeEndAfterRange > 0 ? 'Active' : 'Inactive';
 
                                             return (
@@ -566,13 +570,15 @@ const SensorsManagement = () => {
                                                                 ?
                                                                 <ButtonGroup size="sm" className="mr-2">
                                                                     <Button title="Edit" onClick={() => {
-                                                                        history.push({pathname : `/admin/edit-sensor/${sensor.id}`, state : {
-                                                                            lastDataTime: lastDataTime,
-                                                                            formattedTime: formattedTime,
-                                                                            sensorState: sensorState,
-                                                                        }})
-                                                                    }}squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                                    <Button title="History" onClick={() => { history.push(`/my-history/${sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
+                                                                        navigate({
+                                                                            pathname: `/admin/edit-sensor/${sensor.id}`, state: {
+                                                                                lastDataTime: lastDataTime,
+                                                                                formattedTime: formattedTime,
+                                                                                sensorState: sensorState,
+                                                                            }
+                                                                        })
+                                                                    }} squared><i className="material-icons">&#xe3c9;</i></Button>
+                                                                    <Button title="History" onClick={() => { navigate(`/my-history/${sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
                                                                     <Button title="Delete" onClick={() => { confirmDelete(sensor.uid) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
                                                                     {
                                                                         sensor.synchronized === "0"
@@ -619,7 +625,7 @@ const SensorsManagement = () => {
                 </Card>
             </Container>
             <Modal centered={true} open={toggle}>
-                <ModalHeader className="d-flex justify-content-between align-items-center">
+                <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div>
                         Sensor code : {code}
                     </div>
@@ -647,16 +653,16 @@ const SensorsManagement = () => {
                             {t('cancel')}
                         </Button>
                     </div>
-                </ModalHeader>
-                <ModalBody>
+                </Modal.Header>
+                <Modal.Body>
                     <Row className='d-flex justify-content-center'>
                         <Col lg='6' md='8' sm='8'>
-                            <FormGroup>
+                            <Form.Group>
                                 <label htmlFor="users">Select a user to assign sensor</label>
                                 {
                                     supplier === true
                                         ?
-                                        <FormSelect
+                                        <Form.Select
                                             id="users"
                                             value={supplierUid}
                                             onChange={(e) => setSupplierUid(e.target.value)}
@@ -669,10 +675,10 @@ const SensorsManagement = () => {
 
                                                 })
                                             }
-                                        </FormSelect>
+                                        </Form.Select>
 
                                         :
-                                        <FormSelect
+                                        <Form.Select
                                             id="users"
                                             value={userUid}
                                             onChange={(e) => { setUserUid(e.target.value) }}
@@ -686,14 +692,14 @@ const SensorsManagement = () => {
 
                                                 })
                                             }
-                                        </FormSelect>
+                                        </Form.Select>
                                 }
-                            </FormGroup>
+                            </Form.Group>
                         </Col>
                     </Row>
 
 
-                </ModalBody>
+                </Modal.Body>
             </Modal>
 
         </>

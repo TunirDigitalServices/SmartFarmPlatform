@@ -687,7 +687,7 @@ const Overview = (props) => {
     groupName: "",
     cityId: ""
   })
-  const userUid = JSON.parse(localStorage.getItem('user')).id
+  const userUid = JSON.parse(localStorage.getItem('user'))?.id ?? null
 
   const addFarm = async () => {
 

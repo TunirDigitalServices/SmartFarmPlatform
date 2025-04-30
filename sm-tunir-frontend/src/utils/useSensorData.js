@@ -7,15 +7,15 @@ const useSensorData = () => {
   const [allDataSensor, setAllDataSensor] = useState([]);
   let location = useLocation();
   let userId = location.pathname.split('/')[2];
-  let userUid = JSON.parse(localStorage.getItem('user')).id;
+  let userUid = JSON.parse(localStorage.getItem('user'))?.id;
   let fieldUid = localStorage.getItem('Field');
   let url = '/sensor/sensor-update-data';
 
-  if ((JSON.parse(localStorage.getItem('user')).role === "ROLE_SUPPLIER") && location.pathname === `/Fields/${userId}/${fieldUid}`) {
+  if ((JSON.parse(localStorage.getItem('user'))?.role === "ROLE_SUPPLIER") && location.pathname === `/Fields/${userId}/${fieldUid}`) {
     url = '/supplier/sensor-data';
   }
 
-  if ((JSON.parse(localStorage.getItem('user')).role === "ROLE_SUPPLIER") && location.pathname === `/Dashboard-supplier`) {
+  if ((JSON.parse(localStorage.getItem('user'))?.role === "ROLE_SUPPLIER") && location.pathname === `/Dashboard-supplier`) {
     url = '/supplier/get-sensors-data';
   }
 

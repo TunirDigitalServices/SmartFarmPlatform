@@ -10,9 +10,13 @@ import { useNavigate } from "react-router-dom";
 export default function Sidebar() {
   
   const { t, i18n } = useTranslation();
-  let offer = JSON.parse(localStorage.getItem("user")).offer_type;
-  let role = JSON.parse(localStorage.getItem("user")).role;
-  let commandOption = JSON.parse(localStorage.getItem("user")).has_command;
+
+
+  const offer = JSON.parse(localStorage.getItem("user"))?.offer_type ?? null;
+
+  
+  let role = JSON.parse(localStorage.getItem("user"))?.role??null;
+  let commandOption = JSON.parse(localStorage.getItem("user"))?.has_command?? null;
   const [data, setData] = useState([{ Fields: [] }]);
   const [allSimulations, setAllSimulations] = useState([])
   const navigate = useNavigate();
@@ -264,7 +268,9 @@ export default function Sidebar() {
 
     
   const addToSidebar = () =>  {
-    let role = JSON.parse(localStorage.getItem("user")).role;
+    // let role = JSON.parse(localStorage.getItem("user")).role;
+  let role = JSON.parse(localStorage.getItem("user"))?.role??null;
+
      if(role === "ROLE_ADMIN"){
        return Items.push(
         {
@@ -606,10 +612,10 @@ export default function Sidebar() {
                 localStorage.setItem("Sensors", 0);
               }
               navigate(itemId, { state: uid });;
-                window.location.reload()
+                // window.location.reload()
             } else {
               navigate(itemId);
-              window.location.reload();
+              // window.location.reload();
 
             }
           }

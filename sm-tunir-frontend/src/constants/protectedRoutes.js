@@ -1,14 +1,16 @@
 import Dashboard from '../components/Simulation/Dashboard';
 import Fields from '../views/Field';
-import Sensors from '../pages/sensors/Sensors';
+import Sensors from '../views/Sensors'
 import SatelliteImages from '../pages/sateliteImages/SateliteImages';
 import Simulations from '../pages/mysimulations/Mysimulations';
-import Calendar from '../pages/calendar/Calendar';
-import Weather from '../pages/weatherForecast/WeatherForcast';
+import Calendar from '../views/Calendar';
+import Weather from '../views/Weather';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
-import SensorSettings from '../pages/sensorsSettings/SensorsSettings';
+import EditSensorByAdmin from '../views/EditSensorByAdmin';
 import Overview from '../views/Overview';
 import AdminBoard from '../admin/AdminBoard';
+import SensorsManagement from "../admin/SensorsManagement";
+
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -16,73 +18,88 @@ const protectedRoutes = [
     name: 'Dashboard',
     path: '/dashboard',
     element: <Dashboard />,
-    roles: ['admin','user','guest'] 
+    roles: ['ROLE_ADMIN','user','guest'] 
   },
   {
     name: 'Fields',
     path: '/fields/:id',
     element: <Fields />,
-    roles: ['ROLE_USER','user'] 
+    roles: ['ROLE_USER','user',"ROLE_ADMIN"] 
 
   },
   {
     name: 'Sensors',
-    path: '/sensors',
+    path: '/sensors/:id',
     element: <Sensors />,
-    roles: ['admin','guest'] 
+    roles: ['ROLE_ADMIN','guest',"ROLE_USER"] 
   },
   {
     name: 'Satellite Images',
     path: '/satellite-images',
     element: <SatelliteImages />,
-    roles: ['guest'] 
+    roles: ['ROLE_ADMIN'] 
 
   },
   {
     name: 'My Simulations',
     path: '/simulations',
     element: <Simulations />,
-    roles: ['admin','user'] 
+    roles: ['ROLE_ADMIN','user'] 
   },
   {
     name: 'Calendar',
     path: '/calendar',
     element: <Calendar />,
-    roles: ['guest'] 
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },
   {
     name: 'Weather Forecast',
     path: '/weather',
     element: <Weather />,
-    roles: ['guest'] 
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },
   {
     name: 'Fields Settings',
     path: '/fields-settings',
     element: <FieldSettings />,
-    roles: ['guest'] 
+    roles: ['ROLE_ADMIN'] 
 
   },
+  // {
+  //   name: 'Sensors Settings',
+  //   path: '/sensors-settings',
+  //   element: <SensorSettings />,
+  //   roles: ['ROLE_ADMIN'] 
+
+  // },
   {
-    name: 'Sensors Settings',
-    path: '/sensors-settings',
-    element: <SensorSettings />,
-    roles: ['admin'] 
+    name: 'edit-sensor',
+    path : "/admin/edit-sensor/:id",
+    element: <EditSensorByAdmin />,
+    roles: ['ROLE_ADMIN'] 
 
   },
   {
     name: 'Overview',
     path: '/overview',
     element: <Overview />,
-    roles: ['admin'] 
+    roles: ['ROLE_ADMIN'] 
 
   },
   {
     name: 'admin Board',
     path : "/admin/users",
     element: <AdminBoard />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'admin Board',
+    path : "/admin/sensors",
+
+    element: <SensorsManagement />,
     roles: ['ROLE_ADMIN'] 
 
   },

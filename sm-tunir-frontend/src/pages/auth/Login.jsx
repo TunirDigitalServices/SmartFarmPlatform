@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from "../../assets/images/Logo smart farm1.jpg"
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
@@ -16,7 +16,7 @@ function Login() {
   const [local, setLocal] = useState(localStorage.getItem("local") || "en");
   const { t, i18n } = useTranslation();
 
-
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +59,7 @@ function Login() {
           localStorage.setItem("token", JSON.stringify({ "token": result.token }))
           localStorage.setItem("refreshToken", result.refreshToken)
           // localStorage.setItem("local","en")
-
+      
           if (data.role == "ROLE_ADMIN") {
             navigate("/admin/users")
 
@@ -124,8 +124,8 @@ function Login() {
                     {t('Sign up')}
                   </Link>
                 </div>
-                <form className="pt-3">
-                  <div className="form-group mb-3">
+                <form className="pt-3 px-3" autoComplete="off" >
+                  <div className="form-group mb-3 ">
                     <input
                       type="email"
                       style={{
@@ -140,6 +140,7 @@ function Login() {
                       onChange={e =>
                         setCredentials({ ...credentials, email: e.target.value })
                       }
+                      // autoComplete="off" 
                     />
                   </div>
                   <div className="form-group mb-5">
@@ -157,6 +158,7 @@ function Login() {
                       onChange={e =>
                         setCredentials({ ...credentials, pwd: e.target.value })
                       }
+                      //  autoComplete="off"
                     />
                   </div>
                   <div className="my-3">

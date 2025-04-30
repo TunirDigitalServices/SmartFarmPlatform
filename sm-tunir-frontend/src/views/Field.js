@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { 
-  Container, 
-  Row, 
-  Col, 
-  Card, 
-  Button, 
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
   Form
 } from 'react-bootstrap';
 
@@ -45,7 +45,7 @@ const Field = () => {
   const [isLoading, setIsLoading] = useState(true)
   const { t, i18n } = useTranslation();
 
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [selectedField, setSelectedField] = useState([]);
   const [sensorCode, setSensorCode] = useState('')
   const [coord, setCoord] = useState({ lat: '37.05002', lon: '11.01442' })
@@ -108,7 +108,7 @@ const Field = () => {
   useEffect(() => {
 
     fetchData();
-  }, []);
+  }, [Uid]);
   useEffect(() => {
     const weather = async () => {
       await api.post("/weather/get-data", { type: 'day', lat: coord.lat, lon: coord.lon })
@@ -163,33 +163,33 @@ const Field = () => {
     localStorage.setItem('code', sensorCode)
   }, [sensorCode])
   console.log(sensorCode);
-  
+
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
   useEffect(() => {
-      const calculDataSensor = async () => {
-        console.log(sensorCode)
-        let url = `/calcul/get-sensor-calcul/${sensorCode}`
-        if (role === 'ROLE_SUPPLIER') {
-          url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
-        }
-        await api.get(url)
-          .then(response => {
-            console.log(response.data)
-            let calculResult = response.data.calcul
-            let calculInputs = response.data.inputs
-
-            setResultCalcul(calculResult)
-            setInputsCalcul(calculInputs)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-
+    const calculDataSensor = async () => {
+      console.log(sensorCode)
+      let url = `/calcul/get-sensor-calcul/${sensorCode}`
+      if (role === 'ROLE_SUPPLIER') {
+        url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
       }
+      await api.get(url)
+        .then(response => {
+          console.log(response.data)
+          let calculResult = response.data.calcul
+          let calculInputs = response.data.inputs
 
-      calculDataSensor()
-    
+          setResultCalcul(calculResult)
+          setInputsCalcul(calculInputs)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+    }
+
+    calculDataSensor()
+
   }, [sensorCode])
 
   console.log(resultCalcul)
@@ -295,7 +295,7 @@ const Field = () => {
     // const hours = Math.floor(totalMinutes);
 
     // return `${hours}h`;
-     return `${hours}h ${parseFloat(minutes).toFixed(0)}m`;
+    return `${hours}h ${parseFloat(minutes).toFixed(0)}m`;
   }
   // Marker Position Based on Bilan Hydrique
 
@@ -603,7 +603,7 @@ const Field = () => {
       await api.post('/field/edit-event', updatedEvent)
         .then(response => {
           if (response.data.type === "success") {
-            
+
             handleEventUpdate(selectedEvent, updatedEvent);
             getEvents()
             setShow(false); // Close the modal 
@@ -720,383 +720,383 @@ const Field = () => {
         <Col lg="12" md="12" sm="12">
           <Row>
             <div className="d-flex gap-2 container">
-            <Col lg="4" md="12" sm="12" className="mb-4">
-              {
-                allDataSensor || sensors.length > 0
-                  ?
-                  <Card fluid style={{ minHeight: "330px" }}>
-                    <>
-                      <Card.Header className="border-bottom bg-light">
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            height: "100%",
-                            alignItems: "center"
-                          }}
-                        >
-                          <h6 className="m-0">{t('active_sensors')}</h6>
-                          <Form.Select style={{ width: "50%" }} value={sensorCode} onChange={evt => { setSensorCode(evt.target.value) }}>
-                            <option value="">{t('select_sensor')}</option>
-                            {
-                              sensors.map((sensor, i) => {
-
-                                return (
-                                  <option key={i} value={sensor.code}>{sensor.code}</option>
-                                )
-                              })
-                            }
-                          </Form.Select>
-
-                        </div>
-
-                        {
-                          filteredSensors && filteredSensors.map((data, indx) => {
-                            let prss = data.pressure / 1000
-                            return (
-                              <div
-                                key={indx}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  justifyContent: "space-evenly",
-                                  paddingTop: 10,
-                                  fontSize: 13
-                                }}
-                              >
-                                <div style={{ textAlign: "center" }}>
-                                  <i
-                                    class="fas fa-thermometer-three-quarters"
-                                    style={{ fontSize: "20px" }}
-                                  ></i>
-                                  <p style={{ margin: 0 }}>{t('Temp.')} (°C)</p>
-                                  <p style={{ margin: 0 }}>{data.temperature}</p>
-                                </div>
-                                <div style={{ textAlign: "center" }}>
-                                  <i className="material-icons" style={{ fontSize: "20px" }}>&#xe798;</i>
-                                  <p style={{ margin: 0 }}>{t('Humidity')} (%) </p>
-                                  <p style={{ margin: 0 }}>{data.humidity}</p>
-
-                                </div>
-                                <div style={{ textAlign: "center" }}>
-                                  <i className="material-icons" style={{ fontSize: "20px" }}>&#xe94d;</i>
-                                  <p style={{ margin: 0 }}>{t('Pression')} (kPa)</p>
-                                  <p style={{ margin: 0 }}>{parseFloat(prss).toFixed(3)}</p>
-                                </div>
-                                <div style={{ textAlign: "center" }}>
-                                  <i className="material-icons" style={{ fontSize: "20px" }}>&#xe94d;</i>
-                                  <p style={{ margin: 0 }}>{t('Altitude')} (Pa)</p>
-                                  <p style={{ margin: 0 }}>{data.altitude}</p>
-                                </div>
-                              </div>
-
-                            )
-                          }
-                          )
-                        }
-                      </Card.Header>
-
-                      <Card.Body className="pt-0">
-                        <div style={{ paddingTop: 10 }}>
-                          {
-                            filteredSensors && filteredSensors.map(data => {
-                              // mappingMv('Mv1', data.mv1, data.time, data.sensor_id)                                 
-                              // mappingMv('Mv2', data.mv2, data.time, data.sensor_id)
-                              // mappingMv('Mv3', data.mv3, data.time, data.sensor_id)
-
-
-                              return (
-
-                                <table
-                                  //class="border-none"
-                                  style={{
-                                    textAlign: "center",
-                                    width: "100%",
-                                    gap: 15
-                                  }}
-                                >
-                                  <thead>
-                                    <tr>
-                                      <th><i className="material-icons">&#xe1ff;</i> {t('depth')} (cm)</th>
-                                      <th><i className="material-icons">&#xe798;</i> {t('Humidity')} (%)</th>
-                                    </tr>
-                                  </thead>
-
-                                  <tbody>
-                                    <tr>
-                                      <td>20</td>
-                                      <td>{mappingMv1}</td>
-                                    </tr>
-                                    <tr>
-                                      <td>40</td>
-                                      <td>{mappingMv2}</td>
-                                    </tr>
-                                    <tr>
-                                      <td>60</td>
-                                      <td>{mappingMv3}</td>
-                                    </tr>
-                                  </tbody>
-
-
-                                </table>
-                              )
-                            })
-                          }
-                        </div>
-                        {
-                          filteredSensors.map(data => {
-                            return <h6 className="font-weight-bold" style={{ color: "#0daaa2", fontSize: 14, textAlign: "center", marginTop: 6 }}>
-
-                              {t('last_reading')} :  {moment(data.time).locale('fr').format('L, LT')}
-
-                            </h6>
-                          })
-                        }
-                      </Card.Body>
-
-
-                      <Card.Footer className="border-top">
-                        <div>
-                          <h6 className="m-0" style={{ fontSize: 14 }}>{t('today_weather')}</h6>
+              <Col lg="4" md="12" sm="12" className="mb-4">
+                {
+                  allDataSensor || sensors.length > 0
+                    ?
+                    <Card fluid style={{ minHeight: "330px" }}>
+                      <>
+                        <Card.Header className="border-bottom bg-light">
                           <div
                             style={{
-                              width: "100%",
                               display: "flex",
                               flexDirection: "row",
                               justifyContent: "space-between",
-                              paddingTop: 10
-                            }}>
-                            <div style={{ textAlign: "center" }}>
-                              <i
-                                class="fas fa-thermometer-three-quarters"
-                                style={{ fontSize: "20px" }}
-                              ></i>
-                              <p style={{ margin: 0, fontSize: 14 }}>{t('Temp.')}</p>
-                              <p style={{ margin: 0 }}>
-                                {weatherData.temp}°C
-                              </p>
-                            </div>
-                            <div style={{ textAlign: "center" }}>
-                              <i
-                                class="fas fa-cloud-showers-heavy"
-                                style={{ fontSize: "20px" }}
-                              ></i>
-                              <p style={{ margin: 0, fontSize: 14 }}>{t('Rain')}</p>
-                              <p style={{ margin: 0 }}>
-                                {weatherData.rain ? weatherData.rain : 0} mm
-                              </p>
-                            </div>
-                            <div style={{ textAlign: "center" }}>
-                              <img
-                                src={evapo}
-                                alt="evapoIcon"
-                                style={{ width: "20px", height: "20px" }}
-                              />
-                              <p style={{ margin: 0, fontSize: 14 }}>ET0</p>
+                              height: "100%",
+                              alignItems: "center"
+                            }}
+                          >
+                            <h6 className="m-0">{t('active_sensors')}</h6>
+                            <Form.Select style={{ width: "50%" }} value={sensorCode} onChange={evt => { setSensorCode(evt.target.value) }}>
+                              <option value="">{t('select_sensor')}</option>
+                              {
+                                sensors.map((sensor, i) => {
 
-                              <p style={{ margin: 0 }}>{et0} mm</p>
-
-
-
-
-                            </div>
-                            <div style={{ textAlign: "center" }}>
-                              <i className="material-icons" style={{ fontSize: 20 }}>&#xefd8;</i>
-                              <p style={{ margin: 0, fontSize: 14 }}>{t(`wind`)}</p>
-
-                              <p style={{ margin: 0 }}>{weatherData.wind} km/h</p>
-
-
-
-
-                            </div>
+                                  return (
+                                    <option key={i} value={sensor.code}>{sensor.code}</option>
+                                  )
+                                })
+                              }
+                            </Form.Select>
 
                           </div>
-                        </div>
-                      </Card.Footer>
-                    </>
-                  </Card>
-                  :
-                  <Card fluid style={{ minHeight: "330px" }}>
-                    <Card.Header >
 
-                    </Card.Header>
-                    <Card.Body>
-                      <h5 style={{ textAlign: 'center', color: '#0daaa2' }}>Please use the app to install/register a sensor.</h5>
-
-                    </Card.Body>
-                  </Card>
-              }
-            </Col>
-            <Col lg="4" md="12" sm="12" className="mb-4">
-              <Card fluid style={{ minHeight: "330px" }} >
-
-                <Card.Header className="border-bottom d-flex justify-content-between align-items-center flex-wrap">
-                  <h6 className="m-0">{t('soil_status')}</h6>
-                  <Button theme="info" outline onClick={() => navigate('/Graphs')}>{t('see_all')}</Button>
-
-                </Card.Header>
-                <Card.Body className="p-1">
-                  <SubSoil data={allDataSensor} codeSensor={sensorCode} />
-                  {
-                    filteredSensors && filteredSensors.map(data => {
-                     
-                      return (
-
-                        <>
-
-                          <div className="py-2">
-                            <div className="ProgressBarWrapper">
-                              <div className="stats-dates">
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
-                                <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(data.mv1) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="11"
-                                    height="13"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
-                                  >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </div>
+                          {
+                            filteredSensors && filteredSensors.map((data, indx) => {
+                              let prss = data.pressure / 1000
+                              return (
                                 <div
+                                  key={indx}
                                   style={{
-                                    opacity: "0.2",
-                                    width: "80%",
-                                    height: "20px",
-                                    margin: "0px 0px 0px 10px",
-                                    backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-evenly",
+                                    paddingTop: 10,
+                                    fontSize: 13
                                   }}
-                                ></div>
-                              </div>
-                              <div className="stats-dates" style={{ margin: "-5px 0px" }}>
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
-                                <div className="Marker" style={{ left: calculateLeftPosition(data.mv2) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="14"
-                                    height="17"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
-                                  >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
+                                >
+                                  <div style={{ textAlign: "center" }}>
+                                    <i
+                                      class="fas fa-thermometer-three-quarters"
+                                      style={{ fontSize: "20px" }}
+                                    ></i>
+                                    <p style={{ margin: 0 }}>{t('Temp.')} (°C)</p>
+                                    <p style={{ margin: 0 }}>{data.temperature}</p>
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    <i className="material-icons" style={{ fontSize: "20px" }}>&#xe798;</i>
+                                    <p style={{ margin: 0 }}>{t('Humidity')} (%) </p>
+                                    <p style={{ margin: 0 }}>{data.humidity}</p>
+
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    <i className="material-icons" style={{ fontSize: "20px" }}>&#xe94d;</i>
+                                    <p style={{ margin: 0 }}>{t('Pression')} (kPa)</p>
+                                    <p style={{ margin: 0 }}>{parseFloat(prss).toFixed(3)}</p>
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    <i className="material-icons" style={{ fontSize: "20px" }}>&#xe94d;</i>
+                                    <p style={{ margin: 0 }}>{t('Altitude')} (Pa)</p>
+                                    <p style={{ margin: 0 }}>{data.altitude}</p>
+                                  </div>
                                 </div>
-                                <div
-                                  style={{
-                                    margin: "0px 0px 0px 10px",
-                                    width: "80%",
-                                    height: "20px",
-                                    backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
-                                  }}
-                                ></div>
-                              </div>
-                              <div className="stats-dates">
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
-                                <div className="Marker-yesterday" style={{ left: calculateLeftPosition(data.mv3) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="11"
-                                    height="13"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
+
+                              )
+                            }
+                            )
+                          }
+                        </Card.Header>
+
+                        <Card.Body className="pt-0">
+                          <div style={{ paddingTop: 10 }}>
+                            {
+                              filteredSensors && filteredSensors.map(data => {
+                                // mappingMv('Mv1', data.mv1, data.time, data.sensor_id)                                 
+                                // mappingMv('Mv2', data.mv2, data.time, data.sensor_id)
+                                // mappingMv('Mv3', data.mv3, data.time, data.sensor_id)
+
+
+                                return (
+
+                                  <table
+                                    //class="border-none"
+                                    style={{
+                                      textAlign: "center",
+                                      width: "100%",
+                                      gap: 15
+                                    }}
                                   >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </div>
-                                <div
-                                  style={{
-                                    opacity: "0.2",
-                                    margin: "0px 0px 0px 10px",
-                                    width: "80%",
-                                    height: "20px",
-                                    backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
-                                  }}
-                                ></div>
+                                    <thead>
+                                      <tr>
+                                        <th><i className="material-icons">&#xe1ff;</i> {t('depth')} (cm)</th>
+                                        <th><i className="material-icons">&#xe798;</i> {t('Humidity')} (%)</th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                      <tr>
+                                        <td>20</td>
+                                        <td>{mappingMv1}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>40</td>
+                                        <td>{mappingMv2}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>60</td>
+                                        <td>{mappingMv3}</td>
+                                      </tr>
+                                    </tbody>
+
+
+                                  </table>
+                                )
+                              })
+                            }
+                          </div>
+                          {
+                            filteredSensors.map(data => {
+                              return <h6 className="font-weight-bold" style={{ color: "#0daaa2", fontSize: 14, textAlign: "center", marginTop: 6 }}>
+
+                                {t('last_reading')} :  {moment(data.time).locale('fr').format('L, LT')}
+
+                              </h6>
+                            })
+                          }
+                        </Card.Body>
+
+
+                        <Card.Footer className="border-top">
+                          <div>
+                            <h6 className="m-0" style={{ fontSize: 14 }}>{t('today_weather')}</h6>
+                            <div
+                              style={{
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                paddingTop: 10
+                              }}>
+                              <div style={{ textAlign: "center" }}>
+                                <i
+                                  class="fas fa-thermometer-three-quarters"
+                                  style={{ fontSize: "20px" }}
+                                ></i>
+                                <p style={{ margin: 0, fontSize: 14 }}>{t('Temp.')}</p>
+                                <p style={{ margin: 0 }}>
+                                  {weatherData.temp}°C
+                                </p>
                               </div>
-                              <div className="status">
-                                <div>{t('Critical')}</div>
-                                <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
-                                <div>{t('Full')}</div>
+                              <div style={{ textAlign: "center" }}>
+                                <i
+                                  class="fas fa-cloud-showers-heavy"
+                                  style={{ fontSize: "20px" }}
+                                ></i>
+                                <p style={{ margin: 0, fontSize: 14 }}>{t('Rain')}</p>
+                                <p style={{ margin: 0 }}>
+                                  {weatherData.rain ? weatherData.rain : 0} mm
+                                </p>
                               </div>
+                              <div style={{ textAlign: "center" }}>
+                                <img
+                                  src={evapo}
+                                  alt="evapoIcon"
+                                  style={{ width: "20px", height: "20px" }}
+                                />
+                                <p style={{ margin: 0, fontSize: 14 }}>ET0</p>
+
+                                <p style={{ margin: 0 }}>{et0} mm</p>
+
+
+
+
+                              </div>
+                              <div style={{ textAlign: "center" }}>
+                                <i className="material-icons" style={{ fontSize: 20 }}>&#xefd8;</i>
+                                <p style={{ margin: 0, fontSize: 14 }}>{t(`wind`)}</p>
+
+                                <p style={{ margin: 0 }}>{weatherData.wind} km/h</p>
+
+
+
+
+                              </div>
+
                             </div>
                           </div>
+                        </Card.Footer>
+                      </>
+                    </Card>
+                    :
+                    <Card fluid style={{ minHeight: "330px" }}>
+                      <Card.Header >
 
-                        </>
-                      )
-                    })
-                  }
+                      </Card.Header>
+                      <Card.Body>
+                        <h5 style={{ textAlign: 'center', color: '#0daaa2' }}>Please use the app to install/register a sensor.</h5>
+
+                      </Card.Body>
+                    </Card>
+                }
+              </Col>
+              <Col lg="4" md="12" sm="12" className="mb-4">
+                <Card fluid style={{ minHeight: "330px" }} >
+
+                  <Card.Header className="border-bottom d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 className="m-0">{t('soil_status')}</h6>
+                    <Button theme="info" outline onClick={() => navigate('/Graphs')}>{t('see_all')}</Button>
+
+                  </Card.Header>
+                  <Card.Body className="p-1">
+                    <SubSoil data={allDataSensor} codeSensor={sensorCode} />
+                    {
+                      filteredSensors && filteredSensors.map(data => {
+
+                        return (
+
+                          <>
+
+                            <div className="py-2">
+                              <div className="ProgressBarWrapper">
+                                <div className="stats-dates">
+                                  <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
+                                  <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(data.mv1) }}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="11"
+                                      height="13"
+                                      viewBox="0 0 14 17"
+                                      className="drop-element ng-star-inserted"
+                                    >
+                                      <g fill="none">
+                                        <path
+                                          d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                          fill="#FE3C65"
+                                          className="drop"
+                                          style={{ fill: "rgb(16, 201, 160)" }}
+                                        ></path>
+                                        <path
+                                          d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                          stroke="#FFF"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <div
+                                    style={{
+                                      opacity: "0.2",
+                                      width: "80%",
+                                      height: "20px",
+                                      margin: "0px 0px 0px 10px",
+                                      backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                    }}
+                                  ></div>
+                                </div>
+                                <div className="stats-dates" style={{ margin: "-5px 0px" }}>
+                                  <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
+                                  <div className="Marker" style={{ left: calculateLeftPosition(data.mv2) }}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="14"
+                                      height="17"
+                                      viewBox="0 0 14 17"
+                                      className="drop-element ng-star-inserted"
+                                    >
+                                      <g fill="none">
+                                        <path
+                                          d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                          fill="#FE3C65"
+                                          className="drop"
+                                          style={{ fill: "rgb(16, 201, 160)" }}
+                                        ></path>
+                                        <path
+                                          d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                          stroke="#FFF"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <div
+                                    style={{
+                                      margin: "0px 0px 0px 10px",
+                                      width: "80%",
+                                      height: "20px",
+                                      backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                    }}
+                                  ></div>
+                                </div>
+                                <div className="stats-dates">
+                                  <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
+                                  <div className="Marker-yesterday" style={{ left: calculateLeftPosition(data.mv3) }}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="11"
+                                      height="13"
+                                      viewBox="0 0 14 17"
+                                      className="drop-element ng-star-inserted"
+                                    >
+                                      <g fill="none">
+                                        <path
+                                          d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                          fill="#FE3C65"
+                                          className="drop"
+                                          style={{ fill: "rgb(16, 201, 160)" }}
+                                        ></path>
+                                        <path
+                                          d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                          stroke="#FFF"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <div
+                                    style={{
+                                      opacity: "0.2",
+                                      margin: "0px 0px 0px 10px",
+                                      width: "80%",
+                                      height: "20px",
+                                      backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                    }}
+                                  ></div>
+                                </div>
+                                <div className="status">
+                                  <div>{t('Critical')}</div>
+                                  <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
+                                  <div>{t('Full')}</div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </>
+                        )
+                      })
+                    }
 
 
-                </Card.Body>
-              </Card>
-            </Col>
-            {recomBasedOnDate()}
+                  </Card.Body>
+                </Card>
+              </Col>
+              {recomBasedOnDate()}
             </div>
           </Row>
           <Row>
             <div className="container">
-            <Col lg="12" md="12" sm="12" className="mb-4">
-              <Card>
-                <Card.Body className="p-0">
+              <Col lg="12" md="12" sm="12" className="mb-4">
+                <Card>
+                  <Card.Body className="p-0">
 
-                  <EvapoChart
+                    <EvapoChart
 
-                    data={chartData}
+                      data={chartData}
 
-                  />
-                </Card.Body>
-              </Card>
+                    />
+                  </Card.Body>
+                </Card>
 
-            </Col>
-            <Col lg="12" md="12" sm="12" className="mb-4">
-              <Card>
-                <Card.Body className="p-0">
+              </Col>
+              <Col lg="12" md="12" sm="12" className="mb-4">
+                <Card>
+                  <Card.Body className="p-0">
 
-                  <WaterChart
+                    <WaterChart
 
-                    data={chartData}
+                      data={chartData}
 
-                  />
-                </Card.Body>
-              </Card>
+                    />
+                  </Card.Body>
+                </Card>
 
-            </Col>
+              </Col>
             </div>
           </Row>
         </Col>

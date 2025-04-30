@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from '../../api/api'
 import Notifications ,{notify} from 'react-notify-toast';
 import swal from 'sweetalert';
@@ -14,6 +14,7 @@ export const Register = ({ setToken }) => {
 
   const [hasAccepted, setAccepted] = useState(false);
 
+  const navigate = useNavigate();
 
 
   const [name,setName] = useState("");
@@ -90,6 +91,7 @@ export const Register = ({ setToken }) => {
     event.preventDefault()
     
     const isValid = validate();
+    console.log("Validation Result:", isValid);
     if(isValid) {
         handleRegister()
        
@@ -101,7 +103,7 @@ export const Register = ({ setToken }) => {
 
   const handleRegister = async () => {
 
-    
+    console.log("Handle Register Triggered");
 
     let data = {
       name : name,
@@ -133,15 +135,20 @@ export const Register = ({ setToken }) => {
             })
             setSendEmail(true , resetForm())
           }
-          if(res.data.type && res.data.type == "success") {
+          if(res.data.type && res.data.type === "success") {
             swal({
               icon: 'success',
               title: 'OK',
-              text: 'Email sent check your inbox to confirm'
-            })
-            setSendEmail(true , resetForm())
+              text: 'Email sent, check your inbox to confirm'
+            }).then(() => {
+              // Redirect after user closes the alert
+              navigate('/');
+            });
           
+            setSendEmail(true);
+            resetForm();
           }
+          
           }).catch(() => {
             swal({
               icon: 'error',
@@ -209,14 +216,14 @@ export const Register = ({ setToken }) => {
         <h3 style={{textAlign:"center"}}>{t('Sign up')}</h3>
         <div className="text-center mt-2 font-weight-light">
                  <span>{t('already_account')} </span> 
-                  <Link to="/Login" 
+                  <Link to="/" 
                     style={{ color: "#0daaa2" }}>
                     {t('sign_in')}
                   </Link>
                 </div>
         {/* <div className={`mb-0 alert alert-danger fade ${msgError.displayMsg}`} role="alert"><i class="fa fa-info mx-2"></i>{msgError.msg}</div> */}
 
-                      <form className="pt-3">
+                      <form className="pt-3 px-4">
                         <Row>
                           <Col lg="6" md="12" sm="12">
                               <div className="form-group">
