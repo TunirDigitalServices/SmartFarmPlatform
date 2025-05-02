@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {Container,Row,Col,Card,CardBody,CardHeader,Button,Form,FormInput,FormGroup,FormSelect,ButtonGroup,Modal,ModalBody,ModalHeader} from "shards-react";
+import {Container,Row,Col,Card,Button,Form} from "react-bootstrap";
 import PageTitle from "../components/common/PageTitle";
 import api from '../api/api'
 import  Html5QrcodePlugin  from "../views/Html5QrcodePlugin";
@@ -92,11 +92,12 @@ const AddEquipmentByAdmin = () => {
     <Row>
       <Col lg="12" md="8" sm="12" className="mb-4">
         <Card small className="h-100">
-          <CardHeader className="border-bottom">
+          <Card.Header className="border-bottom">
           <div
             style={{
               display: "flex",
               justifyContent: "flex-start",
+              flexWrap:"wrap",
               width: "auto",
               float: "left"
             }}
@@ -107,6 +108,7 @@ const AddEquipmentByAdmin = () => {
             style={{
               display: "flex",
               justifyContent: "flex-end",
+              gap:"10px"
               
             }}
           >
@@ -126,21 +128,22 @@ const AddEquipmentByAdmin = () => {
               {t('cancel')}
             </Button>
             </div>
-          </CardHeader>
-          <CardBody className="pt-0">
+          </Card.Header>
+          <Card.Body className="pt-0">
             <div
               style={{
                 display: "flex",
                 marginTop: "20px",
-                flexWrap: "wrap"
+                flexWrap: "wrap",
+                gap:"20px"
               }}
             >
-              <Col lg="4" sm="12" md="6">
+              <Col lg="5" sm="12" md="6">
                 <Form>
-                  <Row form>
-                  <Col lg="6" md="12" sm="12" className="form-group">
+                  <Row form className='gap-4'>
+                  <Col lg="5" md="12" sm="12" className="form-group">
                   <p style={{ margin: "0px" }}>{t('Equipment name')}</p>
-                      <FormInput
+                      <Form.Control
                             placeholder={t('Equipment name')}
                             required
                             value={name}
@@ -149,7 +152,7 @@ const AddEquipmentByAdmin = () => {
                     </Col>
                     <Col md="6" className="form-group">
                       <p style={{ margin: "0px" }}>{t('Equipment code')}</p>
-                      <FormInput
+                      <Form.Control
                             placeholder={t('Equipment code')}
                             required
                             value={resultScan}
@@ -161,7 +164,7 @@ const AddEquipmentByAdmin = () => {
 
                     </Col>
                   </Row>
-                  <FormGroup>
+                  <Form.Group>
                     <p style={{ margin: "0px" }}>{t('desc')}</p>
                     <textarea
                       style={{ height: "220px" }}
@@ -169,10 +172,10 @@ const AddEquipmentByAdmin = () => {
                       placeholder={t('desc')}
                       onChange={(e)=>{}}
                     ></textarea>
-                  </FormGroup>
+                  </Form.Group>
                 </Form>
               </Col>
-              <Col lg="8" md="12" sm="12" className="mb-4">
+              <Col lg="6" md="12" sm="12" className="mb-4">
               <div>
             <h3>{t('scan qrcode Equipment')}</h3>
                 <Html5QrcodePlugin 
@@ -186,7 +189,7 @@ const AddEquipmentByAdmin = () => {
               </div>
               </Col>
             </div>
-          </CardBody>
+          </Card.Body>
         </Card>
       </Col>
     </Row>

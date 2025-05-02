@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import api from '../api/api'
-import { Container, Row, Col, CardBody, CardHeader, CardFooter, FormGroup, FormInput, ButtonGroup, FormSelect } from 'shards-react'
+import { Container, Row, Col, Card} from 'react-bootstrap'
 import PageTitle from '../components/common/PageTitle'
 import { useTranslation } from 'react-i18next';
-import { Modal } from "react-bootstrap";
+
 import swal from 'sweetalert';
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 // import {Button, IconButton} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { Recommend } from '@mui/icons-material';
@@ -19,15 +19,16 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import "moment/locale/nb";
-import { TextField, Button, Card, CardContent, Typography ,Switch ,LinearProgress  } from '@mui/material';
+import { TextField, Button, CardContent, Typography ,Switch ,LinearProgress  } from '@mui/material';
 import SimulationChart from './SimulationChart';
+import { useLocation } from 'react-router';
 
 const localizer = momentLocalizer(moment);
 
 const CalculSimulation = () => {
   
   const { t, i18n } = useTranslation();
-  const history = useHistory()
+ 
   const location = useLocation();
   const [events, setEvents] = useState([]);
   const [showAllEvents, setShowAllEvents] = useState(true);
@@ -37,10 +38,10 @@ const CalculSimulation = () => {
     // const {calculData } = location.state;
 
     const initialData = location.state ? location.state.calculData : null;
+ 
+    
     const [calculData, setCalculData] = useState(initialData);
-  if (!calculData) {
-    return <div>No data available</div>;
-  }
+ 
   const toHoursAndMinutes = (totalMinutes) => {
     const minutes = totalMinutes % 60;
     const hours = Math.floor(totalMinutes / 60);
@@ -184,7 +185,9 @@ const CalculSimulation = () => {
 
     getFieldById()
   },[]) 
-
+  if (!calculData) {
+    return <div>No data available</div>;
+  }
   const extractDataForSimulation = (fieldData) => {
     if (fieldData) {
       const { Latitude, Longitude, crops, zones } = fieldData;
@@ -288,8 +291,8 @@ const CalculSimulation = () => {
                       <Typography variant="h6" gutterBottom>
                           {t(`Simulation ${index + 1}`)}
                       </Typography>
-                      <Row>
-                          <Col xs={12} sm={6} md={4}>
+                      <Row className='gap-2'>
+                          <Col xs={12} sm={6} md={3}>
                               <TextField
                                   label="RU Pratique"
                                   value={inputs[0].ruPratique}
@@ -354,7 +357,7 @@ const CalculSimulation = () => {
                                 }}
                               />
                           </Col>
-                          <Col xs={12} sm={6} md={4}>
+                          <Col xs={12} sm={6} md={3}>
                               <TextField
                                   label="Profondeur"
                                   value={inputs[0].profondeur}
@@ -367,7 +370,7 @@ const CalculSimulation = () => {
                                 }}
                               />
                           </Col>
-                          <Col xs={12} sm={6} md={4}>
+                          <Col xs={12} sm={6} md={3}>
                               <TextField
                                   label="Planting Date"
                                   value={inputs[0].plantingDate}
@@ -406,14 +409,14 @@ const CalculSimulation = () => {
              <Row>
             <Col lg="12" md="12" sm="12" className="mb-4">
               <Card>
-                <CardBody className="p-0">
+                <Card.Body className="p-0">
 
                   <SimulationChart
 
                     data={chartData}
 
                   />
-                </CardBody>
+                </Card.Body>
               </Card>
 
             </Col>
@@ -421,7 +424,7 @@ const CalculSimulation = () => {
             <Row>
                   <Col lg='12' md='12' sm='12'>
                     <Card>
-                      <CardBody>
+                      <Card.Body>
 
                         <div style={{ height: 590 }}>
                           <Calendar
@@ -442,7 +445,7 @@ const CalculSimulation = () => {
                           />
                         </div>
 
-                      </CardBody>
+                      </Card.Body>
                     </Card>
                   </Col>
                 </Row>

@@ -8534,6 +8534,11 @@ react-error-overlay@^6.0.11:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.1.0.tgz#22b86256beb1c5856f08a9a228adb8121dd985f2"
   integrity sha512-SN/U6Ytxf1QGkw/9ve5Y+NxBbZM6Ht95tuXNMKs8EJyFa/Vy/+Co3stop3KBHARfn/giv+Lj1uUnTfOJ3moFEQ==
 
+react-export-table-to-excel@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-export-table-to-excel/-/react-export-table-to-excel-1.0.6.tgz#753a9b4e1863c6abd1ffcbb48e8fd17fc7776d2a"
+  integrity sha512-2NKyor1rFFEqYDXQq5tPoVNwwdv5kT8DWc65wAmDa9Hi0441qHj0tOxegWhpW0vlCM2TypIsw+ghzIr900U4RA==
+
 react-fast-compare@^3.0.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"

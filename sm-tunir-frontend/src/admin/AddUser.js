@@ -14,14 +14,16 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useHistory } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
 import api from '../api/api';
 import swal from 'sweetalert';
-import { Button } from 'shards-react';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
 
 const AddUser = () => {
-  const history = useHistory();
+
+  const navigate = useNavigate()
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -300,9 +302,9 @@ const AddUser = () => {
               </Grid>
             </Grid>
           </CardContent>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px',gap:"10px" }}>
           <Button
-                theme="success"
+                variant="success"
                 className="mb-2 mr-1"
                 onClick={handleSubmit}
               >
@@ -310,8 +312,8 @@ const AddUser = () => {
                 Save
               </Button>
               <Button
-                theme="danger"
-                onClick={() => history.push('/admin/users')}
+                variant="danger"
+                onClick={() => navigate('/admin/users')}
                 className="mb-2 mr-1"
               >
                 <i className={`fa fa-times mx-2`}></i>

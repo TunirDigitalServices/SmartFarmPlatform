@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { Col } from 'shards-react';
+
 import moment from 'moment'; // Import moment library
 
 const SimulationChart = ({ data }) => {
@@ -102,7 +102,8 @@ const SimulationChart = ({ data }) => {
   }, [data]);
 
   return (
-    <Line
+    <>
+  { state &&  <Line
       data={state}
       options={{
         title: {
@@ -143,7 +144,8 @@ const SimulationChart = ({ data }) => {
           }
       }
       }}
-    />
+    />}
+    </>
   );
 };
 

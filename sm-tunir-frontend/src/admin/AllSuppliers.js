@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, Row, Col, FormGroup, FormInput, ButtonGroup, Button, Modal, ModalBody, ModalHeader, Nav, NavItem, NavLink } from 'shards-react'
+import {
+    Container, Card, Row, Col, Form, ButtonGroup,
+    Button, Modal, Nav
+} from 'react-bootstrap'
 import PageTitle from '../components/common/PageTitle'
 import api from '../api/api'
 import swal from 'sweetalert'
@@ -55,7 +58,7 @@ const AllSuppliers = () => {
         await api.get('/admin/exist-suppliers')
             .then(response => {
                 let allSuppliers = response.data.suppliers
-                
+
                 setSuppliers(allSuppliers)
             }).catch(err => {
                 console.log(err)
@@ -121,21 +124,21 @@ const AllSuppliers = () => {
                         className="text-sm-left"
                     />
                 </Row>
-                    <Row className="d-flex justify-content-center">
-                        <Nav justified pills className="bg-white w-25">
-                            <NavItem>
-                                <NavLink >
-                                    <Link to={`/admin/users`}>{t('list_users')}</Link>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink active>
-                                    {t('all_suppliers')}
-                                </NavLink>
-                            </NavItem>
-                        </Nav>
+                <Row className="d-flex justify-content-center">
+                    <Nav  variant="pills" justified pills className="w-25">
+                        <Nav.Item>
+                            <Nav.Link >
+                                <Link to={`/admin/users`}>{t('list_users')}</Link>
+                            </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link active>
+                                {t('all_suppliers')}
+                            </Nav.Link>
+                        </Nav.Item>
+                    </Nav>
 
-                    </Row>
+                </Row>
                 <Row>
                     <PageTitle
                         sm="4"
@@ -144,11 +147,11 @@ const AllSuppliers = () => {
                     />
                 </Row>
 
-                <Row form className='d-flex justify-content-center'>
+                <Row form className='d-flex justify-content-center gap-2'>
                     <Col md="3" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                     value={SearchName}
                                     onChange={(e) => setSearchName(e.target.value)}
                                     id="search"
@@ -158,12 +161,12 @@ const AllSuppliers = () => {
             </Button> */}
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                     <Col md="3" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                     value={SearchEmail}
                                     onChange={(e) => setSearchEmail(e.target.value)}
                                     id="search"
@@ -173,7 +176,7 @@ const AllSuppliers = () => {
             </Button> */}
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Card>
@@ -202,7 +205,7 @@ const AllSuppliers = () => {
                                             <td>
                                                 <ButtonGroup size="sm" className="mr-2">
                                                     <Button title="Edit" onClick={() => getSingleSupplier(supplier.uid)} squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                    <Button title="Delete" onClick={() => { }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                                    <Button title="Delete" onClick={() => { }} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                                 </ButtonGroup>
 
                                             </td>
@@ -218,8 +221,8 @@ const AllSuppliers = () => {
 
                 </Card>
             </Container>
-            <Modal open={toggle} >
-                <ModalHeader closeAriaLabel>
+            <Modal show={toggle} >
+                <Modal.Header closeAriaLabel>
 
                     <h6 className="m-0">{t('edit_supplier')}</h6>{" "}
 
@@ -248,70 +251,70 @@ const AllSuppliers = () => {
                         </Button>
                     </div>
 
-                </ModalHeader>
-                <ModalBody>
-                    <Row form className="py-4">
+                </Modal.Header>
+                <Modal.Body>
+                    <Row form className="py-4 gap-2">
                         <Col lg="6" md="12" sm="12" >
-                            <FormGroup>
+                            <Form.Group>
                                 <label htmlFor="name">Supplier Company Name</label>
-                                <FormInput
+                                <Form.Control
                                     id="name"
                                     placeholder="Name"
                                     onChange={(e) => setName(e.target.value)}
                                     value={name}
                                 />
-                            </FormGroup>
-                            <FormGroup>
+                            </Form.Group>
+                            <Form.Group>
                                 <label htmlFor="email">{t('email')}</label>
-                                <FormInput
+                                <Form.Control
                                     id="email"
                                     placeholder="Email"
                                     onChange={(e) => setEmail(e.target.value)}
                                     value={email}
 
                                 />
-                            </FormGroup>
-                            <FormGroup>
+                            </Form.Group>
+                            <Form.Group>
                                 <label htmlFor="tel">Phone Number</label>
-                                <FormInput
+                                <Form.Control
                                     placeholder="Tel"
                                     type="tel"
                                     id="tel"
                                     value={mobilePhone}
                                     onChange={(e) => setMobilePhone(e.target.value)} />
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="6" md="12" sm="12">
-                            <FormGroup>
+                        <Col lg="5" md="12" sm="12">
+                            <Form.Group>
                                 <label htmlFor="Address">{t('address')}</label>
-                                <FormInput
+                                <Form.Control
                                     id="Address"
                                     placeholder="Address"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
-                            </FormGroup>
-                            <FormGroup>
+                            </Form.Group>
+                            <Form.Group>
                                 <label htmlFor="Country">{t('country')}</label>
-                                <FormInput
+                                <Form.Control
                                     id="Country"
                                     placeholder="Country"
                                     value={country}
                                     onChange={(e) => setCountry(e.target.value)}
                                 />
-                            </FormGroup>
-                            <FormGroup>
+                            </Form.Group>
+                            <Form.Group>
                                 <label htmlFor="City">{t('city')}</label>
-                                <FormInput
+                                <Form.Control
                                     id="City"
                                     placeholder="City"
                                     value={city}
                                     onChange={(e) => setCity(e.target.value)} />
-                            </FormGroup>
+                            </Form.Group>
                         </Col>
                     </Row>
-                </ModalBody>
+                </Modal.Body>
             </Modal>
         </>
     )

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import api from '../api/api'
-import { Container, Row, Col, Card, CardBody, CardHeader, CardFooter, FormGroup, FormInput, ButtonGroup, FormSelect } from 'shards-react'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 import PageTitle from '../components/common/PageTitle'
 import { useTranslation } from 'react-i18next';
 import { Modal } from "react-bootstrap";
 import swal from 'sweetalert';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 import {Button, IconButton} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { Recommend } from '@mui/icons-material';
@@ -17,6 +17,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import AddIcon from '@mui/icons-material/Add';
 import Pagination from '../views/Pagination';
+import { useNavigate } from 'react-router';
 
 
 const FieldsManagement = () => {
@@ -108,10 +109,10 @@ const FieldsManagement = () => {
       const response = await api.post('/admin/field-sensor-calcul',{fieldId,userId});
       const data = await response.data.data; 
       if (data && data.length > 0) {
-        history.push({
-          pathname: `/admin/calcul-fields/${fieldId}`,
-          state: { calculData: data } 
-        });
+
+      navigate(`/admin/calcul-fields/${fieldId}`,{state:{
+        calculData: data
+      }})
       } else {
         console.error('No data found');
       }
@@ -159,7 +160,7 @@ const FieldsManagement = () => {
     }
   };
 
-  const history = useHistory()
+  const navigate = useNavigate()
   const goToField = (uid, userId) => {
     if (uid) {
       localStorage.setItem(
@@ -169,11 +170,11 @@ const FieldsManagement = () => {
     } else {
       localStorage.setItem("Field", 0);
     }
-    history.push(`/Fields/${uid}`)
+   navigate(`/Fields/${uid}`)
   }
   const goToHistory = (code) => {
 
-    history.push(`/my-history/${code}`)
+   navigate(`/my-history/${code}`)
   }
 
   const getUserName = (userId) => {
@@ -259,7 +260,7 @@ const FieldsManagement = () => {
 
           </Col> */}
         </Row>
-        <Card>
+        <Card style={{overflowX:"auto"}}>
           <table className="table mb-0 text-center table-responsive-lg table-hover table-bordered">
             <thead className="bg-light">
               <tr>

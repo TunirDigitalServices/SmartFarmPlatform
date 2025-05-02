@@ -18,7 +18,9 @@ const EditSensorByAdmin = () => {
 
   const navigate = useNavigate()
   const location = useLocation();
-  const { lastDataTime, formattedTime, sensorState } = location.state;
+console.log(location,"loc");
+
+  const { lastDataTime, formattedTime, sensorState } = location.state || {};
   const [settingValues, setSettingValues] = useState([])
   const [frequency, setFrequency] = useState('')
   const [dateSetting, setDateSetting] = useState([])
@@ -239,8 +241,8 @@ const EditSensorByAdmin = () => {
 
 
   return (
-    <Container fluid className="main-content-container px-4">
-      <Link to='/admin/sensors'> Go back</Link>
+    <Container fluid className="main-content-container px-4 mt-3">
+      <Link to='/admin/sensors' > Go back</Link>
 
       {/* Page Header */}
       <Row noGutters className="page-header py-4 d-flex justify-content-between align-items-center">
@@ -250,7 +252,7 @@ const EditSensorByAdmin = () => {
           subtitle={t('edit_sensor')}
           className="text-sm-left"
         />
-        <div>
+        <div className='mt-4'>
           <Button title="Historique" onClick={() => { navigate(`/my-history/${resultScan}`) }} squared theme="info"><i className="material-icons">&#xe889;</i> View History</Button>
 
         </div>
@@ -274,7 +276,7 @@ const EditSensorByAdmin = () => {
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
-
+                  gap:"10px"
                 }}
               >
                 <Button
@@ -297,12 +299,12 @@ const EditSensorByAdmin = () => {
               </div>
             </Card.Header>
             <Card.Body className="pt-0 px-1">
-              <Row className="p-2">
-                <Col lg="8" sm="12" md="12">
+              <Row className="p-2 gap-2">
+                <Col lg="7" sm="12" md="12">
                   <Form>
                     <Row form>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1,width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('sensor_code')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -342,7 +344,7 @@ const EditSensorByAdmin = () => {
                         }
                       </Col>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1,width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('Frequency')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -357,7 +359,7 @@ const EditSensorByAdmin = () => {
                     </Row>
                     <Row form>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1, width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('SIM card number')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -371,7 +373,7 @@ const EditSensorByAdmin = () => {
 
                       </Col>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1, width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('SIM Card identifier')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -386,7 +388,7 @@ const EditSensorByAdmin = () => {
                     </Row>
                     <Row form>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1,width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('lat')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -399,7 +401,7 @@ const EditSensorByAdmin = () => {
                         </FormControl>
                       </Col>
                       <Col lg="6" md="12" sm="12" className="form-group">
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" size='small'>
+                        <FormControl sx={{ m: 1,width:"25ch" }} variant="outlined" size='small'>
                           <InputLabel htmlFor="outlined-adornment-password">{t('lon')}</InputLabel>
                           <OutlinedInput
                             id="outlined-adornment-password"
@@ -412,34 +414,11 @@ const EditSensorByAdmin = () => {
                         </FormControl>
                       </Col>
                     </Row>
-                    <Row form>
-                      <Col lg="12" md="12" sm="12">
-                        <table className="table mb-0 border text-center  table-responsive-lg">
-                          <thead className="bg-light">
-                            <tr>
-                              <th scope="col" className="border-0">
-                                <div className='d-flex justify-content-center align-items-center'>
-                                  <Button style={{ outline: 'none', border: 'none', background: 'transparent' }} onClick={() => addTableRows()}><i style={{ fontSize: 20, color: "#27A6B7" }} className='material-icons'>&#xe147;</i></Button>
-                                  <Button style={{ outline: 'none', border: 'none', background: 'transparent' }} onClick={(e) => deleteTableRows(1, e)}><i style={{ fontSize: 20, color: "#27A6B7" }} className="material-icons">&#xe872;</i></Button>
-                                </div>
-                              </th>
-                              <th scope="col" className="border-0">{t('Date')}</th>
-                              <th scope="col" className="border-0">{t('Min')} (%)</th>
-                              <th scope="col" className="border-0">{t('Max')} (%)</th>
-                            </tr>
-                          </thead>
-
-                          {Items()}
-
-                        </table>
-                      
-                      </Col>
-
-                    </Row>
+                   
 
                   </Form>
                 </Col>
-                  <Col lg="4" md="12" sm="12" className="mt-1">
+                  <Col lg="4" md="12" sm="12" className="mt-1" style={{ overflowX: "auto" }}>
                   <table className="table mb-0 border text-center  table-responsive-lg">
                         <thead className="bg-light">
                           <tr>
@@ -468,6 +447,7 @@ const EditSensorByAdmin = () => {
                         </tbody>
 
                       </table>
+                      <div style={{ overflowX: "auto" }}>
                       <table className="table mb-0 border text-center mt-2  table-responsive-lg">
                         <thead className="bg-light">
                           <tr>
@@ -496,6 +476,7 @@ const EditSensorByAdmin = () => {
                         </tbody>
 
                       </table>
+                      </div>
                   </Col>
 
               </Row>
@@ -521,8 +502,33 @@ const EditSensorByAdmin = () => {
                 }
               </div>
             </Card.Body>
+            <Row form className='mx-2 mb-2'>
+                      <Col lg="12" md="12" sm="12" style={{ overflowX: "auto" }}>
+                        <table className="table mb-0 border text-center  table-responsive-lg">
+                          <thead className="bg-light">
+                            <tr>
+                              <th scope="col" className="border-0">
+                                <div className='d-flex justify-content-center align-items-center'>
+                                  <Button style={{ outline: 'none', border: 'none', background: 'transparent' }} onClick={() => addTableRows()}><i style={{ fontSize: 20, color: "#27A6B7" }} className='material-icons'>&#xe147;</i></Button>
+                                  <Button style={{ outline: 'none', border: 'none', background: 'transparent' }} onClick={(e) => deleteTableRows(1, e)}><i style={{ fontSize: 20, color: "#27A6B7" }} className="material-icons">&#xe872;</i></Button>
+                                </div>
+                              </th>
+                              <th scope="col" className="border-0">{t('Date')}</th>
+                              <th scope="col" className="border-0">{t('Min')} (%)</th>
+                              <th scope="col" className="border-0">{t('Max')} (%)</th>
+                            </tr>
+                          </thead>
+
+                          {Items()}
+
+                        </table>
+                      
+                      </Col>
+
+                    </Row>
           </Card>
         </Col>
+        
       </Row>
     </Container>
   )

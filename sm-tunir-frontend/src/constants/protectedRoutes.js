@@ -10,7 +10,15 @@ import EditSensorByAdmin from '../views/EditSensorByAdmin';
 import Overview from '../views/Overview';
 import AdminBoard from '../admin/AdminBoard';
 import SensorsManagement from "../admin/SensorsManagement";
-
+import AddSensor from "../admin/AddSensor"
+import SensorHistory from "../views/SensorHistory"
+import AddSupplier from "../supplier/AddSupplier"
+import AllSuppliers from "../admin/AllSuppliers"
+import AddUser from "../admin/AddUser"
+import FieldsManagement from "../admin/FieldsManagement"
+import CalculSimulation from "../admin/CalculSimulation"
+import CommandeManagement from "../admin/CommandeManagement"
+import AddEquipmentByAdmin from "../admin/AddEquipment"
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -100,6 +108,73 @@ const protectedRoutes = [
     path : "/admin/sensors",
 
     element: <SensorsManagement />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'add-sensor',
+    path : "/admin/add-sensor",
+    element: <AddSensor />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'sensor-history',
+    path : "/my-history/:id",
+
+    element: <SensorHistory />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'supplier',
+    path : "/Supplier",
+    element: <AddSupplier />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'all supplier',
+    path : "/admin/all-suppliers",
+    element: <AllSuppliers />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'add user',
+    path : "/admin/add-user",
+    element: <AddUser />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'fields',
+    path : "/admin/fields",
+    element: <FieldsManagement />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'calcul simulation',
+    path : "/admin/calcul-fields/:fieldId",
+    element: <CalculSimulation />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'Commande Management',
+    path : "/admin/commande",
+
+    element: <CommandeManagement />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'AddEquipmentByAdmin',
+    path : "/admin/add-equipment",
+
+
+    element: <AddEquipmentByAdmin />,
     roles: ['ROLE_ADMIN'] 
 
   },

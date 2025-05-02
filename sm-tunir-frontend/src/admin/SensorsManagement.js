@@ -282,6 +282,8 @@ const SensorsManagement = () => {
             getExistSuppliers()
         }
     }
+    console.log(toggle);
+    
 
     const resetForm = () => {
         setTimeout(() => {
@@ -422,15 +424,16 @@ const SensorsManagement = () => {
                         className="text-sm-left"
                     />
                 </Row>
-                <Row form className="d-flex justify-content-center">
-                    <Col lg="3" md="12" sm="12" className="form-group">
+                <Row form className="d-flex justify-content-center gap-2">
+                    
+                    <Col lg="2" md="12" sm="12" className="form-group">
                         <Form.Group>
                             <div className="d-flex">
                                 <Form.Control
                                     value={SearchCode}
                                     onChange={(e) => setSearchCode(e.target.value)}
                                     id="search"
-                                    placeholder="Search By code" />
+                                    placeholder="Search By code" style={{height:"41px"}} />
 
                             </div>
                         </Form.Group>
@@ -461,9 +464,9 @@ const SensorsManagement = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col lg="3" md="12" sm="12" className="form-group">
-                        <Form.Group>
-                            <div className="d-flex">
+                    <Col lg="3" md="12" sm="12" >
+                        <Form.Group >
+                            <div className="d-flex ">
                                 <Form.Select onChange={(e) => setSelectedSupplier(e.target.value)} value={selectedSupplier}>
                                     {
                                         selectedSupplier === ""
@@ -484,10 +487,12 @@ const SensorsManagement = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                    <Col lg="3" md="12" sm="12">
+                  
+            
+                    <Col lg="3" md="12" sm="12"  >
                         <ButtonGroup className='gap-2'>
-                            <Button outline onClick={() => navigate('/admin/add-sensor')}>Add Sensor</Button>
-                            <Button outline onClick={() => handleCalculSensor()}>Calcul</Button>
+                            <Button variant="outline-primary" onClick={() => navigate('/admin/add-sensor')}>Add Sensor</Button>
+                            <Button variant="outline-primary" onClick={() => handleCalculSensor()}>Calcul</Button>
 
                         </ButtonGroup>
                     </Col>
@@ -569,17 +574,19 @@ const SensorsManagement = () => {
                                                             sensor.deleted_at === null
                                                                 ?
                                                                 <ButtonGroup size="sm" className="mr-2">
-                                                                    <Button title="Edit" onClick={() => {
-                                                                        navigate({
-                                                                            pathname: `/admin/edit-sensor/${sensor.id}`, state: {
-                                                                                lastDataTime: lastDataTime,
-                                                                                formattedTime: formattedTime,
-                                                                                sensorState: sensorState,
+                                                                    <Button title="Edit" style={{background:"#007BFF"}} onClick={() => {
+                                                                
+                                                                        navigate(`/admin/edit-sensor/${sensor.id}`, {
+                                                                            state: {
+                                                                              lastDataTime,
+                                                                              formattedTime,
+                                                                              sensorState,
                                                                             }
-                                                                        })
+                                                                          });
+                                                                          
                                                                     }} squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                                    <Button title="History" onClick={() => { navigate(`/my-history/${sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
-                                                                    <Button title="Delete" onClick={() => { confirmDelete(sensor.uid) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                                                    <Button title="History" style={{backgroundColor:"#00A2BF"}}  onClick={() => { navigate(`/my-history/${sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
+                                                                    <Button title="Delete" variant='danger' onClick={() => { confirmDelete(sensor.uid) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
                                                                     {
                                                                         sensor.synchronized === "0"
                                                                             ?
@@ -599,8 +606,8 @@ const SensorsManagement = () => {
                                                             ?
                                                             <td>
                                                                 <ButtonGroup size="sm" className="mr-2">
-                                                                    <Button outline onClick={() => getSingleSensor(sensor.id, 'User')}>Assign to user</Button>
-                                                                    <Button outline onClick={() => getSingleSensor(sensor.id, 'Supplier')}>Assign to supplier</Button>
+                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.id, 'User')}>Assign to user</Button>
+                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.id, 'Supplier')}>Assign to supplier</Button>
                                                                 </ButtonGroup>
 
                                                             </td>
@@ -624,7 +631,7 @@ const SensorsManagement = () => {
 
                 </Card>
             </Container>
-            <Modal centered={true} open={toggle}>
+            <Modal centered={true} show={toggle}>
                 <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div>
                         Sensor code : {code}

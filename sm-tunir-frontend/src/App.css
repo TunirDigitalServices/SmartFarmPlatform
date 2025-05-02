@@ -39,3 +39,7 @@
     color: transparent !important;
   }
   
+  .btn-outline-primary {
+    border-width: 1px !important; 
+  }
+  
