@@ -10,8 +10,10 @@ import EditSensorByAdmin from '../views/EditSensorByAdmin';
 import Overview from '../views/Overview';
 import AdminBoard from '../admin/AdminBoard';
 import SensorsManagement from "../admin/SensorsManagement";
-import AddSensor from "../admin/AddSensor"
+import AddSensorByAdmin from "../admin/AddSensor"
 import SensorHistory from "../views/SensorHistory"
+import SensorSettings from "../views/SensorSettings"
+import AddSensor from "../views/AddSensor"
 import AddSupplier from "../supplier/AddSupplier"
 import AllSuppliers from "../admin/AllSuppliers"
 import AddUser from "../admin/AddUser"
@@ -19,6 +21,13 @@ import FieldsManagement from "../admin/FieldsManagement"
 import CalculSimulation from "../admin/CalculSimulation"
 import CommandeManagement from "../admin/CommandeManagement"
 import AddEquipmentByAdmin from "../admin/AddEquipment"
+import Configuration from "../admin/Configuration"
+import ConfigurationCities from "../admin/ConfigurationCities"
+import ConfigCitiesWeather from "../admin/ConfigCitiesWeather"
+import ConfigurationCrops from "../admin/ConfigurationCrops"
+import ConfigurationCropsVariety from "../admin/ConfigurationCropsVariety"
+import ConfigurationSoils from "../admin/ConfigurationSoils"
+import ConfigurationIrrigation from "../admin/ConfigurationIrrigation"
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -69,19 +78,20 @@ const protectedRoutes = [
 
   },
   {
+    name: 'AddSensor',
+    path: "/AddSensor",
+
+    element: <AddSensor />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
     name: 'Fields Settings',
     path: '/fields-settings',
     element: <FieldSettings />,
     roles: ['ROLE_ADMIN'] 
 
   },
-  // {
-  //   name: 'Sensors Settings',
-  //   path: '/sensors-settings',
-  //   element: <SensorSettings />,
-  //   roles: ['ROLE_ADMIN'] 
-
-  // },
   {
     name: 'edit-sensor',
     path : "/admin/edit-sensor/:id",
@@ -114,7 +124,7 @@ const protectedRoutes = [
   {
     name: 'add-sensor',
     path : "/admin/add-sensor",
-    element: <AddSensor />,
+    element: <AddSensorByAdmin />,
     roles: ['ROLE_ADMIN'] 
 
   },
@@ -123,7 +133,7 @@ const protectedRoutes = [
     path : "/my-history/:id",
 
     element: <SensorHistory />,
-    roles: ['ROLE_ADMIN'] 
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },
   {
@@ -178,13 +188,67 @@ const protectedRoutes = [
     roles: ['ROLE_ADMIN'] 
 
   },
-  // {
-  //   name: 'Profile',
-  //   path: '/profile',
-  //   element: <Profile />,
-  //   roles: ['admin'] 
+  {
+    name: 'Configuration',
+    path : "/admin/configuration",
 
-  // },
+    element: <Configuration />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'Cities configuration',
+    path : "/admin/configuration/cities",
+    element: <ConfigurationCities />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'configuration weather',
+    path : "/admin/configuration/cities/weather/:id",
+
+    element: <ConfigCitiesWeather />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'configuration crop',
+    path : "/admin/configuration/crops",
+    element: <ConfigurationCrops />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'configuration cropsVariety',
+    path : "/admin/configuration/cropsVariety",
+    element: <ConfigurationCropsVariety />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'configuration soil',
+    path : "/admin/configuration/soils",
+
+    element: <ConfigurationSoils />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'Configuration Irrigation',
+    path : "/admin/configuration/irrigations",
+    element: <ConfigurationIrrigation />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'Sensor Settings',
+    path : "/sensor-settings",
+
+    element: <SensorSettings />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+ 
 ];
 
 export default protectedRoutes;

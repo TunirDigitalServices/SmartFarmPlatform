@@ -1,5 +1,5 @@
 import React, { useEffect, useState ,useCallback} from 'react'
-import { Container, Card, CardHeader, CardBody, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormInput, FormSelect, FormTextarea, ButtonGroup, Button, Progress, Modal, ModalHeader, ModalBody, BreadcrumbItem, Breadcrumb, Nav, NavItem, NavLink } from "shards-react";
+import { Container, Card, CardHeader, CardBody , Row, Button } from "react-bootstrap";
 import PageTitle from '../components/common/PageTitle';
 import { useTranslation } from 'react-i18next';
 import { Link , useHistory , useParams } from 'react-router-dom';
@@ -148,7 +148,7 @@ const ConfigCitiesWeather = () => {
                         {
                             selectMonth === "" 
                             ?
-                            <td><Button outline theme="info" onClick={() => {setSelectMonth(index)}} >All days</Button></td>       
+                            <td><Button variant='outline-info'  onClick={() => {setSelectMonth(index)}} >All days</Button></td>       
 
                             :
                             null
@@ -245,7 +245,7 @@ const ConfigCitiesWeather = () => {
                                 :
                             <CardHeader>
                                 <h5>Month : {Months.at(selectMonth)}</h5>
-                                <Button outline theme="info" onClick={() => {setSelectMonth("")}} >All Months</Button>   
+                                <Button variant='outline-info' onClick={() => {setSelectMonth("")}} >All Months</Button>   
                             </CardHeader>
 
                             }
@@ -287,6 +287,7 @@ const ConfigCitiesWeather = () => {
                         style={{
                         display: "flex",
                         justifyContent: "flex-end",
+                        gap:"10px"
                         }}
                         >
                         <Button onClick={()  => addCitiesWeather()} className="mb-1 mr-1 btn btn-success"><i class={`fa fa-check mx-2`}></i>

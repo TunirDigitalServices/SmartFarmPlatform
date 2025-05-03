@@ -1,8 +1,8 @@
 import React, { useEffect, useState ,useCallback} from 'react'
-import { Container, Card, CardHeader, CardBody, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormInput, FormSelect, FormTextarea, ButtonGroup, Button, Progress, Modal, ModalHeader, ModalBody, BreadcrumbItem, Breadcrumb, Nav, NavItem, NavLink } from "shards-react";
+import { Container, Card,  Row, Col, Form, ButtonGroup, Button, Modal } from "react-bootstrap";
 import PageTitle from '../components/common/PageTitle';
 import { useTranslation } from 'react-i18next';
-import { Link , useHistory , useParams } from 'react-router-dom';
+import { Link  , useNavigate, useParams } from 'react-router-dom';
 import api from '../api/api';
 import swal from 'sweetalert';
 import Pagination from '../views/Pagination';
@@ -10,7 +10,8 @@ import moment from 'moment';
 
 const ConfigurationCities = () => {
 
-    const history = useHistory()
+    const navigate = useNavigate()
+
     const Months = moment.monthsShort()
     
     const [countrysPerPage] = useState(12)
@@ -375,30 +376,30 @@ const ConfigurationCities = () => {
                         className="text-sm-left"
                     />
                 </Row>
-                <Row form className="d-flex justify-content-center">
+                <Row form className="d-flex justify-content-center gap-2">
                     <Col md="3" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                     value={SearchName}
                                     onChange={(e) => setSearchName(e.target.value)}
                                     id="search"
                                     placeholder="Search By Name " />
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                     <Col md="3" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                      value={SearchCode}
                                      onChange={(e) => setSearchCode(e.target.value)}
                                     id="search"
                                     placeholder="Search By Code " />
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>
@@ -410,12 +411,12 @@ const ConfigurationCities = () => {
                 </Row>
                 <Row form className="py-2 d-flex justify-content-center">
                     <ButtonGroup>
-                        <Button outline onClick={() => {setToggle(true)}}>Add City</Button>
+                        <Button  variant='outline-primary' onClick={() => {setToggle(true)}}>Add City</Button>
                     </ButtonGroup>
 
                 </Row>
                 <Card>
-                    <CardHeader className="border-bottom">
+                    <Card.Header className="border-bottom">
                         <div>
                             <h5>
                                 Location Info
@@ -423,8 +424,8 @@ const ConfigurationCities = () => {
                             </h5>
 
                         </div>
-                    </CardHeader>
-                    <CardBody>
+                    </Card.Header>
+                    <Card.Body>
                     <table className="table mb-0 text-center">
                         <thead className="bg-light">
                             <tr>
@@ -452,8 +453,8 @@ const ConfigurationCities = () => {
                                             <td>
                                                
                                                         <ButtonGroup size="sm" className="mr-2">
-                                                            <Button title="Edit" onClick={() => history.push(`/admin/configuration/cities/weather/${city.id}`) } squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                            <Button title="Delete" onClick={() => confirmDelete(city.id)} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                                            <Button title="Edit" onClick={() => navigate(`/admin/configuration/cities/weather/${city.id}`) } squared><i className="material-icons">&#xe3c9;</i></Button>
+                                                            <Button title="Delete" onClick={() => confirmDelete(city.id)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                                         </ButtonGroup>
                                                 
 
@@ -468,7 +469,7 @@ const ConfigurationCities = () => {
 
                         </tbody>
                     </table>
-                    </CardBody>
+                    </Card.Body>
                 </Card>
                 <Row className="py-4 justify-content-center">
                     <Pagination usersPerPage={countrysPerPage} totalUsers={allCities.length} paginate={paginate} />
@@ -476,7 +477,7 @@ const ConfigurationCities = () => {
                 </Row>
         </Container>
         <Modal centered={true} open={toggle}>
-                        <ModalHeader className="d-flex justify-content-between align-items-center">
+                        <Modal.Header className="d-flex justify-content-between align-items-center">
                             <div
                                 style={{
                                     display: "flex",
@@ -501,15 +502,15 @@ const ConfigurationCities = () => {
                                     {t('cancel')}
                                 </Button>
                             </div>
-                        </ModalHeader>
-                        <ModalBody>
+                        </Modal.Header>
+                        <Modal.Body>
                             <Row className='d-flex justify-content-center border-bottom'>
                                 <Col lg='6' md='8' sm='8'>
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="country">Country</label>
    
         
-                                            <FormSelect
+                                            <Form.Select
                                                 value={country}
                                                 onChange={(e) =>{ setCountry(e.target.value.split('_ ')[0]) ;setCountryCode(e.target.value.split('_')[1])}}
                                                 id="country"
@@ -524,67 +525,67 @@ const ConfigurationCities = () => {
                                                                 )
                                                             })
                                                 }
-                                            </FormSelect>
-                                    </FormGroup>
+                                            </Form.Select>
+                                    </Form.Group>
                                 </Col>
                                 <Col lg='6' md='8' sm='8'>
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="country">Country Code</label>
    
                                                 
-                                            <FormInput
+                                            <Form.Control
                                                 value={countryCode}
                                                 onChange={(e) => setCountryCode(e.target.value) }
                                                 id="country"
                                                 placeholder="Country Code"
 
                                             />
-                                    </FormGroup>
+                                    </Form.Group>
                                 </Col>
                             </Row>
                                 <Row className="py-2">
                                 <Col lg='6' md='8' sm='8'>
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="city">City Name</label>
    
         
-                                            <FormInput
+                                            <Form.Control
                                                 value={city}
                                                 onChange={(e) => setCity(e.target.value) }
                                                 id="city"
                                                 placeholder="City Name"
                                             />
-                                    </FormGroup>
+                                    </Form.Group>
                                 </Col>
                                 <Col lg='3' md='8' sm='8'>
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="lat">Latitude</label>
    
         
-                                            <FormInput
+                                            <Form.Control
                                             value={lat}
                                             onChange={(e) => setLat(e.target.value) }
                                                 id="lat"
                                                 placeholder="Latitude"
                                             />
-                                    </FormGroup>
+                                    </Form.Group>
                                 </Col>
                                 <Col lg='3' md='8' sm='8'>
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="lon">Longitude</label>
    
         
-                                            <FormInput
+                                            <Form.Control
                                              value={lon}
                                              onChange={(e) => setLon(e.target.value) }
                                                 id="lon"
                                                 placeholder="Longitude"
                                             />
-                                    </FormGroup>
+                                    </Form.Group>
                                 </Col>
                                 </Row>
         
-                        </ModalBody>
+                        </Modal.Body>
         </Modal>
         </>
     )

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Card, CardHeader, CardBody, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormInput, FormSelect, FormTextarea, ButtonGroup, Button, Progress, Modal, ModalHeader, ModalBody, BreadcrumbItem, Breadcrumb, Nav, NavItem, NavLink } from "shards-react";
+import {
+    Container, Card, Row, Col, Form, ButtonGroup, Button,
+    Modal
+} from "react-bootstrap";
 import PageTitle from '../components/common/PageTitle';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import { Carousel } from 'react-responsive-carousel';
-import countryState from '../data/gistfile.json'
-import cartImg from '../images/pin.png'
-import soil from '../images/soil.png'
+
 import api from '../api/api';
 import swal from 'sweetalert';
 import Pagination from '../views/Pagination';
@@ -23,7 +22,7 @@ const ConfigurationSoils = () => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     const { t, i18n } = useTranslation();
-    const history = useHistory()
+
 
     const [allSoils, setAllSoils] = useState([])
 
@@ -35,9 +34,9 @@ const ConfigurationSoils = () => {
         fc: "",
         fractionRuPratique: "",
         EffPluie: "",
-        soilAr :"",
-        soilEn :"",
-        soilPhoto :""
+        soilAr: "",
+        soilEn: "",
+        soilPhoto: ""
 
     })
 
@@ -81,7 +80,7 @@ const ConfigurationSoils = () => {
                 setSoilData({ ru: dataSoils.ru })
                 setSoilData({ fc: dataSoils.fc })
                 setSoilData({ pwp: dataSoils.pwp })
-                setSoilData({ taw: dataSoils.taw }) 
+                setSoilData({ taw: dataSoils.taw })
                 setSoilData({ EffPluie: dataSoils.rain_eff })
                 setSoilData({ fractionRuPratique: dataSoils.practical_fraction })
 
@@ -99,26 +98,26 @@ const ConfigurationSoils = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedFile, setUploadedFile] = useState({});
-  
+
     const onFileChange = e => {
-      setSelectedFile(e.target.files[0]);
+        setSelectedFile(e.target.files[0]);
     };
-  
+
     const onFileUploadEdit = async () => {
         const formData = new FormData();
-      formData.append('photo', selectedFile);
-      formData.append('soil', singleSoil.soil);
+        formData.append('photo', selectedFile);
+        formData.append('soil', singleSoil.soil);
 
-      try {
-        const res = await api.post('/soil/upload-photo', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-        setUploadedFile(res.data);
-      } catch (err) {
-        console.error(err);
-      }
+        try {
+            const res = await api.post('/soil/upload-photo', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            setUploadedFile(res.data);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
 
@@ -129,11 +128,11 @@ const ConfigurationSoils = () => {
             fc: soilData.fc,
             pwp: soilData.pwp,
             taw: soilData.taw,
-            rain_eff : soilData.EffPluie,
-            practical_fraction : soilData.fractionRuPratique,
-            soil_ar :soilData.soilAr,
-            soil_en:soilData.soilEn,
-            soil_photo:soilData.soilPhoto
+            rain_eff: soilData.EffPluie,
+            practical_fraction: soilData.fractionRuPratique,
+            soil_ar: soilData.soilAr,
+            soil_en: soilData.soilEn,
+            soil_photo: soilData.soilPhoto
         }
 
         api.post('/soils/add-soils', data)
@@ -160,8 +159,8 @@ const ConfigurationSoils = () => {
             fc: soilData.fc,
             pwp: soilData.pwp,
             taw: soilData.taw,
-            rain_eff : soilData.EffPluie,
-            practical_fraction : soilData.fractionRuPratique
+            rain_eff: soilData.EffPluie,
+            practical_fraction: soilData.fractionRuPratique
         }
 
 
@@ -287,16 +286,16 @@ const ConfigurationSoils = () => {
                 </Row>
                 <Row form className="d-flex justify-content-center">
                     <Col md="3" className="form-group">
-                        <FormGroup>
+                        <Form.Group>
                             <div className="d-flex">
-                                <FormInput
+                                <Form.Control
                                     value={SearchName}
                                     onChange={(e) => setSearchName(e.target.value)}
                                     id="search"
                                     placeholder="Search By Name " />
 
                             </div>
-                        </FormGroup>
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>
@@ -308,12 +307,12 @@ const ConfigurationSoils = () => {
                 </Row>
                 <Row form className="py-2 d-flex justify-content-center">
                     <ButtonGroup>
-                        <Button outline onClick={() => { setToggle(true) }}>Add Soil Type</Button>
+                        <Button variant='outline-primary' onClick={() => { setToggle(true) }}>Add Soil Type</Button>
                     </ButtonGroup>
 
                 </Row>
                 <Card>
-                    <CardHeader className="border-bottom">
+                    <Card.Header className="border-bottom">
                         <div>
                             <h5>
                                 Soils Info
@@ -321,8 +320,8 @@ const ConfigurationSoils = () => {
                             </h5>
 
                         </div>
-                    </CardHeader>
-                    <CardBody>
+                    </Card.Header>
+                    <Card.Body>
                         <table className="table mb-0 text-center  table-responsive-lg">
                             <thead className="bg-light">
                                 <tr>
@@ -333,7 +332,7 @@ const ConfigurationSoils = () => {
                                     <th scope="col" className="border-0">{t('TAW %')}</th>
                                     <th scope="col" className="border-0">{t('Rain efficiency %')}</th>
                                     <th scope="col" className="border-0">{t('Practical fraction %')}</th>
-                                    
+
                                     <th scope="col" className="border-0"></th>
 
                                 </tr>
@@ -355,7 +354,7 @@ const ConfigurationSoils = () => {
 
                                                     <ButtonGroup size="sm" className="mr-2">
                                                         <Button title="Edit" onClick={() => { getSingleSoil(soil.id, 'Edit') }} squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                        <Button title="Delete" onClick={() => { confirmDelete(soil.id) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                                        <Button title="Delete" onClick={() => { confirmDelete(soil.id) }} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                                     </ButtonGroup>
 
 
@@ -371,19 +370,21 @@ const ConfigurationSoils = () => {
 
                             </tbody>
                         </table>
-                    </CardBody>
+                    </Card.Body>
                 </Card>
                 <Row className="py-4 justify-content-center">
                     <Pagination usersPerPage={soilsPerPage} totalUsers={allSoils.length} paginate={paginate} />
 
                 </Row>
             </Container>
-            <Modal size='lg' centered={true} open={toggle}>
-                <ModalHeader className="d-flex justify-content-between align-items-center">
+            <Modal size='lg' centered={true} show={toggle}>
+                <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
+                            gap: "10px",
+                            width: "100%"
 
                         }}
                     >
@@ -404,51 +405,51 @@ const ConfigurationSoils = () => {
                             {t('cancel')}
                         </Button>
                     </div>
-                </ModalHeader>
-                <ModalBody>
+                </Modal.Header>
+                <Modal.Body>
                     <Row>
                         <Col lg="12" md="12" sm="12" >
 
-                            <CardBody>
-                                <Row>
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                            <Card.Body>
+                                <Row className='gap-2'>
+                                    <Col lg='5' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soil">Soil Type</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soil'
                                                 placeholder='Soil Type'
                                                 value={soilData.soil}
                                                 onChange={e => setSoilData({ ...soilData, soil: e.target.value })}
                                             />
 
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                    <Col lg='5' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soilAr">Soil Type (Ar)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilAr'
                                                 placeholder="Soil Type"
                                                 value={soilData.soilAr}
-                                                onChange={e => setSoilData({...soilData , soilAr : e.target.value})}
+                                                onChange={e => setSoilData({ ...soilData, soilAr: e.target.value })}
                                             />
-                                        </FormGroup>
-                                    </Col>      
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg='5' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soilEn">Soil Type (En)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilEn'
                                                 placeholder="Soil Type"
                                                 value={soilData.soilEn}
-                                                onChange={e => setSoilData({...soilData , soilEn : e.target.value})}
+                                                onChange={e => setSoilData({ ...soilData, soilEn: e.target.value })}
                                             />
-                                        </FormGroup>
-                                    </Col>      
+                                        </Form.Group>
+                                    </Col>
                                     {/* <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                        <Form.Group>
                                             <label htmlFor="soilp">Soil Photo</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilp'
                                                 type="file"
                                                 placeholder="Soil Photo"
@@ -456,111 +457,113 @@ const ConfigurationSoils = () => {
                                                 onChange={onFileChange}
                                             />
                                             <button style={{background :"#E5E5E5" , border:"2px solid #d7d7d7",borderRadius:5,padding:3,margin:3}} onClick={onFileUpload}>Upload</button>
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>    */}
-                                    <Col lg='6' md="12" sm="12">
+                                    <Col lg='5' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Ru">La Réserve Utile (RU)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Ru'
                                                 value={soilData.ru}
                                                 onChange={e => setSoilData({ ...soilData, ru: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                 </Row>
-                                <Row>
-                                    <Col lg='5' md="12" sm="12">
+                                <Row className='gap-2 mt-2'>
+                                    <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="pwp">Permanent Wilting Point (PWP)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='pwp'
                                                 placeholder="Permanent Wilting Point (PWP)"
                                                 value={soilData.pwp}
                                                 onChange={e => setSoilData({ ...soilData, pwp: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                     <Col lg='3' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Fc">Irrigation Efficiency </label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Fc'
                                                 placeholder='Irrigation Efficiency'
                                                 value={soilData.fc}
                                                 onChange={e => setSoilData({ ...soilData, fc: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="taw">Total available water (TAW)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='taw'
                                                 placeholder="Total available water (TAW)"
                                                 value={soilData.taw}
                                                 onChange={e => setSoilData({ ...soilData, taw: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                 </Row>
-                                <Row>
+                                <Row className='gap-2'>
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Practical Fraction Ru">Practical Fraction Ru</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Practical Fraction Ru'
                                                 placeholder='Practical Fraction Ru'
                                                 value={soilData.fractionRuPratique}
-                                                onChange={e => { setSoilData({...soilData , fractionRuPratique : e.target.value}) }}
+                                                onChange={e => { setSoilData({ ...soilData, fractionRuPratique: e.target.value }) }}
 
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Rain Efficiency">Rain Efficiency</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Rain Efficiency'
                                                 placeholder="Rain Efficiency"
                                                 value={soilData.EffPluie}
-                                                onChange={e => { setSoilData({...soilData , EffPluie : e.target.value}) }}
+                                                onChange={e => { setSoilData({ ...soilData, EffPluie: e.target.value }) }}
 
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                 </Row>
-                                <FormGroup>
+                                <Form.Group className='mt-2'>
                                     <label htmlFor="feDescription">{t('desc')}</label>
-                                    <FormTextarea
+                                    <Form.Control
+                                        as="textarea"
                                         placeholder={t('desc')}
                                         id="feDescription"
-                                        rows="5" />
+                                        rows="3" />
 
-                                </FormGroup>
+                                </Form.Group>
 
-                            </CardBody>
+                            </Card.Body>
                         </Col>
                     </Row>
-                </ModalBody>
+                </Modal.Body>
             </Modal>
-            <Modal size='lg' centered={true} open={toggleEdit}>
-                <ModalHeader className="d-flex justify-content-between align-items-center">
+            <Modal size='lg' centered={true} show={toggleEdit}>
+                <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-
+                            gap: "10px",
+                            width: "100%"
                         }}
                     >
                         <Button
@@ -580,154 +583,155 @@ const ConfigurationSoils = () => {
                             {t('cancel')}
                         </Button>
                     </div>
-                </ModalHeader>
-                <ModalBody>
+                </Modal.Header>
+                <Modal.Body>
                     <Row>
                         <Col lg="12" md="12" sm="12" >
 
-                            <CardBody>
-                                <Row>
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                            <Card.Body>
+                                <Row className='gap-2'>
+                                    <Col lg='5' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soil">Soil Type</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soil'
                                                 placeholder='Soil Type'
                                                 value={soilData.soil}
                                                 onChange={e => setSoilData({ ...soilData, soil: e.target.value })}
                                             />
 
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                     <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                        <Form.Group>
                                             <label htmlFor="soilAr">Soil Type (Ar)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilAr'
                                                 placeholder="Soil Type"
                                                 value={soilData.soilAr}
-                                                onChange={e => setSoilData({...soilData , soilAr : e.target.value})}
+                                                onChange={e => setSoilData({ ...soilData, soilAr: e.target.value })}
                                             />
-                                        </FormGroup>
-                                    </Col>      
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg='3' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soilEn">Soil Type (En)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilEn'
                                                 placeholder="Soil Type"
                                                 value={soilData.soilEn}
-                                                onChange={e => setSoilData({...soilData , soilEn : e.target.value})}
+                                                onChange={e => setSoilData({ ...soilData, soilEn: e.target.value })}
                                             />
-                                        </FormGroup>
-                                    </Col>      
-                                    <Col lg='6' md="12" sm="12">
-                                        <FormGroup>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg='4' md="12" sm="12">
+                                        <Form.Group>
                                             <label htmlFor="soilp">Soil Photo</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='soilp'
                                                 type="file"
                                                 placeholder="Soil Photo"
                                                 // value={soilData.soilPhoto}
                                                 onChange={onFileChange}
                                             />
-                                            <button style={{background :"#E5E5E5" , border:"2px solid #d7d7d7",borderRadius:5,padding:3,margin:3}} onClick={onFileUploadEdit}>Upload</button>
-                                            {uploadedFile ? <h6 style={{fontWeight :"bold"}}>{uploadedFile.message}</h6> : null}
+                                            <button style={{ background: "#E5E5E5", border: "2px solid #d7d7d7", borderRadius: 5, padding: 3, margin: 3 }} onClick={onFileUploadEdit}>Upload</button>
+                                            {uploadedFile ? <h6 style={{ fontWeight: "bold" }}>{uploadedFile.message}</h6> : null}
 
-                                        </FormGroup>
-                                    </Col>   
-                                    <Col lg='6' md="12" sm="12">
+                                        </Form.Group>
+                                    </Col>
+                                    <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Ru">La Réserve Utile (RU)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Ru'
                                                 value={soilData.ru}
                                                 onChange={e => setSoilData({ ...soilData, ru: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                 </Row>
-                                <Row>
-                                    <Col lg='5' md="12" sm="12">
+                                <Row className='gap-2'>
+                                    <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="pwp">Permanent Wilting Point (PWP)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='pwp'
                                                 placeholder="Permanent Wilting Point (PWP)"
                                                 value={soilData.pwp}
                                                 onChange={e => setSoilData({ ...soilData, pwp: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                     <Col lg='3' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Fc">Irrigation Efficiency </label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Fc'
                                                 placeholder='Irrigation Efficiency'
                                                 value={soilData.fc}
                                                 onChange={e => setSoilData({ ...soilData, fc: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="taw">Total available water (TAW)</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='taw'
                                                 placeholder="Total available water (TAW)"
                                                 value={soilData.taw}
                                                 onChange={e => setSoilData({ ...soilData, taw: e.target.value })}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
 
                                 </Row>
-                                <Row>
+                                <Row className='gap-2'>
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Practical Fraction Ru">Practical Fraction Ru</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Practical Fraction Ru'
                                                 placeholder='Practical Fraction Ru'
                                                 value={soilData.fractionRuPratique}
-                                                onChange={e => { setSoilData({...soilData , fractionRuPratique : e.target.value}) }}
+                                                onChange={e => { setSoilData({ ...soilData, fractionRuPratique: e.target.value }) }}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                     <Col lg='4' md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                             <label htmlFor="Rain Efficiency">Rain Efficiency</label>
-                                            <FormInput
+                                            <Form.Control
                                                 id='Rain Efficiency'
                                                 placeholder="Rain Efficiency"
                                                 value={soilData.EffPluie}
-                                                onChange={e => { setSoilData({...soilData , EffPluie : e.target.value}) }}
+                                                onChange={e => { setSoilData({ ...soilData, EffPluie: e.target.value }) }}
                                             />
-                                        </FormGroup>
+                                        </Form.Group>
                                     </Col>
                                 </Row>
-                                <FormGroup>
+                                <Form.Group>
                                     <label htmlFor="feDescription">{t('desc')}</label>
-                                    <FormTextarea
+                                    <Form.Control
+                                        as="textarea"
                                         placeholder={t('desc')}
                                         id="feDescription"
-                                        rows="5" />
+                                        rows="3" />
 
-                                </FormGroup>
+                                </Form.Group>
 
-                            </CardBody>
+                            </Card.Body>
                         </Col>
                     </Row>
-                </ModalBody>
+                </Modal.Body>
             </Modal>
         </>
     )

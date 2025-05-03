@@ -217,10 +217,22 @@ export default function Sidebar() {
       subNav : Sensors
     },
     {
+      title: `${t('weather_forecast')}`,
+      itemId: "/Weather",
+      elemBefore: () => <i class="fas fa-cloud" style={{ width: "20px" }}></i>
+    },
+    {
       title: `${t('Satellite Images')}`,
       itemId: "/satellite-images",
       elemBefore: () => (
         <i class="fas fa-satellite" style={{ width: "20px" }}></i>
+      )
+    },
+    {
+      title: `${t('calendar')}`,
+      itemId: "/Calendar",
+      elemBefore: () => (
+        <i class="fas fa-calendar-week" style={{ width: "20px" }}></i>
       )
     },
     {
@@ -245,11 +257,7 @@ export default function Sidebar() {
         <i class="fas fa-calendar-week" style={{ width: "20px" }}></i>
       )
     },
-    {
-      title: `${t('weather_forecast')}`,
-      itemId: "/Weather",
-      elemBefore: () => <i class="fas fa-cloud" style={{ width: "20px" }}></i>
-    },
+   
     {
       title: `${t('fields_settings')}`,
       itemId: "/AddField",
