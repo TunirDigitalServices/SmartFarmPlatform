@@ -217,10 +217,10 @@ const SatelliteImages = () => {
     }
   };
   const designationImageMap = {
-    ndvi: "Vegetation index",
+    ndvi: "densité de végétation",
     ndwi: "Irrigation index",
-    moisture: "Nitrogen Map",
-    swir: "Plant Health"
+    moisture: "humidité",
+    swir: "stress hydrique"
   };
   const typeIcons = {
     ndvi,
@@ -248,27 +248,17 @@ const SatelliteImages = () => {
 
     return (
       <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          padding: "10px"
-        }}
+        className="d-flex justify-content-between flex-wrap"
       >
         {selectedImages.map((image, index) => (
           <div
-            style={{
-              border:
-                selectedImageUrl === image.image_url
-                  ? "2px solid #29B2C4"
-                  : "1px solid #ddd",
-              cursor: "pointer",
-              borderRadius: "4px"
-            }}
+            key={index}
+            onClick={() => handleClick(image)}
+            className={`btn ${
+              selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
+            }`}
           >
             <div
-              key={index}
-              onClick={() => handleClick(image)}
               style={{
                 textAlign: "center"
               }}
