@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
-// import { Container, Row, Col, CardBody, Card, Button, Dropdown, DropdownMenu,
-//    DropdownItem, Tooltip, FormInput, Form.Select, Form.Group, Form } from "shards-react";
+
 import { Container, Row, Col, Card, Dropdown, Form } from 'react-bootstrap';
 // import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-// import Dropdown from 'react-bootstrap/Dropdown';
+
 import Tooltip from 'react-bootstrap/Tooltip';
 // import Form from 'react-bootstrap/Form';
 import PageTitle from "../components/common/PageTitle";
@@ -1298,34 +1297,34 @@ const Overview = (props) => {
                     </div>
                   </Row>
                   <div className="d-flex gap-2">
-                  <Row>
-                  <div className="d-flex gap-2">
-                    
-                    <Col lg='6' md="12" sm='12' className="form-group">
-                      <p style={{ margin: "0px", textAlign: "left" }}>{t('width')} (M)</p>
-                      <Form.Control
-                        style={{ height: '40px' }}
-                        type="number"
-                        placeholder={t('width')}
-                        value={dataField.width}
-                        onChange={e => setDataField({ ...dataField, width: e.target.value })}
-                        required
-                      />
-                    </Col>
-                    <Col lg='6' md="12" sm='12' className="form-group">
-                      <p style={{ margin: "0px", textAlign: "left" }}>{t('length')} (M)</p>
-                      <Form.Control
-                        style={{ height: '40px' }}
+                    <Row>
+                      <div className="d-flex gap-2">
 
-                        type="number"
-                        placeholder={t('length')}
-                        value={dataField.length}
-                        onChange={e => setDataField({ ...dataField, length: e.target.value })}
-                        required
-                      />
-                    </Col>
-</div>
-                  </Row>
+                        <Col lg='6' md="12" sm='12' className="form-group">
+                          <p style={{ margin: "0px", textAlign: "left" }}>{t('width')} (M)</p>
+                          <Form.Control
+                            style={{ height: '40px' }}
+                            type="number"
+                            placeholder={t('width')}
+                            value={dataField.width}
+                            onChange={e => setDataField({ ...dataField, width: e.target.value })}
+                            required
+                          />
+                        </Col>
+                        <Col lg='6' md="12" sm='12' className="form-group">
+                          <p style={{ margin: "0px", textAlign: "left" }}>{t('length')} (M)</p>
+                          <Form.Control
+                            style={{ height: '40px' }}
+
+                            type="number"
+                            placeholder={t('length')}
+                            value={dataField.length}
+                            onChange={e => setDataField({ ...dataField, length: e.target.value })}
+                            required
+                          />
+                        </Col>
+                      </div>
+                    </Row>
                   </div>
                 </Col>
                 <Col lg='6' md="12" sm='12'>
@@ -1348,62 +1347,62 @@ const Overview = (props) => {
             </Row>
             <Row className="py-2 d-flex justify-content-start border-bottom align-items-center" >
               <div className="d-flex gap-2">
-              <Col lg='4' md="12" sm="12" className="form-group">
-                <p style={{ margin: "0px" }}>{t('soil_zone')} *</p>
-                <Form.Control
-                  type="text"
-                  value={soilParams.name}
-                  placeholder={t('soil_zone')}
-                  required
-                  onChange={e => setSoilParams({ ...soilParams, name: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' , height: '40px'}}
+                <Col lg='4' md="12" sm="12" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('soil_zone')} *</p>
+                  <Form.Control
+                    type="text"
+                    value={soilParams.name}
+                    placeholder={t('soil_zone')}
+                    required
+                    onChange={e => setSoilParams({ ...soilParams, name: e.target.value })}
+                    style={{ border: '1px solid #0BAECB', height: '40px' }}
 
-                />
-                <p style={{ margin: "0px" }}>{t('soil_type')} *</p>
-                <Form.Select
-                  value={soilParams.soilType}
-                  onChange={handleSoilPick}
-                  style={{ border: '1px solid #0BAECB' }}
-                >
-                  <option value="">{t('select_soil')}</option>
-                  {
-                    listSoils.map((item, index) => {
-                      return <option value={item.soil} >{item.soil}</option>;
+                  />
+                  <p style={{ margin: "0px" }}>{t('soil_type')} *</p>
+                  <Form.Select
+                    value={soilParams.soilType}
+                    onChange={handleSoilPick}
+                    style={{ border: '1px solid #0BAECB' }}
+                  >
+                    <option value="">{t('select_soil')}</option>
+                    {
+                      listSoils.map((item, index) => {
+                        return <option value={item.soil} >{item.soil}</option>;
 
-                    })
-                  }
-                </Form.Select>
+                      })
+                    }
+                  </Form.Select>
 
 
-              </Col>
-              <Col lg='4' md="12" sm="12" className="form-group">
-                <p style={{ margin: "0px" }}>{t('soil_prop')} *</p>
-                <Form.Select
-                  onChange={evt => {
+                </Col>
+                <Col lg='4' md="12" sm="12" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('soil_prop')} *</p>
+                  <Form.Select
+                    onChange={evt => {
 
-                    setSoilType(!isStandardSoil);
+                      setSoilType(!isStandardSoil);
 
-                  }}
-                  style={{ border: '1px solid #0BAECB' }}
+                    }}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option selected={isStandardSoil}>Standard</option>
-                  <option selected={!isStandardSoil}>Composite</option>
-                </Form.Select>
-                <p style={{ margin: "0px" }}>{t('name_field')} *</p>
-                <Form.Select
-                  value={soilParams.field_uid}
-                  onChange={e => setSoilParams({ ...soilParams, field_uid: e.target.value })}
-                  placeholder={t('name_field')}
-                  style={{ border: '1px solid #0BAECB' , height: '40px'}}
+                  >
+                    <option selected={isStandardSoil}>Standard</option>
+                    <option selected={!isStandardSoil}>Composite</option>
+                  </Form.Select>
+                  <p style={{ margin: "0px" }}>{t('name_field')} *</p>
+                  <Form.Select
+                    value={soilParams.field_uid}
+                    onChange={e => setSoilParams({ ...soilParams, field_uid: e.target.value })}
+                    placeholder={t('name_field')}
+                    style={{ border: '1px solid #0BAECB', height: '40px' }}
 
-                >
-                  <option value="">{t('select_field')}</option>
-                  {fields.map((item, index) => {
-                    return <option value={item.Uid}>{item.title}</option>;
-                  })}
-                </Form.Select>
-              </Col>
+                  >
+                    <option value="">{t('select_field')}</option>
+                    {fields.map((item, index) => {
+                      return <option value={item.Uid}>{item.title}</option>;
+                    })}
+                  </Form.Select>
+                </Col>
               </div>
             </Row>
             <Row form>
@@ -1411,29 +1410,29 @@ const Overview = (props) => {
             </Row>
             <Row form className="py-2" >
               <div className="d-flex gap-2">
-              <Col lg="6" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%) *</p>
-                  <Form.Control
-                    type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
-                    style={{ border: '1px solid #0BAECB' }}
+                <Col lg="6" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%) *</p>
+                    <Form.Control
+                      type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
+                      style={{ border: '1px solid #0BAECB' }}
 
-                  />
+                    />
 
-                </Form.Group>
-              </Col>
-              <Col lg="6" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>RU max (mm/m) *</p>
-                  <Form.Control
-                    type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
-                    style={{ border: '1px solid #0BAECB' }}
+                  </Form.Group>
+                </Col>
+                <Col lg="6" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>RU max (mm/m) *</p>
+                    <Form.Control
+                      type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
+                      style={{ border: '1px solid #0BAECB' }}
 
-                  />
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
+                </Col>
               </div>
             </Row>
           </Form>
@@ -1448,180 +1447,180 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row className="py-2 d-flex justify-content-start border-bottom align-items-center">
-            <div className="d-flex gap-2 mt-3">
+              <div className="d-flex gap-2 mt-3">
 
-              <Col lg='6' md="12" sm="12" className="form-group ">
-                <p style={{ margin: "0px" }}>{t('crop_type')} *</p>
-                <Form.Select
-                  onChange={handleCropPick}
-                  placeholder={t('crop_type')}
-                  value={cropData.cropType}
-                  style={{ border: '1px solid #0BAECB' }}
+                <Col lg='6' md="12" sm="12" className="form-group ">
+                  <p style={{ margin: "0px" }}>{t('crop_type')} *</p>
+                  <Form.Select
+                    onChange={handleCropPick}
+                    placeholder={t('crop_type')}
+                    value={cropData.cropType}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option value="">Select Crop</option>
+                  >
+                    <option value="">Select Crop</option>
+                    {
+                      listCrop.map(crop => {
+                        return (
+                          <option value={crop.id}>{crop.crop}</option>
+
+                        )
+                      })
+                    }
+                  </Form.Select>
+
+                  <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
+                  <Form.Select value={cropData.variety} onChange={handleVarietyPick} id="cropVariety">
+                    <option value="">{t('crop_variety')}</option>
+                    {
+                      cropData.cropVariety.map(variety => (
+                        <option value={variety.varietyId}>{variety.variety}</option>
+                      ))
+                    }
+                  </Form.Select>
+                  <input type="checkbox" name="Autre" id="check" onClick={() => setChecked(!checked)} /> {t('other')}
                   {
-                    listCrop.map(crop => {
-                      return (
-                        <option value={crop.id}>{crop.crop}</option>
+                    checked
+                      ?
 
-                      )
-                    })
-                  }
-                </Form.Select>
+                      <Form.Control
 
-                <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
-                <Form.Select value={cropData.variety} onChange={handleVarietyPick} id="cropVariety">
-                  <option value="">{t('crop_variety')}</option>
-                  {
-                    cropData.cropVariety.map(variety => (
-                      <option value={variety.varietyId}>{variety.variety}</option>
-                    ))
-                  }
-                </Form.Select>
-                <input type="checkbox" name="Autre" id="check" onClick={() => setChecked(!checked)} /> {t('other')}
-                {
-                  checked
-                    ?
+                        value={cropData.variety || ""}
+                        placeholder={t('crop_variety')}
+                        id="cropVariety"
+                        onChange={e => setCropData({ ...cropData, variety: e.target.value })}
+                      />
 
-                    <Form.Control
-
-                      value={cropData.variety || ""}
-                      placeholder={t('crop_variety')}
-                      id="cropVariety"
-                      onChange={e => setCropData({ ...cropData, variety: e.target.value })}
-                    />
-
-                    :
-                    null
-                }
-
-              </Col>
-              < Col lg="6" md="12" sm="12" className="form-group">
-                <p style={{ margin: "0px" }}>{t('crop_zone')} *</p>
-                <Form.Select
-                  value={cropData.zone_uid}
-                  onChange={e => setCropData({ ...cropData, zone_uid: e.target.value })}
-                  placeholder={t('crop_zone')}
-                  style={{ border: '1px solid #0BAECB' }}
-
-                >
-                  <option>{t('select_zone')}</option>
-
-                  {
-                    zones.map(soil => {
-                      return <option value={soil.Uid}>{soil.name}</option>
-
-                    })
+                      :
+                      null
                   }
 
-                </Form.Select>
-                <p style={{ margin: "0px" }}>{t('crop_field')} *</p>
-                <Form.Select
-                  value={cropData.field_uid}
-                  onChange={e => setCropData({ ...cropData, field_uid: e.target.value })}
-                  placeholder={t('crop_zone')}
-                  style={{ border: '1px solid #0BAECB' }}
+                </Col>
+                < Col lg="6" md="12" sm="12" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('crop_zone')} *</p>
+                  <Form.Select
+                    value={cropData.zone_uid}
+                    onChange={e => setCropData({ ...cropData, zone_uid: e.target.value })}
+                    placeholder={t('crop_zone')}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option>{t('select_field')}</option>
-                  {
-                    fields.map((item, indx) => {
-                      return <option value={item.Uid}>{item.title}</option>
-                    })
-                  }
-                </Form.Select>
+                  >
+                    <option>{t('select_zone')}</option>
 
-              </Col>
+                    {
+                      zones.map(soil => {
+                        return <option value={soil.Uid}>{soil.name}</option>
+
+                      })
+                    }
+
+                  </Form.Select>
+                  <p style={{ margin: "0px" }}>{t('crop_field')} *</p>
+                  <Form.Select
+                    value={cropData.field_uid}
+                    onChange={e => setCropData({ ...cropData, field_uid: e.target.value })}
+                    placeholder={t('crop_zone')}
+                    style={{ border: '1px solid #0BAECB' }}
+
+                  >
+                    <option>{t('select_field')}</option>
+                    {
+                      fields.map((item, indx) => {
+                        return <option value={item.Uid}>{item.title}</option>
+                      })
+                    }
+                  </Form.Select>
+
+                </Col>
               </div>
             </Row>
             <Row className="py-2">
-            <div className="d-flex gap-2">
+              <div className="d-flex gap-2">
 
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('surface')} (m²)</p>
-                  <Form.Control type="number" value={cropData.surface} onChange={e => setCropData({ ...cropData, surface: e.target.value })} id='z' placeholder={t('surface')}
-                  />
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('surface')} (m²)</p>
+                    <Form.Control type="number" value={cropData.surface} onChange={e => setCropData({ ...cropData, surface: e.target.value })} id='z' placeholder={t('surface')}
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('depth')} (m) *</p>
-                  <Form.Control type="number" value={cropData.rootDepth} onChange={e => setCropData({ ...cropData, rootDepth: e.target.value })} id='z' placeholder={t('depth')}
-                    style={{ border: '1px solid #0BAECB' }}
+                </Col>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('depth')} (m) *</p>
+                    <Form.Control type="number" value={cropData.rootDepth} onChange={e => setCropData({ ...cropData, rootDepth: e.target.value })} id='z' placeholder={t('depth')}
+                      style={{ border: '1px solid #0BAECB' }}
 
-                  />
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('Days')} *</p>
-                  <Form.Control style={{ border: '1px solid #0BAECB' }} type="number" value={cropData.days} id='days' onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
+                </Col>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('Days')} *</p>
+                    <Form.Control style={{ border: '1px solid #0BAECB' }} type="number" value={cropData.days} id='days' onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              </div>
-            <div className="d-flex gap-2">
-
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('planting_date')} *</p>
-                  <Form.Control style={{ border: '1px solid #0BAECB' }} type="date" value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} id='planting_date' />
-
-                </Form.Group>
-
-              </Col>
-              <Col hidden lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('growing_season')}</p>
-                  <Form.Control type="date" value={cropData.plantingDate} onChange={e => setCropData({ ...cropData, plantingDate: e.target.value })} id='days' />
-
-                </Form.Group>
-
-              </Col>
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('fraction_pratique')} (%) * </p>
-                  <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')}
-                    style={{ border: '1px solid #0BAECB' }}
-
-                  />
-                </Form.Group>
-
-              </Col>
+                </Col>
               </div>
               <div className="d-flex gap-2">
 
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
-                  <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} id='ecartInter' placeholder={t('ecart_inter')}
-                  />
-                </Form.Group>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('planting_date')} *</p>
+                    <Form.Control style={{ border: '1px solid #0BAECB' }} type="date" value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} id='planting_date' />
 
-              </Col>
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('ecart_intra')} (m) </p>
-                  <Form.Control type="number" value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} id='ecartIntra' placeholder={t('ecart_intra')}
-                  />
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              <Col lg="4" md="12" sm="12">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('densité')} (plants/ha)</p>
-                  <Form.Control type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} id='densité' placeholder={t('densité')}
-                  />
-                </Form.Group>
+                </Col>
+                <Col hidden lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('growing_season')}</p>
+                    <Form.Control type="date" value={cropData.plantingDate} onChange={e => setCropData({ ...cropData, plantingDate: e.target.value })} id='days' />
 
-              </Col>
+                  </Form.Group>
+
+                </Col>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('fraction_pratique')} (%) * </p>
+                    <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')}
+                      style={{ border: '1px solid #0BAECB' }}
+
+                    />
+                  </Form.Group>
+
+                </Col>
+              </div>
+              <div className="d-flex gap-2">
+
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
+                    <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} id='ecartInter' placeholder={t('ecart_inter')}
+                    />
+                  </Form.Group>
+
+                </Col>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('ecart_intra')} (m) </p>
+                    <Form.Control type="number" value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} id='ecartIntra' placeholder={t('ecart_intra')}
+                    />
+                  </Form.Group>
+
+                </Col>
+                <Col lg="4" md="12" sm="12">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('densité')} (plants/ha)</p>
+                    <Form.Control type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} id='densité' placeholder={t('densité')}
+                    />
+                  </Form.Group>
+
+                </Col>
               </div>
 
             </Row>
@@ -1637,116 +1636,116 @@ const Overview = (props) => {
               </div>
             </Row>
             <Row form>
-            <div className="d-flex gap-2">
+              <div className="d-flex gap-2">
 
-              <Col md="6" className="form-group">
-                <p style={{ margin: "0px" }}>{t('irrigation_zone')} *</p>
-                <Form.Select
-                  value={irrigData.zone_uid}
-                  onChange={e => setIrrigData({ ...irrigData, zone_uid: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' }}
+                <Col md="6" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('irrigation_zone')} *</p>
+                  <Form.Select
+                    value={irrigData.zone_uid}
+                    onChange={e => setIrrigData({ ...irrigData, zone_uid: e.target.value })}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option>{t('select_zone')}</option>
+                  >
+                    <option>{t('select_zone')}</option>
 
-                  {
-                    zones.map((item, indx) => {
-                      return <option value={item.Uid}>{item.name}</option>
-                    })
-                  }
-                </Form.Select>
-              </Col>
-              <Col md="6" className="form-group">
-                <p style={{ margin: "0px" }}>{t('irrigation_crop')} *</p>
-                <Form.Select
-                  value={irrigData.crop_uid}
-                  onChange={e => setIrrigData({ ...irrigData, crop_uid: e.target.value })}
-                  style={{ border: '1px solid #0BAECB' }}
-
-                >
-                  <option>{t('select_crop')}</option>
-                  {
-                    crops.map(crop => {
-                      let cropType = ""
-                      listCrop.map(croptype => {
-                        if (croptype.id === crop.croptype_id) {
-                          cropType = croptype.crop
-                        }
+                    {
+                      zones.map((item, indx) => {
+                        return <option value={item.Uid}>{item.name}</option>
                       })
-                      return <option value={crop.Uid} >{cropType}</option>
+                    }
+                  </Form.Select>
+                </Col>
+                <Col md="6" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('irrigation_crop')} *</p>
+                  <Form.Select
+                    value={irrigData.crop_uid}
+                    onChange={e => setIrrigData({ ...irrigData, crop_uid: e.target.value })}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                    })
-                  }
-                </Form.Select>
-              </Col>
+                  >
+                    <option>{t('select_crop')}</option>
+                    {
+                      crops.map(crop => {
+                        let cropType = ""
+                        listCrop.map(croptype => {
+                          if (croptype.id === crop.croptype_id) {
+                            cropType = croptype.crop
+                          }
+                        })
+                        return <option value={crop.Uid} >{cropType}</option>
+
+                      })
+                    }
+                  </Form.Select>
+                </Col>
               </div>
               <div className="d-flex gap-2">
 
-              <Col md="6" className="form-group">
-                <p style={{ margin: "0px" }}>{t('Irrigation_system_type')} *</p>
-                <Form.Select
-                  // className={props.typeErrorIrrig == '' ? '' : 'is-invalid'}
-                  value={irrigData.irrigType}
-                  onChange={evt => {
-                    handleIrrigPick(evt)
-                  }}
-                  style={{ border: '1px solid #0BAECB' }}
+                <Col md="6" className="form-group">
+                  <p style={{ margin: "0px" }}>{t('Irrigation_system_type')} *</p>
+                  <Form.Select
+                    // className={props.typeErrorIrrig == '' ? '' : 'is-invalid'}
+                    value={irrigData.irrigType}
+                    onChange={evt => {
+                      handleIrrigPick(evt)
+                    }}
+                    style={{ border: '1px solid #0BAECB' }}
 
-                >
-                  <option disabled selected value="">{t('select_irriagtion')}</option>
-                  {
-                    listIrrigations.map(item => {
-                      // if (item.value === irrigationMethod) {
-                      //   return <option value={item.value} selected={true}>{item.type}</option>;
-                      // } else {
-                      //   return <option value={item.value} selected={false}>{item.type}</option>;
-                      // }
-                      return <option value={item.irrigation} >{t(`${item.irrigation}`)}</option>;
-                    })
-                  }
-                </Form.Select>
-              </Col>
-              <Col lg="6" md="8" sm="8">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) *</p>
-                  <Form.Control type="number" value={irrigData.effIrrig}  onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
-                    style={{ border: '1px solid #0BAECB',height:41 }}
+                  >
+                    <option disabled selected value="">{t('select_irriagtion')}</option>
+                    {
+                      listIrrigations.map(item => {
+                        // if (item.value === irrigationMethod) {
+                        //   return <option value={item.value} selected={true}>{item.type}</option>;
+                        // } else {
+                        //   return <option value={item.value} selected={false}>{item.type}</option>;
+                        // }
+                        return <option value={item.irrigation} >{t(`${item.irrigation}`)}</option>;
+                      })
+                    }
+                  </Form.Select>
+                </Col>
+                <Col lg="6" md="8" sm="8">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) *</p>
+                    <Form.Control type="number" value={irrigData.effIrrig} onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
+                      style={{ border: '1px solid #0BAECB', height: 41 }}
 
-                  />
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
+                </Col>
               </div>
               <div className="d-flex gap-2">
 
-              <Col lg="4" md="8" sm="8">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
-                  <Form.Control value={irrigData.pumpType} onChange={e => setIrrigData({ ...irrigData, pumpType: e.target.value })} id='type_reseau' placeholder={t('type_reseau')}
-                  />
+                <Col lg="4" md="8" sm="8">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
+                    <Form.Control value={irrigData.pumpType} onChange={e => setIrrigData({ ...irrigData, pumpType: e.target.value })} id='type_reseau' placeholder={t('type_reseau')}
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              <Col lg="4" md="8" sm="8">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
-                  <Form.Control type="number" value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
-                  />
+                </Col>
+                <Col lg="4" md="8" sm="8">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
+                    <Form.Control type="number" value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
-              <Col lg="4" md="8" sm="8">
-                <Form.Group>
-                  <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
-                  <Form.Control type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} id='nbr_ligne' placeholder={t('nbr_ligne')}
-                  />
+                </Col>
+                <Col lg="4" md="8" sm="8">
+                  <Form.Group>
+                    <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
+                    <Form.Control type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                    />
 
-                </Form.Group>
+                  </Form.Group>
 
-              </Col>
+                </Col>
               </div>
 
               <Col lg="4" md="8" sm="8">
@@ -1855,14 +1854,14 @@ const Overview = (props) => {
       {/* Page Header */}
       <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between w-100 flex-nowrap align-items-center border-bottom">
         <PageTitle title={t('overview')} className=" mb-1" />
-        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 custom-dropdown" style={{ width: '50px', height: '50px',all:"unset"}}>
-          <Dropdown.Toggle className="d-flex justify-content-center align-items-center "  style={{
-    all: 'unset',
-    border: 'none',
-    background: 'none',
-    boxShadow: 'none',
-    outline: 'none',
-  }}>
+        <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 custom-dropdown " style={{ width: '50px', height: '50px', all: "unset" }}>
+          <Dropdown.Toggle className="d-flex justify-content-center align-items-center " style={{
+            all: 'unset',
+            border: 'none',
+            background: 'none',
+            boxShadow: 'none',
+            outline: 'none',
+          }}>
             <Button id="TooltipExample" theme="info" className="rounded-circle" style={{ height: 50, width: 50 }} onClick={toggleDropDown}  >
               <i className="material-icons" style={{ fontSize: 30, display: "flex", justifyContent: "center", alignItems: "center", color: "#fff" }}>&#xe145;</i>
               <Tooltip

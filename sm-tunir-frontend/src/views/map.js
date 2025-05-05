@@ -52,17 +52,15 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
     return null;
   };
   useEffect(() => {
-    const updateMapCenter = async () => {
-      const centerFromSensors = getCenterFromSensors();
-      if (centerFromSensors) {
-        setMapCenter(centerFromSensors);
-        setZoomLevel(16.5)
-        mapRef.current.setView(centerFromSensors, zoomLevel);
-      }
-    };
+    const centerFromSensors = getCenterFromSensors();
+    if (centerFromSensors && mapRef.current) {
+      setMapCenter(centerFromSensors);
+      setZoomLevel(16.5);
+      mapRef.current.setView(centerFromSensors, 16.5);
+    }
+  }, [sensor]);
   
-    updateMapCenter();
-  }, [sensor, mapRef, zoomLevel]);
+  
   const location = useGeoLocation();
 
   const returnedMap = (L) => {
@@ -275,7 +273,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
   return (
     <div>
       <MapContainer
-      style={{borderRadius :20,boxShadow : '1px 1px 10px #bbb',height:300}}
+      style={{borderRadius :20,boxShadow : '1px 1px 10px #bbb',height:300,zIndex: 1}}
         className="markercluster-map"
         zoom={zoomLevel}
         center={mapCenter}

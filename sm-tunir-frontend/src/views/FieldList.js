@@ -4,10 +4,7 @@ import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
 import {Modal, Button, ButtonGroup, Row, Col, Form} from "react-bootstrap"
-import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, ImageOverlay, ScaleControl } from "react-leaflet";
-import useGeoLocation from "../utils/useGeoLocation";
-import LeafletGeoCoder from "./LeafletGeoCoder";
-import L from 'leaflet';
+
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import LeafletMap from './map';
@@ -222,6 +219,8 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
             })
 
     }   
+    console.log(FieldsList,"FieldsList");
+    
 
 
     return (

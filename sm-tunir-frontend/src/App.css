@@ -42,4 +42,8 @@
   .btn-outline-primary {
     border-width: 1px !important; 
   }
+  .custom-dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: #fff !important;
+    color: #000 !important; /* black text */
+  }
   

@@ -8,6 +8,7 @@ import Weather from '../views/Weather';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import EditSensorByAdmin from '../views/EditSensorByAdmin';
 import Overview from '../views/Overview';
+import AddField from '../views/AddField';
 import AdminBoard from '../admin/AdminBoard';
 import SensorsManagement from "../admin/SensorsManagement";
 import AddSensorByAdmin from "../admin/AddSensor"
@@ -245,6 +246,14 @@ const protectedRoutes = [
     path : "/sensor-settings",
 
     element: <SensorSettings />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'Add Field',
+    path: "/AddField",
+
+    element: <AddField />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

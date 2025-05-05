@@ -189,10 +189,19 @@ input[type="password"]
   text-align: center;
   position: relative;
 }
-.stats-dates{
-  display :flex;
-  justify-content:center;
-  align-items:center;
+.stats-dates {
+  position: relative; /* Enable absolute positioning context for markers */
+  width: 80%; /* Match the bar width */
+  margin-left: 10px;
+}
+
+.Marker,
+.Marker-tomorrow,
+.Marker-yesterday {
+  position: absolute;
+  top: -15px; /* Adjust to show the SVG above the bar */
+  transform: translateX(-50%);
+  z-index: 2; /* Make sure they appear above the progress bar */
 }
 .Segment1 {
   opacity :0.2;
