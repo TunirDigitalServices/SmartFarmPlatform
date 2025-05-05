@@ -44,11 +44,12 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
         }
     }
     const calculateLeftPosition = (value) => {
-        const minValue = 22;
-        const maxValue = 60;
+        const minValue = 0;
+        const maxValue = 50;
         const adjustedValue = Math.max(minValue, Math.min(maxValue, parseFloat(value)));
         return `calc(${adjustedValue}% - 6px)`;
     };
+    
 
     const returnBL = (charge) => {
         if ((Number(charge) >= 90)) {
@@ -171,7 +172,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                                                 <div>{t('Full')}</div>
                                                             </div>
                                                         </section> */}
-                                                         <div className="py-2">
+                                                         <div className="pt-2">
                             <div className="ProgressBarWrapper">
                               <div className="stats-dates">
                                 <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
@@ -202,13 +203,14 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                     opacity: "0.2",
                                     width: "80%",
                                     height: "20px",
+                                    position:"relative",
                                     margin: "0px 0px 0px 10px",
                                     backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
                                   }}
                                 ></div>
                               </div>
-                              <div className="stats-dates" style={{ margin: "-5px 0px" }}>
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
+                              <div className="stats-dates " style={{ margin: "-5px 0px" }}>
+                                <span style={{ fontSize: 14}}>{t('niveau')} 2</span>
                                 <div className="Marker" style={{ left: calculateLeftPosition(mv2) }}>
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -189,19 +189,10 @@ input[type="password"]
   text-align: center;
   position: relative;
 }
-.stats-dates {
-  position: relative; /* Enable absolute positioning context for markers */
-  width: 80%; /* Match the bar width */
-  margin-left: 10px;
-}
-
-.Marker,
-.Marker-tomorrow,
-.Marker-yesterday {
-  position: absolute;
-  top: -15px; /* Adjust to show the SVG above the bar */
-  transform: translateX(-50%);
-  z-index: 2; /* Make sure they appear above the progress bar */
+.stats-dates{
+  display :flex;
+  justify-content:center;
+  align-items:center;
 }
 .Segment1 {
   opacity :0.2;
@@ -244,7 +235,7 @@ input[type="password"]
   position: absolute;
   transform: rotate(180deg);
   margin-top: 1px;
-  margin-left: 60px;
+  /* margin-left: 60px; */
 }
 .Marker-yesterday {
   position: absolute;
@@ -552,5 +543,4 @@ h5.modal-title h6{
 .satellite-date {
   background-color: #8ad3dd;
   border-radius: 50%; 
-
 }
