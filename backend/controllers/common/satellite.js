@@ -163,6 +163,9 @@ const addSatelliteImagesSentinel = async (req, res) => {
     const end_date = new Date(start_date);
     end_date.setDate(start_date.getDate() + 7);
     // fetch satellite image where start end + field id
+   console.log(today,'---------------Today');
+   console.log(start_date,'---------------startDay');
+   console.log(end_date,'---------------EndDay');
    
     // if exist return res.send
     const coordinates = req.body.coordinates;
