@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Container,
   Row,
@@ -7,9 +6,11 @@ import {
   Card,
   Button,
   Nav,
-  Modal
-} from 'react-bootstrap';
+  NavItem,
+  NavLink,
+  Modal,
 
+} from "react-bootstrap";
 import PageTitle from "../components/common/PageTitle";
 import "../assets/styling/Styles.css";
 import "./Styles.css";
@@ -36,7 +37,7 @@ class AddField extends React.Component {
       zoom: "",
       center: [],
       fromAction: false,
-      elemValue: "field",
+      elemValue: "soil",
       depthLevel: props.depth,
       dataChange: props.state,
       setupCardSave: false,
@@ -67,10 +68,11 @@ class AddField extends React.Component {
       farmError: "",
       description: null,
       farmName: "",
-      width:"",
-      length:"",
+      width: "",
+      length: "",
       added: false,
       source: "1",
+      stateFlag: false,
       soilProperty: "Standard",
       depth_data: [{
         uni: "",//soil type
@@ -87,7 +89,7 @@ class AddField extends React.Component {
       RUmax: "",
       effPluie: "",
       ruPratique: "",
-      growingDate:"",
+      growingDate: "",
       effIrrig: "",
       density: "",
       ecartInter: "",
@@ -117,7 +119,7 @@ class AddField extends React.Component {
       lateral: null,
       pumpFlow: "",
       pumpType: "",
-      linesNumber:"",
+      linesNumber: "",
       draw: {
         polygon: false,
         circle: false,
@@ -140,9 +142,9 @@ class AddField extends React.Component {
   }
 
   toggle() {
-      this.setState({
-        open: !this.state.open
-      });
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   _onCreated = e => {
@@ -169,7 +171,7 @@ class AddField extends React.Component {
 
   };
 
-
+ 
   componentDidMount = async () => {
 
     this.getDataFields();
@@ -177,6 +179,7 @@ class AddField extends React.Component {
     this.getDataCrops();
     this.getDataIrrigations();
     this.getSoils();
+
   }
 
   componentWillUnmount() {
@@ -184,36 +187,59 @@ class AddField extends React.Component {
       return;
     };
   }
-  getDataZones = async () => {
-    await api.get('/zone/zones').then(res => {
-      const newDataZone = res.data;
-      this.setState({ zones: newDataZone.farms });
-      let Zones = [];
-      this.state.zones.map(item => {
-        let fields = item.fields;
-        if (fields) {
-          fields.map(itemZone => {
-            let zones = itemZone.zones;
-            if (zones) {
-              zones.map(i => {
-                Zones.push({
-                  Id: i.id,
-                  name: i.name,
-                  Uid: i.uid,
-                  source: i.source,
-                  description: i.description,
-                  depth_data: i.depth_data,
-                  field_id: i.field_id
-                })
-              })
-            }
-          })
-        }
-      })
-
-      this.setState({ zonesData: Zones })
-    })
+ 
+  componentDidUpdate(prevProps, prevState) {
+    // Check if zonesData has actually changed
+    if (prevState.zonesData !== this.state.zonesData) {
+      console.log('zonesData updated:', this.state.zonesData);
+    }
   }
+
+  getDataZones = async () => {
+    try {
+      const res = await api.get('/zone/zones');
+      const newDataZone = res.data;
+      console.log("Fetched Data:", newDataZone);  // Log response from API
+
+      const Zones = [];
+      newDataZone?.farms?.forEach(farm => {
+        farm.fields?.forEach(field => {
+          field.zones?.forEach(zone => {
+            Zones.push({
+              id: zone.id,
+              name: zone.name,
+              Uid: zone.uid,
+              source: zone.source,
+              description: zone.description,
+              depth_data: zone.depth_data,
+              field_id: zone.field_id
+            });
+          });
+        });
+      });
+
+      console.log("Zones array before setState:", Zones);
+
+      // Only update if zonesData has changed
+      if (Zones.length > 0 && Zones !== this.state.zonesData) {
+        this.setState({
+          zones: newDataZone.farms,  // New reference for zones
+          zonesData: Zones,  // New reference for zonesData
+          stateFlag: !this.state.stateFlag  // Force re-render
+        }, () => {
+          console.log('State after setState:', this.state); // Check the updated state
+          this.forceUpdate();  // Force the re-render
+        });
+      } else {
+        console.log("No new zones to update.");
+      }
+
+    } catch (error) {
+      console.error('Error fetching zones:', error);
+    }
+  };
+
+  
 
   getDataCrops = async () => {
     await api.get('/crop/crops').then(res => {
@@ -351,12 +377,12 @@ class AddField extends React.Component {
     });
   };
 
-  handleWidth = (e) =>{
+  handleWidth = (e) => {
     this.setState({
       width: e.target.value,
     });
   }
-  handleLength = (e) =>{
+  handleLength = (e) => {
     this.setState({
       length: e.target.value,
     });
@@ -418,8 +444,8 @@ class AddField extends React.Component {
       farm_uid: this.state.farm_uid,
       Latitude: this.state.Latitude,
       Longitude: this.state.Longitude,
-      largeur:this.state.width,
-      longueur:this.state.length
+      largeur: this.state.width,
+      longueur: this.state.length
     }
 
     api.post('/field/add-field', data)
@@ -442,22 +468,22 @@ class AddField extends React.Component {
             icon: "error",
             text: 'Error'
 
-        });
+          });
         }
         if (res.data.type && res.data.type == "success") {
           this.getDataFields()
           this.setState({ added: true }, this.resetForm())
-          this.setState({elemValue : "soil"})
+          this.setState({ elemValue: "soil" })
           // this.setState({ msgServer: "field_added" })
           // this.setState({ classMsg: "success" })
           // this.setState({ displayMsg: "show" })
           // this.setState({ iconMsg: "check" })
           swal({
-            title:'Field added',
+            title: 'Field added',
             icon: "success",
             text: 'Field added successfully '
 
-        });
+          });
 
           this.resetForm()
         }
@@ -623,22 +649,22 @@ class AddField extends React.Component {
           // this.setState({ classMsg: "danger" })
           // this.setState({ displayMsg: "show" })
           swal({
-            title:'Cannot add soil',
+            title: 'Cannot add soil',
             icon: "error",
 
-        });
+          });
         }
         if (res.data.type && res.data.type == "success") {
           this.getDataZones();
           this.setState({ added: true }, this.resetFormSoil())
           swal({
-            title:'Soil added',
+            title: 'Soil added',
             icon: "success",
             text: 'Soil added successfully '
 
           });
-          this.setState({elemValue : "crop"})
-          this.setState({open : false})
+          this.setState({ elemValue: "crop" })
+          this.setState({ open: false })
           // this.setState({ msgServer: "zone_added" })
           // this.setState({ classMsg: "success" })
           // this.setState({ displayMsg: "show" })
@@ -788,7 +814,7 @@ class AddField extends React.Component {
       density: this.state.density,
       ecart_inter: this.state.ecartInter,
       ecart_intra: this.state.ecartIntra,
-      growingDate:this.state.growingDate
+      growingDate: this.state.growingDate
     }
 
     api.post('/crop/add-crop', data)
@@ -806,22 +832,22 @@ class AddField extends React.Component {
           // this.setState({ classMsg: "danger" })
           // this.setState({ displayMsg: "show" })
           swal({
-            title:'Cannot add crop',
+            title: 'Cannot add crop',
             icon: "error",
 
-        });
+          });
         }
         if (res.data.type && res.data.type == "success") {
           this.getDataCrops()
           this.setState({ added: true }, this.resetFormCrop())
           swal({
-            title:'Crop added',
+            title: 'Crop added',
             icon: "success",
             text: 'Crop added successfully '
 
           });
-          this.setState({elemValue : "irrig"})
-          this.setState({open : false})
+          this.setState({ elemValue: "irrig" })
+          this.setState({ open: false })
           // this.setState({ msgServer: "crop_added" })
           // this.setState({ classMsg: "success" })
           // this.setState({ displayMsg: "show" })
@@ -921,7 +947,7 @@ class AddField extends React.Component {
     })
   }
 
-  handleLinesNumber = (e) =>{
+  handleLinesNumber = (e) => {
     this.setState({
       linesNumber: e.target.value
     })
@@ -982,7 +1008,7 @@ class AddField extends React.Component {
       pumpFlow: this.state.pumpFlow,
       pumpType: this.state.pumpType,
       drippers_spacing: this.state.drippersSpacing,
-      lines_number:this.state.linesNumber
+      lines_number: this.state.linesNumber
     }
 
 
@@ -1046,6 +1072,8 @@ class AddField extends React.Component {
   render() {
     const { t } = this.props;
     const renderAddSetup = () => {
+      console.log("Rendering with zonesData:", this.state.zonesData);
+
       switch (this.state.elemValue) {
         case 'field':
           return (
@@ -1087,197 +1115,94 @@ class AddField extends React.Component {
                     </Button>
 
                   </div> */}
-                  
+
 
                 </Card.Body>
               </Card>
               <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle} >
-                    <Modal.Header>
-                      <Button
-                        // theme="success"
-                        className="mb-2 mr-1 btn btn-danger"
-                        onClick={this.toggle}
+                <Modal.Header>
+                  <Button
+                    // theme="success"
+                    className="mb-2 mr-1 btn btn-danger"
+                    onClick={this.toggle}
 
+                  >
+                    <i class={`fa fa-times mx-2`}></i>
+                  </Button>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <Col lg='6' md="12" sm="12">
+                      <div
+                        style={{
+                          display: "flex",
+                          marginTop: "20px",
+                          flexWrap: "wrap"
+                        }}
                       >
-                        <i class={`fa fa-times mx-2`}></i>
-                      </Button>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Row>
-                        <Col lg='6' md="12" sm="12">
-                          <div
-                            style={{
-                              display: "flex",
-                              marginTop: "20px",
-                              flexWrap: "wrap"
-                            }}
-                          >
-                            <FieldSetupForm
-                              handleDescription={this.handleDescription}
-                              handleName={this.handleName}
-                              handleUidFarm={this.handleUidFarm}
-                              onChange={value => console.log(value)}
-                              saved={this.state.setupCardSave}
-                              nameError={this.state.nameError}
-                              farmError={this.state.farmError}
-                              name={this.state.name}
-                              farm_uid={this.state.farm_uid}
-                              description={this.state.description}
-                              length={this.state.length}
-                              width={this.state.width}
-                              handleWidth={this.handleWidth}
-                              handleLength={this.handleLength}
-                            />
+                        <FieldSetupForm
+                          handleDescription={this.handleDescription}
+                          handleName={this.handleName}
+                          handleUidFarm={this.handleUidFarm}
+                          onChange={value => console.log(value)}
+                          saved={this.state.setupCardSave}
+                          nameError={this.state.nameError}
+                          farmError={this.state.farmError}
+                          name={this.state.name}
+                          farm_uid={this.state.farm_uid}
+                          description={this.state.description}
+                          length={this.state.length}
+                          width={this.state.width}
+                          handleWidth={this.handleWidth}
+                          handleLength={this.handleLength}
+                        />
 
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center"
-                            }}
-                          >
-                            <Button
-                              onClick={this.handleSubmit}
-                              theme="info"
-                              className="mb-2 mr-1 btn btn-success"
-                              style={{ fontSize: 16, color: "#fff" }}
-                              // disabled={this.state.Latitude !== "" ? false : true}
-                            >
-                              <i class={`fa fa-check mx-2`}></i>
-                              {t('save')}
-                            </Button>
-                          </div>
-                        </Col>
-                        
-                        {/* <Col lg="6" md="12" sm="12" className="mb-4">
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        <Button
+                          onClick={this.handleSubmit}
+                          theme="info"
+                          className="mb-2 mr-1 btn btn-success"
+                          style={{ fontSize: 16, color: "#fff" }}
+                        // disabled={this.state.Latitude !== "" ? false : true}
+                        >
+                          <i class={`fa fa-check mx-2`}></i>
+                          {t('save')}
+                        </Button>
+                      </div>
+                    </Col>
+
+                    {/* <Col lg="6" md="12" sm="12" className="mb-4">
 
                           <LeafletMap _onCreated={this._onCreated} fields={this.state.farmsData} data={this.state.farms} draw={this.state.draw} edit={this.state.edit} zoom={this.state.zoom} center={this.state.center} fromAction={this.state.fromAction} />
 
                         </Col> */}
-                      </Row>
-                    </Modal.Body>
-                  </Modal>
+                  </Row>
+                </Modal.Body>
+              </Modal>
             </div>
           )
         case 'soil':
           return (
             <div>
-              <Card small className="h-100">
-                <Card.Header className="border-bottom">
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <h6 className="m-0">{t('soil_info')}</h6>
-                   
-                  </div>
-                </Card.Header>
-                <Card.Body className="pt-0">
-                      <Row noGutters className="page-header py-4">
-                       <PageTitle
-                         sm="4"
-                         title={t('my_zones')}
-                         className="text-sm-left"
-                       />
-                     </Row>
-                     <Row className="px-2">
-   
-                       <ZoneList
-                         zonesList={this.state.zonesData}
-                         Zones={this.getDataZones}
-                         Fields={this.state.farmsData}
-                         state={this.dataChange}
-                         listSoils={this.state.listSoils}
-   
-                       />
-
-   
-                     </Row>
-                     {/* <div className="d-flex justify-content-center align-items-center">
-                    <Button theme="success" className="rounded-circle" style={{ height: 60, width: 60 }} onClick={this.toggle} title={`${t('add_soil')}`}>
-                      <i className="material-icons" style={{ fontSize: 36, display: "flex", justifyContent: "center", alignItems: "center" }}>&#xe145;</i>
-                    </Button>
-
-                  </div> */}
-                </Card.Body>
-              </Card>
-                  <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle} >
-                    <Modal.Header>
-                    <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flexStart",
-                              alignItems: "center"
-                            }}
-                          >
-
-                        <Button
-                            // theme="success"
-                            className="mb-2 mr-1 btn btn-danger"
-                            onClick={this.toggle}
-
-                          >
-                            <i class={`fa fa-times mx-2`}></i>
-                          </Button>
-                          <Button
-                                    onClick={this.zoneHandleSubmit}
-                                    theme="info"
-                                    className="mb-2 mr-1 btn btn-success"
-                                    style={{ fontSize: 16, color: "#fff" }}
-                                    // disabled={this.state.Latitude !== "" ? false : true}
-                                  >
-                                    <i class={`fa fa-check mx-2`}></i>
-                                    {t('save')}
-                            </Button>
-                      
-                            
-                          </div>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginTop: "20px",
-                            flexWrap: "wrap"
-                          }}
-                        >
-                          <FieldSoilForm
-                            handleZoneName={this.handleZoneName}
-                            handleSource={this.handleSource}
-                            handleDepth={this.handleDepth}
-                            handleSoilProprety={this.handleSoilProprety}
-                            handleUidField={this.handleUidField}
-                            handleUidZone={this.handleUidZone}
-                            source={this.state.source}
-                            zones={this.state.zonesData}
-                            ZoneFunction={this.getDataZones}
-                            fields={this.state.farmsData}
-                            onChange={value => console.log(value)}
-                            saved={this.state.soilCardSave}
-                            nameError={this.state.nameError}
-                            modal={false}
-                            zoneName={this.state.zoneName}
-                            listSoils={this.state.listSoils}
-                            // effIrrig={this.state.effIrrig}
-                            effPluie={this.state.effPluie}
-                            ruPratique={this.state.ruPratique}
-                            RUmax={this.state.RUmax}
-                            irrigArea={this.state.irrigArea}
-                            // handleEffIrrig={this.handleEffIrrig}
-                            handleEffRain={this.handleEffRain}
-                            handleIrrigArea={this.handleIrrigArea}
-                            handleRuPractical={this.handleRuPractical}
-                            handleRuMax={this.handleRuMax}
-                          />
-                        </div>
-                            
-                    </Modal.Body>
-                  </Modal>
-            </div>
+      <h2>Zones:</h2>
+      {this.state.zonesData.length > 0 ? (
+        this.state.zonesData.map(zone => (
+          <div key={zone.id}>
+            <h3>{zone.name}</h3>
+            <p>{zone.description}</p>
+          </div>
+        ))
+      ) : (
+        <p>No zones loaded.</p>
+      )}
+    </div>
           )
         case 'crop':
           return (
@@ -1295,7 +1220,7 @@ class AddField extends React.Component {
                   </div>
                 </Card.Header>
                 <Card.Body className="pt-0">
-                <Row noGutters className="page-header py-4">
+                  <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
                       title={t('my_crops')}
@@ -1321,86 +1246,86 @@ class AddField extends React.Component {
 
                 </Card.Body>
               </Card>
-                  <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle}>
-                    <Modal.Header>
-                    <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flexStart",
-                              alignItems: "center"
-                            }}
-                          >
-                               <Button
-                        // theme="success"
-                        className="mb-2 mr-1 btn btn-danger"
-                        onClick={this.toggle}
+              <Modal size='lg' centered={true} show={this.state.open} toggle={this.toggle}>
+                <Modal.Header>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flexStart",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Button
+                      // theme="success"
+                      className="mb-2 mr-1 btn btn-danger"
+                      onClick={this.toggle}
 
-                      >
-                        <i class={`fa fa-times mx-2`}></i>
-                      </Button>
+                    >
+                      <i class={`fa fa-times mx-2`}></i>
+                    </Button>
 
-                        <Button
-                                onClick={this.cropHandleSubmit}
-                                theme="info"
-                                className="mb-2 mr-1 btn btn-success"
-                                style={{ fontSize: 16, color: "#fff" }}
-                                // disabled={this.state.Latitude !== "" ? false : true}
-                              >
-                                <i class={`fa fa-check mx-2`}></i>
-                                {t('save')}
-                        </Button>
-                            
-                          </div>
-                   
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div
-                        style={{
-                          display: "flex",
-                          marginTop: "20px",
-                          flexWrap: "wrap"
-                        }}
-                      >
-                        <FieldCropForm
-                          handleCropType={this.handleCropType}
-                          handlePrevType={this.handlePrevType}
-                          handleGGD={this.handleGGD}
-                          handleUidField={this.handleUidField}
-                          handleZone={this.handleZone}
-                          handleDate={this.handleDate}
-                          // zone={this.state.zone}
-                          cropType={this.state.cropType}
-                          // previous_type={this.state.previous_type}
-                          zones={this.state.zonesData}
-                          fields={this.state.farmsData}
-                          startDate={this.state.startDate}
-                          endDate={this.state.endDate}
-                          onChange={value => console.log(value)}
-                          saved={this.state.cropsCardSave}
-                          typeError={this.state.typeError}
-                          handleDays={this.handleDays}
-                          handleCropVariety={this.handleCropVariety}
-                          handlePlantingDate={this.handlePlantingDate}
-                          handleGrowingDate={this.handleGrowingDate}
-                          handleRootDepth={this.handleRootDepth}
-                          handleRuPractical={this.handleRuPractical}
-                          ruPratique={this.state.ruPratique}
-                          cropVariety={this.state.cropVariety}
-                          days={this.state.days}
-                          plantingDate={this.state.plantingDate}
-                          growingDate={this.state.growingDate}
-                          rootDepth={this.state.rootDepth}
-                          denisty={this.state.density}
-                          ecartInter={this.state.ecartInter}
-                          ecartIntra={this.state.ecartIntra}
-                          handleCropDensity={this.handleCropDensity}
-                          handleEcartInter={this.handleEcartInter}
-                          handleEcartIntra={this.handleEcartIntra}
-                        />
-                      </div>
-                   
-                    </Modal.Body>
-                  </Modal>
+                    <Button
+                      onClick={this.cropHandleSubmit}
+                      theme="info"
+                      className="mb-2 mr-1 btn btn-success"
+                      style={{ fontSize: 16, color: "#fff" }}
+                    // disabled={this.state.Latitude !== "" ? false : true}
+                    >
+                      <i class={`fa fa-check mx-2`}></i>
+                      {t('save')}
+                    </Button>
+
+                  </div>
+
+                </Modal.Header>
+                <Modal.Body>
+                  <div
+                    style={{
+                      display: "flex",
+                      marginTop: "20px",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <FieldCropForm
+                      handleCropType={this.handleCropType}
+                      handlePrevType={this.handlePrevType}
+                      handleGGD={this.handleGGD}
+                      handleUidField={this.handleUidField}
+                      handleZone={this.handleZone}
+                      handleDate={this.handleDate}
+                      // zone={this.state.zone}
+                      cropType={this.state.cropType}
+                      // previous_type={this.state.previous_type}
+                      zones={this.state.zonesData}
+                      fields={this.state.farmsData}
+                      startDate={this.state.startDate}
+                      endDate={this.state.endDate}
+                      onChange={value => console.log(value)}
+                      saved={this.state.cropsCardSave}
+                      typeError={this.state.typeError}
+                      handleDays={this.handleDays}
+                      handleCropVariety={this.handleCropVariety}
+                      handlePlantingDate={this.handlePlantingDate}
+                      handleGrowingDate={this.handleGrowingDate}
+                      handleRootDepth={this.handleRootDepth}
+                      handleRuPractical={this.handleRuPractical}
+                      ruPratique={this.state.ruPratique}
+                      cropVariety={this.state.cropVariety}
+                      days={this.state.days}
+                      plantingDate={this.state.plantingDate}
+                      growingDate={this.state.growingDate}
+                      rootDepth={this.state.rootDepth}
+                      denisty={this.state.density}
+                      ecartInter={this.state.ecartInter}
+                      ecartIntra={this.state.ecartIntra}
+                      handleCropDensity={this.handleCropDensity}
+                      handleEcartInter={this.handleEcartInter}
+                      handleEcartIntra={this.handleEcartIntra}
+                    />
+                  </div>
+
+                </Modal.Body>
+              </Modal>
             </div>
           )
         case 'irrig':
@@ -1419,7 +1344,7 @@ class AddField extends React.Component {
                   </div>
                 </Card.Header>
                 <Card.Body className="pt-0">
-                <Row noGutters className="page-header py-4">
+                  <Row noGutters className="page-header py-4">
                     <PageTitle
                       sm="4"
                       title={t('my_irrigations')}
@@ -1443,91 +1368,91 @@ class AddField extends React.Component {
                   </div> */}
                 </Card.Body>
               </Card>
-                  <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle}>
-                    <Modal.Header>
-                    <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flexStart",
-                              alignItems: "center"
-                            }}
-                          >
+              <Modal size='lg' centered={true} show={this.state.open} toggle={this.toggle}>
+                <Modal.Header>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flexStart",
+                      alignItems: "center"
+                    }}
+                  >
 
-                          <Button
-                              // theme="success"
-                              className="mb-2 mr-1 btn btn-danger"
-                              onClick={this.toggle}
+                    <Button
+                      // theme="success"
+                      className="mb-2 mr-1 btn btn-danger"
+                      onClick={this.toggle}
 
-                            >
-                              <i class={`fa fa-times mx-2`}></i>
-                            </Button>
-                            <Button
-                                      onClick={this.IrrigHandleSubmit}
-                                      theme="info"
-                                      className="mb-2 mr-1 btn btn-success"
-                                      style={{ fontSize: 16, color: "#fff" }}
-                                      // disabled={this.state.Latitude !== "" ? false : true}
-                                    >
-                                      <i class={`fa fa-check mx-2`}></i>
-                                      {t('save')}
-                              </Button>
-                      
-                            
-                          </div>
-                    </Modal.Header>
-                    <Modal.Body>
+                    >
+                      <i class={`fa fa-times mx-2`}></i>
+                    </Button>
+                    <Button
+                      onClick={this.IrrigHandleSubmit}
+                      theme="info"
+                      className="mb-2 mr-1 btn btn-success"
+                      style={{ fontSize: 16, color: "#fff" }}
+                    // disabled={this.state.Latitude !== "" ? false : true}
+                    >
+                      <i class={`fa fa-check mx-2`}></i>
+                      {t('save')}
+                    </Button>
 
-                      <div
-                        style={{
-                          display: "flex",
-                          marginTop: "20px",
-                          flexWrap: "wrap"
-                        }}
-                      >
-                        <FieldIrrigationForm
-                          handleType={this.handleIrrigType}
-                          handleZone={this.handleIrrigZone}
-                          handleCrop={this.handleCrop}
-                          handleIrrigAlrd={this.handleIrrigAlrd}
-                          handleFlowrate={this.handleFlowrate}
-                          handleName={this.handleName}
-                          handleIrrgSyst={this.handleIrrgSyst}
-                          handleRunTime={this.handleRunTime}
-                          handlePivotCoord={this.handlePivotCoord}
-                          handlePivotLength={this.handlePivotLength}
-                          handlePivotShape={this.handlePivotShape}
-                          handleLateral={this.handleLateral}
-                          zones={this.state.zonesData}
-                          crops={this.state.cropsData}
-                          Type={this.state.irrigType}
-                          flowrate={this.state.flowrate}
-                          name={this.state.name}
-                          irrigation_syst={this.state.irrigation_syst}
-                          pivot_coord={this.state.pivot_coord}
-                          pivot_length={this.state.pivot_length}
-                          pivot_shape={this.state.pivot_shape}
-                          irrigated_already={this.state.irrigated_already}
-                          full_runtime={this.state.full_runtime}
-                          lateral={this.state.lateral}
-                          onChange={value => console.log(value)}
-                          saved={this.state.irrigationCardSave}
-                          typeErrorIrrig={this.state.typeErrorIrrig}
-                          drippers={this.state.drippers}
-                          drippersSpacing={this.state.drippersSpacing}
-                          handleDrippers={this.handleDrippers}
-                          handleDrippersSpacing={this.handleDrippersSpacing}
-                          handleEffIrrig={this.handleEffIrrig}
-                          effIrrig={this.state.effIrrig}
-                          handlePumpFlow={this.handlePumpFlow}
-                          pumpFlow={this.state.pumpFlow}
-                          handlePumpType={this.handlePumpType}
-                          pumpType={this.state.pumpType}
-                          linesNumber={this.state.linesNumber}
-                        />
-                      </div>
-                     
-                    </Modal.Body>
-                  </Modal>
+
+                  </div>
+                </Modal.Header>
+                <Modal.Body>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      marginTop: "20px",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <FieldIrrigationForm
+                      handleType={this.handleIrrigType}
+                      handleZone={this.handleIrrigZone}
+                      handleCrop={this.handleCrop}
+                      handleIrrigAlrd={this.handleIrrigAlrd}
+                      handleFlowrate={this.handleFlowrate}
+                      handleName={this.handleName}
+                      handleIrrgSyst={this.handleIrrgSyst}
+                      handleRunTime={this.handleRunTime}
+                      handlePivotCoord={this.handlePivotCoord}
+                      handlePivotLength={this.handlePivotLength}
+                      handlePivotShape={this.handlePivotShape}
+                      handleLateral={this.handleLateral}
+                      zones={this.state.zonesData}
+                      crops={this.state.cropsData}
+                      Type={this.state.irrigType}
+                      flowrate={this.state.flowrate}
+                      name={this.state.name}
+                      irrigation_syst={this.state.irrigation_syst}
+                      pivot_coord={this.state.pivot_coord}
+                      pivot_length={this.state.pivot_length}
+                      pivot_shape={this.state.pivot_shape}
+                      irrigated_already={this.state.irrigated_already}
+                      full_runtime={this.state.full_runtime}
+                      lateral={this.state.lateral}
+                      onChange={value => console.log(value)}
+                      saved={this.state.irrigationCardSave}
+                      typeErrorIrrig={this.state.typeErrorIrrig}
+                      drippers={this.state.drippers}
+                      drippersSpacing={this.state.drippersSpacing}
+                      handleDrippers={this.handleDrippers}
+                      handleDrippersSpacing={this.handleDrippersSpacing}
+                      handleEffIrrig={this.handleEffIrrig}
+                      effIrrig={this.state.effIrrig}
+                      handlePumpFlow={this.handlePumpFlow}
+                      pumpFlow={this.state.pumpFlow}
+                      handlePumpType={this.handlePumpType}
+                      pumpType={this.state.pumpType}
+                      linesNumber={this.state.linesNumber}
+                    />
+                  </div>
+
+                </Modal.Body>
+              </Modal>
             </div>
           )
         default:
@@ -1635,22 +1560,22 @@ class AddField extends React.Component {
             <Row className=' d-flex justify-content-center align-items-center py-2'>
               <Col lg='12' md='12' sm='12'>
                 <Nav tabs style={{ paddingBottom: 10 }}>
-                  <Nav.Item>
-                    <Nav.Link id="field" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
+                  <NavItem>
+                    <NavLink id="field" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
                       {t('field_setup')}
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link id="soil" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink id="soil" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
                       {t('soil_info')}
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link id="crop" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link id="irrig" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</Nav.Link>
-                  </Nav.Item>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink id="crop" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink id="irrig" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</NavLink>
+                  </NavItem>
                 </Nav>
 
               </Col>

@@ -153,7 +153,7 @@ class SmallStats extends React.Component {
       ...this.props.chartConfig
     };
 
-    this.chartInstance = new Plot(this.canvasRef.current, chartConfig);
+    // this.chartInstance = new Plot(this.canvasRef.current, chartConfig);
   }
 
 
@@ -193,9 +193,9 @@ class SmallStats extends React.Component {
         case `${t('low_batt')}`:
         case `${t('offline')}`:
         case `${t('online')}`:
-          return this.props.ToSensorPage()
+          // return this.props.ToSensorPage()
         default:
-          return this.props.FilterByStatus(state)
+          // return this.props.FilterByStatus(state)
       }
     }
 
@@ -228,11 +228,7 @@ class SmallStats extends React.Component {
           <span> {state}</span>
           <p style={{ textAlign: "center" }} className={RSBHeader}>{icon}</p>
         </div>
-        <canvas
-          height={canvasHeight}
-          ref={this.canvasRef}
-          className={`stats-small-${shortid()}`}
-        />
+        
       </div>
     );
   }

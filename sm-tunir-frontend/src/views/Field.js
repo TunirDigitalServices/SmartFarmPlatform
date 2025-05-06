@@ -44,7 +44,6 @@ const Field = () => {
   const Uid = localStorage.getItem("Field");
   const [isLoading, setIsLoading] = useState(true)
   const { t, i18n } = useTranslation();
-
   const navigate = useNavigate()
   const [selectedField, setSelectedField] = useState([]);
   const [sensorCode, setSensorCode] = useState('')
@@ -108,7 +107,7 @@ const Field = () => {
   useEffect(() => {
 
     fetchData();
-  }, [Uid]);
+  }, []);
   useEffect(() => {
     const weather = async () => {
       await api.post("/weather/get-data", { type: 'day', lat: coord.lat, lon: coord.lon })
@@ -163,34 +162,34 @@ const Field = () => {
     localStorage.setItem('code', sensorCode)
   }, [sensorCode])
   console.log(sensorCode);
-
+  
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
   useEffect(() => {
-    const calculDataSensor = async () => {
-      console.log(sensorCode)
-      let url = `/calcul/get-sensor-calcul/${sensorCode}`
-      if (role === 'ROLE_SUPPLIER') {
-        url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
+      const calculDataSensor = async () => {
+        console.log(sensorCode)
+        let url = `/calcul/field-calcul/${Uid}`
+        if (role === 'ROLE_SUPPLIER') {
+          url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
+        }
+        await api.get(url)
+          .then(response => {
+            console.log(response.data)
+            let calculResult = response.data.calcul
+            let calculInputs = response.data.inputs
+
+            setResultCalcul(calculResult)
+            setInputsCalcul(calculInputs)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
       }
-      await api.get(url)
-        .then(response => {
-          console.log(response.data)
-          let calculResult = response.data.calcul
-          let calculInputs = response.data.inputs
 
-          setResultCalcul(calculResult)
-          setInputsCalcul(calculInputs)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-
-    }
-
-    calculDataSensor()
-
-  }, [sensorCode])
+      calculDataSensor()
+    
+  }, [Uid])
 
   console.log(resultCalcul)
 
@@ -233,6 +232,7 @@ const Field = () => {
     let ET0 = 0
     let RuMax = ''
     let todayDate = new Date()
+    
     let today = todayDate.toISOString().slice(0, 10)
     resultCalcul.map(result => {
       if (result) {
@@ -295,7 +295,7 @@ const Field = () => {
     // const hours = Math.floor(totalMinutes);
 
     // return `${hours}h`;
-    return `${hours}h ${parseFloat(minutes).toFixed(0)}m`;
+     return `${hours}h ${parseFloat(minutes).toFixed(0)}m`;
   }
   // Marker Position Based on Bilan Hydrique
 
@@ -660,42 +660,99 @@ const Field = () => {
   }, [])
 
 
+  // useEffect(() => {
+  //   let data = [];
+  //   allCalcul &&
+  //     allCalcul.forEach((event) => {
+        
+  //       let startDate = new Date(event.start_date).toISOString().slice(0, 10);
+  //       let endDate = new Date(event.end_date).toISOString().slice(0, 10);
+  //       let resultCalcul = event.result;
+
+  //       const filteredEvents = resultCalcul.filter((result) => {
+  //         let resultDate = new Date(result.date).toISOString().slice(0, 10);
+
+  //         return (
+  //           result.irrigationNbr === 1 &&
+  //           resultDate >= startDate &&
+  //           resultDate < endDate
+  //         );
+  //       });
+  //       filteredEvents &&
+  //         filteredEvents.forEach((event) => {
+  //           data.push({
+  //             title: (
+  //               <div style={{ fontSize: 11.5 }}>
+  //                 <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
+  //                 <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
+  //                 <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
+  //               </div>
+  //             ),
+  //             allDay: true,
+  //             start: new Date(event.date),
+  //             end: new Date(event.date),
+  //             source: "resultCalcul",
+  //           });
+  //         });
+  //     });
+  //   setEvents(data);
+  // }, [allCalcul]);
   useEffect(() => {
     let data = [];
-    allCalcul &&
-      allCalcul.forEach((event) => {
-        let startDate = new Date(event.start_date).toISOString().slice(0, 10);
-        let endDate = new Date(event.end_date).toISOString().slice(0, 10);
-        let resultCalcul = event.result;
-
-        const filteredEvents = resultCalcul.filter((result) => {
-          let resultDate = new Date(result.date).toISOString().slice(0, 10);
-
-          return (
-            result.irrigationNbr === 1 &&
-            resultDate >= startDate &&
-            resultDate < endDate
-          );
-        });
-        filteredEvents &&
-          filteredEvents.forEach((event) => {
-            data.push({
-              title: (
-                <div style={{ fontSize: 11.5 }}>
-                  <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
-                  <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
-                  <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
-                </div>
-              ),
-              allDay: true,
-              start: new Date(event.date),
-              end: new Date(event.date),
-              source: "resultCalcul",
-            });
-          });
+  
+    if (!allCalcul || !Array.isArray(allCalcul)) return;
+  
+    allCalcul.forEach((event) => {
+      const start = new Date(event.start_date);
+      const end = new Date(event.end_date);
+  
+      if (isNaN(start) || isNaN(end)) {
+        console.warn("Invalid start or end date in event:", event);
+        return;
+      }
+  
+      let startDate = start.toISOString().slice(0, 10);
+      let endDate = end.toISOString().slice(0, 10);
+      let resultCalcul = event.result || [];
+  
+      const filteredEvents = resultCalcul.filter((result) => {
+        const resultDt = new Date(result.date);
+        if (isNaN(resultDt)) {
+          console.warn("Invalid result date:", result.date);
+          return false;
+        }
+        let resultDate = resultDt.toISOString().slice(0, 10);
+  
+        return (
+          result.irrigationNbr === 1 &&
+          resultDate >= startDate &&
+          resultDate < endDate
+        );
       });
+  
+      filteredEvents.forEach((resultEvent) => {
+        const resultDate = new Date(resultEvent.date);
+        if (isNaN(resultDate)) return;
+  
+        data.push({
+          title: (
+            <div style={{ fontSize: 11.5 }}>
+              <div>{'Irrigation Dose : ' + parseFloat(resultEvent.irrigation).toFixed(2) + ' mm'}</div>
+              <div>{'Irrigation Time : ' + toHoursAndMinutes(resultEvent.irrigationTime)}</div>
+              <div>{'Rain : ' + parseFloat(resultEvent.rain).toFixed(2) + ' mm'}</div>
+            </div>
+          ),
+          allDay: true,
+          start: resultDate,
+          end: resultDate,
+          source: "resultCalcul",
+        });
+      });
+    });
+  
     setEvents(data);
   }, [allCalcul]);
+  
 
   const calculateLeftPosition = (value) => {
     const minValue = 20;
@@ -1066,7 +1123,7 @@ const Field = () => {
                   </Card.Body>
                 </Card>
               </Col>
-              {recomBasedOnDate()}
+              {recomBasedOnDate()} 
             </div>
           </Row>
           <Row>

@@ -287,7 +287,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                 </thead>
                 <tbody>
                     {
-                        zonesList.map((item, indx) => {
+                        zonesList?.map((item, indx) => {
                             let nameField = "";
                             Fields.map((fieldData) => {
                                 if (fieldData.Id == item.field_id) {

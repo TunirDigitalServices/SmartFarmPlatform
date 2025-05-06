@@ -237,7 +237,7 @@ export default function Sidebar() {
     },
     {
       title: `${t('my_simulations')}`,
-      itemId: "/MSimulations",
+      itemId: "/MSimulations/:idSimulation",
       elemBefore: () => (
         <i class="material-icons" style={{ width: "20px" }}>&#xf071;</i>
       ),
@@ -250,13 +250,7 @@ export default function Sidebar() {
     //     <i class="material-icons" style={{ width: "20px" }}>&#xe429;</i>
     //   )
     // },
-    {
-      title: `${t('calendar')}`,
-      itemId: "/Calendar",
-      elemBefore: () => (
-        <i class="fas fa-calendar-week" style={{ width: "20px" }}></i>
-      )
-    },
+
    
     {
       title: `${t('fields_settings')}`,

@@ -3,18 +3,13 @@ import api from '../../api/api'
 import countryState from '../../data/gistfile.json'
 import {
   Card,
-  CardHeader,
   ListGroup,
   ListGroupItem,
   Row,
   Col,
   Form,
-  FormGroup,
-  FormInput,
-  FormSelect,
-  FormTextarea,
   Button
-} from "shards-react";
+} from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 
@@ -266,9 +261,9 @@ export default function UserAccountDetails() {
 
     
   <Card small className="mb-4">
-    <CardHeader className="border-bottom">
+    <Card.Header className="border-bottom">
       <h6 className="m-0"></h6>
-    </CardHeader>
+    </Card.Header>
     <ListGroup flush>
       <ListGroupItem className="p-3">
       <div className={`mb-0 alert alert-${classMsg} fade ${displayMsg}`}>
@@ -277,11 +272,11 @@ export default function UserAccountDetails() {
         <Row>
           <Col>
             <Form>
-              <Row form>
+              <Row form className="gap-4">
                 {/* First Name */}
-                <Col md="6" className="form-group">
+                <Col md="5" className="form-group">
                   <label htmlFor="feFirstName">{t('name')}</label>
-                  <FormInput
+                  <Form.Control
                     id="feFirstName"
                     placeholder={t('name')}
                     className={errorMsg.nameError =='' ? '' : 'is-invalid'}
@@ -293,7 +288,7 @@ export default function UserAccountDetails() {
                 {/* Email */}
                 <Col md="6" className="form-group">
                   <label htmlFor="feEmail">{t('email')}</label>
-                  <FormInput
+                  <Form.Control
                     type="email"
                     id="feEmail"
                     placeholder={t('email')}
@@ -305,20 +300,20 @@ export default function UserAccountDetails() {
                   <div className="invalid-feedback" >{errorMsg.emailError}</div>
                 </Col>
               </Row>
-              <FormGroup>
+              <Form.Group>
                 <label htmlFor="feAddress">{t('address')}</label>
-                <FormInput
+                <Form.Control
                   id="feAddress"
                   placeholder={t('address')}
                   value={address}
                   onChange={(e) => {setAddress(e.target.value)}}
                 />
-              </FormGroup>
-              <Row form>
+              </Form.Group>
+              <Row form className="gap-2 mt-3">
                 {/* State */}
                 <Col md="4" className="form-group">
                   <label htmlFor="feInputState">{t('state')}</label>
-                  <FormSelect id="feInputState" value={country} onChange={(e) => handleCountry(e.target.value)}>
+                  <Form.Select id="feInputState" value={country} onChange={(e) => handleCountry(e.target.value)}>
                     <option>Choose...</option>
 
                     {
@@ -330,16 +325,17 @@ export default function UserAccountDetails() {
                       })
 
                     }
-                  </FormSelect>
+                  </Form.Select>
                 </Col>
                 {/* City */}
-                <Col md="6" className="form-group">
+                <Col md="5" className="form-group">
                   <label htmlFor="feCity">{t('city')}</label>
-                  <FormSelect
+                  <Form.Select
                     id="feCity"
                     placeholder={t('city')}
                     value={city}
                     onChange={(e) => {setCity(e.target.value)}}
+                    style={{height:"38px"}}
                   >
                     <option>{other}</option>
                     {
@@ -350,14 +346,14 @@ export default function UserAccountDetails() {
                         )
                       })
                     }
-                    </FormSelect>
+                    </Form.Select>
                       <input type="checkbox" name="Autre" id="check" onClick={() => setToggle(!toggle)} /> {t('other')}
 
                         {
                           toggle 
                           ?
 
-                          <FormInput 
+                          <Form.Control 
                           
                           placeholder={t('city')}
                           onChange={(e) => {setCity(e.target.value)}}
@@ -371,11 +367,13 @@ export default function UserAccountDetails() {
                 {/* Zip Code */}
                 <Col md="2" className="form-group">
                   <label htmlFor="feZipCode">{t('zip')}</label>
-                  <FormInput
+                  <Form.Control
                     id="feZipCode"
                     placeholder={t('zip')}
                     value={zip_code}
                     onChange={(e) => {setZipCode(e.target.value)}}
+                    style={{height:"38px"}}
+
                   />
                 </Col>
               </Row>
@@ -383,7 +381,7 @@ export default function UserAccountDetails() {
                 {/* Description */}
                 <Col md="12" className="form-group">
                   <label htmlFor="feDescription">{t('desc')}</label>
-                  <FormTextarea id="feDescription" rows="5" onChange={(e) => {setDescription(e.target.value)}} value={description} /> 
+                  <Form.Control as="textarea" id="feDescription" rows="5" onChange={(e) => {setDescription(e.target.value)}} value={description} /> 
                 </Col>
               </Row>
               <Button theme="accent" onClick={handleSubmit}>{t('update_btn')}</Button>
@@ -394,10 +392,10 @@ export default function UserAccountDetails() {
         <Row form className="p-1">
           <Form>
                     <h5 className="pb-3 pt-3">{t('pass_change')}</h5>      
-            <Row form>    
+            <Row form className="gap-2">    
                     <Col md="4" className="form-group">
                      <label htmlFor="feCurrentPassword">{t('current_pass')}</label>
-                      <FormInput
+                      <Form.Control
                         type="password"
                         id="feCurrentPassword"
                         placeholder={t('current_pass')}
@@ -408,9 +406,9 @@ export default function UserAccountDetails() {
                       />
                         <div className="invalid-feedback">{currentMdpError}</div>
                     </Col>
-                    <Col md="4" className="form-group">
+                    <Col md="3" className="form-group">
                       <label htmlFor="feNewPassword">{t('new_pass')}</label>
-                      <FormInput
+                      <Form.Control
                         type="password"
                         id="feNewPassword"
                         placeholder={t('new_pass')}
@@ -424,7 +422,7 @@ export default function UserAccountDetails() {
                     </Col>
                     <Col md="4" className="form-group">
                       <label htmlFor="feConfNewPass">{t('conf_pass')} </label>
-                      <FormInput
+                      <Form.Control
                         type="password"
                         id="feConfNewPass"
                         placeholder={t('conf_pass')}

@@ -49,7 +49,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
         const adjustedValue = Math.max(minValue, Math.min(maxValue, parseFloat(value)));
         return `calc(${adjustedValue}% - 6px)`;
     };
-    
+
 
     const returnBL = (charge) => {
         if ((Number(charge) >= 90)) {
@@ -67,7 +67,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
     return (
         <Container >
 
-            <Row>
+            <Row className='gap-3 justify-content-center'>
                 {
                     filteredFields.map(field => {
                         let cropT = ''
@@ -79,7 +79,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                         let msg = ""
                         if (field.sensors == 0) msg = "Please use the app to install/register a sensor."
                         return (
-                            <Col lg="4" md="6" sm="6">
+                            <Col lg="3" md="6" sm="6">
                                 <div className="sensor w-100">
                                     <div className="sensorHeader">
                                         <div className="sensorNameWrapper">
@@ -172,118 +172,118 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                                                 <div>{t('Full')}</div>
                                                             </div>
                                                         </section> */}
-                                                         <div className="pt-2">
-                            <div className="ProgressBarWrapper">
-                              <div className="stats-dates">
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
-                                <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(mv1) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="11"
-                                    height="13"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
-                                  >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </div>
-                                <div
-                                  style={{
-                                    opacity: "0.2",
-                                    width: "80%",
-                                    height: "20px",
-                                    position:"relative",
-                                    margin: "0px 0px 0px 10px",
-                                    backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
-                                  }}
-                                ></div>
-                              </div>
-                              <div className="stats-dates " style={{ margin: "-5px 0px" }}>
-                                <span style={{ fontSize: 14}}>{t('niveau')} 2</span>
-                                <div className="Marker" style={{ left: calculateLeftPosition(mv2) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="14"
-                                    height="17"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
-                                  >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </div>
-                                <div
-                                  style={{
-                                    margin: "0px 0px 0px 10px",
-                                    width: "80%",
-                                    height: "20px",
-                                    backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
-                                  }}
-                                ></div>
-                              </div>
-                              <div className="stats-dates">
-                                <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
-                                <div className="Marker-yesterday" style={{ left: calculateLeftPosition(mv3) }}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="11"
-                                    height="13"
-                                    viewBox="0 0 14 17"
-                                    className="drop-element ng-star-inserted"
-                                  >
-                                    <g fill="none">
-                                      <path
-                                        d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
-                                        fill="#FE3C65"
-                                        className="drop"
-                                        style={{ fill: "rgb(16, 201, 160)" }}
-                                      ></path>
-                                      <path
-                                        d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
-                                        stroke="#FFF"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </div>
-                                <div
-                                  style={{
-                                    opacity: "0.2",
-                                    margin: "0px 0px 0px 10px",
-                                    width: "80%",
-                                    height: "20px",
-                                    backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
-                                  }}
-                                ></div>
-                              </div>
-                              <div className="status">
-                                <div>{t('Critical')}</div>
-                                <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
-                                <div>{t('Full')}</div>
-                              </div>
-                            </div>
-                          </div>
-                                                    
+                                                        <div className="pt-2">
+                                                            <div className="ProgressBarWrapper">
+                                                                <div className="stats-dates">
+                                                                    <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
+                                                                    <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(mv1) }}>
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="11"
+                                                                            height="13"
+                                                                            viewBox="0 0 14 17"
+                                                                            className="drop-element ng-star-inserted"
+                                                                        >
+                                                                            <g fill="none">
+                                                                                <path
+                                                                                    d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                                                                    fill="#FE3C65"
+                                                                                    className="drop"
+                                                                                    style={{ fill: "rgb(16, 201, 160)" }}
+                                                                                ></path>
+                                                                                <path
+                                                                                    d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                                                                    stroke="#FFF"
+                                                                                ></path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <div
+                                                                        style={{
+                                                                            opacity: "0.2",
+                                                                            width: "80%",
+                                                                            height: "20px",
+                                                                            position: "relative",
+                                                                            margin: "0px 0px 0px 10px",
+                                                                            backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                                                        }}
+                                                                    ></div>
+                                                                </div>
+                                                                <div className="stats-dates " style={{ margin: "-5px 0px" }}>
+                                                                    <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
+                                                                    <div className="Marker" style={{ left: calculateLeftPosition(mv2) }}>
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="14"
+                                                                            height="17"
+                                                                            viewBox="0 0 14 17"
+                                                                            className="drop-element ng-star-inserted"
+                                                                        >
+                                                                            <g fill="none">
+                                                                                <path
+                                                                                    d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                                                                    fill="#FE3C65"
+                                                                                    className="drop"
+                                                                                    style={{ fill: "rgb(16, 201, 160)" }}
+                                                                                ></path>
+                                                                                <path
+                                                                                    d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                                                                    stroke="#FFF"
+                                                                                ></path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <div
+                                                                        style={{
+                                                                            margin: "0px 0px 0px 10px",
+                                                                            width: "80%",
+                                                                            height: "20px",
+                                                                            backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                                                        }}
+                                                                    ></div>
+                                                                </div>
+                                                                <div className="stats-dates">
+                                                                    <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
+                                                                    <div className="Marker-yesterday" style={{ left: calculateLeftPosition(mv3) }}>
+                                                                        <svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="11"
+                                                                            height="13"
+                                                                            viewBox="0 0 14 17"
+                                                                            className="drop-element ng-star-inserted"
+                                                                        >
+                                                                            <g fill="none">
+                                                                                <path
+                                                                                    d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                                                                                    fill="#FE3C65"
+                                                                                    className="drop"
+                                                                                    style={{ fill: "rgb(16, 201, 160)" }}
+                                                                                ></path>
+                                                                                <path
+                                                                                    d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                                                                                    stroke="#FFF"
+                                                                                ></path>
+                                                                            </g>
+                                                                        </svg>
+                                                                    </div>
+                                                                    <div
+                                                                        style={{
+                                                                            opacity: "0.2",
+                                                                            margin: "0px 0px 0px 10px",
+                                                                            width: "80%",
+                                                                            height: "20px",
+                                                                            backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                                                                        }}
+                                                                    ></div>
+                                                                </div>
+                                                                <div className="status">
+                                                                    <div>{t('Critical')}</div>
+                                                                    <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
+                                                                    <div>{t('Full')}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
 
                                                         <div className="sensorFooter">
                                                             <p>{t('last_reading')} :</p>

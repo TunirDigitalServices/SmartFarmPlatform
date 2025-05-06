@@ -1,13 +1,18 @@
 import Dashboard from '../components/Simulation/Dashboard';
+import BilanHydrique from '../components/Simulation/BilanHydrique';
 import Fields from '../views/Field';
 import Sensors from '../views/Sensors'
 import SatelliteImages from '../pages/sateliteImages/SateliteImages';
-import Simulations from '../pages/mysimulations/Mysimulations';
+import MySimulations from '../components/Simulation/MySimulations'
+
 import Calendar from '../views/Calendar';
+import AllNotifications from '../views/AllNotifications';
 import Weather from '../views/Weather';
 import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import EditSensorByAdmin from '../views/EditSensorByAdmin';
 import Overview from '../views/Overview';
+import Reports from '../views/Reports';
+import UserProfileLite from '../views/UserProfileLite';
 import AddField from '../views/AddField';
 import AdminBoard from '../admin/AdminBoard';
 import SensorsManagement from "../admin/SensorsManagement";
@@ -36,13 +41,13 @@ const protectedRoutes = [
     name: 'Dashboard',
     path: '/dashboard',
     element: <Dashboard />,
-    roles: ['ROLE_ADMIN','user','guest'] 
+    roles: ['ROLE_ADMIN',"ROLE_USER",'guest'] 
   },
   {
     name: 'Fields',
     path: '/fields/:id',
     element: <Fields />,
-    roles: ['ROLE_USER','user',"ROLE_ADMIN"] 
+    roles: ['ROLE_USER',"ROLE_USER","ROLE_ADMIN"] 
 
   },
   {
@@ -58,12 +63,12 @@ const protectedRoutes = [
     roles: ['ROLE_ADMIN'] 
 
   },
-  {
-    name: 'My Simulations',
-    path: '/simulations',
-    element: <Simulations />,
-    roles: ['ROLE_ADMIN','user'] 
-  },
+  // {
+  //   name: 'My Simulations',
+  //   path: '/simulations',
+  //   element: <Simulations />,
+  //   roles: ['ROLE_ADMIN',"ROLE_USER"] 
+  // },
   {
     name: 'Calendar',
     path: '/calendar',
@@ -252,8 +257,43 @@ const protectedRoutes = [
   {
     name: 'Add Field',
     path: "/AddField",
-
     element: <AddField />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'BilanHydrique',
+    path : "/Bilan",
+    element: <BilanHydrique />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'UserProfileLite',
+    path: "/user-profile",
+    element: <UserProfileLite />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'Reports',
+    path : "/my-reports",
+    element: <Reports />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'Simulations',
+    path : "/Simulations/:idSimulation",
+
+    element: <MySimulations />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'AllNotifications',
+    path : "/notifications",
+    element: <AllNotifications />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

@@ -14,7 +14,7 @@ import EditableMap from './EditableMap';
 const FieldList = ({ FieldsList, Fields ,Uid}) => {
     const { t, i18n } = useTranslation();
 
-    const [toggle, setToggle] = useState(false);
+    const [toggle, setToggle] = useState(true);
 
     const [data, setData] = useState([]);
 
@@ -239,7 +239,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                 </thead>
                 <tbody>
                     {
-                        FieldsList.map((item, indx) => {
+                        FieldsList?.map((item, indx) => {
                             let nameFarm = "";
                             data.map((farmData) => {
                                 if(farmData.id == item.farm_id){

@@ -1,18 +1,20 @@
 import React, { useState, useEffect} from 'react'
-import { Container, Row, Col, Card, CardHeader, CardBody, Form, FormGroup, Nav, NavItem, NavLink, FormInput, FormSelect, Button } from 'shards-react'
+import { Container, Row, Col, Card,Form, 
+     Nav, NavItem, NavLink, Button } from 'react-bootstrap'
 import PageTitle from "../common/PageTitle";
 import { useTranslation } from "react-i18next";
 import api from '../../api/api';
 import moment from 'moment';
 import WaterChart from './WaterChart';
-import position from '../../images/pin.png'
-import soil from "../../images/soil.png"
-import crop from "../../images/crop.png"
+import position from '../../assets/images/pin.png'
+import soil from "../../assets/images/soil.png"
+import crop from "../../assets/images/crop.png"
 import LoadingSpinner from "../common/LoadingSpinner"
 import swal from 'sweetalert';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+
 const BilanHydrique = () => {
-    const history = useHistory()
+    const navigate=useNavigate()
     const [isLoading,setIsLoading] = useState(false)
     const [toggle, setToggle] = useState(true)
     const [pluie, setPluie] = useState({})
@@ -550,21 +552,21 @@ const BilanHydrique = () => {
             case "name":
                 return (
 
-                    <FormGroup>
+                    <Form.Group>
                         <label htmlFor="name">{t('name')}</label>
-                        <FormInput id="name" placeholder={t('name')} value={dataSimulation.name} className={`form-control form-control-md ${nameError ? "is-invalid" : ""}`}  onChange={(e) => setDataSimulation({...dataSimulation , name : e.target.value})} />
-                    </FormGroup>
+                        <Form.Control id="name" placeholder={t('name')} value={dataSimulation.name} className={`form-control form-control-md ${nameError ? "is-invalid" : ""}`}  onChange={(e) => setDataSimulation({...dataSimulation , name : e.target.value})} />
+                    </Form.Group>
 
                 )
             case "pos":
                 return (
-                    <Row form >
+                    <Row form  className='gap-2'>
 
                         <Col className="py-4" lg="6" md="8" sm="8">
-                            <FormGroup>
+                            <Form.Group>
 
                                 <label htmlFor="country">{t('state')}</label>
-                                <FormSelect id="country" value={InputsData.country || ''} onChange={handleCountryPick}>
+                                <Form.Select id="country" value={InputsData.country || ''} onChange={handleCountryPick}>
 
                                     <option value=''>{t('select_country')}</option>
 
@@ -574,15 +576,15 @@ const BilanHydrique = () => {
                                         ))
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
 
-                            </FormGroup>
+                            </Form.Group>
                         </Col>
-                        <Col className="py-4" lg="6" md="8" sm="8">
-                            <FormGroup>
+                        <Col className="py-4" lg="5" md="8" sm="8">
+                            <Form.Group>
 
                                 <label htmlFor="city">{t('city')}</label>
-                                <FormSelect className={`form-control form-control-md ${cityError ? "is-invalid" : ""}`} value={dataSimulation.cityId || ""} onChange={e => setDataSimulation({ ...dataSimulation, cityId: e.target.value })} id="city">
+                                <Form.Select className={`form-control form-control-md ${cityError ? "is-invalid" : ""}`} value={dataSimulation.cityId || ""} onChange={e => setDataSimulation({ ...dataSimulation, cityId: e.target.value })} id="city" style={{height:"40px"}}>
                                     <option value="">{t('select_city')}</option>
                                     {
                                         InputsData.cities.map(city => {
@@ -592,9 +594,9 @@ const BilanHydrique = () => {
                                         })
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
 
@@ -604,11 +606,11 @@ const BilanHydrique = () => {
                 )
             case "crop":
                 return (
-                    <Row form className="py-2 m-2">
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                    <Row form className="py-2 m-2 gap-2">
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="cropType">{t('crop_type')}</label>
-                                <FormSelect className={`form-control form-control-md ${cropError ? "is-invalid" : ""}`} id="cropType" value={dataSimulation.cropTypeId || ""} onChange={(e) => handleCropPick(e.target.value)}>
+                                <Form.Select className={`form-control form-control-md ${cropError ? "is-invalid" : ""}`} id="cropType" value={dataSimulation.cropTypeId || ""} onChange={(e) => handleCropPick(e.target.value)}>
                                     <option value="">{t('select_crop')}</option>
                                     {
                                         listCrop.map(cropType => (
@@ -617,82 +619,82 @@ const BilanHydrique = () => {
                                         ))
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="cropVariety">{t('crop_variety')}</label>
-                                <FormSelect value={InputsData.variety || ""} onChange={handleVarietyPick} id="cropVariety">
+                                <Form.Select value={InputsData.variety || ""} onChange={handleVarietyPick} id="cropVariety">
                                     <option value="">{t('crop_type')}</option>
                                     {
                                         InputsData.cropVariety.map(variety => (
                                             <option value={variety.id}>{variety.variety}</option>
                                         ))
                                     }
-                                </FormSelect>
-                            </FormGroup>
+                                </Form.Select>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="ruPratique">{t('fraction_pratique')} (%) </label>
-                                <FormInput value={InputsData.ruPratique || ''} onChange={e => setInputsData({ ...InputsData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')} 
+                                <Form.Control value={InputsData.ruPratique || ''} onChange={e => setInputsData({ ...InputsData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')} 
                                 />
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="z">{t('depth')} (m)</label>
-                                <FormInput value={InputsData.Profondeur || ''} onChange={e => setInputsData({ ...InputsData, Profondeur: e.target.value })} id='z' placeholder={t('profondeur')}
+                                <Form.Control value={InputsData.Profondeur || ''} onChange={e => setInputsData({ ...InputsData, Profondeur: e.target.value })} id='z' placeholder={t('profondeur')}
                                 />
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="days">{t('Days')}</label>
 
-                                <FormInput value={InputsData.days || ""} id='days' onChange={e => setInputsData({ ...InputsData, days: e.target.value })} placeholder={t('Days')} />
+                                <Form.Control value={InputsData.days || ""} id='days' onChange={e => setInputsData({ ...InputsData, days: e.target.value })} placeholder={t('Days')} />
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="days">{t('growing_season')}</label>
 
-                                <FormInput type="date" value={InputsData.plantingDate || ""} onChange={e => setInputsData({ ...InputsData, plantingDate: e.target.value })} id='days' />
+                                <Form.Control type="date" value={InputsData.plantingDate || ""} onChange={e => setInputsData({ ...InputsData, plantingDate: e.target.value })} id='days' />
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="ecartInter">{t('ecart_inter')} (m)</label>
-                                <FormInput value={""} onChange={""} id='ecartInter' placeholder={t('ecart_inter')}
+                                <Form.Control value={""} onChange={""} id='ecartInter' placeholder={t('ecart_inter')}
                                 />
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                        <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                        <Form.Group>
                             <label htmlFor="ecartIntra">{t('ecart_intra')} (m) </label>
-                            <FormInput value={""} onChange={""} id='ecartIntra' placeholder={t('ecart_intra')}
+                            <Form.Control value={""} onChange={""} id='ecartIntra' placeholder={t('ecart_intra')}
                             />
-                        </FormGroup>
+                        </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="densité">{t('densité')} (plants/ha)</label>
-                                <FormInput value={""} onChange={""} id='densité' placeholder={t('densité')}
+                                <Form.Control value={""} onChange={""} id='densité' placeholder={t('densité')}
                                 />
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
                     </Row>
@@ -700,11 +702,11 @@ const BilanHydrique = () => {
                 )
             case "soil":
                 return (
-                    <Row form className="py-2 m-2">
+                    <Row form className="py-2 m-2 gap-2">
                         <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                            <Form.Group>
                                 <label htmlFor="soil">{t('soil_type')}</label>
-                                <FormSelect className={`form-control form-control-md ${soilError ? "is-invalid" : ""}`} value={dataSimulation.soilTypeId} id="soil" onChange={(e) => handleSoilPick(e.target.value)}>
+                                <Form.Select className={`form-control form-control-md ${soilError ? "is-invalid" : ""}`} value={dataSimulation.soilTypeId} id="soil" onChange={(e) => handleSoilPick(e.target.value)}>
                                     <option value=''>{t('select_soil')}</option>
                                     {
                                         allSoils.map(soil => {
@@ -714,50 +716,50 @@ const BilanHydrique = () => {
                                             )
                                         })
                                     }
-                                </FormSelect>
+                                </Form.Select>
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                            <Form.Group>
                                 <label htmlFor="effPluie">{t('efficacité_pluie')} (%)</label>
-                                <FormInput value={InputsData.effPluie || ''} onChange={e => setInputsData({ ...InputsData, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')} 
+                                <Form.Control value={InputsData.effPluie || ''} onChange={e => setInputsData({ ...InputsData, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')} 
                                 />
 
-                            </FormGroup>
+                            </Form.Group>
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="ruMax">RU max (mm/m)</label>
-                                <FormInput value={InputsData.RUmax || ''} onChange={e => setInputsData({ ...InputsData, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
+                                <Form.Control value={InputsData.RUmax || ''} onChange={e => setInputsData({ ...InputsData, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
                                 />
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
                     </Row>
                 )
             case "irrig":
                     return (
-                        <Row form className="py-2 m-2">
+                        <Row form className="py-2 m-2 gap-2">
                              <Col lg="6" md="8" sm="8">
-                            <FormGroup>
+                            <Form.Group>
                                 <label htmlFor="surfaceIrrig">{t('surface_irriguée')} (ha)</label>
-                                <FormInput value={InputsData.surfaceIrrig || ''} onChange={e => setInputsData({ ...InputsData, surfaceIrrig: e.target.value })} id="surfaceIrrig" placeholder={t('surface_irriguée')}
+                                <Form.Control value={InputsData.surfaceIrrig || ''} onChange={e => setInputsData({ ...InputsData, surfaceIrrig: e.target.value })} id="surfaceIrrig" placeholder={t('surface_irriguée')}
                                 />
 
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
-                        <Col lg="6" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="5" md="8" sm="8">
+                            <Form.Group>
                                 <label htmlFor="effIrrig">{t('efficience_irrigation')} (%) </label>
-                                <FormInput value={InputsData.effIrrig || ''} onChange={e => setInputsData({ ...InputsData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')} 
+                                <Form.Control value={InputsData.effIrrig || ''} onChange={e => setInputsData({ ...InputsData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')} 
                                 />
 
-                            </FormGroup>
+                            </Form.Group>
 
                         </Col>
 
@@ -766,12 +768,12 @@ const BilanHydrique = () => {
 
             default:
                 return (
-                    <Row form  >
+                    <Row form className='gap-2' >
                         <Col lg="6" md="8" sm="8">
-                            <FormGroup>
+                            <Form.Group>
 
                                 <label htmlFor="country">{t('state')}</label>
-                                <FormSelect id="country" value={InputsData.country || ''} onChange={handleCountryPick}>
+                                <Form.Select id="country" value={InputsData.country || ''} onChange={handleCountryPick}>
 
                                     <option value=''>{t('select_country')}</option>
 
@@ -781,15 +783,15 @@ const BilanHydrique = () => {
                                         ))
                                     }
 
-                                </FormSelect>
+                                </Form.Select>
 
-                            </FormGroup>
+                            </Form.Group>
                         </Col>
-                        <Col lg="6" md="8" sm="8">
-                            <FormGroup>
+                        <Col lg="5" md="8" sm="8">
+                            <Form.Group>
 
                                 <label htmlFor="city">{t('city')}</label>
-                                <FormSelect value={InputsData.city || ""} onChange={e => setInputsData({ ...InputsData, city: e.target.value })} id="city">
+                                <Form.Select value={InputsData.city || ""} onChange={e => setInputsData({ ...InputsData, city: e.target.value })} id="city">
                                     <option value="">{t('select_city')}</option>
                                     {
                                         InputsData.cities.map(city => {
@@ -799,8 +801,8 @@ const BilanHydrique = () => {
                                         })
                                     }
 
-                                </FormSelect>
-                            </FormGroup>
+                                </Form.Select>
+                            </Form.Group>
 
                         </Col>
 
@@ -909,13 +911,13 @@ const BilanHydrique = () => {
             <Row className='text-center my-2'>
                 <Col lg='12' md="12" sm="12">
                     <Card>
-                        <CardHeader className="border-bottom d-flex justify-content-between align-items-center">
+                        <Card.Header className="border-bottom d-flex justify-content-between align-items-center">
                                 <h6 className="m-0">{t('config')}</h6>
                                 <div>
                                     <i className='material-icons'>&#xe88e;</i> <span style={{fontSize :13,textDecoration:"underline"}}>{t('msg_simulation_name')}</span>
                                 </div>
-                        </CardHeader>
-                        <CardBody>
+                        </Card.Header>
+                        <Card.Body>
                             <Row>
                                 <Col lg='4' md="12" sm="12" className="border-right d-flex justify-content-center align-items-center">
                                     <div className="mb-3 mx-auto" style={{ height: "140px" }}>
@@ -965,14 +967,14 @@ const BilanHydrique = () => {
                                 </Col>
 
                             </Row>
-                        </CardBody>
+                        </Card.Body>
                     </Card>
                 </Col>
             </Row>
             <Row>
                 <Col lg='12' md="12" sm="12">
                     <Card>
-                        <CardHeader className="border-bottom">
+                        <Card.Header className="border-bottom">
                             <div
                                 style={{
                                     display: "flex",
@@ -983,58 +985,58 @@ const BilanHydrique = () => {
                             >
                                 <h6 className="m-0">{t('outputs')}</h6>{" "}
                             </div>
-                        </CardHeader>
-                        <CardBody>
-                            <Row>
-                                <Col id="page" lg="4" md="8" sm="8" className="form-group">
+                        </Card.Header>
+                        <Card.Body>
+                            <Row className='gap-2'>
+                                <Col id="page" lg="3" md="8" sm="8" className="form-group ">
                                     <label htmlFor="ruMax">RU max (mm)</label>
-                                    <FormInput id="ruMax" value={RuMax} placeholder="RU max" />
+                                    <Form.Control id="ruMax" value={RuMax} placeholder="RU max" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="2" md="8" sm="8" className="form-group">
                                     <label htmlFor="ruInit">{t('ru_initiale')} (mm)</label>
-                                    <FormInput id='ruInit' value={RuInitial} placeholder="RU initiale" />
+                                    <Form.Control id='ruInit' value={RuInitial} placeholder="RU initiale" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="epuis">{t('epuisement_max')} (mm)</label>
-                                    <FormInput id="epuis" value={Epuisement_maximal} placeholder="Epuisement maximal" />
+                                    <Form.Control id="epuis" value={Epuisement_maximal} placeholder="Epuisement maximal" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="nbrIrrig">{t('nbr_irrigations')}</label>
 
-                                    <FormInput id='nbrIrrig' value={sumNbrIrrig} placeholder="Nombre d'irrigations" />
+                                    <Form.Control id='nbrIrrig' value={sumNbrIrrig} placeholder="Nombre d'irrigations" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="2" md="8" sm="8" className="form-group">
                                     <label htmlFor="hautIrrig">{t('hauteur_irrigations')} (mm)</label>
-                                    <FormInput id='hautIrrig' value={parseFloat(sumIrrig).toFixed(0)} placeholder="Hauteur d'eau des irrigations" />
+                                    <Form.Control id='hautIrrig' value={parseFloat(sumIrrig).toFixed(0)} placeholder="Hauteur d'eau des irrigations" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="vIrrig">{t('volume_irrigations')} (m³ /ha)</label>
-                                    <FormInput value={parseFloat(VolumeIrrigation).toFixed(0)} id="vIrrig" placeholder="Volume des irrigations" />
+                                    <Form.Control value={parseFloat(VolumeIrrigation).toFixed(0)} id="vIrrig" placeholder="Volume des irrigations" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="rumin">Ru Min (mm)</label>
-                                    <FormInput value={RuMin} id="rumin" placeholder="RU min" />
+                                    <Form.Control value={RuMin} id="rumin" placeholder="RU min" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="volTotalIrrig">{t('Volume_total_irrigation')} (m³)</label>
-                                    <FormInput value={parseFloat(VolumeTotalEauIrrigation).toFixed(0)} id="volTotalIrrig" placeholder="Volume Total d'eau d'irrigation" />
+                                    <Form.Control value={parseFloat(VolumeTotalEauIrrigation).toFixed(0)} id="volTotalIrrig" placeholder="Volume Total d'eau d'irrigation" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="pluieTotal">{t('pluie_total')} (mm)</label>
-                                    <FormInput value={parseFloat(sumPluie).toFixed(0)} id="pluieTotal" placeholder="Pluie total" />
+                                    <Form.Control value={parseFloat(sumPluie).toFixed(0)} id="pluieTotal" placeholder="Pluie total" />
                                 </Col>
-                                <Col lg="4" md="8" sm="8" className="form-group">
+                                <Col lg="3" md="8" sm="8" className="form-group">
                                     <label htmlFor="evoTotal">{t('evapotranspiration_totale')} (mm)</label>
-                                    <FormInput value={parseFloat(sumETC).toFixed(0)} id='evoTotal' placeholder="Evapotranspiration totale" />
+                                    <Form.Control value={parseFloat(sumETC).toFixed(0)} id='evoTotal' placeholder="Evapotranspiration totale" />
                                 </Col>
 
-                                <Col lg="4" md="8" sm="8" >
+                                <Col lg="3" md="8" sm="8" >
                                     <label htmlFor="deficit">{t('déficit')} (mm)</label>
-                                    <FormInput value={parseFloat(Deficit).toFixed(0)} id="deficit" placeholder="Déficit" />
+                                    <Form.Control value={parseFloat(Deficit).toFixed(0)} id="deficit" placeholder="Déficit" />
                                 </Col>
                             </Row>
 
-                        </CardBody>
+                        </Card.Body>
                     </Card>
                 </Col>
             </Row>
@@ -1046,7 +1048,7 @@ const BilanHydrique = () => {
                          isLoading
 
                             ?
-                            <CardBody>
+                            <Card.Body>
                                 <p className="py-2 d-flex justify-content-center align-items-center">
                                     <button style={{ fontSize: 30, margin: 8, border: '1px solid #eee', borderRadius: 10, background: 'none' }} onClick={() => setToggle(true)}><i className='material-icons'>&#xe265;</i></button>
                                     <button style={{ fontSize: 30, margin: 8, border: '1px solid #eee', borderRadius: 10, background: 'none' }} onClick={() => setToggle(false)}><i className='material-icons'>&#xe6e1;</i></button>
@@ -1137,7 +1139,7 @@ const BilanHydrique = () => {
                                     <WaterChart data={chartData} />
                                 </Col>
 
-                            </CardBody>
+                            </Card.Body>
                             :
                             null
 
