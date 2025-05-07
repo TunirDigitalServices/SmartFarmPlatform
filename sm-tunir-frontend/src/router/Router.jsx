@@ -58,29 +58,6 @@ function Router() {
   }, []);
   
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem('user');
-
-  //   if (storedUser) {
-
-  //     setUser(JSON.parse(storedUser));
-  //     setIsLoading(false);
-  //   } else {
-
-  //     setTimeout(() => {
-  //       if (fakeAuth.isAuthenticated) {
-  //         const selectedUser = fakeUsers[0]; 
-
-
-  //         setUser(selectedUser);
-  //         localStorage.setItem('user', JSON.stringify(selectedUser)); 
-  //       } else {
-  //         setUser(false);
-  //       }
-  //       setIsLoading(false);
-  //     }, 1500);
-  //   }
-  // }, []);
 
   if (isLoading) {
     return (
@@ -99,13 +76,6 @@ function Router() {
             <Route path="/" element={<App />}>
               <Route
                 index
-                // element={
-                //   user.offre === "1" ? (
-                //     <Navigate to="/dashboard" />
-                //   ) : (
-                //     <Navigate to="/overview" />
-                //   )
-                // }
                 element={user.offre === "1" ? <Dashboard /> : <Overview />}
 
               />

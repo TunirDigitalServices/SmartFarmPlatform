@@ -236,7 +236,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
             return (
                 <Col md="12" className="form-group">
                     <Button
-                        theme="danger"
+                        variant="danger"
                         onClick={evt => {
                             evt.preventDefault();
                             if (window.confirm("delete_depth")) {
@@ -300,9 +300,9 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                                     <td>{item.name}</td>
                                     <td>{nameField}</td>
                                     <td>
-                                        <ButtonGroup size="sm" className="mr-2">
-                                            <Button onClick={() => getSingleZone(item.Uid)} squared theme="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                        <ButtonGroup size="sm" className="mr-2 gap-2">
+                                            <Button onClick={() => getSingleZone(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>
@@ -320,11 +320,11 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-
+gap:"10px"
                         }}
                     >
                         <Button
-                            // theme="success"
+                            // variant="success"
                             className="mb-2 mr-1 btn btn-success"
                             onClick={() => handleEdit(SingleZone.uid)}
                         >
@@ -345,7 +345,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                 </Modal.Header>
                 <Modal.Body>
                     {<Form>
-                        <Row form>
+                        <Row form className='gap-2 '>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('soil_zone')}</p>
                                 <Form.Control
@@ -353,9 +353,10 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                                     required
                                     defaultValue={SingleZone.name}
                                     onChange={(e) => setName(e.target.value)}
+                                    style={{height:"40px"}}
                                 />
                             </Col>
-                            <Col md="6" className="form-group">
+                            <Col md="5" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_field')}</p>
                                 <Form.Select
                                     value={field}
@@ -398,7 +399,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                                 </FormSelect>
 
                             </Col> */}
-                            <Col md="6" className="form-group">
+                            <Col md="5" className="form-group">
                                 <p style={{ margin: "0px" }}>Soil Property</p>
                                 <Form.Select
                                     value={defaultSoilProprety}
@@ -410,7 +411,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                             </Col>
                         </Row>
                     </Form>}
-                    <Row>
+                    <Row className='gap-2'>
                         {soilTypeForm()}
                         <Col lg="4" md="8" sm="8">
                             <Form.Group>

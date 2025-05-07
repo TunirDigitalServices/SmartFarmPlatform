@@ -9,6 +9,7 @@ const EvapoChart = ({data}) => {
     const [state,setState] = useState(null)
     const { t, i18n } = useTranslation();
 
+console.log(data,"data");
 
     const getChartData = () => {
     

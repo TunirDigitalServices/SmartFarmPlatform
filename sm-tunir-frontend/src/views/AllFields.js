@@ -44,8 +44,8 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
         }
     }
     const calculateLeftPosition = (value) => {
-        const minValue = 0;
-        const maxValue = 50;
+        const minValue = 22;
+        const maxValue = 60;
         const adjustedValue = Math.max(minValue, Math.min(maxValue, parseFloat(value)));
         return `calc(${adjustedValue}% - 6px)`;
     };

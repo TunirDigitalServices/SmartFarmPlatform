@@ -1,376 +1,316 @@
-import React, { Component } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Circle,
-  FeatureGroup,
-  Polygon
-} from "react-leaflet";
-import L, { polygon } from "leaflet";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, Tooltip, useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "./Styles.css";
+import useGeoLocation from "../utils/useGeoLocation";
 import { EditControl } from "react-leaflet-draw";
+import api from "../api/api";
+import L from 'leaflet';
+import MarkerObject from "./MarkerMap"
+import { useRef } from "react";
+import LeafletGeoCoder from "./LeafletGeoCoder";
+import icon from "../assets/images/icons/icon.png"
+import sensor from "../assets/images/icons/sensor.png"
 
-// work around broken icons when using webpack, see https://github.com/PaulLeCam/react-leaflet/issues/255
+const zoomDefault = 14;
+let centerDefault = [36.806389, 10.181667];
+const myIcon = new L.Icon({
+  iconUrl: icon,
+  iconSize: [40, 45],
+  iconAnchor: [17, 45],
+  popupAnchor: [3, -46]
+})
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-icon.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png"
-});
+const Iconsensor = new L.Icon({
+  iconUrl:sensor,
+  iconSize: [40, 42],
+  iconAnchor: [17, 45],
+  popupAnchor: [3, -46]
+})
 
-let polyline;
+let currentPage = window.location.pathname
 
-export default class Map extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      drawPolicy: {
-        polygon: true,
-        circle: true,
-        rectangle: true,
-        polyline: true,
-        marker: false,
-        circlemarker: false
-      },
-      leaflet: null,
-      editPolicy: {
-        delete: true,
-        edit: true
+const  SetViewOnClick = ({ center , zoom }) => {
+  const map = useMap();
+  map.setView(center, zoom);
+
+  return null;
+}
+
+const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farms,fields, zoom, center, fromAction,uid}) => {
+  const mapRef = useRef(null);
+  const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
+  const [zoomLevel, setZoomLevel] = useState(10);
+  const getCenterFromSensors = () => {
+    if (sensor && sensor.length > 0) {
+      const firstSensor = sensor[0];
+      if(firstSensor.Latitude && firstSensor.Longitude){
+        return [Number(firstSensor.Latitude), Number(firstSensor.Longitude)];
+
+      }
+    }
+    return null;
+  };
+  useEffect(() => {
+    const updateMapCenter = async () => {
+      const centerFromSensors = getCenterFromSensors();
+      if (centerFromSensors) {
+        setMapCenter(centerFromSensors);
+        setZoomLevel(16.5)
+        mapRef.current.setView(centerFromSensors, zoomLevel);
       }
     };
-  }
-  _onEdited = e => {
-    let numEdited = 0;
-    e.layers.eachLayer(layer => {
-      numEdited += 1;
-    });
-    console.log(`_onEdited: edited ${numEdited} layers`, e);
-    console.log(e.layers._layers[0]);
+  
+    updateMapCenter();
+  }, [sensor, mapRef, zoomLevel]);
+  const location = useGeoLocation();
 
-    this._onChange();
-  };
-
-  _onCreated = e => {
-    let type = e.layerType;
-    let layer = e.layer;
-    if (type === "marker") {
-      // Do marker specific actions
-      console.log("_onCreated: marker created", e);
-    } else {
-      console.log("_onCreated: something else created:", type, e);
-      console.log(e.layer._latlngs[0]);
-    }
-    // Do whatever else you need to. (save to db; etc)
-
-    this._onChange();
-  };
-
-  _onDeleted = e => {
-    let numDeleted = 0;
-    e.layers.eachLayer(layer => {
-      numDeleted += 1;
-    });
-    console.log(`onDeleted: removed ${numDeleted} layers`, e);
-
-    this._onChange();
-  };
-
-  _onMounted = drawControl => {
-    console.log("_onMounted", drawControl);
-  };
-
-  _onEditStart = e => {
-    console.log("_onEditStart", e);
-  };
-
-  _onEditStop = e => {
-    console.log("_onEditStop", e);
-  };
-
-  _onDeleteStart = e => {
-    console.log("_onDeleteStart", e);
-  };
-
-  _onDeleteStop = e => {
-    console.log("_onDeleteStop", e);
-  };
-
-  _onDrawVertex = e => {
-    console.log("vertex drawn", e);
-    var leafletId = e.layers._leaflet_id;
-    console.log(leafletId);
-    console.log(e.layers._layers[2]);
-  };
-
-  componentDidMount() {
-    const fetchData = async () => {
-      const response = await fetch(`http://127.0.0.1:9000/getShape`);
-      const newData = await response.json();
-
-      f.push(
-        {
-          type: "Feature",
-          properties: {},
-          geometry: {
-            type: "Polygon",
-            coordinates: newData.coordinates
+  const returnedMap = (L) => {
+    switch (currentPage) {
+      case '/AddSensor':
+        return farms.map((item, indx) => {
+          let coordinates = []
+          let coord = JSON.parse(item.coordinates)
+          if (coord) {
+            coord.map(co => {
+              coordinates.push(Object.values(co))
+            })
           }
-        },
-        {
-          type: "Feature",
-          properties: {},
-          geometry: {
-            type: "Point",
-            coordinates: [130, 50]
+        if(coord){
+          return <>
+          <Polygon key={indx} positions={coordinates}> </Polygon>
+          {
+          data.map((item, indx) => {
+                if (item.Latitude && item.Longitude) {
+                  return  <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
+      
+      
+      
+                }
+              })
+
           }
+          </>
+
         }
-      );
-      let leafletGeoJSON = new L.GeoJSON(getGeoJson());
-      let leafletFG = this.state.leaflet;
 
-      leafletGeoJSON.eachLayer(layer => {
-        leafletFG.addLayer(layer);
-      });
-    };
+        })
+      case '/':
+        return data.map((item, indx) => {
+          let coordinates = []
+          let fields = item.fields;
+          let sensorsCoord = []
+          fields.map(field => {
+            let coord = JSON.parse(field.coordinates)
+            if (coord) {
+              coord.map(co => {
+                coordinates.push(Object.values(co))
+              })
+            }
+            let sensors = field.sensors;
+              if(sensors){
 
-    //fetchData();
+                sensors.map(sensor => {
+                  if(sensor.Latitude && sensor.Longitude){
+                    sensorsCoord.push({
+                      code: sensor.code,
+                      Latitude: sensor.Latitude,
+                      Longitude: sensor.Longitude
+                    })
 
-    if (this.props.type == "edit") {
-      this.setState({
-        ...this.state,
-        drawPolicy: {
-          polygon: true,
-          circle: false,
-          rectangle: false,
-          polyline: true,
-          marker: false,
-          circlemarker: false
+                  }
+                })
+              }
+          })
+            return (
+                <>
+                 <Polygon color="#28A6B7" key={indx} positions={coordinates}>
+                    {/* <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject> */}
+              </Polygon> 
+                   {/* <Polygon key={indx} positions={coordinates}> */}
+              
+                    {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
+                      <Popup>{item.name}</Popup>
+                    </Marker> */}
+                  {/* </Polygon>  */}
+                  {
+
+                sensor && sensor.map((sensors, indx) => {
+                       if(sensors.Latitude && sensors.Longitude){
+
+                         return(
+                                 <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                            <Popup >{sensors.code}</Popup>
+                          </Marker>
+                          )
+                       }
+                      // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
+  
+
+                      
+                    }
+  
+                    )
+                    
+                  }
+                </>
+              )
+
+          
+
+        })
+        case '/Dashboard-supplier':
+           
+              return (
+                  <>
+                    {/* <Polygon key={indx} positions={coordinates}>
+                
+                      <Marker key={indx} position={[item.Latitude, item.Longitude]}>
+                        <Popup>{item.name}</Popup>
+                      </Marker>
+                    </Polygon> */}
+                    {
+  
+                      sensor.map((sensors, indx) => {
+                         return <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
+    
+                        //<Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                        //   <Popup>{sensors.code}</Popup>
+                        // </Marker>
+  
+                        
+                      }
+    
+                      )
+                      
+                    }
+                  </>
+                )
+
+  
+      case `/admin/user/${uid}/farms` : 
+          return data.map((item, indx) => {
+            let coordinates = []
+            let coord = JSON.parse(item.coordinates)
+            if (coord) {
+              coord.map(co => {
+                coordinates.push(Object.values(co))
+              })
+            }
+            if (coord) {
+              return <Polygon key={indx} positions={coordinates}>
+                      <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject>
+                </Polygon>
+            } else {
+              return <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id} zoom={zoom} center={center} fromAction={fromAction}></MarkerObject>
+            }
+  
+  
+          })
+      case `/admin/user/${uid}/fields` :     
+      return data.map((item, indx) => {
+        let coordinates = []
+        let coord = JSON.parse(item.coordinates)
+        if (coord) {
+          coord.map(co => {
+            coordinates.push(Object.values(co))
+          })
         }
-      });
-    }
+      if(coord){
+        return (
+            <>
+            <Polygon key={indx} positions={coordinates}> </Polygon>
+          
+            {
+              fields && fields.map((item,indx)=>{
+                if(item.Latitude){
+                  return(
 
-    if (this.props.draw == false) {
-      this.setState({
-        ...this.state,
-        drawPolicy: {
-          polygon: false,
-          circle: false,
-          rectangle: false,
-          polyline: false,
-          marker: false,
-          circlemarker: false
-        }
-      });
-    }
+                    <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.title} id={item.id}></MarkerObject>
 
-    if (this.props.edit == false) {
-      this.setState({
-        ...this.state,
-        editPolicy: {
-          remove: false,
-          edit: false
+                  )
+
+                }
+              })
+            }
+            </>
+
+        )
+      }
+
+      })
+      case `/admin/user/${uid}/sensors` :     
+      return farms && farms.map((item, indx) => {
+        let coordinates = []
+        let coord = JSON.parse(item.coordinates)
+        if (coord) {
+          coord.map(co => {
+            coordinates.push(Object.values(co))
+          })
         }
-      });
+      if(coord){
+        return <>
+        <Polygon key={indx} positions={coordinates}> </Polygon>
+        {
+        data.map((item, indx) => {
+              if (item.Latitude && item.Longitude) {
+                return  <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
+    
+    
+    
+              }
+            })
+
+        }
+        </>
+
+      }
+
+      })
     }
   }
 
-  render() {
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: 300,
-          overflow: "hidden"
+  let userSensorCenter = getCenterFromSensors()
+
+  return (
+    <div>
+      <MapContainer
+      style={{borderRadius :20,boxShadow : '1px 1px 10px #bbb',height:300}}
+        className="markercluster-map"
+        zoom={zoomLevel}
+        center={mapCenter}
+        maxZoom={18}
+        whenCreated={(map) => {
+          mapRef.current = map; // Assign the map instance to mapRef.current
         }}
       >
-        <MapContainer
-          center={[37.8189, -122.4786]}
-          zoom={13}
-          zoomControl={true}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-          />
-          <FeatureGroup
-            ref={reactFGref => {
-              this._onFeatureGroupReady(reactFGref);
-            }}
-          >
-            <EditControl
-              position="topleft"
-              //onEdited={this._onEdited}
-              onEdited={e => {
-                e.layers.eachLayer(a => {
-                  console.log(a.toGeoJSON());
-                });
-              }}
-              onCreated={this._onCreated}
-              onDeleted={this._onDeleted}
-              onMounted={this._onMounted}
-              //onEditStart={this._onEditStart}
-              onEditStop={this._onEditStop}
-              onDeleteStart={this._onDeleteStart}
-              onDeleteStop={this._onDeleteStop}
-              onDrawVertex={this._onDrawVertex}
-              draw={this.state.drawPolicy}
-              edit={this.state.editPolicy}
-            />
-          </FeatureGroup>
-        </MapContainer>
-      </div>
-    );
-  }
+        <FeatureGroup>
+          <EditControl draw={draw} edit={edit} position="topright" onCreated={_onCreated} onEdited={_onEdited} />
+        </FeatureGroup>
+        <TileLayer
+        
+        url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
+        subdomains={['mt0','mt1','mt2','mt3']}
+          
+        />
+        <LeafletGeoCoder />
+        {location.loaded && !location.error && (
+          <Marker icon={myIcon} position={[location.coordinates.lat, location.coordinates.lng]}>
+            <Popup>My position</Popup>
+          </Marker>
+        )}
+        {
+          fromAction
+          ?
+          <SetViewOnClick center={center.length !== 0 ? center : centerDefault} zoom={zoom === "" ? zoomDefault : zoom} />
+          :
+          null
+        }
 
-  _editableFG = null;
-
-  _onFeatureGroupReady = reactFGref => {
-    // populate the leaflet FeatureGroup with the geoJson layers
-
-    let leafletGeoJSON = new L.GeoJSON(getGeoJson());
-    let leafletFG = reactFGref;
-    this.state.leaflet = reactFGref;
-
-    leafletGeoJSON.eachLayer(layer => {
-      //leafletFG.addLayer(layer);
-    });
-
-    //map.eachLayer(function (layer) {
-    // map.removeLayer(layer);
-    //})
-
-    // store the ref for future access to content
-
-    this._editableFG = reactFGref;
-  };
-
-  _onChange = () => {
-    // this._editableFG contains the edited geometry, which can be manipulated through the leaflet API
-
-    const { onChange } = this.props;
-
-    if (!this._editableFG || !onChange) {
-      return;
-    }
-
-    const geojsonData = this._editableFG.toGeoJSON();
-    onChange(geojsonData);
-    console.log(geojsonData);
-  };
+        {returnedMap(L)}
+      </MapContainer>
+    </div>
+  );
 }
 
-// data taken from the example in https://github.com/PaulLeCam/react-leaflet/issues/176
-
-var f = [
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "LineString",
-      coordinates: [
-        [-122.47979164123535, 37.830124319877235],
-        [-122.47721672058105, 37.809377088502615]
-      ]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Point",
-      coordinates: [-122.46923446655273, 37.80293476836673]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Point",
-      coordinates: [-122.48399734497069, 37.83466623607849]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Point",
-      coordinates: [-122.47867584228514, 37.81893781173967]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [-122.48069286346434, 37.800637436707525],
-          [-122.48069286346434, 37.803104310307276],
-          [-122.47950196266174, 37.803104310307276],
-          [-122.47950196266174, 37.800637436707525],
-          [-122.48069286346434, 37.800637436707525]
-        ]
-      ]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [-122.48103886842728, 37.833075326166274],
-          [-122.48065531253813, 37.832558431940114],
-          [-122.4799284338951, 37.8322660885204],
-          [-122.47963070869446, 37.83231693093747],
-          [-122.47948586940764, 37.832467339549524],
-          [-122.47945636510849, 37.83273426112019],
-          [-122.47959315776825, 37.83289737938241],
-          [-122.48004108667372, 37.833109220743104],
-          [-122.48058557510376, 37.83328293020496],
-          [-122.48080283403395, 37.83332529830436],
-          [-122.48091548681259, 37.83322785163939],
-          [-122.48103886842728, 37.833075326166274]
-        ]
-      ]
-    }
-  },
-  {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [-122.48043537139893, 37.82564992009924],
-          [-122.48129367828368, 37.82629397920697],
-          [-122.48240947723389, 37.82544653184479],
-          [-122.48373985290527, 37.82632787689904],
-          [-122.48425483703613, 37.82680244295304],
-          [-122.48605728149415, 37.82639567223645],
-          [-122.4898338317871, 37.82663295542695],
-          [-122.4930953979492, 37.82415839321614],
-          [-122.49700069427489, 37.821887146654376],
-          [-122.4991464614868, 37.82171764783966],
-          [-122.49850273132326, 37.81798857543524],
-          [-122.50923156738281, 37.82090404811055],
-          [-122.51232147216798, 37.823344820392535],
-          [-122.50150680541992, 37.8271414168374],
-          [-122.48743057250977, 37.83093781796035],
-          [-122.48313903808594, 37.82822612280363],
-          [-122.48043537139893, 37.82564992009924]
-        ]
-      ]
-    }
-  }
-];
-function getGeoJson() {
-  return {
-    type: "FeatureCollection",
-    features: f
-  };
-}
+export default LeafletMap;

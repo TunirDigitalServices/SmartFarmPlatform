@@ -14,7 +14,7 @@ import EditableMap from './EditableMap';
 const FieldList = ({ FieldsList, Fields ,Uid}) => {
     const { t, i18n } = useTranslation();
 
-    const [toggle, setToggle] = useState(true);
+    const [toggle, setToggle] = useState(false);
 
     const [data, setData] = useState([]);
 
@@ -253,9 +253,9 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                                     <td>{item.status}</td>
                                     <td>{nameFarm}</td>
                                     <td>
-                                        <ButtonGroup size="sm" className="mr-2">
-                                            <Button onClick={() => getSingleField(item.Uid)} squared theme="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                        <ButtonGroup size="sm" className="mr-2 gap-2">
+                                            <Button onClick={() => getSingleField(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>
@@ -275,7 +275,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-
+                             gap:"10px"
                         }}
                     >
                         <Button
@@ -303,7 +303,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
 
 
                     <Form>
-                        <Row form>
+                        <Row form className='gap-2 justify-content-between'>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_farm')}</p>
                                 <Form.Select
@@ -321,11 +321,12 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                                    
                                 </Form.Select>
                             </Col>
-                            <Col md="6" className="form-group">
+                            <Col md="5" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_field')}</p>
                                 <Form.Control
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    style={{height:"40px"}}
                                 />
 
                                 <div className="invalid-feedback">{t('no_empty')}</div>

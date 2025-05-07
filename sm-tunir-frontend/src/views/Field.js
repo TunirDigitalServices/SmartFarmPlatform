@@ -1297,7 +1297,7 @@ const Field = () => {
         <Col lg="12" md="12" sm="12">
           <Card>
             <Card.Body>
-              <Calendar
+            <Calendar
                 key={events.length}
                 localizer={localizer}
                 events={events}

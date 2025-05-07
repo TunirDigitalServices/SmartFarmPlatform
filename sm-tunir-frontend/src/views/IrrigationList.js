@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import PivotForm from '../components/FieldSettingForms/pivotForm';
 import LateralForm from '../components/FieldSettingForms/lateralForm';
 import DripForm from '../components/FieldSettingForms/dripForm';
-import {Modal} from "react-bootstrap"
+import { Modal } from "react-bootstrap"
 
 const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
 
@@ -29,12 +29,12 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
     const [crop, setCrop] = useState('');
     const [zone, setZone] = useState('');
     const [drippers, setDrippers] = useState('');
-    const [drippersSpacing,setDrippersSpacing] = useState('')
-    const [IrrigationData,setIrrigationData] = useState({
-        effIrrig : "",
-        pumpFlow : "",
-        pumpType : "",
-        linesNumber :""
+    const [drippersSpacing, setDrippersSpacing] = useState('')
+    const [IrrigationData, setIrrigationData] = useState({
+        effIrrig: "",
+        pumpFlow: "",
+        pumpType: "",
+        linesNumber: ""
     })
 
     const [msgServer, setMsg] = useState("")
@@ -49,14 +49,14 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
 
 
 
-    const getSingleIrrig =  (irrigationUid) => {
+    const getSingleIrrig = (irrigationUid) => {
 
 
         let data = {
             irrigation_uid: irrigationUid,
         }
 
-     api.post('/irrigation', data)
+        api.post('/irrigation', data)
             .then(res => {
                 let IrrigationData = res.data.irrigation
                 setSingleIrrigation(IrrigationData)
@@ -70,10 +70,10 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                 setIrrigAlready(IrrigationData.irrigated_already)
                 setIrrigSyst(IrrigationData.irrigation_syst)
                 setDrippers(IrrigationData.drippers)
-                setIrrigationData({effIrrig : IrrigationData.effIrrig})
-                setIrrigationData({pumpFlow : IrrigationData.pumpFlow})
-                setIrrigationData({pumpType : IrrigationData.pumpType})
-                setIrrigationData({linesNumber : IrrigationData.lines_number})
+                setIrrigationData({ effIrrig: IrrigationData.effIrrig })
+                setIrrigationData({ pumpFlow: IrrigationData.pumpFlow })
+                setIrrigationData({ pumpType: IrrigationData.pumpType })
+                setIrrigationData({ linesNumber: IrrigationData.lines_number })
                 setDrippersSpacing(IrrigationData.drippers_spacing)
 
                 Crops.map((cropData) => {
@@ -106,7 +106,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
         let data = {
             type: type,
             crop_uid: crop,
-            zone_uid :zone,
+            zone_uid: zone,
             irrigation_uid: irrigationUid,
             flowrate: flowrate,
             irrigated_already: irrigatedAlready,
@@ -117,12 +117,12 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
             pivot_coord: pivotCoord,
             full_runtime: fullRuntime,
             lateral: lateral,
-            drippers:drippers,
-            pumpFlow : IrrigationData.pumpFlow,
-            effIrrig : IrrigationData.effIrrig,
-            drippers_spacing : drippersSpacing,
-            pumpType :IrrigationData.pumpType,
-            lines_number :IrrigationData.lines_number
+            drippers: drippers,
+            pumpFlow: IrrigationData.pumpFlow,
+            effIrrig: IrrigationData.effIrrig,
+            drippers_spacing: drippersSpacing,
+            pumpType: IrrigationData.pumpType,
+            lines_number: IrrigationData.lines_number
         }
 
 
@@ -312,14 +312,14 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                             })
                             return (
                                 <tr>
-                                    <td style={{textTransform:'capitalize'}}>{item.type}</td>
+                                    <td style={{ textTransform: 'capitalize' }}>{item.type}</td>
                                     {/* <td>{item.pivotShape}</td> */}
                                     <td>{nameCrop}</td>
                                     <td>{nameZone}</td>
                                     <td>
-                                        <ButtonGroup size="sm" className="mr-2">
-                                            <Button onClick={() => getSingleIrrig(item.Uid)} squared theme="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                        <ButtonGroup size="sm" className="mr-2 gap-2">
+                                            <Button onClick={() => getSingleIrrig(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
                                         </ButtonGroup>
                                     </td>
 
@@ -336,7 +336,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-
+                            gap: "10px"
                         }}
                     >
                         <Button
@@ -360,8 +360,8 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Row form>
-                            <Col md="6" className="form-group">
+                        <Row form className='gap-2 justify-content-between'>
+                            <Col md="4" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('Irrigation_system_type')}</p>
                                 <Form.Select
                                     value={type}
@@ -378,7 +378,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                                 </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
-                            <Col md="6" className="form-group">
+                            <Col md="4" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('crop_type')}</p>
                                 <Form.Select
                                     value={crop}
@@ -393,7 +393,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                                 </Form.Select>
                                 <div className="invalid-feedback">{t('no_empty')}</div>
                             </Col>
-                            <Col md="6" className="form-group">
+                            <Col md="3" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_zone')}</p>
                                 <Form.Select
                                     value={zone}
@@ -410,43 +410,43 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                             </Col>
                         </Row>
                     </Form>
-                    <Row form>
-                                <Col lg="4" md="12" sm="12">
-                        <Form.Group>
-                            <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) </p>
-                            <Form.Control type="number" value={IrrigationData.effIrrig} onChange={ e => setIrrigationData({effIrrig : e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
-                            />
-
-                        </Form.Group>
-
-                        </Col>
-                       <Col lg="4" md="8" sm="8">
-                        <Form.Group>
-                            <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
-                            <Form.Control value={IrrigationData.pumpType} onChange={ e => setIrrigationData({pumpType : e.target.value })} id='debitReseau' placeholder={t('type_reseau')}
-                            />
-
-                        </Form.Group>
-
-                        </Col>
-                            <Col lg="4" md="12" sm="12">
+                    <Row form className='gap-2 justify-content-between'>
+                        <Col lg="4" md="12" sm="12">
                             <Form.Group>
-                                <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
-                                <Form.Control type="number" value={IrrigationData.pumpFlow} onChange={e => setIrrigationData({pumpFlow : e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
+                                <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) </p>
+                                <Form.Control type="number" value={IrrigationData.effIrrig} onChange={e => setIrrigationData({ effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
                                 />
 
                             </Form.Group>
 
-                            </Col>
-                            <Col lg="4" md="8" sm="8">
-                                <Form.Group>
-                                <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
-                                <Form.Control type='number' value={IrrigationData.linesNumber} onChange={e => setIrrigationData({linesNumber :e.target.value})} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                        </Col>
+                        <Col lg="4" md="8" sm="8">
+                            <Form.Group>
+                                <p style={{ margin: "0px" }}>{t('type_reseau')}</p>
+                                <Form.Control value={IrrigationData.pumpType} onChange={e => setIrrigationData({ pumpType: e.target.value })} id='debitReseau' placeholder={t('type_reseau')}
                                 />
 
-                                </Form.Group>
+                            </Form.Group>
 
-                            </Col>
+                        </Col>
+                        <Col lg="3" md="12" sm="12">
+                            <Form.Group>
+                                <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
+                                <Form.Control type="number" value={IrrigationData.pumpFlow} onChange={e => setIrrigationData({ pumpFlow: e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
+                                />
+
+                            </Form.Group>
+
+                        </Col>
+                        <Col lg="4" md="8" sm="8">
+                            <Form.Group>
+                                <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
+                                <Form.Control type='number' value={IrrigationData.linesNumber} onChange={e => setIrrigationData({ linesNumber: e.target.value })} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                                />
+
+                            </Form.Group>
+
+                        </Col>
                         {irrigationMethodForm()}
 
                     </Row>

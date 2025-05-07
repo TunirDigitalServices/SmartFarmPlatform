@@ -2,14 +2,14 @@ import Dashboard from '../components/Simulation/Dashboard';
 import BilanHydrique from '../components/Simulation/BilanHydrique';
 import Fields from '../views/Field';
 import Sensors from '../views/Sensors'
-import SatelliteImages from '../pages/sateliteImages/SateliteImages';
+import SatelliteImages from '../views/SatelliteImages'
 import MySimulations from '../components/Simulation/MySimulations'
-
 import Calendar from '../views/Calendar';
 import AllNotifications from '../views/AllNotifications';
 import Weather from '../views/Weather';
-import FieldSettings from '../pages/fieldsSettings/FieldsSettings';
 import EditSensorByAdmin from '../views/EditSensorByAdmin';
+import AllRecommendations from '../views/AllRecommendations'
+
 import Overview from '../views/Overview';
 import Reports from '../views/Reports';
 import UserProfileLite from '../views/UserProfileLite';
@@ -56,13 +56,7 @@ const protectedRoutes = [
     element: <Sensors />,
     roles: ['ROLE_ADMIN','guest',"ROLE_USER"] 
   },
-  {
-    name: 'Satellite Images',
-    path: '/satellite-images',
-    element: <SatelliteImages />,
-    roles: ['ROLE_ADMIN'] 
-
-  },
+ 
   // {
   //   name: 'My Simulations',
   //   path: '/simulations',
@@ -84,18 +78,18 @@ const protectedRoutes = [
 
   },
   {
+    name: 'AllRecommendations',
+    path : "/recommendations/:id",
+    element: <AllRecommendations />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
     name: 'AddSensor',
     path: "/AddSensor",
 
     element: <AddSensor />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
-
-  },
-  {
-    name: 'Fields Settings',
-    path: '/fields-settings',
-    element: <FieldSettings />,
-    roles: ['ROLE_ADMIN'] 
 
   },
   {
@@ -294,6 +288,14 @@ const protectedRoutes = [
     name: 'AllNotifications',
     path : "/notifications",
     element: <AllNotifications />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'SatelliteImages',
+    path: "/satellite-images",
+
+    element: <SatelliteImages />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

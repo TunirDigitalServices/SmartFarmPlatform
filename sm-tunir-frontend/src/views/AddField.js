@@ -37,7 +37,7 @@ class AddField extends React.Component {
       zoom: "",
       center: [],
       fromAction: false,
-      elemValue: "soil",
+      elemValue: "field",
       depthLevel: props.depth,
       dataChange: props.state,
       setupCardSave: false,
@@ -68,11 +68,10 @@ class AddField extends React.Component {
       farmError: "",
       description: null,
       farmName: "",
-      width: "",
-      length: "",
+      width:"",
+      length:"",
       added: false,
       source: "1",
-      stateFlag: false,
       soilProperty: "Standard",
       depth_data: [{
         uni: "",//soil type
@@ -89,7 +88,7 @@ class AddField extends React.Component {
       RUmax: "",
       effPluie: "",
       ruPratique: "",
-      growingDate: "",
+      growingDate:"",
       effIrrig: "",
       density: "",
       ecartInter: "",
@@ -119,7 +118,7 @@ class AddField extends React.Component {
       lateral: null,
       pumpFlow: "",
       pumpType: "",
-      linesNumber: "",
+      linesNumber:"",
       draw: {
         polygon: false,
         circle: false,
@@ -182,64 +181,93 @@ class AddField extends React.Component {
 
   }
 
-  componentWillUnmount() {
-    this.setState = (state, callback) => {
-      return;
-    };
-  }
+  // componentWillUnmount() {
+  //   this.setState = (state, callback) => {
+  //     return;
+  //   };
+  // }
  
-  componentDidUpdate(prevProps, prevState) {
-    // Check if zonesData has actually changed
-    if (prevState.zonesData !== this.state.zonesData) {
-      console.log('zonesData updated:', this.state.zonesData);
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   // Check if zonesData has actually changed
+  //   if (prevState.zonesData !== this.state.zonesData) {
+  //     console.log('zonesData updated:', this.state.zonesData);
+  //   }
+  // }
+
+  // getDataZones = async () => {
+  //   try {
+  //     const res = await api.get('/zone/zones');
+  //     const newDataZone = res.data;
+  //     console.log("Fetched Data:", newDataZone);  // Log response from API
+
+  //     const Zones = [];
+  //     newDataZone?.farms?.forEach(farm => {
+  //       farm.fields?.forEach(field => {
+  //         field.zones?.forEach(zone => {
+  //           Zones.push({
+  //             id: zone.id,
+  //             name: zone.name,
+  //             Uid: zone.uid,
+  //             source: zone.source,
+  //             description: zone.description,
+  //             depth_data: zone.depth_data,
+  //             field_id: zone.field_id
+  //           });
+  //         });
+  //       });
+  //     });
+
+  //     console.log("Zones array before setState:", Zones);
+
+  //     // Only update if zonesData has changed
+  //     if (Zones.length > 0 && Zones !== this.state.zonesData) {
+  //       this.setState({
+  //         zones: newDataZone.farms,  // New reference for zones
+  //         zonesData: Zones,  // New reference for zonesData
+  //         stateFlag: !this.state.stateFlag  // Force re-render
+  //       }, () => {
+  //         console.log('State after setState:', this.state); // Check the updated state
+  //         this.forceUpdate();  // Force the re-render
+  //       });
+  //     } else {
+  //       console.log("No new zones to update.");
+  //     }
+
+  //   } catch (error) {
+  //     console.error('Error fetching zones:', error);
+  //   }
+  // };
 
   getDataZones = async () => {
-    try {
-      const res = await api.get('/zone/zones');
+    await api.get('/zone/zones').then(res => {
       const newDataZone = res.data;
-      console.log("Fetched Data:", newDataZone);  // Log response from API
+      this.setState({ zones: newDataZone.farms });
+      let Zones = [];
+      this.state.zones.map(item => {
+        let fields = item.fields;
+        if (fields) {
+          fields.map(itemZone => {
+            let zones = itemZone.zones;
+            if (zones) {
+              zones.map(i => {
+                Zones.push({
+                  Id: i.id,
+                  name: i.name,
+                  Uid: i.uid,
+                  source: i.source,
+                  description: i.description,
+                  depth_data: i.depth_data,
+                  field_id: i.field_id
+                })
+              })
+            }
+          })
+        }
+      })
 
-      const Zones = [];
-      newDataZone?.farms?.forEach(farm => {
-        farm.fields?.forEach(field => {
-          field.zones?.forEach(zone => {
-            Zones.push({
-              id: zone.id,
-              name: zone.name,
-              Uid: zone.uid,
-              source: zone.source,
-              description: zone.description,
-              depth_data: zone.depth_data,
-              field_id: zone.field_id
-            });
-          });
-        });
-      });
-
-      console.log("Zones array before setState:", Zones);
-
-      // Only update if zonesData has changed
-      if (Zones.length > 0 && Zones !== this.state.zonesData) {
-        this.setState({
-          zones: newDataZone.farms,  // New reference for zones
-          zonesData: Zones,  // New reference for zonesData
-          stateFlag: !this.state.stateFlag  // Force re-render
-        }, () => {
-          console.log('State after setState:', this.state); // Check the updated state
-          this.forceUpdate();  // Force the re-render
-        });
-      } else {
-        console.log("No new zones to update.");
-      }
-
-    } catch (error) {
-      console.error('Error fetching zones:', error);
-    }
-  };
-
-  
+      this.setState({ zonesData: Zones })
+    })
+  }
 
   getDataCrops = async () => {
     await api.get('/crop/crops').then(res => {
@@ -1191,18 +1219,121 @@ class AddField extends React.Component {
         case 'soil':
           return (
             <div>
-      <h2>Zones:</h2>
-      {this.state.zonesData.length > 0 ? (
-        this.state.zonesData.map(zone => (
-          <div key={zone.id}>
-            <h3>{zone.name}</h3>
-            <p>{zone.description}</p>
+            <Card small className="h-100">
+              <Card.Header className="border-bottom">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <h6 className="m-0">{t('soil_info')}</h6>
+                 
+                </div>
+              </Card.Header>
+              <Card.Body className="pt-0">
+                    <Row noGutters className="page-header py-4">
+                     <PageTitle
+                       sm="4"
+                       title={t('my_zones')}
+                       className="text-sm-left"
+                     />
+                   </Row>
+                   <Row className="px-2">
+ 
+                     <ZoneList
+                       zonesList={this.state.zonesData}
+                       Zones={this.getDataZones}
+                       Fields={this.state.farmsData}
+                       state={this.dataChange}
+                       listSoils={this.state.listSoils}
+ 
+                     />
+
+ 
+                   </Row>
+                   {/* <div className="d-flex justify-content-center align-items-center">
+                  <Button theme="success" className="rounded-circle" style={{ height: 60, width: 60 }} onClick={this.toggle} title={`${t('add_soil')}`}>
+                    <i className="material-icons" style={{ fontSize: 36, display: "flex", justifyContent: "center", alignItems: "center" }}>&#xe145;</i>
+                  </Button>
+
+                </div> */}
+              </Card.Body>
+            </Card>
+                <Modal size='lg' centered={true} show={this.state.open} toggle={this.toggle} >
+                  <Modal.Header>
+                  <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "flexStart",
+                            alignItems: "center"
+                          }}
+                        >
+
+                      <Button
+                          // theme="success"
+                          className="mb-2 mr-1 btn btn-danger"
+                          onClick={this.toggle}
+
+                        >
+                          <i class={`fa fa-times mx-2`}></i>
+                        </Button>
+                        <Button
+                                  onClick={this.zoneHandleSubmit}
+                                  theme="info"
+                                  className="mb-2 mr-1 btn btn-success"
+                                  style={{ fontSize: 16, color: "#fff" }}
+                                  // disabled={this.state.Latitude !== "" ? false : true}
+                                >
+                                  <i class={`fa fa-check mx-2`}></i>
+                                  {t('save')}
+                          </Button>
+                    
+                          
+                        </div>
+                  </Modal.Header>
+                  <Modal.Body>
+                      <div
+                        style={{
+                          display: "flex",
+                          marginTop: "20px",
+                          flexWrap: "wrap"
+                        }}
+                      >
+                        <FieldSoilForm
+                          handleZoneName={this.handleZoneName}
+                          handleSource={this.handleSource}
+                          handleDepth={this.handleDepth}
+                          handleSoilProprety={this.handleSoilProprety}
+                          handleUidField={this.handleUidField}
+                          handleUidZone={this.handleUidZone}
+                          source={this.state.source}
+                          zones={this.state.zonesData}
+                          ZoneFunction={this.getDataZones}
+                          fields={this.state.farmsData}
+                          onChange={value => console.log(value)}
+                          saved={this.state.soilCardSave}
+                          nameError={this.state.nameError}
+                          modal={false}
+                          zoneName={this.state.zoneName}
+                          listSoils={this.state.listSoils}
+                          // effIrrig={this.state.effIrrig}
+                          effPluie={this.state.effPluie}
+                          ruPratique={this.state.ruPratique}
+                          RUmax={this.state.RUmax}
+                          irrigArea={this.state.irrigArea}
+                          // handleEffIrrig={this.handleEffIrrig}
+                          handleEffRain={this.handleEffRain}
+                          handleIrrigArea={this.handleIrrigArea}
+                          handleRuPractical={this.handleRuPractical}
+                          handleRuMax={this.handleRuMax}
+                        />
+                      </div>
+                          
+                  </Modal.Body>
+                </Modal>
           </div>
-        ))
-      ) : (
-        <p>No zones loaded.</p>
-      )}
-    </div>
           )
         case 'crop':
           return (

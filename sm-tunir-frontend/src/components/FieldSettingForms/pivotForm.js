@@ -47,7 +47,7 @@ function PivotForm(props) {
           onChange={props.handlePivotLength}
         />
       </Col>
-      <Col md="6" className="form-group">
+      <Col md="5" className="form-group">
         <Form.Control
         type="number"
           value={props.pivot_coord}
