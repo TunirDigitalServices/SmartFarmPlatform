@@ -34,6 +34,8 @@ import ConfigurationCrops from "../admin/ConfigurationCrops"
 import ConfigurationCropsVariety from "../admin/ConfigurationCropsVariety"
 import ConfigurationSoils from "../admin/ConfigurationSoils"
 import ConfigurationIrrigation from "../admin/ConfigurationIrrigation"
+import Graph from "../views/Graph";
+
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -89,6 +91,14 @@ const protectedRoutes = [
     path: "/AddSensor",
 
     element: <AddSensor />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'Graph',
+    path: "/Graphs",
+
+    element: <Graph />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

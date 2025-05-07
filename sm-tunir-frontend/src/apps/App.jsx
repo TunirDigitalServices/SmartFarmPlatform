@@ -8,7 +8,6 @@ import "../assets/styling/Styles.css"
 function App() {
   return (
     <div>
-    {/* <MiniDrawer/> */}
     <DefaultLayout/>
     </div>
   )

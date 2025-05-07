@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import protectedRoutes from "../constants/protectedRoutes"
-import NotFound from '../pages/NotFound';
+import NotFound from '../views/NotFound';
 import App from '../apps/App';
 import Auth from '../apps/auth'
-import Login from '../pages/auth/Login';
+import Login from '../views/auth/Login';
 import logo from "../assets/images/Logo smart farm1.jpg"
-import SignUp from '../pages/auth/SignUp';
+import SignUp from '../views/auth/SignUp';
 import Dashboard from "../components/Simulation/Dashboard"
 import { fakeUsers } from '../constants/fakeUsers';
 import PrivateRoute from './PrivateRouter';
-import ForgotPwd from '../pages/auth/ForgotPwd';
-import Terms from '../pages/auth/Terms';
-import Privacy from '../pages/auth/Privacy';
+import ForgotPwd from '../views/auth/ForgotPwd';
+import Terms from '../views/auth/Terms';
+import Privacy from '../views/auth/Privacy';
 import useToken from '../useToken';
 import Overview from '../views/Overview';
-import NewPassValid from '../pages/auth/NewPassValid';
-import Valid from '../pages/auth/Valid';
+import NewPassValid from '../views/auth/NewPassValid';
+import Valid from '../views/auth/Valid';
 
 
 const fakeAuth = {

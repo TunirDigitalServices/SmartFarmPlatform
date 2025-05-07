@@ -1,11 +1,13 @@
 import moment from 'moment';
 import React , {useState,useEffect}from 'react'
 import { Line } from  'react-chartjs-2';
-import { useHistory } from 'react-router-dom';
-import { Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
+
+import {  Card, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router';
 
 const SubSoilHumidityChart = ({data,title,onSelect}) => {
-    const history = useHistory()
+   
+    const navigate=useNavigate()
 
     const [state,setState] = useState(null)
  
@@ -71,20 +73,20 @@ const SubSoilHumidityChart = ({data,title,onSelect}) => {
         getChartData()
     },[data])
    const goToSelctedChart = (title) => {
-        history.push(`/Graphs/${title}`);
+        navigate(`/Graphs/${title}`);
         window.location.reload();
       }
 
     return (
         <Card className="h-100">
-        <CardHeader className="border-bottom d-flex justify-content-between">
+        <Card.Header className="border-bottom d-flex justify-content-between">
             {title}
-          <Button onClick={() => onSelect("SubSoilHumidityChart")} squared theme="light">
+          <Button onClick={() => onSelect("SubSoilHumidityChart")} squared variant="light">
             <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M5.075 21.2Q4.125 21.2 3.463 20.538Q2.8 19.875 2.8 18.925V5.075Q2.8 4.125 3.463 3.462Q4.125 2.8 5.075 2.8H12V5.075H5.075Q5.075 5.075 5.075 5.075Q5.075 5.075 5.075 5.075V18.925Q5.075 18.925 5.075 18.925Q5.075 18.925 5.075 18.925H18.925Q18.925 18.925 18.925 18.925Q18.925 18.925 18.925 18.925V12H21.2V18.925Q21.2 19.875 20.538 20.538Q19.875 21.2 18.925 21.2ZM9.875 15.7 8.3 14.125 17.35 5.075H14V2.8H21.2V10H18.925V6.65Z" /></svg>
           </Button>
-        </CardHeader>
-        <CardBody className="p-0">
-      <Line
+        </Card.Header>
+        <Card.Body className="p-0">
+     { state && <Line
       data={state}
           options={{
             title:{
@@ -105,8 +107,8 @@ const SubSoilHumidityChart = ({data,title,onSelect}) => {
               }]
           },
           }}
-      />
-  </CardBody>
+      />}
+  </Card.Body>
       </Card>
   );
 }
