@@ -1,0 +1,167 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "SmartFarm Project",
+        "description": "My Project Application API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "my.smartfarm.com.tn:443",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Users",
+            "description": "API for users in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api-external-sensor/:sensorCode" :{
+            "get" :{
+                "tags" :[
+                "Sensors"
+            ],
+            "summary": "Get Sensor Data",
+            "parameters" :[
+                {
+                "name": "sensorCode",
+                "description": "API for get sensors data and coordinates by code and ET0 and solar radiation",
+                "required": true,
+                "type": "string"
+            }
+            ],
+            "responses": {
+                "201": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                          "example": {
+                            "results": [
+                              {
+                                "abc": 20
+                              }
+                            ],
+                            "totalCount": 69
+                          }
+                        }
+                    },
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                          "data": {
+                            "type": "array",
+                            "items": {
+                              "time": "object",
+                              "properties": {
+                                "time": {
+                                  "type": "string"
+                                },
+                                "ref": {
+                                    "type": "string"
+                                  },
+                                  "day_num": {
+                                    "type": "string"
+                                  },
+                                  "temperature": {
+                                    "type": "string"
+                                  },
+                                  "humidity": {
+                                    "type": "string"
+                                  },
+                                  "pressure": {
+                                    "type": "string"
+                                  },
+                                  "charge": {
+                                    "type": "string"
+                                  },
+                                  "adc": {
+                                    "type": "string"
+                                  },
+                                  "ts": {
+                                    "type": "string"
+                                  },
+                                  "mv1": {
+                                    "type": "string"
+                                  },
+                                  "mv2": {
+                                    "type": "string"
+                                  },
+                                  "mv3": {
+                                    "type": "string"
+                                  },
+                                  "altitude": {
+                                    "type": "string"
+                                  }
+
+
+
+
+                              }
+                            }
+                          },
+                          "solar" :{
+                            "type" :"array",
+                            "items" :{
+                                "type" :"object",
+                                "properties" :{
+                                    "date" :{
+                                        "type" : "string"
+                                    },
+                                    "radiation" : {
+                                       "type"  : "integer"
+                                    }
+                                }
+                            }
+                          },
+                          "evapo" :{
+                            "type" :"array",
+                            "items" :{
+                                "type" :"object",
+                                "properties" :{
+                                    "ET0" :{
+                                        "type" : "string"
+                                    }
+                                    
+                                }
+                            }
+                          },
+                          "coords" :{
+                            "type" :"array",
+                            "items" :{
+                                "type" :"object",
+                                "properties" :{
+                                    "latitude" :{
+                                        "type" : "string"
+                                    },
+                                    "longitude" :{
+                                        "type" : "string"
+                                    }
+                                    
+                                }
+                            }
+                          }
+                          
+                          }}
+                },
+                "500": {
+                    "description": "Error get data"
+                },
+                "400": {
+                    "description": "No sensor found"
+                }
+            }
+            }
+        }
+    }
+}

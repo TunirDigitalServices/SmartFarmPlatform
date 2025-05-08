@@ -337,8 +337,10 @@ const Field = () => {
 
     const todayCalcul = resultCalcul.find(calcul => {
       const date = new Date(calcul.date);
+ 
       return date.toDateString() === todayDate.toDateString();
     });
+    
 
     if (!todayCalcul) {
       return null;
