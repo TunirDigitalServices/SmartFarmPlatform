@@ -20,6 +20,7 @@ const Report = require('../../models/Report')
 const DataMapping = require('../../models/DataMapping')
 const option1 = require('../../reports/option1')
 const Notification = require('../../models/Notification')
+const { log } = require('console')
 
 
 const addDays = (date, days) => {
@@ -2281,15 +2282,16 @@ const getAllCalculByUser = async (req, res) => {
 const getAllCalculByField = async (req, res) => {
     if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
     const fieldUid = req.params.fieldUid;
+    console.log(fieldUid,"fieldUid")
     let field_id = ""
     let calcul_id = ''
     try {
-        const user = await new Field({ 'uid': fieldUid, 'deleted_at': null })
-            .fetch({ require: false })
-            .then(async result => {
-                if (result === null) return res.status(404).json({ type: "danger", message: "no_field" });
-                if (result) field_id = result.get("id");
-            });
+        const field = await new Field({ 'uid': fieldUid, 'deleted_at': null }).fetch({ require: false })
+            if (!field) {
+                return res.status(404).json({ type: "danger", message: "no_field" });
+            }else {
+                field_id = field.get("id");
+            }
             const query = new CalculSensor().query((qb) => {
                 qb.select('*');
                 qb.where({ field_id });

@@ -165,33 +165,63 @@ const Field = () => {
   
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
-  useEffect(() => {
-      const calculDataSensor = async () => {
-        console.log(sensorCode)
-        let url = `/calcul/field-calcul/${Uid}`
-        if (role === 'ROLE_SUPPLIER') {
-          url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
-        }
-        await api.get(url)
-          .then(response => {
-            console.log(response.data)
-            let calculResult = response.data.calcul
-            let calculInputs = response.data.inputs
+  // useEffect(() => {
+  //     const calculDataSensor = async () => {
+  //       let url = `/calcul/field-calcul/${Uid}`
+  //       if (role === 'ROLE_SUPPLIER') {
+  //         url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
+  //       }
+  //       await api.get(url)
+  //         .then(response => {
+  //           console.log(response.data,"response.data 2")
+  //           let calculResult = response.data.calcul
+  //           let calculInputs = response.data.inputs
 
-            setResultCalcul(calculResult)
-            setInputsCalcul(calculInputs)
-          })
-          .catch(err => {
-            console.log(err)
-          })
+  //           setResultCalcul(calculResult)
+  //           setInputsCalcul(calculInputs)
+  //         })
+  //         .catch(err => {
+  //           console.log(err)
+  //         })
 
-      }
+  //     }
 
-      calculDataSensor()
+  //     calculDataSensor()
     
-  }, [Uid])
+  // }, [Uid])
+  // useEffect(() => {
+  //   const getAllCalculByField = async () => {
+  //     try {
+  //       const response = await api.get(`/calcul/field-calcul/${Uid}`)
+  //       const eventData = response.data.calcul;
+  //       setAllCalcul(eventData)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
 
-  console.log(resultCalcul)
+  //   getAllCalculByField()
+  // }, [])
+
+
+ useEffect(()=>{
+  const fetchData=async()=>{
+    try{
+      let url = `/calcul/field-calcul/${Uid}`
+      if (role === 'ROLE_SUPPLIER') {
+        url = `/supplier/get-sensor-calcul/${userId}/${sensorCode}`
+      }
+      const response1 = await api.get(url);
+      setResultCalcul(response1.data.calcul);
+      setInputsCalcul(response1.data.inputs);
+      const response2 = await api.get(`/calcul/field-calcul/${Uid}`);
+      setAllCalcul(response2.data.calcul);
+    }catch(err){
+      console.log(err);
+    }
+  }
+  fetchData();
+ },[Uid])
 
   const [mappingMv1, setMappingMv1] = useState("")
   const [mappingMv2, setMappingMv2] = useState("")
@@ -647,21 +677,8 @@ const Field = () => {
     }
   };
 
-  useEffect(() => {
-    const getAllCalculByField = async () => {
-      try {
-        const response = await api.get(`/calcul/field-calcul/${Uid}`)
-        const eventData = response.data.calcul;
-        setAllCalcul(eventData)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+ 
 
-    getAllCalculByField()
-  }, [])
-
-  console.log(allCalcul);
   
 
   useEffect(() => {
