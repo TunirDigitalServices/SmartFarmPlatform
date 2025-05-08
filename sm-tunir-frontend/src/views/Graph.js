@@ -134,10 +134,10 @@ const getHistorySensor = async (page) => {
           </Col>
         </Row>
         {/* First Row of Posts */}
-        <Row>
+        <Row className="gap-4">
         {selectedChart ? ( 
           <Col lg="12" md="12" sm="12" className="mb-4">
-            <Row className="d-flex justify-content-center m-2">
+            <Row className="d-flex justify-content-center  m-2">
                   <Button onClick={handleClearSelection} outline theme="info">
                     {t("see_all")}
                   </Button>
@@ -173,7 +173,7 @@ const getHistorySensor = async (page) => {
             <Col lg="6" md="12" sm="12" className="mb-4">
               <TempChart title={t("Temp.")} data={dataSensor} onSelect={handleSelectChart} />
             </Col>
-            <Col lg="6" md="12" sm="12" className="mb-4">
+            <Col lg="5" md="12" sm="12" className="mb-4">
               <PressionChart
                 title={t("Pression.")}
                 data={dataSensor}
@@ -187,7 +187,7 @@ const getHistorySensor = async (page) => {
                 onSelect={handleSelectChart}
               />
             </Col>
-            <Col lg="6" md="12" sm="12" className="mb-4">
+            <Col lg="5" md="12" sm="12" className="mb-4">
               <SubSoilHumidityChart
                 title="Subsoil Humidity"
                 data={dataSensor}
