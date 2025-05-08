@@ -724,9 +724,10 @@ const Field = () => {
       {/* First Row of Posts */}
       <Row className="border-bottom mb-4">
         <Col lg="12" md="12" sm="12">
-          <Row>
-            <div className="d-flex gap-2 container">
+          <Row className="gap-2">
+           
               <Col lg="4" md="12" sm="12" className="mb-4">
+              {/* active sensors  */}
                 {
                   allDataSensor || sensors.length > 0
                     ?
@@ -936,6 +937,7 @@ const Field = () => {
                 }
               </Col>
               <Col lg="4" md="12" sm="12" className="mb-4">
+              {/* soil status */}
                 <Card fluid style={{ minHeight: "330px" }} >
 
                   <Card.Header className="border-bottom d-flex justify-content-between align-items-center flex-wrap">
@@ -1073,7 +1075,7 @@ const Field = () => {
                 </Card>
               </Col>
               {recomBasedOnDate()} 
-            </div>
+           
           </Row>
           <Row>
             <div className="container">
