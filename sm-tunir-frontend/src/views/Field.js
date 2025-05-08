@@ -724,9 +724,9 @@ const Field = () => {
       {/* First Row of Posts */}
       <Row className="border-bottom mb-4">
         <Col lg="12" md="12" sm="12">
-          <Row className="gap-2">
+          <Row className="gap-4">
            
-              <Col lg="4" md="12" sm="12" className="mb-4">
+              <Col lg="3" md="12" sm="12" className="mb-4">
               {/* active sensors  */}
                 {
                   allDataSensor || sensors.length > 0
