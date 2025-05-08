@@ -603,7 +603,7 @@ const Field = () => {
       await api.post('/field/edit-event', updatedEvent)
         .then(response => {
           if (response.data.type === "success") {
-
+            
             handleEventUpdate(selectedEvent, updatedEvent);
             getEvents()
             setShow(false); // Close the modal 
@@ -659,99 +659,48 @@ const Field = () => {
     getAllCalculByField()
   }, [])
 
+  console.log(allCalcul);
+  
 
-  // useEffect(() => {
-  //   let data = [];
-  //   allCalcul &&
-  //     allCalcul.forEach((event) => {
-        
-  //       let startDate = new Date(event.start_date).toISOString().slice(0, 10);
-  //       let endDate = new Date(event.end_date).toISOString().slice(0, 10);
-  //       let resultCalcul = event.result;
-
-  //       const filteredEvents = resultCalcul.filter((result) => {
-  //         let resultDate = new Date(result.date).toISOString().slice(0, 10);
-
-  //         return (
-  //           result.irrigationNbr === 1 &&
-  //           resultDate >= startDate &&
-  //           resultDate < endDate
-  //         );
-  //       });
-  //       filteredEvents &&
-  //         filteredEvents.forEach((event) => {
-  //           data.push({
-  //             title: (
-  //               <div style={{ fontSize: 11.5 }}>
-  //                 <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
-  //                 <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
-  //                 <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
-  //               </div>
-  //             ),
-  //             allDay: true,
-  //             start: new Date(event.date),
-  //             end: new Date(event.date),
-  //             source: "resultCalcul",
-  //           });
-  //         });
-  //     });
-  //   setEvents(data);
-  // }, [allCalcul]);
   useEffect(() => {
     let data = [];
-  
-    if (!allCalcul || !Array.isArray(allCalcul)) return;
-  
-    allCalcul.forEach((event) => {
-      const start = new Date(event.start_date);
-      const end = new Date(event.end_date);
-  
-      if (isNaN(start) || isNaN(end)) {
-        console.warn("Invalid start or end date in event:", event);
-        return;
-      }
-  
-      let startDate = start.toISOString().slice(0, 10);
-      let endDate = end.toISOString().slice(0, 10);
-      let resultCalcul = event.result || [];
-  
-      const filteredEvents = resultCalcul.filter((result) => {
-        const resultDt = new Date(result.date);
-        if (isNaN(resultDt)) {
-          console.warn("Invalid result date:", result.date);
-          return false;
+    allCalcul &&
+      allCalcul.forEach((event) => {
+        if(event.irrigationNbr === 1){
+          data.push({
+            title: (
+              <div style={{ fontSize: 11.5 }}>
+                <div>{'Irrigation Dose : ' + parseFloat(event.irrigation).toFixed(2) + ' mm'}</div>
+                <div>{'Irrigation Time : ' + toHoursAndMinutes(event.irrigationTime)}</div>
+                <div>{'Rain : ' + parseFloat(event.rain).toFixed(2) + ' mm'}</div>
+              </div>
+            ),
+            allDay: true,
+            start: new Date(event.date),
+            end: new Date(event.date),
+            source: "resultCalcul",
+          });
         }
-        let resultDate = resultDt.toISOString().slice(0, 10);
-  
-        return (
-          result.irrigationNbr === 1 &&
-          resultDate >= startDate &&
-          resultDate < endDate
-        );
+        // let startDate = new Date(event.start_date).toISOString().slice(0, 10);
+        // let endDate = new Date(event.end_date).toISOString().slice(0, 10);
+        // let resultCalcul = event.result;
+
+        // const filteredEvents = resultCalcul.filter((result) => {
+        //   let resultDate = new Date(result.date).toISOString().slice(0, 10);
+
+        //   return (
+        //     result.irrigationNbr === 1 &&
+        //     resultDate >= startDate &&
+        //     resultDate < endDate
+        //   );
+        // });
+        // filteredEvents && filteredEvents.forEach((event) => {
+            
+          // });
       });
-  
-      filteredEvents.forEach((resultEvent) => {
-        const resultDate = new Date(resultEvent.date);
-        if (isNaN(resultDate)) return;
-  
-        data.push({
-          title: (
-            <div style={{ fontSize: 11.5 }}>
-              <div>{'Irrigation Dose : ' + parseFloat(resultEvent.irrigation).toFixed(2) + ' mm'}</div>
-              <div>{'Irrigation Time : ' + toHoursAndMinutes(resultEvent.irrigationTime)}</div>
-              <div>{'Rain : ' + parseFloat(resultEvent.rain).toFixed(2) + ' mm'}</div>
-            </div>
-          ),
-          allDay: true,
-          start: resultDate,
-          end: resultDate,
-          source: "resultCalcul",
-        });
-      });
-    });
-  
     setEvents(data);
   }, [allCalcul]);
+  console.log(events,"events");
   
 
   const calculateLeftPosition = (value) => {

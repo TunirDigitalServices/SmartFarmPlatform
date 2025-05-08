@@ -73,7 +73,7 @@ export default function DBSensor({ filteredSensors }) {
         <div>
           <p>QR: {filteredSensors.code}</p>
         </div>
-          <section className="ProgressBarWrapper">
+        {/* <section className="ProgressBarWrapper">
             <div className="stats-dates">
             <p style={{ fontSize: 13 }}>{t('niveau')} 1</p>
               <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(filteredSensors.humidityMV1) }}>
@@ -100,16 +100,126 @@ export default function DBSensor({ filteredSensors }) {
               <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
               <div>{t('Full')}</div>
             </div>
-          </section>
-          <div className="sensorFooter">
-            <p>{t('last_reading')} :</p>
-            <p>{moment(filteredSensors.time).locale('fr').format('L, LT')}</p>
+          </section> */}
+        <div className="py-2">
+          <div className="ProgressBarWrapper">
+            <div className="stats-dates mt-4">
+              <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
+              <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(filteredSensors.humidityMV1) }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="13"
+                  viewBox="0 0 14 17"
+                  className="drop-element ng-star-inserted"
+                >
+                  <g fill="none">
+                    <path
+                      d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                      fill="#FE3C65"
+                      className="drop"
+                      style={{ fill: "rgb(16, 201, 160)" }}
+                    ></path>
+                    <path
+                      d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                      stroke="#FFF"
+                    ></path>
+                  </g>
+                </svg>
+              </div>
+              <div
+                style={{
+                  opacity: "0.2",
+                  width: "80%",
+                  height: "20px",
+                  margin: "0px 0px 0px 10px",
+                  backgroundImage: "linear-gradient(90deg, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                }}
+              ></div>
+            </div>
+            <div className="stats-dates" style={{ margin: "-5px 0px" }}>
+              <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
+              <div className="Marker" style={{ left: calculateLeftPosition(filteredSensors.humidityMV2) }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="17"
+                  viewBox="0 0 14 17"
+                  className="drop-element ng-star-inserted"
+                >
+                  <g fill="none">
+                    <path
+                      d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                      fill="#FE3C65"
+                      className="drop"
+                      style={{ fill: "rgb(16, 201, 160)" }}
+                    ></path>
+                    <path
+                      d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                      stroke="#FFF"
+                    ></path>
+                  </g>
+                </svg>
+              </div>
+              <div
+                style={{
+                  margin: "0px 0px 0px 10px",
+                  width: "80%",
+                  height: "20px",
+                  backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                }}
+              ></div>
+            </div>
+            <div className="stats-dates">
+              <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
+              <div className="Marker-yesterday" style={{ left: calculateLeftPosition(filteredSensors.humidityMV3) }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="13"
+                  viewBox="0 0 14 17"
+                  className="drop-element ng-star-inserted"
+                >
+                  <g fill="none">
+                    <path
+                      d="M7.8 0.4L7.5 0 7.1 0.4C6.9 0.7 1.1 7.3 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9 13.8 7.3 8.1 0.7 7.8 0.4Z"
+                      fill="#FE3C65"
+                      className="drop"
+                      style={{ fill: "rgb(16, 201, 160)" }}
+                    ></path>
+                    <path
+                      d="M13.8 11.9C13.8 7.3 8.1 0.7 7.8 0.4L7.5 0 7.1 0.4C7 0.6 5 2.8 3.4 5.5 2.2 7.6 1.1 9.9 1.1 11.9 1.1 15.1 4 17.6 7.5 17.6 11 17.6 13.8 15.1 13.8 11.9Z"
+                      stroke="#FFF"
+                    ></path>
+                  </g>
+                </svg>
+              </div>
+              <div
+                style={{
+                  opacity: "0.2",
+                  margin: "0px 0px 0px 10px",
+                  width: "80%",
+                  height: "20px",
+                  backgroundImage: "linear-gradient(to right, #ff2866, #f98c66, #bfba2e, #26cc94, #00c7a8, #00b7bc, #00a0db)",
+                }}
+              ></div>
+            </div>
+            <div className="status">
+              <div>{t('Critical')}</div>
+              <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
+              <div>{t('Full')}</div>
+            </div>
           </div>
-          <div className="sensorFooter d-flex justify-content-around align-items-center ">
-            <Button theme="info" onClick={() => { navigate(`/my-history/${filteredSensors.code}`) }}><i className='material-icons'>&#xe889;</i> {t('history')}</Button>
-            {/* <Button theme="info" onClick={() => { history.push(`/my-sensor/${filteredSensors.code}`)}}><i className='material-icons'>&#xe889;</i> View Sensor Stats</Button> */}
+        </div>
+        <div className="sensorFooter">
+          <p>{t('last_reading')} :</p>
+          <p>{moment(filteredSensors.time).locale('fr').format('L, LT')}</p>
+        </div>
+        <div className="sensorFooter d-flex justify-content-around align-items-center ">
+          <Button theme="info" onClick={() => { navigate(`/my-history/${filteredSensors.code}`) }}><i className='material-icons'>&#xe889;</i> {t('history')}</Button>
+          {/* <Button theme="info" onClick={() => { history.push(`/my-sensor/${filteredSensors.code}`)}}><i className='material-icons'>&#xe889;</i> View Sensor Stats</Button> */}
 
-          </div>
+        </div>
 
       </div>
     </Col>

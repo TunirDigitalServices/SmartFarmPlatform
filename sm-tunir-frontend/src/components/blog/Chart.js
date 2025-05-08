@@ -71,7 +71,8 @@ class Chart extends React.Component {
       let date = ''
       let dt = []
       console.log(dataSensor)
-      if(dataSensor && dataSensor !== []){
+      // if(dataSensor && dataSensor !== []){
+       if(dataSensor){
         
         dataSensor.map(sensorData => {
           date = sensorData.time
