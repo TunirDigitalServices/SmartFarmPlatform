@@ -66,17 +66,17 @@ const BilanHydrique = () => {
     let EvopoTotal
     let Deficit
 
-    const getCitiesList = () => {
-        api.get('/cities/list-cities')
-        .then(response=>{
-            let cities = response.data.Cities
-            if(response && response.data.type === "success"){
-                setInputsData({city : cities})
-            }
-        }).catch(err=>{
-            console.log(err)
-        })
-    }   
+        const getCitiesList = () => {
+            api.get('/cities/list-cities')
+            .then(response=>{
+                let cities = response.data.Cities
+                if(response && response.data.type === "success"){
+                    setInputsData({city : cities})
+                }
+            }).catch(err=>{
+                console.log(err)
+            })
+        }   
 
     const getWeather = () => {
        let data = {
