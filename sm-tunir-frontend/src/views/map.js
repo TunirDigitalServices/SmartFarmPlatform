@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, Tooltip, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, Tooltip, useMapEvents, ScaleControl } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Styles.css";
 import useGeoLocation from "../utils/useGeoLocation";
@@ -30,21 +30,21 @@ const Iconsensor = new L.Icon({
 
 let currentPage = window.location.pathname
 
-const  SetViewOnClick = ({ center , zoom }) => {
+const SetViewOnClick = ({ center, zoom }) => {
   const map = useMap();
   map.setView(center, zoom);
 
   return null;
 }
 
-const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farms,fields, zoom, center, fromAction,uid}) => {
+const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, farms, fields, zoom, center, fromAction, uid }) => {
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
   const [zoomLevel, setZoomLevel] = useState(10);
   const getCenterFromSensors = () => {
     if (sensor && sensor.length > 0) {
       const firstSensor = sensor[0];
-      if(firstSensor.Latitude && firstSensor.Longitude){
+      if (firstSensor.Latitude && firstSensor.Longitude) {
         return [Number(firstSensor.Latitude), Number(firstSensor.Longitude)];
 
       }
@@ -59,8 +59,8 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
       mapRef.current.setView(centerFromSensors, 16.5);
     }
   }, [sensor]);
-  
-  
+
+
   const location = useGeoLocation();
 
   const returnedMap = (L) => {
@@ -74,23 +74,23 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
               coordinates.push(Object.values(co))
             })
           }
-        if(coord){
-          return <>
-          <Polygon key={indx} positions={coordinates}> </Polygon>
-          {
-          data.map((item, indx) => {
-                if (item.Latitude && item.Longitude) {
-                  return  <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
-      
-      
-      
-                }
-              })
+          if (coord) {
+            return <>
+              <Polygon key={indx} positions={coordinates}> </Polygon>
+              {
+                data.map((item, indx) => {
+                  if (item.Latitude && item.Longitude) {
+                    return <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
+
+
+
+                  }
+                })
+
+              }
+            </>
 
           }
-          </>
-
-        }
 
         })
       case '/':
@@ -106,165 +106,191 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
               })
             }
             let sensors = field.sensors;
-              if(sensors){
+            if (sensors) {
 
-                sensors.map(sensor => {
-                  if(sensor.Latitude && sensor.Longitude){
-                    sensorsCoord.push({
-                      code: sensor.code,
-                      Latitude: sensor.Latitude,
-                      Longitude: sensor.Longitude
-                    })
+              sensors.map(sensor => {
+                if (sensor.Latitude && sensor.Longitude) {
+                  sensorsCoord.push({
+                    code: sensor.code,
+                    Latitude: sensor.Latitude,
+                    Longitude: sensor.Longitude
+                  })
 
-                  }
-                })
-              }
+                }
+              })
+            }
           })
-            return (
-                <div style={{zIndex:1}}>
-                 <Polygon color="#28A6B7" key={indx} positions={coordinates}>
-                    {/* <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject> */}
-              </Polygon> 
-                   {/* <Polygon key={indx} positions={coordinates}> */}
-              
-                    {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
+          return (
+            <div style={{ zIndex: 1 }}>
+              <MapContainer
+                ref={mapRef}
+                style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300 }}
+                className="markercluster-map"
+                zoom={zoomLevel}
+                center={mapCenter}
+                whenCreated={(map) => {
+                  mapRef.current = map;
+                }}
+              >
+                <FeatureGroup>
+                  <ScaleControl position="bottomleft" />
+                </FeatureGroup>
+
+                <TileLayer
+                  maxNativeZoom={18}
+                  maxZoom={20}
+                  url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
+                  subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+                />
+                {coordinates.length > 0 && (
+                  <Polygon
+                    pathOptions={{ color: '#26A6B7' }}
+                    positions={coordinates}
+                    fillColor="#BDD2CC"
+                  />
+                )}
+
+                {/* <Polygon key={indx} positions={coordinates}> */}
+
+                {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
                       <Popup>{item.name}</Popup>
                     </Marker> */}
-                  {/* </Polygon>  */}
-                  {
+                {/* </Polygon>  */}
+                {
 
-                sensor && sensor.map((sensors, indx) => {
-                       if(sensors.Latitude && sensors.Longitude){
+                  sensor && sensor.map((sensors, indx) => {
+                    if (sensors.Latitude && sensors.Longitude) {
 
-                         return(
-                                 <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
-                            <Popup >{sensors.code}</Popup>
-                          </Marker>
-                          )
-                       }
-                      // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
-  
-
-                      
+                      return (
+                        <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                          <Popup >{sensors.code}</Popup>
+                        </Marker>
+                      )
                     }
-  
-                    )
-                    
-                  }
-                </div>
-              )
+                    // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
 
-          
+
+
+                  }
+
+                  )
+
+                }
+              </MapContainer>
+            </div>
+          )
+
+
 
         })
-        case '/Dashboard-supplier':
-           
-              return (
-                  <>
-                    {/* <Polygon key={indx} positions={coordinates}>
+      case '/Dashboard-supplier':
+
+        return (
+          <>
+            {/* <Polygon key={indx} positions={coordinates}>
                 
                       <Marker key={indx} position={[item.Latitude, item.Longitude]}>
                         <Popup>{item.name}</Popup>
                       </Marker>
                     </Polygon> */}
-                    {
-  
-                      sensor.map((sensors, indx) => {
-                         return <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
-    
-                        //<Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
-                        //   <Popup>{sensors.code}</Popup>
-                        // </Marker>
-  
-                        
-                      }
-    
-                      )
-                      
-                    }
-                  </>
-                )
-
-  
-      case `/admin/user/${uid}/farms` : 
-          return data.map((item, indx) => {
-            let coordinates = []
-            let coord = JSON.parse(item.coordinates)
-            if (coord) {
-              coord.map(co => {
-                coordinates.push(Object.values(co))
-              })
-            }
-            if (coord) {
-              return <Polygon key={indx} positions={coordinates}>
-                      <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject>
-                </Polygon>
-            } else {
-              return <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id} zoom={zoom} center={center} fromAction={fromAction}></MarkerObject>
-            }
-  
-  
-          })
-      case `/admin/user/${uid}/fields` :     
-      return data.map((item, indx) => {
-        let coordinates = []
-        let coord = JSON.parse(item.coordinates)
-        if (coord) {
-          coord.map(co => {
-            coordinates.push(Object.values(co))
-          })
-        }
-      if(coord){
-        return (
-            <>
-            <Polygon key={indx} positions={coordinates}> </Polygon>
-          
             {
-              fields && fields.map((item,indx)=>{
-                if(item.Latitude){
-                  return(
 
-                    <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.title} id={item.id}></MarkerObject>
+              sensor.map((sensors, indx) => {
+                return <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
 
-                  )
+                //<Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                //   <Popup>{sensors.code}</Popup>
+                // </Marker>
 
-                }
-              })
+
+              }
+
+              )
+
             }
+          </>
+        )
+
+
+      case `/admin/user/${uid}/farms`:
+        return data.map((item, indx) => {
+          let coordinates = []
+          let coord = JSON.parse(item.coordinates)
+          if (coord) {
+            coord.map(co => {
+              coordinates.push(Object.values(co))
+            })
+          }
+          if (coord) {
+            return <Polygon key={indx} positions={coordinates}>
+              <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject>
+            </Polygon>
+          } else {
+            return <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id} zoom={zoom} center={center} fromAction={fromAction}></MarkerObject>
+          }
+
+
+        })
+      case `/admin/user/${uid}/fields`:
+        return data.map((item, indx) => {
+          let coordinates = []
+          let coord = JSON.parse(item.coordinates)
+          if (coord) {
+            coord.map(co => {
+              coordinates.push(Object.values(co))
+            })
+          }
+          if (coord) {
+            return (
+              <>
+                <Polygon key={indx} positions={coordinates}> </Polygon>
+
+                {
+                  fields && fields.map((item, indx) => {
+                    if (item.Latitude) {
+                      return (
+
+                        <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.title} id={item.id}></MarkerObject>
+
+                      )
+
+                    }
+                  })
+                }
+              </>
+
+            )
+          }
+
+        })
+      case `/admin/user/${uid}/sensors`:
+        return farms && farms.map((item, indx) => {
+          let coordinates = []
+          let coord = JSON.parse(item.coordinates)
+          if (coord) {
+            coord.map(co => {
+              coordinates.push(Object.values(co))
+            })
+          }
+          if (coord) {
+            return <>
+              <Polygon key={indx} positions={coordinates}> </Polygon>
+              {
+                data.map((item, indx) => {
+                  if (item.Latitude && item.Longitude) {
+                    return <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
+
+
+
+                  }
+                })
+
+              }
             </>
 
-        )
-      }
+          }
 
-      })
-      case `/admin/user/${uid}/sensors` :     
-      return farms && farms.map((item, indx) => {
-        let coordinates = []
-        let coord = JSON.parse(item.coordinates)
-        if (coord) {
-          coord.map(co => {
-            coordinates.push(Object.values(co))
-          })
-        }
-      if(coord){
-        return <>
-        <Polygon key={indx} positions={coordinates}> </Polygon>
-        {
-        data.map((item, indx) => {
-              if (item.Latitude && item.Longitude) {
-                return  <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.code} id={item.id}></MarkerObject>
-    
-    
-    
-              }
-            })
-
-        }
-        </>
-
-      }
-
-      })
+        })
     }
   }
 
@@ -273,7 +299,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
   return (
     <div>
       <MapContainer
-      style={{borderRadius :20,boxShadow : '1px 1px 10px #bbb',height:300,zIndex: 1}}
+        style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300, zIndex: 1 }}
         className="markercluster-map"
         zoom={zoomLevel}
         center={mapCenter}
@@ -286,10 +312,10 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
           <EditControl draw={draw} edit={edit} position="topright" onCreated={_onCreated} onEdited={_onEdited} />
         </FeatureGroup>
         <TileLayer
-        
-        url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
-        subdomains={['mt0','mt1','mt2','mt3']}
-          
+
+          url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
+          subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+
         />
         <LeafletGeoCoder />
         {location.loaded && !location.error && (
@@ -299,10 +325,10 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit ,sensor,farm
         )}
         {
           fromAction
-          ?
-          <SetViewOnClick center={center.length !== 0 ? center : centerDefault} zoom={zoom === "" ? zoomDefault : zoom} />
-          :
-          null
+            ?
+            <SetViewOnClick center={center.length !== 0 ? center : centerDefault} zoom={zoom === "" ? zoomDefault : zoom} />
+            :
+            null
         }
 
         {returnedMap(L)}

@@ -7,6 +7,7 @@ const path = require("path");
 const fetch = require("node-fetch");
 const { v4: uuidv4 } = require("uuid");
 const knex = require("../../knex/knex.js");
+const dayjs = require("dayjs");
 
 const addSatelliteImages = async (req, res) => {
   const { user_uid, field_id, data, polygon } = req.body;
@@ -153,7 +154,10 @@ function unescapeEvalscript(escapedScript) {
 const addSatelliteImagesSentinel = async (req, res) => {
   // return;
   try {
+
+
     const today = new Date(req.body.date);
+
     const day = today.getDay(); // 0 (Sun) to 6 (Sat)
     const diffToMonday = (day === 0 ? -6 : 1) - day; // Calculate days to subtract to get Monday
 
@@ -163,26 +167,26 @@ const addSatelliteImagesSentinel = async (req, res) => {
     const end_date = new Date(start_date);
     end_date.setDate(start_date.getDate() + 7);
     // fetch satellite image where start end + field id
-   console.log(today,'---------------Today');
-   console.log(start_date,'---------------startDay');
-   console.log(end_date,'---------------EndDay');
-   
+    console.log(today, '---------------Today');
+    console.log(start_date, '---------------startDay');
+    console.log(end_date, '---------------EndDay');
+
     // if exist return res.send
     const coordinates = req.body.coordinates;
     const { userId, fieldId } = req.params;
     const satelliteImages = await new SatelliteImage()
-    .query((qb) =>
-      qb
-        .where("field_id", "=", fieldId)
-        .andWhere("start_date", "=", start_date)
-        .andWhere("end_date", "=", end_date)
-    )
-    .fetchAll({ require: false });
-    if (satelliteImages.length){
+      .query((qb) =>
+        qb
+          .where("field_id", "=", fieldId)
+          .andWhere("start_date", "=", start_date)
+          .andWhere("end_date", "=", end_date)
+      )
+      .fetchAll({ require: false });
+    if (satelliteImages.length) {
       return res.status(201).json({
         type: "success",
         message: `Satellite images fetched and saved for all users and fields.`,
-        images:satelliteImages,
+        images: satelliteImages,
       });
     }
     async function getUserByUID(uid) {
@@ -233,8 +237,7 @@ const addSatelliteImagesSentinel = async (req, res) => {
             },
             body: JSON.stringify({
               input: {
-                // bounds: { bbox },
-                // bounds: { coordinates },
+
                 bounds: {
                   geometry: {
                     type: "Polygon",
@@ -243,6 +246,7 @@ const addSatelliteImagesSentinel = async (req, res) => {
                 },
                 data: [
                   {
+
                     type: "S2L2A",
                     dataFilter: {
                       timeRange: {
@@ -250,13 +254,17 @@ const addSatelliteImagesSentinel = async (req, res) => {
                         to: new Date(end_date).toISOString(),
                       },
                       mosaickingOrder: "mostRecent",
-                    },
+                    }, processing: {
+                      "upsampling": "BILINEAR"
+                    }
                   },
                 ],
               },
+
               output: {
-                width: 512,
-                height: 512,
+                width: 1080,
+                height: 1080,
+                upsampling: "BILINEAR",
                 responses: [
                   { identifier: "default", format: { type: "image/png" } },
                 ],
@@ -348,6 +356,7 @@ async function saveToStaticServer(
   buffer,
   fileName
 ) {
+  console.log(start_date, "start ------------");
   console.log(end_date, "end ------------");
 
   end_date = new Date(end_date).toISOString().split("T")[0];
@@ -504,8 +513,8 @@ async function sentinel() {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
         grant_type: "client_credentials",
-        client_id: "15521c37-1358-4976-a2f1-66a38393cb08",
-        client_secret: "vU0XFbIIds9GEYB5MK9manB0o2LtJXmY",
+        client_id: "daac5048-b33e-49c0-9f3b-6ab64ef85a19",
+        client_secret: "UDdS9IU7Sf1eyBKLCCPwm8fUh6nzep2E",
       }),
     }
   );

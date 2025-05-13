@@ -71,16 +71,11 @@ const SatelliteImages = () => {
 
       const apiUrl = `/add-satellite-images/${userUid}/${fieldId}`;
       const response = await api.post(apiUrl, {
-        date: selectedDate,
+        date: formatDate(selectedDate),
         coordinates
       });
 
-      // Assuming the backend now returns image URLs
-      // const fetchedData = response.data.images.map(image => ({
-      //   ...image,
-      //   // Add a preview URL if needed (for thumbnails)
-      //   previewUrl: image.image_url // or generate thumbnails on backend
-      // }));
+
 
       setSatellitesImages(response.data.images);
       setLoadingImages(false);
@@ -129,18 +124,7 @@ const SatelliteImages = () => {
 
   const { t, i18n } = useTranslation();
 
-  // useEffect(() => {
-  //   // Generate an array of dates for the next 7 days
-  //   const next7Days = Array.from({ length: 6 }, (_, index) =>
-  //     moment()
-  //       .subtract(index, "days")
-  //       .format("D MMM YYYY")
-  //   );
 
-  //   const ascendingDates = next7Days.reverse();
-
-  //   setDates(ascendingDates);
-  // }, []);
 
   const formatDate = dateString => {
     // Parse the input date string using Moment.js
@@ -156,37 +140,6 @@ const SatelliteImages = () => {
     setSelectedDate(date);
     const formattedDate = formatDate(date);
 
-    // Filter existing images first
-    // const filteredData = satellitesImages.filter(
-    //   data => moment(data.created_at).format("D MMM YYYY") === date
-    // );
-
-    // setSelectedImages(filteredData);
-
-    // If no images for this date, fetch from backend
-    // if (filteredData.length === 0) {
-    //   try {
-    //     setLoadingImages(true);
-    //     const fieldId = selectedField[0].Id;
-    //     const userId = JSON.parse(localStorage.getItem("user")).id;
-    //     const apiUrl = `/satellite-images/${userId}/${fieldId}/${formattedDate}`;
-
-    //     const response = await api.get(apiUrl);
-    //     if (response.data.imagesData && response.data.imagesData.length > 0) {
-    //       const newImages = response.data.imagesData.map(img => ({
-    //         ...img,
-    //         previewUrl: img.image_url
-    //       }));
-
-    //       setSatellitesImages(prev => [...prev, ...newImages]);
-    //       setSelectedImages(newImages);
-    //     }
-    //   } catch (error) {
-    //     console.error("API error:", error);
-    //   } finally {
-    //     setLoadingImages(false);
-    //   }
-    // }
   };
   const getSelectedField = e => {
     const selectedId = e.target.value;

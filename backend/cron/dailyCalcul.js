@@ -48,7 +48,7 @@ const getRainFromConfig = async (city_id) => {
 const getRainFromWeather = async (lat, lon) => {
     let rain = [];
     const linkApi = 'https://api.openweathermap.org/data/2.5/forecast';
-    const keyOpenWeather =  '482a3988a736d910de52ac8ac007e1ba';
+    const keyOpenWeather = '482a3988a736d910de52ac8ac007e1ba';
     const response = await fetch(`${linkApi}?lat=${lat}&lon=${lon}&units=metric&appid=${keyOpenWeather}`);
     const data = await response.json();
     let list = data.list
@@ -76,15 +76,15 @@ const getRainFromWeather = async (lat, lon) => {
 
 }
 
-const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxData,dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, startPlantingDate,dataCrop, rainConfig, latField, lonField, fieldsId, codeSensor) => {
-    let dailyDates =  []
+const calculSimulation = async (DataIrrigations, DataCrops, ruPratiqueData, RUmaxData, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, startPlantingDate, dataCrop, rainConfig, latField, lonField, fieldsId, codeSensor) => {
+    let dailyDates = []
     let dailyET0 = []
     await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`, {
-      
+
     }).then((response) => response.json()).then((jsonData) => {
-      dailyDates = jsonData.daily.time
-       dailyET0 = jsonData.daily.et0_fao_evapotranspiration
-   
+        dailyDates = jsonData.daily.time
+        dailyET0 = jsonData.daily.et0_fao_evapotranspiration
+
     });
     let surfaceOccup = 0
     let flowByTree = 0
@@ -93,7 +93,7 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
     let sumNbrIrrig = 0
     let sumRain = 0
     var elements = [];
-    let resultFormule = []; let ETC = 0; let RuInitial = 0; let Pe = 0; let bilanHydrique = 0; 
+    let resultFormule = []; let ETC = 0; let RuInitial = 0; let Pe = 0; let bilanHydrique = 0;
     let firstFormule = 0; let formule = 0; let firstFormuleIrrig = 0; let formuleIrrig = 0; let dataSoil = 0
     let IrrigationNbr = 0; let RuMax = 0; let ruPratique = 0
     if (dataCrop != null && Object.keys(dataCrop).length > 0 && typeof dataCrop.all_kc !== 'undefined' && days > 0 && latField != null && latField != "" && lonField != null && lonField != "") {
@@ -124,24 +124,24 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
                 var currentYear = currentDate.getYear();
                 let DateFormat = new Date(date)
                 let dateET0 = DateFormat.toISOString().slice(0, 10)
-                dailyDates.map((dayDate,indx)=>{
-                    if(dateET0 == dayDate){
+                dailyDates.map((dayDate, indx) => {
+                    if (dateET0 == dayDate) {
                         ET0 = dailyET0[indx]
                     }
-                })   
-                if(DataCrops.length > 0){
-                    DataCrops.map(item=>{
-                        surfaceOccup =  2 * 3
+                })
+                if (DataCrops.length > 0) {
+                    DataCrops.map(item => {
+                        surfaceOccup = 2 * 3
                     })
-                
+
                 }
-                if(DataIrrigations.length > 0){
-                    DataIrrigations.map(item=>{
-                        item.map(value=>{
-                            flowByTree =  Number(value.drippers) * Number(value.flowrate)
-                        })     
+                if (DataIrrigations.length > 0) {
+                    DataIrrigations.map(item => {
+                        item.map(value => {
+                            flowByTree = Number(value.drippers) * Number(value.flowrate)
+                        })
                     })
-                
+
                 }
 
                 if (typeof rainConfig.rainByDay !== 'undefined' && typeof rainConfig.rainByDay[month + "_" + day + "_rain"] !== 'undefined') {
@@ -177,7 +177,7 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
                 if (i > 1) {
                     prevResultBilan = resultFormule[(i - 1) - 1]
                     // formuleIrrig = ((Number(RuMax) - Number(prevResultBilan)) + Number(ETC)) / (Number(effIrrig) / 100)
-                     formuleIrrig = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100)
+                    formuleIrrig = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100)
 
                     formule = (Number(prevResultBilan) + parseInt(Pe)) - (parseFloat(ETC).toFixed(1) + Irrigation)
                 }
@@ -200,17 +200,17 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
                     } else {
                         bilanHydrique = RuMax
                     }
-                    if(formule <= RuMin  ){
+                    if (formule <= RuMin) {
                         Irrigation = formuleIrrig
                         bilanHydrique = formule + formuleIrrig
-                    }else{
+                    } else {
                         Irrigation = 0
 
                     }
-  
+
                 }
                 if (Irrigation == 0) {
-                    
+
                     IrrigationNbr = 0
                 } else {
                     IrrigationNbr = 1
@@ -228,20 +228,20 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
                 }
                 sumRain = sumRain + rainData
                 elements.push({
-                    RUmax : RuMax,
-                    RUMin:RuMin,
+                    RUmax: RuMax,
+                    RUMin: RuMin,
                     days: i,
                     date: date,
                     bilan: bilanHydrique,
                     pe: Pe,
                     Etc: ETC,
-                    ET0 :ET0, 
+                    ET0: ET0,
                     rain: rainData,
                     kc: dataCrop.all_kc[i - 1].kc,
                     irrigation: Irrigation,
-                    irrigationNbr: IrrigationNbr, 
+                    irrigationNbr: IrrigationNbr,
                     codeSensor: codeSensor,
-                    irrigationTime : IrrigTime
+                    irrigationTime: IrrigTime
                 })
             }
         }
@@ -254,47 +254,47 @@ const calculSimulation = async (DataIrrigations,DataCrops,ruPratiqueData, RUmaxD
 const addCalculSensorRecommnd = async (user_id, field_id) => {
 
     try {
-    await new CalculSensor()
-    .query((qb) => {
-        qb.select('*');
-        qb.where({ user_id: user_id });
-    })
-        .fetchAll({ require: false })
-        .then(async result => {
-            let resultCalcul = JSON.parse(JSON.stringify(result))
-            let todayDate = new Date()
-            let today = todayDate.toISOString().slice(0, 10)
-            let filteredResult = [];
-            let title = ''
-            let description = ''
-            resultCalcul.map(calcul => {
-                let startDate = new Date(calcul.start_date).toISOString().slice(0, 10)
-                let endDate = new Date(calcul.end_date).toISOString().slice(0, 10)
-                let resultCalcul = calcul.result
-                if (today >= startDate && today <= endDate) {
-                    filteredResult = resultCalcul.filter(result => {
-                        let resultDate = new Date(result.date).toISOString().slice(0, 10)
-                        return startDate <= resultDate && endDate >= resultDate
+        await new CalculSensor()
+            .query((qb) => {
+                qb.select('*');
+                qb.where({ user_id: user_id });
+            })
+            .fetchAll({ require: false })
+            .then(async result => {
+                let resultCalcul = JSON.parse(JSON.stringify(result))
+                let todayDate = new Date()
+                let today = todayDate.toISOString().slice(0, 10)
+                let filteredResult = [];
+                let title = ''
+                let description = ''
+                resultCalcul.map(calcul => {
+                    let startDate = new Date(calcul.start_date).toISOString().slice(0, 10)
+                    let endDate = new Date(calcul.end_date).toISOString().slice(0, 10)
+                    let resultCalcul = calcul.result
+                    if (today >= startDate && today <= endDate) {
+                        filteredResult = resultCalcul.filter(result => {
+                            let resultDate = new Date(result.date).toISOString().slice(0, 10)
+                            return startDate <= resultDate && endDate >= resultDate
+                        })
+                    }
+                })
+                if (filteredResult.length > 0) {
+                    let calculWithIrrigation = filteredResult.filter(calcul => {
+                        let irrig = calcul.irrigationNbr
+                        return irrig !== 0
                     })
+                    if (calculWithIrrigation.length > 0) {
+                        title = "Irrigate"
+                        description = "Soil water is now less than the refill point ,  Plant water stress can occur if refill status persists"
+                    }
+                    else {
+                        title = "Don't Irrigate"
+                        description = "Soil water is not expected to fall below the refill point within the next 7 days, even without irrigation"
+                    }
+
+                    await new Recommendation({ title, description, user_id, field_id }).save()
                 }
             })
-            if(filteredResult.length > 0){
-                let calculWithIrrigation = filteredResult.filter(calcul=>{
-                   let irrig = calcul.irrigationNbr
-                    return irrig !== 0
-                })
-                if(calculWithIrrigation.length > 0){
-                    title =  "Irrigate"
-                    description = "Soil water is now less than the refill point ,  Plant water stress can occur if refill status persists"
-                }
-                else{
-                    title = "Don't Irrigate"
-                    description = "Soil water is not expected to fall below the refill point within the next 7 days, even without irrigation"
-                }
-
-                await new Recommendation({ title,description,user_id,field_id}).save()
-            }
-        })     
     } catch (error) {
         console.log(error)
     }
@@ -303,7 +303,7 @@ const addCalculSensorRecommnd = async (user_id, field_id) => {
 
 // const calculBilanHydrique = async () => {
 //     console.log('Running calculBilanHydrique cron');
-  
+
 //     try {
 //         const fields = await new Field()
 //         .query((qb) => qb.where('deleted_at', null).whereNotNull('Latitude').whereNotNull('Longitude'))
@@ -318,7 +318,7 @@ const addCalculSensorRecommnd = async (user_id, field_id) => {
 //                 ],
 //                 require: false
 //             });
-            
+
 //         if (!fields || fields.length === 0) {
 //             console.log('No fields found');
 //             return;
@@ -473,7 +473,7 @@ const calculBilanHydrique = async (req, res) => {
                         let plantingDate = "";
                         let profondeur = 0;
                         let zoneData = [];
-                        
+
                         //Zone
                         if (fields.zones !== []) {
                             let soilsData = fields.zones
@@ -494,11 +494,11 @@ const calculBilanHydrique = async (req, res) => {
                         //Crops
 
                         if (fields.crops !== []) {
-                            DataIrrigations = DataCrops.map(data=>{
+                            DataIrrigations = DataCrops.map(data => {
                                 return data.irrigations
                             })
-                            
-                           let cropsData = fields.crops
+
+                            let cropsData = fields.crops
                             cropsData.map(async crops => {
                                 days = Number(crops.days)
                                 profondeur = Number(crops.rootDepth)
@@ -510,18 +510,18 @@ const calculBilanHydrique = async (req, res) => {
                                     dataCrop = crops.varieties;
                                 }
                             })
-                            DataCrops.map(data=>{
+                            DataCrops.map(data => {
                                 let irrigData = data.irrigations
-                                    irrigData.map(irrig=>{
-                                        if(typeof irrig.effIrrig !== "undefined" )
-                                            effIrrig = Number(irrig.effIrrig)
-                                    })
-                                
+                                irrigData.map(irrig => {
+                                    if (typeof irrig.effIrrig !== "undefined")
+                                        effIrrig = Number(irrig.effIrrig)
+                                })
+
 
                             })
                         }
-                       
-                        if (fields.sensors !== [] && fields.sensors!= null && Object.keys(fields.sensors).length > 0) {
+
+                        if (fields.sensors !== [] && fields.sensors != null && Object.keys(fields.sensors).length > 0) {
 
                             let city_id = ""
                             let farmId = fields.farm_id
@@ -534,7 +534,7 @@ const calculBilanHydrique = async (req, res) => {
                             let rainConfig = await getRainFromConfig(city_id);
 
                             let sensorsData = fields.sensors
-                            
+
                             sensorsData.map(async (sensors) => {
                                 let codeSensor = sensors.code
                                 let user_id = sensors.user_id
@@ -542,7 +542,7 @@ const calculBilanHydrique = async (req, res) => {
                                     //let RuMax = getDataFromApiSensor(codeSensor);
                                     let key = fields.id;
                                     let resultCalcul = null;
-                                    resultCalcul = await calculSimulation(DataIrrigations,DataCrops,ruPratique, RUmax,dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate,dataCrop, rainConfig, latField, lonField, fields.id, codeSensor);
+                                    resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, codeSensor);
 
                                     dataCalcul.push({
                                         "user_id": user_id,
@@ -565,60 +565,60 @@ const calculBilanHydrique = async (req, res) => {
                                             plantingDate: plantingDate
 
                                         })
-                                        if(resultCalcul.length > 0){
+                                        if (resultCalcul.length > 0) {
                                             await new CalculSensor()
-                                            .query((qb) => {
-                                                qb.select('*');
-                                                qb.where({ sensor_id: sensors.id });
-                                            }).fetchAll({ require: false })
-                                            .then(async dataFromCalcul => {
-                                                let r = JSON.parse(JSON.stringify(dataFromCalcul))
-                                                if (r.length > 0) {
-                                                    //     let endDate = data.end_date.slice(0, 10)
-                                                    //     let currentDay = dateStart.toISOString().slice(0, 10)
-                                                    //     let startDate = data.start_date.slice(0, 10)
-                                                    //     let lastDay = dateEnd.toISOString().slice(0, 10)
-                                                    // if (currentDay >= endDate) {
+                                                .query((qb) => {
+                                                    qb.select('*');
+                                                    qb.where({ sensor_id: sensors.id });
+                                                }).fetchAll({ require: false })
+                                                .then(async dataFromCalcul => {
+                                                    let r = JSON.parse(JSON.stringify(dataFromCalcul))
+                                                    if (r.length > 0) {
+                                                        //     let endDate = data.end_date.slice(0, 10)
+                                                        //     let currentDay = dateStart.toISOString().slice(0, 10)
+                                                        //     let startDate = data.start_date.slice(0, 10)
+                                                        //     let lastDay = dateEnd.toISOString().slice(0, 10)
+                                                        // if (currentDay >= endDate) {
                                                         // }
-                                                     await new CalculSensor({user_id : user_id,field_id : sensors.field_id , sensor_id :sensors.id ,sensor_code :codeSensor,start_date:dateStart,end_date:dateEnd ,result :resultCalcul,inputs:inputs}).save()
-                                                    // await addCalculSensorRecommnd(user_id,sensors.field_id )
-                                                    logger.info( dateStart + " Calcul Saved successfully ")
+                                                        await new CalculSensor({ user_id: user_id, field_id: sensors.field_id, sensor_id: sensors.id, sensor_code: codeSensor, start_date: dateStart, end_date: dateEnd, result: resultCalcul, inputs: inputs }).save()
+                                                        // await addCalculSensorRecommnd(user_id,sensors.field_id )
+                                                        logger.info(dateStart + " Calcul Saved successfully ")
                                                         // await new CalculSensor({user_id : user_id,field_id : sensors.field_id , sensor_id :sensors.id ,sensor_code :codeSensor,start_date:dateStart,end_date:dateEnd ,result :resultCalcul,inputs:inputs}).save()
                                                         // logger.info( "sensor_id ->" + sensors.id +" field_id -> " + sensors.field_id + "success")
-                                                
-                                                }
-                                                // if (r.length == 0) {
+
+                                                    }
+                                                    // if (r.length == 0) {
                                                     // await new CalculSensor({user_id : user_id,field_id : sensors.field_id , sensor_id :sensors.id ,sensor_code :codeSensor,start_date:dateStart,end_date:dateEnd ,result :resultCalcul,inputs:inputs}).save()
                                                     // await addCalculSensorRecommnd(user_id,sensors.field_id )
                                                     // logger.info( "sensor_id ->" + sensors.id +" field_id -> " + sensors.field_id + "success")
-                                                // }
-                                            }).catch(err => {
-                                                console.log('Calculations Error'+err);
+                                                    // }
+                                                }).catch(err => {
+                                                    console.log('Calculations Error' + err);
 
-                                            })
+                                                })
                                         }
 
                                     }
                                 }
                             })
-                           
+
                         }
                     }))
                     console.log('Calculations completed successfully');
 
                 }
             }).catch(err => {
-                logger.fatal('**Calcul cron ** '+ err)
+                logger.fatal('**Calcul cron ** ' + err)
             });
     } catch (error) {
         console.log(error)
-        logger.fatal('**Calcul cron ** '+ error)
+        logger.fatal('**Calcul cron ** ' + error)
     }
 
 
 
 }
 
-    cron.schedule('0 4 * * *', async () => {
-        await calculBilanHydrique();
-    });
+cron.schedule('0 4 * * *', async () => {
+    await calculBilanHydrique();
+});

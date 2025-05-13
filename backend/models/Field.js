@@ -23,7 +23,10 @@ const  Field = bookshelf.Model.extend({
   events(){
     return this.hasMany(require('./Event'))
     
-  }   
+  } ,  
+  farm() {
+    return this.belongsTo('./Farm');
+  }
 });
 
 module.exports = Field;

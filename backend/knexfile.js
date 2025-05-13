@@ -1,5 +1,7 @@
 const dotenv = require('dotenv');
-dotenv.config();
+
+dotenv.config({ path: __dirname + '/./.env' }); // if your .env is one directory up
+
 module.exports = {
     development: {
       client: 'mysql',

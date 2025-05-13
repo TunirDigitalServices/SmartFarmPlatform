@@ -761,13 +761,13 @@ const createBulletin = async (req, res) => {
                     let startDate = new Date(dataCalcul.start_date)
                     let endDate = new Date(dataCalcul.end_date)
                     let resultCalcul = dataCalcul.result
-    
-    
+
+
                     const filteredResult = resultCalcul.filter(result => {
                         let resultDate = new Date(result.date).toISOString().slice(0, 10)
                         return toSqlDate(startDate) <= resultDate && toSqlDate(endDate) >= resultDate && result.codeSensor == dataCalcul.sensors.code
                     })
-    
+
                     // console.log(dataCalcul.fields.zones.soilTypes)
                     if (dataCalcul) {
                         if (dataCalcul.fields.zones) {
@@ -784,7 +784,7 @@ const createBulletin = async (req, res) => {
                                 plantDate = crops.growingDate
                                 if (typeof crops.varieties !== 'undefined' && crops.varieties != null && crops.varieties != "") {
                                     cropVariety = crops.varieties.crop_variety
-    
+
                                 }
                                 let irrig = crops.irrigations
                                 if (irrig) {
@@ -807,17 +807,17 @@ const createBulletin = async (req, res) => {
                             dataCalcul.users.farms && dataCalcul.users.farms.map(farms => {
                                 if (farms) {
                                     farm = farms.name
-    
+
                                 }
                             })
                         }
-    
+
                     }
                     let lat = parseFloat(dataCalcul.sensors.Latitude).toFixed(4)
                     let lng = parseFloat(dataCalcul.sensors.Latitude).toFixed(4)
                     let total = 0;
                     if (filteredResult.length > 0) {
-    
+
                         for (let index = 0; index < filteredResult.length - 1; index++) {
                             const element = filteredResult[index];
                             total += element.irrigation;
@@ -833,10 +833,10 @@ const createBulletin = async (req, res) => {
                             const averageBilanValue = element.bilan.reduce((acc, bilan) => acc + parseFloat(bilan.value), 0) / element.bilan.length;
 
                             bilan.push({
-                                "value": parseFloat(averageBilanValue).toFixed(1), 
+                                "value": parseFloat(averageBilanValue).toFixed(1),
 
                             })
-                               
+
                         }
                     }
                     let calculIrrigation = calcul.filter(irrig => {
@@ -857,11 +857,11 @@ const createBulletin = async (req, res) => {
                     const hours = Math.floor(irrigTime);
                     let irrigationDuration = `${hours}h`;
                     const html = fs.readFile(path.join(__dirname, '../../reports/bulletin.html'), 'utf-8', async function (err, data) {
-    
+
                         const filename = dataCalcul.fields.uid + "_" + toSqlDate(startDate) + "_" + toSqlDate(endDate) + '_doc' + '.pdf';
                         await pdf.create(
                             {
-    
+
                                 html: data,
                                 data: {
                                     products: [{
@@ -886,40 +886,40 @@ const createBulletin = async (req, res) => {
                                         "irrigNumber": irrigNumber,
                                         "irrigTime": irrigationDuration,
                                         "irrigDate": irrigDates
-    
+
                                     }],
                                     calcul: calcul,
-                                    bilan :bilan
-    
+                                    bilan: bilan
+
                                 },
                                 path: './docs/' + filename
                             },
                             option1)
-    
+
                             .then(async result => {
                                 if (result) {
                                     console.log(result)
                                     await new Report({ user_id: dataCalcul.users.id, field_id: dataCalcul.fields.id, filename: filename }).save()
-                                   // await addNotifWhenCreateBulletin(dataCalcul.users.id)
+                                    // await addNotifWhenCreateBulletin(dataCalcul.users.id)
                                     // if (phoneNumber && phoneNumber != "") {
-                                       //  await sendSMStoUsers(phoneNumber, irrigNumber, irrigDates, irrigTime)
-    
+                                    //  await sendSMStoUsers(phoneNumber, irrigNumber, irrigDates, irrigTime)
+
                                     // }
                                 }
                             }).catch(error => {
                                 console.log(error);
                             });
                     })
-    
-    
-    
+
+
+
                 }))
                 return res.status(200).json({ type: "success", result: data });
-    
+
             }).catch(err => {
                 console.log(err)
             })
-        
+
     } catch (error) {
         return res.status(500).json({ type: "danger", message: "Error Creating Report" });
 
@@ -1113,7 +1113,7 @@ const getDataFromApiSensor = async (codeSensor) => {
 //                     // IrrigTime = (Number(doseByTree) / (Number(flowByTree) / 1000)) * 60;
 //                     IrrigTime = Number(Irrigation) / Number(rainfall)
 //                 }
-             
+
 
 //                 let hourlyBilan = [];
 //                 let requiredIrrigation = 0;
@@ -1123,7 +1123,7 @@ const getDataFromApiSensor = async (codeSensor) => {
 //                     // let prevHourlyBilan = hourlyBilan.length > 0 ? hourlyBilan[hourlyBilan.length - 1].value : RuInitial;
 //                     let hourlyETC = ETC / 24;
 //                     let hourlyBilanValue = (prevHourlyBilan + Pe / 24) - hourlyETC;
-                    
+
 //                     if (hourlyBilanValue <= RuMin) {
 //                        requiredIrrigation = (Number(RuMax) - Number(RuMin)) / (Number(effIrrig) / 100)
 //                       Irrigation += requiredIrrigation;
@@ -1144,7 +1144,7 @@ const getDataFromApiSensor = async (codeSensor) => {
 //                         sumIrrig = sumIrrig + Irrigation;
 //                         rainfall = Number(flowByTree) / Number(surfaceOccup);
 //                         IrrigTime = Number(Irrigation) / Number(rainfall)
-    
+
 //                     }
 
 //                     prevHourlyBilan = hourlyBilanValue;
@@ -1155,7 +1155,7 @@ const getDataFromApiSensor = async (codeSensor) => {
 //                     sumETC = sumETC + ETC;
 //                 }
 
-               
+
 
 //                 sumRain = sumRain + rainData;
 
@@ -1203,21 +1203,21 @@ const calculSimulation = async (
     lonField,
     fieldsId,
     codeSensor
-  ) => {
+) => {
     let dailyDates = [];
     let dailyET0 = [];
-  
+
     // Fetch daily evapotranspiration data
     await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`,
-      {}
+        `https://api.open-meteo.com/v1/forecast?latitude=${latField}&longitude=${lonField}&timezone=GMT&daily=et0_fao_evapotranspiration`,
+        {}
     )
-      .then((response) => response.json())
-      .then((jsonData) => {
-        dailyDates = jsonData.daily.time;
-        dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
-      });
-  
+        .then((response) => response.json())
+        .then((jsonData) => {
+            dailyDates = jsonData.daily.time;
+            dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
+        });
+
     // Initialize variables
     let surfaceOccup = 0;
     let flowByTree = 0;
@@ -1226,106 +1226,106 @@ const calculSimulation = async (
     let sumNbrIrrig = 0;
     let sumRain = 0;
     let elements = [];
-  
+
     let RuInitial = Number(RUmaxData) * Number(profondeur);
     let ruPratique = Number(ruPratiqueData);
     let RuMax = RuInitial;
     let Epuisement_maximal = (RuMax * ruPratique) / 100;
     let RuMin = RuMax - Epuisement_maximal;
     let prevHourlyBilan = RuInitial;
-  
-    if (
-      dataCrop &&
-      Object.keys(dataCrop).length > 0 &&
-      typeof dataCrop.all_kc !== "undefined" &&
-      days > 0 &&
-      latField &&
-      lonField
-    ) {
-      // Main loop for each day
-      for (let i = 1; i <= days; i++) {
-        if (typeof dataCrop.all_kc[i - 1] !== "undefined") {
-          let ET0 = 6;
-          let date = addDays(startPlantingDate, i - 1);
-          let month = date.getMonth();
-          let day = date.getDate();
-          let year = date.getFullYear();
-          let dateET0 = date.toISOString().slice(0, 10);
-  
-          // Retrieve ET0 for the specific day
-          dailyDates.forEach((dayDate, indx) => {
-            if (dateET0 === dayDate) {
-              ET0 = dailyET0[indx];
-            }
-          });
-  
-          // Calculate surface occupied and flow by tree
-          if (DataCrops.length > 0) {
-            surfaceOccup = DataCrops[0].surface;
-          }
-          if (DataIrrigations.length > 0) {
-            flowByTree = DataIrrigations[0].reduce((acc, value) => acc + Number(value.drippers) * Number(value.flowrate), 0);
-          }
-  
-          // Get rainfall data
-          let rainData = getRainData(rainConfig, month, day);
-          if (isCurrentWeek(month, day, year)) {
-            let sataRainWeather = await getRainFromWeather(latField, lonField);
-            rainData = sataRainWeather[getFormattedDate(year, month, day)] || 0;
-          }
-  
-          let Pe = (Number(rainData) * Number(effPluie)) / 100;
-          let kcValue = dataCrop.all_kc[i - 1]?.kc || 0;
-          let ETC = kcValue * Number(ET0);
-  
-          let { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime , pluieArrosage } = calculateIrrigation(
-            i,
-            Pe,
-            ETC,
-            RuMax,
-            RuMin,
-            RuInitial,
-            prevHourlyBilan,
-            effIrrig,
-            surfaceOccup,
-            flowByTree
-          );
-  
-          // Update sums
-          sumETC += ETC;
-          sumRain += rainData;
-          sumNbrIrrig += IrrigationNbr;
-          sumIrrig += Irrigation;
-  
-          elements.push({
-            RUmax: RuMax,
-            RUMin: RuMin,
-            days: i,
-            date: date,
-            bilan: bilanHydrique,
-            pe: Pe,
-            Etc: ETC,
-            ET0: ET0,
-            rain: rainData,
-            kc: kcValue,
-            irrigation: Irrigation,
-            irrigationNbr: IrrigationNbr,
-            pluieArrosage : pluieArrosage , 
-            codeSensor: codeSensor,
-            irrigationTime: IrrigTime,
-          });
-  
-          prevHourlyBilan = bilanHydrique[bilanHydrique.length - 1].value;
-        }
-      }
-    }
-  
-    return elements;
-  };
-  
-  // Helper functions
 
-  const getRainData = (rainConfig, month, day) => {
+    if (
+        dataCrop &&
+        Object.keys(dataCrop).length > 0 &&
+        typeof dataCrop.all_kc !== "undefined" &&
+        days > 0 &&
+        latField &&
+        lonField
+    ) {
+        // Main loop for each day
+        for (let i = 1; i <= days; i++) {
+            if (typeof dataCrop.all_kc[i - 1] !== "undefined") {
+                let ET0 = 6;
+                let date = addDays(startPlantingDate, i - 1);
+                let month = date.getMonth();
+                let day = date.getDate();
+                let year = date.getFullYear();
+                let dateET0 = date.toISOString().slice(0, 10);
+
+                // Retrieve ET0 for the specific day
+                dailyDates.forEach((dayDate, indx) => {
+                    if (dateET0 === dayDate) {
+                        ET0 = dailyET0[indx];
+                    }
+                });
+
+                // Calculate surface occupied and flow by tree
+                if (DataCrops.length > 0) {
+                    surfaceOccup = DataCrops[0].surface;
+                }
+                if (DataIrrigations.length > 0) {
+                    flowByTree = DataIrrigations[0].reduce((acc, value) => acc + Number(value.drippers) * Number(value.flowrate), 0);
+                }
+
+                // Get rainfall data
+                let rainData = getRainData(rainConfig, month, day);
+                if (isCurrentWeek(month, day, year)) {
+                    let sataRainWeather = await getRainFromWeather(latField, lonField);
+                    rainData = sataRainWeather[getFormattedDate(year, month, day)] || 0;
+                }
+
+                let Pe = (Number(rainData) * Number(effPluie)) / 100;
+                let kcValue = dataCrop.all_kc[i - 1]?.kc || 0;
+                let ETC = kcValue * Number(ET0);
+
+                let { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime, pluieArrosage } = calculateIrrigation(
+                    i,
+                    Pe,
+                    ETC,
+                    RuMax,
+                    RuMin,
+                    RuInitial,
+                    prevHourlyBilan,
+                    effIrrig,
+                    surfaceOccup,
+                    flowByTree
+                );
+
+                // Update sums
+                sumETC += ETC;
+                sumRain += rainData;
+                sumNbrIrrig += IrrigationNbr;
+                sumIrrig += Irrigation;
+
+                elements.push({
+                    RUmax: RuMax,
+                    RUMin: RuMin,
+                    days: i,
+                    date: date,
+                    bilan: bilanHydrique,
+                    pe: Pe,
+                    Etc: ETC,
+                    ET0: ET0,
+                    rain: rainData,
+                    kc: kcValue,
+                    irrigation: Irrigation,
+                    irrigationNbr: IrrigationNbr,
+                    pluieArrosage: pluieArrosage,
+                    codeSensor: codeSensor,
+                    irrigationTime: IrrigTime,
+                });
+
+                prevHourlyBilan = bilanHydrique[bilanHydrique.length - 1].value;
+            }
+        }
+    }
+
+    return elements;
+};
+
+// Helper functions
+
+const getRainData = (rainConfig, month, day) => {
     if (!rainConfig) {
         // console.log("Rain config is null or undefined, returning default value 0.");
         return 0;
@@ -1335,25 +1335,25 @@ const calculSimulation = async (
     let monthKey = `${month}_rain`;
 
     return (
-      (rainConfig.rainByDay && rainConfig.rainByDay[dayKey]) ||
-      (rainConfig.rainByMonth && rainConfig.rainByMonth[monthKey]) ||
-      0
+        (rainConfig.rainByDay && rainConfig.rainByDay[dayKey]) ||
+        (rainConfig.rainByMonth && rainConfig.rainByMonth[monthKey]) ||
+        0
     );
 };
 
-  
-  const isCurrentWeek = (month, day, year) => {
+
+const isCurrentWeek = (month, day, year) => {
     let currentDate = new Date();
     let dateCurrent = currentDate.getDate();
     currentDate.setDate(currentDate.getDate() + 7);
     return currentDate.getMonth() === month && day >= dateCurrent && day < currentDate.getDate() && year === currentDate.getFullYear();
-  };
-  
-  const getFormattedDate = (year, month, day) => {
+};
+
+const getFormattedDate = (year, month, day) => {
     return `${year}-${('0' + (month + 1)).slice(-2)}-${('0' + day).slice(-2)}`;
-  };
-  
-  const calculateIrrigation = (i, Pe, ETC, RuMax, RuMin, RuInitial, prevHourlyBilan, effIrrig, surfaceOccup, flowByTree) => {
+};
+
+const calculateIrrigation = (i, Pe, ETC, RuMax, RuMin, RuInitial, prevHourlyBilan, effIrrig, surfaceOccup, flowByTree) => {
     let bilanHydrique = [];
     let Irrigation = 0;
     let IrrigationNbr = 0;
@@ -1363,25 +1363,25 @@ const calculSimulation = async (
     let prevResultBilan = i > 1 ? prevHourlyBilan : RuInitial;
     let pluieArrosage = flowByTree / surfaceOccup
     for (let hour = 0; hour < 24; hour++) {
-      let hourlyETC = ETC / 24;
-      let hourlyBilanValue = (prevResultBilan + Pe / 24) - hourlyETC;
-  
-      if (hourlyBilanValue <= RuMin) {
-        Irrigation = formuleIrrig;
-        hourlyBilanValue = RuMax;
-        IrrigationNbr = 1;
-        IrrigTime = (Irrigation / pluieArrosage) * 60 ;
-      }
-  
-      hourlyBilanValue = Math.min(hourlyBilanValue, RuMax);
-      bilanHydrique.push({ hour: hour, value: hourlyBilanValue });
-  
-      prevResultBilan = hourlyBilanValue;
+        let hourlyETC = ETC / 24;
+        let hourlyBilanValue = (prevResultBilan + Pe / 24) - hourlyETC;
+
+        if (hourlyBilanValue <= RuMin) {
+            Irrigation = formuleIrrig;
+            hourlyBilanValue = RuMax;
+            IrrigationNbr = 1;
+            IrrigTime = (Irrigation / pluieArrosage) * 60;
+        }
+
+        hourlyBilanValue = Math.min(hourlyBilanValue, RuMax);
+        bilanHydrique.push({ hour: hour, value: hourlyBilanValue });
+
+        prevResultBilan = hourlyBilanValue;
     }
-  
-    return { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime , pluieArrosage };
-  };
-  
+
+    return { bilanHydrique, Irrigation, IrrigationNbr, IrrigTime, pluieArrosage };
+};
+
 
 
 const getRainFromConfig = async (city_id) => {
@@ -1455,9 +1455,9 @@ const calculBilanHydrique = async (req, res) => {
     const allowedEndTime = new Date();
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
-  if (today.getDay() !== 1 || today !== allowedStartTime) {
-    return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
-}
+    if (today.getDay() !== 1 || today !== allowedStartTime) {
+        return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
+    }
 
     try {
         const field = new Field()
@@ -1492,7 +1492,7 @@ const calculBilanHydrique = async (req, res) => {
                         let plantingDate = "";
                         let profondeur = 0;
                         let zoneData = [];
-                        
+
                         //Zone
                         if (fields.zones !== []) {
                             let soilsData = fields.zones
@@ -1649,7 +1649,8 @@ const calculBilanHydrique = async (req, res) => {
 // admin calcul
 const calculBilanHydriqueByField = async (req, res) => {
     const errors = validationResult(req);
-    const { fieldId , userId } = req.body;
+    const { fieldId, userId } = req.body;
+
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
@@ -1681,6 +1682,8 @@ const calculBilanHydriqueByField = async (req, res) => {
                 ],
                 require: false
             });
+  
+
 
         if (field === null) {
             return res.status(404).json({ type: "danger", message: "no_fields" });
@@ -1724,7 +1727,7 @@ const calculBilanHydriqueByField = async (req, res) => {
             // Crops
             if (fields.crops.length > 0) {
                 DataIrrigations = DataCrops.map(data => data.irrigations);
-                
+
                 let cropsData = fields.crops;
                 for (let crops of cropsData) {
                     days = Number(crops.days);
@@ -1753,11 +1756,11 @@ const calculBilanHydriqueByField = async (req, res) => {
 
             // Check if sensors exist
             // if (fields.sensors && fields.sensors.length > 0) {
-                let farmId = fields.farm_id;
-                const farm = await new Farm({ 'id': farmId }).fetch({ require: false });
-                let city_id = farm ? farm.toJSON().city_id : "";
+            let farmId = fields.farm_id;
+            const farm = await new Farm({ 'id': farmId }).fetch({ require: false });
+            let city_id = farm ? farm.toJSON().city_id : "";
 
-                let rainConfig = await getRainFromConfig(city_id);
+            let rainConfig = await getRainFromConfig(city_id);
 
             //     for (let sensors of fields.sensors) {
             //         let codeSensor = sensors.code;
@@ -1822,49 +1825,49 @@ const calculBilanHydriqueByField = async (req, res) => {
             //         }
             //     }
             // } else { 
-                // If no sensors, still perform the calculation using default or minimal values
-                console.log(days);
-                if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
-                    let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
-                    if (resultCalcul.length > 0) {
-                        const today = new Date();
-                        const day = today.getDay(); // 0 (Sun) to 6 (Sat)
-                        const diffToMonday = (day === 0 ? -6 : 1) - day; // Calculate days to subtract to get Monday
-                    
-                        const start_date = new Date(today);
-                        start_date.setDate(today.getDate() + diffToMonday);
-                    
-                        const end_date = new Date(start_date);
-                        end_date.setDate(start_date.getDate() + 7);
-                        inputs.push({
-                            ruPratique: ruPratique,
-                            RUmax: RUmax,
-                            effPluie: effPluie,
-                            effIrrig: effIrrig,
-                            irrigArea: irrigArea,
-                            profondeur: profondeur,
-                            plantingDate: plantingDate
-                        });
+            // If no sensors, still perform the calculation using default or minimal values
+            console.log(days);
+            if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
+                let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
+                if (resultCalcul.length > 0) {
+                    const today = new Date();
+                    const day = today.getDay(); // 0 (Sun) to 6 (Sat)
+                    const diffToMonday = (day === 0 ? -6 : 1) - day; // Calculate days to subtract to get Monday
 
-                        let calcData = {
-                            user_id: userId,
-                            field_id: fields.id,
-                            sensor_id: null,
-                            sensor_code: null,
-                            start_date,
-                            end_date,
-                            result: resultCalcul,
-                            inputs: inputs
-                        };
-                        console.log(resultCalcul)
-                        allCalculations.push(calcData);
-                        savedCalcul = await new CalculSensor(calcData).save();
-                    }
+                    const start_date = new Date(today);
+                    start_date.setDate(today.getDate() + diffToMonday);
+
+                    const end_date = new Date(start_date);
+                    end_date.setDate(start_date.getDate() + 7);
+                    inputs.push({
+                        ruPratique: ruPratique,
+                        RUmax: RUmax,
+                        effPluie: effPluie,
+                        effIrrig: effIrrig,
+                        irrigArea: irrigArea,
+                        profondeur: profondeur,
+                        plantingDate: plantingDate
+                    });
+
+                    let calcData = {
+                        user_id: userId,
+                        field_id: fields.id,
+                        sensor_id: null,
+                        sensor_code: null,
+                        start_date,
+                        end_date,
+                        result: resultCalcul,
+                        inputs: inputs
+                    };
+                    console.log(resultCalcul)
+                    allCalculations.push(calcData);
+                    savedCalcul = await new CalculSensor(calcData).save();
                 }
             }
+        }
         // }
         if (allCalculations.length > 0) {
-            return res.status(201).json({data : allCalculations , id : savedCalcul.id});
+            return res.status(201).json({ data: allCalculations, id: savedCalcul.id });
         } else {
             return res.status(200).json({ type: "success", message: "ok" });
         }
@@ -1878,7 +1881,7 @@ const calculBilanHydriqueByField = async (req, res) => {
 
 const EditBilanHydriqueByField = async (req, res) => {
     const errors = validationResult(req);
-    const { fieldId , RUmax , effPluie , effIrrig , irrigArea , ruPratique ,profondeur } = req.body;
+    const { fieldId, RUmax, effPluie, effIrrig, irrigArea, ruPratique, profondeur } = req.body;
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
@@ -1933,14 +1936,14 @@ const EditBilanHydriqueByField = async (req, res) => {
             // Zone
             if (fields.zones.length > 0) {
                 let soilsData = fields.zones;
-                    zoneData.push({
-                        ruPratique: ruPratique,
-                        RUmax: RUmax,
-                        effIrrig: effIrrig,
-                        effPluie: effPluie,
-                        irrigArea: irrigArea,
-                    });
-                
+                zoneData.push({
+                    ruPratique: ruPratique,
+                    RUmax: RUmax,
+                    effIrrig: effIrrig,
+                    effPluie: effPluie,
+                    irrigArea: irrigArea,
+                });
+
             }
 
             // Crops
@@ -2038,7 +2041,7 @@ const EditBilanHydriqueByField = async (req, res) => {
         }
 
         if (allCalculations.length > 0) {
-            return res.status(201).json({data : allCalculations});
+            return res.status(201).json({ data: allCalculations });
         } else {
             return res.status(200).json({ type: "success", message: "ok" });
         }
@@ -2127,7 +2130,7 @@ const getCalculSensor = async (req, res) => {
     if (!req.userUid || req.userUid === "") {
         return res.status(404).json({ type: "danger", message: "no_user" });
     }
-    
+
     const uid = req.userUid;
     const sensorCode = req.params.sensorCode || ""; // Default to empty string if not provided
     console.log(sensorCode)
@@ -2171,9 +2174,9 @@ const getCalculSensor = async (req, res) => {
             let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
             let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
             inputsCalcul = calcul.inputs;
-            
+
             if (today >= startDate && today <= endDate) {
-                console.log('Here is sensor calcul '+ calcul.id)
+                console.log('Here is sensor calcul ' + calcul.id)
                 filteredResult = calcul.result.filter(result => {
                     let resultDate = new Date(result.date).toISOString().slice(0, 10);
                     return startDate <= resultDate && endDate >= resultDate && (sensorCode === "" || result.codeSensor === sensorCode);
@@ -2282,67 +2285,67 @@ const getAllCalculByUser = async (req, res) => {
 const getAllCalculByField = async (req, res) => {
     if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
     const fieldUid = req.params.fieldUid;
-    console.log(fieldUid,"fieldUid")
+    console.log(fieldUid, "fieldUid")
     let field_id = ""
     let calcul_id = ''
     try {
         const field = await new Field({ 'uid': fieldUid, 'deleted_at': null }).fetch({ require: false })
-            if (!field) {
-                return res.status(404).json({ type: "danger", message: "no_field" });
-            }else {
-                field_id = field.get("id");
+        if (!field) {
+            return res.status(404).json({ type: "danger", message: "no_field" });
+        } else {
+            field_id = field.get("id");
+        }
+        const query = new CalculSensor().query((qb) => {
+            qb.select('*');
+            qb.where({ field_id });
+        });
+
+        const result = await query.fetchAll({ require: false });
+
+        if (result === null || result.length === 0) {
+            return res.status(404).json({ type: "danger", message: "no_field_calcul" });
+        }
+
+        let resultCalcul = JSON.parse(JSON.stringify(result));
+        let todayDate = new Date();
+        let today = todayDate.toISOString().slice(0, 10);
+        let filteredResult = [];
+        let inputsCalcul = [];
+
+
+        let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
+        let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
+        filteredResult = resultCalcul[resultCalcul.length - 1].result.filter(result => {
+            let resultDate = new Date(result.date).toISOString().slice(0, 10);
+            return startDate <= resultDate && endDate >= resultDate;
+        });
+        inputsCalcul = resultCalcul[resultCalcul.length - 1].inputs;
+
+
+        const start_date = new Date(startDate);
+        start_date.setDate(start_date.getDate() - 14);
+
+        const end_date = new Date(endDate);
+        end_date.setDate(end_date.getDate() - 14);
+
+        resultCalcul.forEach((calcul, index) => {
+            // let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
+            // let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
+
+            if (today >= startDate && today <= endDate && index === resultCalcul.length - 1) {
+                inputsCalcul = calcul.inputs;
+
+                calcul_id = calcul.id;
+                console.log(calcul_id, 'my id');
+
+                filteredResult = calcul.result.filter(result => {
+                    let resultDate = new Date(result.date).toISOString().slice(0, 10);
+                    return startDate <= resultDate && endDate >= resultDate;
+                });
             }
-            const query = new CalculSensor().query((qb) => {
-                qb.select('*');
-                qb.where({ field_id });
-            });
-    
-            const result = await query.fetchAll({ require: false });
-    
-            if (result === null || result.length === 0) {
-                return res.status(404).json({ type: "danger", message: "no_field_calcul" });
-            }
-        
-            let resultCalcul = JSON.parse(JSON.stringify(result));
-            let todayDate = new Date();
-            let today = todayDate.toISOString().slice(0, 10);
-            let filteredResult = [];
-            let inputsCalcul = [];
+        });
 
-
-            let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
-            let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
-            filteredResult = resultCalcul[resultCalcul.length - 1].result.filter(result => {
-                let resultDate = new Date(result.date).toISOString().slice(0, 10);
-                return startDate <= resultDate && endDate >= resultDate;
-            });
-            inputsCalcul = resultCalcul[resultCalcul.length - 1].inputs;
-
-
-            const start_date = new Date(startDate);
-            start_date.setDate(start_date.getDate() - 14);
-        
-            const end_date = new Date(endDate);
-            end_date.setDate(end_date.getDate() - 14);
-
-            resultCalcul.forEach((calcul,index) => {
-                // let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);
-                // let endDate = new Date(calcul.end_date).toISOString().slice(0, 10);
- 
-                if (today >= startDate && today <= endDate && index === resultCalcul.length - 1) {
-                    inputsCalcul = calcul.inputs;
-
-                   calcul_id = calcul.id;
-                   console.log(calcul_id,'my id');
-                   
-                    filteredResult = calcul.result.filter(result => {
-                        let resultDate = new Date(result.date).toISOString().slice(0, 10);
-                        return startDate <= resultDate && endDate >= resultDate;
-                    });
-                }
-            });
-    
-            return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul , id : calcul_id });
+        return res.status(201).json({ calcul: filteredResult, inputs: inputsCalcul, id: calcul_id });
 
 
     } catch (error) {
@@ -2481,5 +2484,5 @@ const getReportsByField = async (req, res) => {
 }
 
 
-module.exports = { calculBilanHydrique, getCalculSensor, addCalculSensorRecommnd, generatePDF, createBulletin, sendSMStoUsers, getReportsByField, sendSMStoSelectedUser, getAllCalculByUser, getAllCalculByField , calculBilanHydriqueByField ,EditBilanHydriqueByField}
+module.exports = { calculBilanHydrique, getCalculSensor, addCalculSensorRecommnd, generatePDF, createBulletin, sendSMStoUsers, getReportsByField, sendSMStoSelectedUser, getAllCalculByUser, getAllCalculByField, calculBilanHydriqueByField, EditBilanHydriqueByField }
 

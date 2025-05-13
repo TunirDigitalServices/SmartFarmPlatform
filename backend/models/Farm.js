@@ -8,7 +8,10 @@ const  Farm = bookshelf.Model.extend({
   equipments(){
     return this.belongsTo(require('./Equipment'))
     
-  }      
+  },
+    user() {
+    return this.belongsTo('./User');
+  }  
 });
 
 module.exports = Farm;
