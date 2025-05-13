@@ -69,7 +69,8 @@ const PressionChart = ({ data, title, onSelect }) => {
         {state && <Line
           data={state}
           options={{
-            title: {
+            plugins:{
+               title: {
               display: true,
               text: 'Pression (kPa)',
               fontSize: 15
@@ -78,6 +79,8 @@ const PressionChart = ({ data, title, onSelect }) => {
               display: true,
               position: 'bottom'
             }
+            }
+           
           }}
         />}
       </Card.Body>

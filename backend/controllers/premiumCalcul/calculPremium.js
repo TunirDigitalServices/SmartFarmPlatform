@@ -2313,19 +2313,19 @@ const getAllCalculByField = async (req, res) => {
         let inputsCalcul = [];
         console.log(today, "----------today");
 
-       console.log(resultCalcul[resultCalcul.length - 1].start_date,"before tolocalstring date");
-    //    console.log(resultCalcul[resultCalcul.length - 1].start_date.toLocaleString(),"after tolocal string");
-       
+        console.log(resultCalcul[resultCalcul.length - 1].start_date, "before tolocalstring date");
+        //    console.log(resultCalcul[resultCalcul.length - 1].start_date.toLocaleString(),"after tolocal string");
+
         const localDate = new Date(resultCalcul[resultCalcul.length - 1].start_date);
 
-console.log(localDate.toLocaleString(),"after tolocal string");
+        console.log(localDate.toLocaleString(), "after tolocal string");
 
 
         let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
         let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
 
-  console.log(startDate,"startDate after isotostring");
-  
+        console.log(startDate, "startDate after isotostring");
+
 
 
 

@@ -161,7 +161,8 @@ const SensorHistoryChart = ({ data }) => {
      { state && <Line
         data={state}
         options={{
-          title: {
+          plugins:{
+            title: {
             display: true,
             text: `${t('Sensor History')}`,
             fontSize: 20
@@ -170,6 +171,8 @@ const SensorHistoryChart = ({ data }) => {
             display: false,
             position: 'bottom'
           },
+          },
+          
           scales: {
             yAxes: [{
               ticks: {

@@ -79,7 +79,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                         let msg = ""
                         if (field.sensors == 0) msg = "Please use the app to install/register a sensor."
                         return (
-                            <Col lg="3" md="6" sm="6">
+                            <Col lg="4" md="6" sm="6">
                                 <div className="sensor w-100">
                                     <div className="sensorHeader">
                                         <div className="sensorNameWrapper">
@@ -176,7 +176,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                                             <div className="ProgressBarWrapper">
                                                                 <div className="stats-dates">
                                                                     <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
-                                                                    <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(mv1) }}>
+                                                                    <div className="Marker-tomorrow" >
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="11"
@@ -211,7 +211,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                                                 </div>
                                                                 <div className="stats-dates " style={{ margin: "-5px 0px" }}>
                                                                     <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
-                                                                    <div className="Marker" style={{ left: calculateLeftPosition(mv2) }}>
+                                                                    <div className="Marker" >
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="14"
@@ -244,7 +244,7 @@ const AllFields = ({ filteredFields, sensorsData, crops }) => {
                                                                 </div>
                                                                 <div className="stats-dates">
                                                                     <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
-                                                                    <div className="Marker-yesterday" style={{ left: calculateLeftPosition(mv3) }}>
+                                                                    <div className="Marker-yesterday" >
                                                                         <svg
                                                                             xmlns="http://www.w3.org/2000/svg"
                                                                             width="11"
