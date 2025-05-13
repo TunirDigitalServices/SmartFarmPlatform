@@ -51,25 +51,27 @@ console.log(data,"data");
         {state && (
  <Line
  data={state}
-     options={{
-       title:{
-         display:true,
-         text:`${t('ETC')}`,
-         fontSize:14
-       },
-       legend:{
-         display:true,
-         position:'bottom'
-       },
-       scales: {
-         yAxes: [{
-             ticks: {
-                 beginAtZero: true,
-                 min: 0
-             }
-         }]
-     },
-     }}
+      options={{
+    plugins: {
+      title: {
+        display: true,
+        text: `${t('ETC')}`,
+        font: {
+          size: 14,
+        },
+      },
+      legend: {
+        display: true,
+        position: 'bottom',
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        min: 0,
+      },
+    },
+  }}
  />
         )}
      

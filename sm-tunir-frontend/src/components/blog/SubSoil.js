@@ -134,63 +134,116 @@ const SubSoil = ({data,codeSensor}) => {
         getChartData()
     },[historyData])
 
-    const options = {
-      title: {
-        display: false,
-        text: 'Subsoil Humidity (%)',
-        fontSize: 15
-      },
-      legend: {
-        display: true,
-        position: 'bottom',
-        fontSize: 10
+    // const options = {
+    //   title: {
+    //     display: false,
+    //     text: 'Subsoil Humidity (%)',
+    //     fontSize: 15
+    //   },
+    //   legend: {
+    //     display: true,
+    //     position: 'bottom',
+    //     fontSize: 10
 
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-            max: 100,
-            min: 0,
-            stepSize: 25,
-            fontColor: '#000',
-            fontSize: 14,
-          },
-          gridLines: {
-            color: 'rgba(0,0,0,0.2)',
-            lineWidth: 1,
-          },
-          scaleOverride: true,
-          scaleSteps: 4,
-          scaleStepWidth: 25,
-          scaleStartValue: 0,
-          scaleBackgroundColor: function (context) {
-            if (context.tick.value <= 25) {
-              return '#fdd';
-            } else if (context.tick.value <= 50) {
-              return '#dfd';
-            } else if (context.tick.value <= 75) {
-              return '#ddf';
-            } else {
-              return '#ffd';
-            }
-          }
-        }],
-        xAxes: [{
-          ticks: {
-            autoSkip: false,
-            maxRotation: 90,
-            fontColor: '#000',
-            fontSize: 10,
-          },
-          gridLines: {
-            color: 'rgba(0,0,0,0.2)',
-            lineWidth: 1,
-          },
-        }]
-      }
+    //   },
+    //   scales: {
+    //     yAxes: [{
+    //       ticks: {
+    //         beginAtZero: true,
+    //         max: 100,
+    //         min: 0,
+    //         stepSize: 25,
+    //         fontColor: '#000',
+    //         fontSize: 14,
+    //       },
+    //       gridLines: {
+    //         color: 'rgba(0,0,0,0.2)',
+    //         lineWidth: 1,
+    //       },
+    //       scaleOverride: true,
+    //       scaleSteps: 4,
+    //       scaleStepWidth: 25,
+    //       scaleStartValue: 0,
+    //       scaleBackgroundColor: function (context) {
+    //         if (context.tick.value <= 25) {
+    //           return '#fdd';
+    //         } else if (context.tick.value <= 50) {
+    //           return '#dfd';
+    //         } else if (context.tick.value <= 75) {
+    //           return '#ddf';
+    //         } else {
+    //           return '#ffd';
+    //         }
+    //       }
+    //     }],
+    //     xAxes: [{
+    //       ticks: {
+    //         autoSkip: false,
+    //         maxRotation: 90,
+    //         fontColor: '#000',
+    //         fontSize: 10,
+    //       },
+    //       gridLines: {
+    //         color: 'rgba(0,0,0,0.2)',
+    //         lineWidth: 1,
+    //       },
+    //     }]
+    //   }
       
-    };
+    // };
+    const options = {
+  plugins: {
+    title: {
+      display: false,
+      text: 'Subsoil Humidity (%)',
+      font: {
+        size: 15
+      }
+    },
+    legend: {
+      display: true,
+      position: 'bottom',
+      labels: {
+        font: {
+          size: 10
+        }
+      }
+    }
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      min: 0,
+      max: 100,
+      ticks: {
+        stepSize: 25,
+        color: '#000',
+        font: {
+          size: 14
+        }
+      },
+      grid: {
+        color: 'rgba(0,0,0,0.2)',
+        lineWidth: 1
+      }
+    },
+    x: {
+      ticks: {
+        autoSkip: false,
+        maxRotation: 90,
+        color: '#000',
+        font: {
+          size: 10
+        }
+      },
+      grid: {
+        color: 'rgba(0,0,0,0.2)',
+        lineWidth: 1
+      }
+    }
+  }
+};
+
 
   return (
     <div>
