@@ -71,6 +71,7 @@ const Field = () => {
 
   const [et0, setET0] = useState(2)
 
+console.log(resultCalcul,"resultCalcul");
 
 
   useEffect(() => {

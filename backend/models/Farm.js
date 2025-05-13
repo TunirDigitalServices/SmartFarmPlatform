@@ -10,7 +10,7 @@ const  Farm = bookshelf.Model.extend({
     
   },
     user() {
-    return this.belongsTo('./User');
+    return this.belongsTo(require('./User'));
   }  
 });
 

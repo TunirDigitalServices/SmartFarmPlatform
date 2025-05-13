@@ -25,7 +25,7 @@ const  Field = bookshelf.Model.extend({
     
   } ,  
   farm() {
-    return this.belongsTo('./Farm');
+    return this.belongsTo(require('./Farm'));
   }
 });
 

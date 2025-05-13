@@ -1682,7 +1682,7 @@ const calculBilanHydriqueByField = async (req, res) => {
                 ],
                 require: false
             });
-  
+
 
 
         if (field === null) {
@@ -2311,12 +2311,30 @@ const getAllCalculByField = async (req, res) => {
         let today = todayDate.toISOString().slice(0, 10);
         let filteredResult = [];
         let inputsCalcul = [];
+        console.log(today, "----------today");
+
+       console.log(resultCalcul[resultCalcul.length - 1].start_date,"before new date");
+       
+        const localDate = new Date(resultCalcul[resultCalcul.length - 1].start_date);
+
+console.log(localDate,"start date after new date");
 
 
         let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
         let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
+
+  console.log(startDate,"startDate after isotostring");
+  
+
+
+
+
+
+
         filteredResult = resultCalcul[resultCalcul.length - 1].result.filter(result => {
             let resultDate = new Date(result.date).toISOString().slice(0, 10);
+
+
             return startDate <= resultDate && endDate >= resultDate;
         });
         inputsCalcul = resultCalcul[resultCalcul.length - 1].inputs;
@@ -2327,6 +2345,12 @@ const getAllCalculByField = async (req, res) => {
 
         const end_date = new Date(endDate);
         end_date.setDate(end_date.getDate() - 14);
+
+
+        console.log("Current timezone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+        console.log("System timezone offset (min):", new Date().getTimezoneOffset());
+        console.log("Raw result.date:", result.date);
+        console.log("Parsed result.date:", new Date(result.date));
 
         resultCalcul.forEach((calcul, index) => {
             // let startDate = new Date(calcul.start_date).toISOString().slice(0, 10);

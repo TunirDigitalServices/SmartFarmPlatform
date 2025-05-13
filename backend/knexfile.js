@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 
-dotenv.config({ path: __dirname + '/./.env' }); // if your .env is one directory up
+dotenv.config({ path: __dirname + '/./.env' }); 
 
 module.exports = {
     development: {

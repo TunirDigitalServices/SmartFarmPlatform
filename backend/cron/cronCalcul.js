@@ -2,7 +2,7 @@
 const { calculBilanHydriqueByField } = require('../controllers/premiumCalcul/calculPremium');
 const knex = require('../knex/knex');
 const Field = require('../models/Field');
-const User = require('../models/User');
+const cron = require('node-cron');
 
 
 const getFieldsToProcess = async () => {
@@ -54,3 +54,10 @@ console.log(fields,"---------fields");
 processFields()
     .then(() => console.log('Cron job completed successfully!'))
     .catch((error) => console.error('Error running cron job:', error));
+
+
+   
+cron.schedule('0 0 * * 1', async () => {
+  console.log('Running scheduled cron job for calculBilanHydriqueByField...');
+  await processFields();
+});
