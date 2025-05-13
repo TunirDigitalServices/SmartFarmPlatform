@@ -9,8 +9,9 @@ WORKDIR /app
 
 
 # Copy package.json and install dependencies
-COPY package.json package-lock.json ./
-RUN npm install --legacy-peer-deps
+COPY package.json yarn.lock ./
+RUN npm i -g yarn 
+RUN yarn
 
 # Copy the rest of the application files
 COPY . .
