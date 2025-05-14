@@ -122,61 +122,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
           })
           return (
             <div style={{ zIndex: 1 }}>
-              <MapContainer
-                ref={mapRef}
-                style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300 }}
-                className="markercluster-map"
-                zoom={zoomLevel}
-                center={mapCenter}
-                whenCreated={(map) => {
-                  mapRef.current = map;
-                }}
-              >
-                <FeatureGroup>
-                  <ScaleControl position="bottomleft" />
-                </FeatureGroup>
-
-                <TileLayer
-                  maxNativeZoom={18}
-                  maxZoom={20}
-                  url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
-                  subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-                />
-                {coordinates.length > 0 && (
-                  <Polygon
-                    pathOptions={{ color: '#26A6B7' }}
-                    positions={coordinates}
-                    fillColor="#BDD2CC"
-                  />
-                )}
-
-                {/* <Polygon key={indx} positions={coordinates}> */}
-
-                {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
-                      <Popup>{item.name}</Popup>
-                    </Marker> */}
-                {/* </Polygon>  */}
-                {
-
-                  sensor && sensor.map((sensors, indx) => {
-                    if (sensors.Latitude && sensors.Longitude) {
-
-                      return (
-                        <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
-                          <Popup >{sensors.code}</Popup>
-                        </Marker>
-                      )
-                    }
-                    // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
-
-
-
-                  }
-
-                  )
-
-                }
-              </MapContainer>
+             
             </div>
           )
 

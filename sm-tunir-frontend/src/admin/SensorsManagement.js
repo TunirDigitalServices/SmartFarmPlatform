@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-     import { Container, Row, Col, Card, Form, ButtonGroup, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form, ButtonGroup, Button, Modal } from 'react-bootstrap';
 
 import PageTitle from '../components/common/PageTitle'
 import api from '../../src/api/api'
@@ -37,8 +37,7 @@ const SensorsManagement = () => {
     const [users, setUsers] = useState([])
 
     const [allSensors, setAllSensors] = useState([])
-    const [lastData, setLastData] = useState([])
-    const [frequency, setFrequency] = useState([])
+
 
     const [existUsers, setExistUsers] = useState([])
 
@@ -129,28 +128,16 @@ const SensorsManagement = () => {
     const getAllSensors = async () => {
         await api.get('/admin/all-sensors')
             .then(response => {
-                let dataSensors = [];
-                let dataSensorApi = [];
-                let frequencyData = [];
-                let sensorsData = response.data.sensors;
-
-                sensorsData.map(data => {
-                    if (data.data) {
-                        dataSensors.push(data.sensor);
-                        frequencyData.push(data.config);
-                        dataSensorApi.push(data.data);
-                    }
-                });
-
-                setAllSensors(dataSensors);
-                setLastData(dataSensorApi);
-                setFrequency(frequencyData);
+                const validSensors = response.data.sensors.filter(s => s.data);
+                setAllSensors(validSensors);
             })
             .catch(err => {
                 console.log(err);
             })
             .finally(() => setIsLoading(false));
     };
+
+
 
     const getExistUsers = async () => {
         await api.get('/admin/users')
@@ -283,7 +270,7 @@ const SensorsManagement = () => {
         }
     }
     console.log(toggle);
-    
+
 
     const resetForm = () => {
         setTimeout(() => {
@@ -425,7 +412,7 @@ const SensorsManagement = () => {
                     />
                 </Row>
                 <Row form className="d-flex justify-content-center gap-2">
-                    
+
                     <Col lg="2" md="12" sm="12" className="form-group">
                         <Form.Group>
                             <div className="d-flex">
@@ -433,7 +420,7 @@ const SensorsManagement = () => {
                                     value={SearchCode}
                                     onChange={(e) => setSearchCode(e.target.value)}
                                     id="search"
-                                    placeholder="Search By code" style={{height:"41px"}} />
+                                    placeholder="Search By code" style={{ height: "41px" }} />
 
                             </div>
                         </Form.Group>
@@ -487,8 +474,8 @@ const SensorsManagement = () => {
                             </div>
                         </Form.Group>
                     </Col>
-                  
-            
+
+
                     <Col lg="3" md="12" sm="12"  >
                         <ButtonGroup className='gap-2'>
                             <Button variant="outline-primary" onClick={() => navigate('/admin/add-sensor')}>Add Sensor</Button>
@@ -541,18 +528,18 @@ const SensorsManagement = () => {
                                             let lastDataTime = '-'
                                             let formattedTime = '-'
                                             users.map(user => {
-                                                if (user.id === sensor.user_id) {
+                                                if (user.id === sensor.sensor.user_id) {
                                                     nameUser = user.name
                                                 }
                                             })
                                             existSuppliers.map(user => {
-                                                if (user.id === sensor.supplier_id) {
+                                                if (user.id === sensor.sensor.supplier_id) {
                                                     nameSupplier = user.name
                                                 }
                                             })
-                                            if (frequency.length > 0 && lastData.length > 0 && lastData[dataIndex]) {
-                                                lastDataTime = moment(lastData[dataIndex].time).add(1, 'hours').format('YYYY-MM-DD HH:mm')
-                                                frequencyValue = frequency[dataIndex].frequence
+                                            if (sensor.config && sensor.data) {
+                                                lastDataTime = moment(sensor.data.time).add(1, 'hours').format('YYYY-MM-DD HH:mm')
+                                                frequencyValue = sensor.config.frequence
                                             }
                                             const newTime = moment(lastDataTime).add(frequencyValue, 'seconds');
                                             formattedTime = newTime.format('YYYY-MM-DD HH:mm');
@@ -563,7 +550,7 @@ const SensorsManagement = () => {
 
                                             return (
                                                 <tr key={index}>
-                                                    <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{sensor.code}</td>
+                                                    <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{sensor.sensor.code}</td>
                                                     <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{nameUser}</td>
                                                     <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{nameSupplier}</td>
                                                     <td style={{ fontSize: 11.5, fontWeight: 'bold' }}>{lastDataTime.toString()}</td>
@@ -571,26 +558,26 @@ const SensorsManagement = () => {
                                                     <td style={{ color: sensorState === 'Active' ? 'green' : 'red', fontSize: 13, fontWeight: 'bold' }}>{sensorState}</td>
                                                     <td>
                                                         {
-                                                            sensor.deleted_at === null
+                                                            sensor.sensor.deleted_at === null
                                                                 ?
                                                                 <ButtonGroup size="sm" className="mr-2">
-                                                                    <Button title="Edit" style={{background:"#007BFF"}} onClick={() => {
-                                                                
-                                                                        navigate(`/admin/edit-sensor/${sensor.id}`, {
+                                                                    <Button title="Edit" style={{ background: "#007BFF" }} onClick={() => {
+
+                                                                        navigate(`/admin/edit-sensor/${sensor.sensor.id}`, {
                                                                             state: {
-                                                                              lastDataTime,
-                                                                              formattedTime,
-                                                                              sensorState,
+                                                                                lastDataTime,
+                                                                                formattedTime,
+                                                                                sensorState,
                                                                             }
-                                                                          });
-                                                                          
+                                                                        });
+
                                                                     }} squared><i className="material-icons">&#xe3c9;</i></Button>
-                                                                    <Button title="History" style={{backgroundColor:"#00A2BF"}}  onClick={() => { navigate(`/my-history/${sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
-                                                                    <Button title="Delete" variant='danger' onClick={() => { confirmDelete(sensor.uid) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
+                                                                    <Button title="History" style={{ backgroundColor: "#00A2BF" }} onClick={() => { navigate(`/my-history/${sensor.sensor.code}`) }} squared theme="info"><i className="material-icons">&#xe889;</i></Button>
+                                                                    <Button title="Delete" variant='danger' onClick={() => { confirmDelete(sensor.sensor.uid) }} squared theme="danger"><i className="material-icons">&#xe872;</i></Button>
                                                                     {
-                                                                        sensor.synchronized === "0"
+                                                                        sensor.sensor.synchronized === "0"
                                                                             ?
-                                                                            <Button onClick={() => fetchDataSensor(sensor.uid, sensor.code)} squared theme="info"><i className='material-icons'>&#xe627;</i></Button>
+                                                                            <Button onClick={() => fetchDataSensor(sensor.sensor.uid, sensor.sensor.code)} squared theme="info"><i className='material-icons'>&#xe627;</i></Button>
                                                                             :
                                                                             null
                                                                     }
@@ -602,12 +589,12 @@ const SensorsManagement = () => {
 
                                                     </td>
                                                     {
-                                                        sensor.deleted_at === null
+                                                        sensor.sensor.deleted_at === null
                                                             ?
                                                             <td>
                                                                 <ButtonGroup size="sm" className="mr-2">
-                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.id, 'User')}>Assign to user</Button>
-                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.id, 'Supplier')}>Assign to supplier</Button>
+                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.sensor.id, 'User')}>Assign to user</Button>
+                                                                    <Button variant="outline-primary" onClick={() => getSingleSensor(sensor.sensor.id, 'Supplier')}>Assign to supplier</Button>
                                                                 </ButtonGroup>
 
                                                             </td>
