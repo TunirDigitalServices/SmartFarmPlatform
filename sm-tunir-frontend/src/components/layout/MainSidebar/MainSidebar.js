@@ -8,6 +8,8 @@ import SidebarSearch from "./SidebarSearch";
 import SidebarNavItems from "./SidebarNavItems";
 
 import { Store } from "../../../flux";
+import { Dispatcher, Constants } from "../../../flux";
+
 
 class MainSidebar extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class MainSidebar extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
+
   }
 
   componentWillMount() {
@@ -36,6 +40,11 @@ class MainSidebar extends React.Component {
       sidebarNavItems: Store.getSidebarItems()
     });
   }
+   handleToggleSidebar() {
+    Dispatcher.dispatch({
+      actionType: Constants.TOGGLE_SIDEBAR
+    });
+  }
 
   render() {
     const classes = classNames(
@@ -47,9 +56,9 @@ class MainSidebar extends React.Component {
 
     return (
       <Col tag="aside" className={classes} lg={2} md={3} >
-        <SidebarMainNavbar hideLogoText={this.props.hideLogoText} />
+        <SidebarMainNavbar hideLogoText={this.props.hideLogoText} handleToggleSidebar={this.handleToggleSidebar}/>
         {/* <SidebarSearch /> */}
-        <SidebarNavItems />
+        <SidebarNavItems handleToggleSidebar={this.handleToggleSidebar}/>
       </Col>
     );
   }

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Sidebar() {
+export default function Sidebar({handleToggleSidebar}) {
   
   const { t, i18n } = useTranslation();
 
@@ -615,9 +615,11 @@ export default function Sidebar() {
               }
               navigate(itemId, { state: uid });;
                 // window.location.reload()
+                handleToggleSidebar()
             } else {
               navigate(itemId);
               // window.location.reload();
+                handleToggleSidebar()
 
             }
           }

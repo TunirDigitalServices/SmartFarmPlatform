@@ -5,7 +5,9 @@ input[type="password"]
 {
   font-family: 'Marcellus', serif;
 }
-
+.main-sidebar .toggle-sidebar{
+  border-left:none !important
+}
 .MainContainer {
   display: flex;
   height: 100%;

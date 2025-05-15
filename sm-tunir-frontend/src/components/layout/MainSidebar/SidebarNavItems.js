@@ -31,6 +31,8 @@ class SidebarNavItems extends React.Component {
 
   render() {
     const { navItems: items } = this.state;
+    const {handleToggleSidebar } = this.props;
+
     return (
       <div className="nav-wrapper">
         {/*<Nav className="nav--no-borders flex-column">
@@ -38,7 +40,7 @@ class SidebarNavItems extends React.Component {
             <SidebarNavItem key={idx} item={item} />
           ))}
         </Nav>*/}
-        <Sidebar />
+        <Sidebar handleToggleSidebar={handleToggleSidebar}/>
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Navbar, Container } from "react-bootstrap";
-import { Dispatcher, Constants } from "../../../flux";
 import logo from "../../../assets/images/Logo smart farm1.jpg"
 
 
@@ -9,17 +8,12 @@ class SidebarMainNavbar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
   }
 
-  handleToggleSidebar() {
-    Dispatcher.dispatch({
-      actionType: Constants.TOGGLE_SIDEBAR
-    });
-  }
+
 
   render() {
-    const { hideLogoText } = this.props;
+    const { hideLogoText, handleToggleSidebar } = this.props;
     return (
       <div className="main-navbar">
         <div
@@ -32,7 +26,7 @@ class SidebarMainNavbar extends React.Component {
             style={{ lineHeight: "25px" }}
           >
             <div className="d-table m-auto pt-3">
-              <div style={{ height: 60, width: "100%", overflow: "hidden" }}>
+              <div style={{ height: 60, width: "100%", overflow: "hidden" }} >
                 <img
                   id="main-logo"
                   className="d-inline-block align-top mr-1"
@@ -40,19 +34,20 @@ class SidebarMainNavbar extends React.Component {
                   src={logo}
                   alt="Smart Farm"
                 />
+                <a
+                  className="toggle-sidebar d-sm-inline d-md-none d-lg-none mb-3"
+                >
+                  <i className="material-icons " style={{top:'-16px'}} onClick={handleToggleSidebar} >&#xE5C4;</i>
+                </a>
               </div>
               {/*!hideLogoText && (
                 <span className="d-none d-md-inline ml-1">Smart Farm</span>
               )*/}
+
             </div>
           </Navbar.Brand>
           {/* eslint-disable-next-line */}
-          <a
-            className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
-            onClick={this.handleToggleSidebar}
-          >
-            <i className="material-icons">&#xE5C4;</i>
-          </a>
+
         </div>
       </div>
     );

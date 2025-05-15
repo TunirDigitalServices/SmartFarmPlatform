@@ -198,7 +198,7 @@ const SatelliteImages = () => {
           <div
             key={index}
             onClick={() => handleClick(image)}
-            className={`btn ${selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
+            className={`btn w-25 ${selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
               }`}
           >
             <div
@@ -216,7 +216,7 @@ const SatelliteImages = () => {
           </div>
         ))}
         <div
-          className={`btn ${selectedImageUrl === 'terrain' ? 'btn-primary' : 'btn-light'}`}
+          className={`btn w-25 ${selectedImageUrl === 'terrain' ? 'btn-primary' : 'btn-light'}`}
           onClick={() => {
             setSelectedImageUrl('');
             setDataDisplayed([]);        // Clear data

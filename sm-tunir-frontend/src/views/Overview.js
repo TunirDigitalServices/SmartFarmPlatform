@@ -1997,7 +1997,7 @@ const Overview = (props) => {
         <Col lg="4" md="12" sm="12" className="">
           {/* <h4 style={{ marginBottom: "-15px" }}>{t('map')}</h4> */}
           <LeafletMap data={layerFarm} sensor={sensorStats} draw={configMap.draw} zoom={mapConfig.zoom} 
-          center={mapConfig.center} fromAcrion={mapConfig.fromAction} />
+          center={mapConfig.center} fromAction={mapConfig.fromAction} />
         </Col>
       </Row>
       <Row className="d-flex justify-content-center align-items-center">

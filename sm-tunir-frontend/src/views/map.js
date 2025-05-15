@@ -36,11 +36,27 @@ const SetViewOnClick = ({ center, zoom }) => {
 
   return null;
 }
+const MapViewUpdater = ({ center, zoom }) => {
+  const map = useMap();
 
+  React.useEffect(() => {
+    if (map && center && zoom) {
+      map.setView(center, zoom);
+    }
+  }, [map, center, zoom]);
+
+  return null;
+};
 const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, farms, fields, zoom, center, fromAction, uid }) => {
+  console.log(data, "data--------");
+
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
   const [zoomLevel, setZoomLevel] = useState(10);
+  const [polygonCoords, setPolygonCoords] = useState([]);
+  const [markers, setMarkers] = useState([]);
+  const [bounds, setBounds] = useState(null);
+
   const getCenterFromSensors = () => {
     if (sensor && sensor.length > 0) {
       const firstSensor = sensor[0];
@@ -51,6 +67,58 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
     }
     return null;
   };
+  const calculateImageBounds = (coordinates) => {
+    if (!coordinates || coordinates.length === 0) return;
+
+    const lats = coordinates.map(coord => coord[0]);
+    const lngs = coordinates.map(coord => coord[1]);
+
+    const newBounds = [
+      [Math.min(...lats), Math.min(...lngs)], // South West corner
+      [Math.max(...lats), Math.max(...lngs)]  // North East corner
+    ];
+
+    setBounds(newBounds); // Update the bounds state
+  };
+
+
+  useEffect(() => {
+    if (data && data.length > 0 && data[0]) {
+      const field = data?.[0]?.fields?.[0] ?? data?.[1]?.fields?.[0];
+      const latitude = Number(field.Latitude);
+      const longitude = Number(field.Longitude);
+
+
+      // Set marker position
+      setMarkers([latitude, longitude]);
+      setMapCenter([latitude, longitude]);
+
+      // Parse and set polygon coordinates
+      try {
+        if (field.coordinates) {
+          const parsedCoords = JSON.parse(field.coordinates);
+
+          // Ensure that parsedCoords is an array of objects like [{Lat: xx, Long: xx}, ...]
+          if (Array.isArray(parsedCoords)) {
+            const formattedCoords = parsedCoords.map(coord => {
+              return [coord.Lat, coord.Long]; // Ensure [Lat, Long] format for Leaflet
+            });
+
+
+            setPolygonCoords(formattedCoords); // Set the coordinates state
+            calculateImageBounds(formattedCoords); // Calculate the bounds based on the coordinates
+          }
+        }
+      } catch (e) {
+        console.error("Error parsing coordinates:", e);
+      }
+    }
+  }, [data]);
+
+
+
+
+
   useEffect(() => {
     const centerFromSensors = getCenterFromSensors();
     if (centerFromSensors && mapRef.current) {
@@ -61,7 +129,11 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
   }, [sensor]);
 
 
+
   const location = useGeoLocation();
+
+
+
 
   const returnedMap = (L) => {
     switch (currentPage) {
@@ -94,6 +166,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
         })
       case '/':
+        
         return data.map((item, indx) => {
           let coordinates = []
           let fields = item.fields;
@@ -120,10 +193,28 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
               })
             }
           })
+          console.log(markers, "item");
+
           return (
-            <div style={{ zIndex: 1 }}>
-             
-            </div>
+            <>
+              {location.loaded && !location.error && (
+                <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
+                  <Popup>My position</Popup>
+                </Marker>
+              )}
+              {markers.length > 0 && data && data[0] && (
+                <Marker position={[markers[0], markers[1]]}>
+                  <Popup>{data?.[0]?.fields?.[0]?.name ?? data?.[1]?.fields?.[0]?.name }</Popup>
+                </Marker>
+              )}
+              {polygonCoords.length > 0 && (
+                <Polygon
+                  pathOptions={{ color: '#26A6B7', opacity: 0.2 }}
+                  positions={polygonCoords}
+                  fillColor="none"
+                />
+              )}
+            </>
           )
 
 
@@ -241,6 +332,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
   }
 
   let userSensorCenter = getCenterFromSensors()
+console.log(zoomLevel,"zl");
 
   return (
     <div>
@@ -249,9 +341,11 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
         className="markercluster-map"
         zoom={zoomLevel}
         center={mapCenter}
-        maxZoom={18}
+        maxZoom={22}
         whenCreated={(map) => {
-          mapRef.current = map; // Assign the map instance to mapRef.current
+          mapRef.current = map;
+
+         
         }}
       >
         <FeatureGroup>
@@ -261,7 +355,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
           url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-
+          maxZoom={22}
         />
         <LeafletGeoCoder />
         {location.loaded && !location.error && (
@@ -278,6 +372,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
         }
 
         {returnedMap(L)}
+        <MapViewUpdater center={mapCenter} zoom={16.5} />
       </MapContainer>
     </div>
   );
