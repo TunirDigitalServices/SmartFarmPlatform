@@ -24,7 +24,7 @@ import ndvi from "../assets/images/NDVI.png";
 import ndwi from "../assets/images/NDWI.png";
 import moisture from "../assets/images/MOISTURE-INDEX.png";
 import swir from "../assets/images/SWIR.png";
-import { Switch, FormControlLabel } from '@mui/material';
+import terrain from "../assets/images/terrain.png";
 
 const SatelliteImages = () => {
   const [coords, setCoords] = useState({
@@ -57,7 +57,6 @@ const SatelliteImages = () => {
   const [polygonDisplayed, setPolygonDisplayed] = useState([]);
   const [loadingImages, setLoadingImages] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-
   const [selectedDate, setSelectedDate] = useState(
     moment().format("D MMM YYYY")
   );
@@ -153,9 +152,14 @@ const SatelliteImages = () => {
     setSelectedImages(satellitesImages);
   }, [selectedDate, selectedField, satellitesImages]);
 
-  
-
-
+  const handleClick = image => {
+    if (image) {
+      const imageUrl = `${process.env.REACT_APP_BASE_URL}${image.image_url}`; // Prepend the backend URL
+      setSelectedImageUrl(imageUrl); // Save the full image URL with localhost
+      setDataDisplayed(image.data || []); // Save data for the selected image (e.g., coordinates or metadata)
+      setPolygonDisplayed(image.polygon || []); // Save polygon data if applicable
+    }
+  };
   const designationImageMap = {
     ndvi: "densité de végétation",
     ndwi: "Irrigation index",
@@ -169,7 +173,7 @@ const SatelliteImages = () => {
     swir
   };
 
-  const renderImageGallery = (setShowToggle,handleClick) => {
+  const renderImageGallery = () => {
     if (loadingImages) {
       return (
         <Box display="flex" justifyContent="center" my={2}>
@@ -193,10 +197,9 @@ const SatelliteImages = () => {
         {selectedImages.map((image, index) => (
           <div
             key={index}
-            onClick={() => handleClick(image,setShowToggle)}
-            className={`btn ${
-              selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
-            }`}
+            onClick={() => handleClick(image)}
+            className={`btn ${selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
+              }`}
           >
             <div
               style={{
@@ -212,7 +215,23 @@ const SatelliteImages = () => {
             <p className="mt-2">{designationImageMap[image.type]}</p>
           </div>
         ))}
-          
+        <div
+          className={`btn ${selectedImageUrl === 'terrain' ? 'btn-primary' : 'btn-light'}`}
+          onClick={() => {
+            setSelectedImageUrl('');
+            setDataDisplayed([]);        // Clear data
+            setPolygonDisplayed([]);     // Clear polygons
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <img
+              src={terrain} // Replace with the icon for terrain
+              alt="Terrain"
+              style={{ height: '32px', width:"32px", borderRadius: '50%',objectFit:"cover" }}
+            />
+          </div>
+          <p className="mt-1">Terrain </p>
+        </div>
       </div>
     );
   };
@@ -256,8 +275,6 @@ const SatelliteImages = () => {
                   data={selectedField}
                   satellitesImages={selectedImages}
                   selectedData={dataDisplayed}
-                  setDataDisplayed={setDataDisplayed}
-                  setPolygonDisplayed={setPolygonDisplayed}
                   drawn={polygonDisplayed}
                   draw={mapConfig.draw}
                   edit={mapConfig.edit}
@@ -265,7 +282,6 @@ const SatelliteImages = () => {
                   center={coords.center}
                   fromAction={coords.fromAction}
                   selectedImageUrl={selectedImageUrl}
-                  setSelectedImageUrl={setSelectedImageUrl}
                   renderImageGallery={renderImageGallery}
                 />
               </Col>
@@ -392,10 +408,10 @@ const SatelliteImages = () => {
                               locale={
                                 localStorage.getItem("local")
                                   ? `${localStorage.getItem(
-                                      "local"
-                                    )}-${localStorage
-                                      .getItem("local")
-                                      .toUpperCase()}`
+                                    "local"
+                                  )}-${localStorage
+                                    .getItem("local")
+                                    .toUpperCase()}`
                                   : "en-EN"
                               }
                               tileContent={({ date, view }) => {
