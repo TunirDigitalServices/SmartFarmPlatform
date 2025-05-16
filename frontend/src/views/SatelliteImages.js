@@ -3,9 +3,19 @@ import {
   Container,
   Row,
   Col,
+  CardBody,
+  CardHeader,
   Card,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Tooltip,
+  FormInput,
+  FormSelect,
+  FormGroup,
   Form
-} from "react-bootstrap";
+} from "shards-react";
 import PageTitle from "../components/common/PageTitle";
 import { useTranslation } from "react-i18next";
 import LeafletMap from "./map";
@@ -20,11 +30,10 @@ import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import ndvi from "../assets/images/NDVI.png";
-import ndwi from "../assets/images/NDWI.png";
-import moisture from "../assets/images/MOISTURE-INDEX.png";
-import swir from "../assets/images/SWIR.png";
-import terrain from "../assets/images/terrain.png";
+import ndvi from "../assets/NDVI.png";
+import ndwi from "../assets/NDWI.png";
+import moisture from "../assets/MOISTURE-INDEX.png";
+import swir from "../assets/SWIR.png";
 
 const SatelliteImages = () => {
   const [coords, setCoords] = useState({
@@ -72,11 +81,16 @@ const SatelliteImages = () => {
 
       const apiUrl = `/add-satellite-images/${userUid}/${fieldId}`;
       const response = await api.post(apiUrl, {
-        date: formatDate(selectedDate),
+        date: formatDate(selectedDate) ,
         coordinates
       });
 
-
+      // Assuming the backend now returns image URLs
+      // const fetchedData = response.data.images.map(image => ({
+      //   ...image,
+      //   // Add a preview URL if needed (for thumbnails)
+      //   previewUrl: image.image_url // or generate thumbnails on backend
+      // }));
 
       setSatellitesImages(response.data.images);
       setLoadingImages(false);
@@ -125,7 +139,18 @@ const SatelliteImages = () => {
 
   const { t, i18n } = useTranslation();
 
+  // useEffect(() => {
+  //   // Generate an array of dates for the next 7 days
+  //   const next7Days = Array.from({ length: 6 }, (_, index) =>
+  //     moment()
+  //       .subtract(index, "days")
+  //       .format("D MMM YYYY")
+  //   );
 
+  //   const ascendingDates = next7Days.reverse();
+
+  //   setDates(ascendingDates);
+  // }, []);
 
   const formatDate = dateString => {
     // Parse the input date string using Moment.js
@@ -141,6 +166,37 @@ const SatelliteImages = () => {
     setSelectedDate(date);
     const formattedDate = formatDate(date);
 
+    // Filter existing images first
+    // const filteredData = satellitesImages.filter(
+    //   data => moment(data.created_at).format("D MMM YYYY") === date
+    // );
+
+    // setSelectedImages(filteredData);
+
+    // If no images for this date, fetch from backend
+    // if (filteredData.length === 0) {
+    //   try {
+    //     setLoadingImages(true);
+    //     const fieldId = selectedField[0].Id;
+    //     const userId = JSON.parse(localStorage.getItem("user")).id;
+    //     const apiUrl = `/satellite-images/${userId}/${fieldId}/${formattedDate}`;
+
+    //     const response = await api.get(apiUrl);
+    //     if (response.data.imagesData && response.data.imagesData.length > 0) {
+    //       const newImages = response.data.imagesData.map(img => ({
+    //         ...img,
+    //         previewUrl: img.image_url
+    //       }));
+
+    //       setSatellitesImages(prev => [...prev, ...newImages]);
+    //       setSelectedImages(newImages);
+    //     }
+    //   } catch (error) {
+    //     console.error("API error:", error);
+    //   } finally {
+    //     setLoadingImages(false);
+    //   }
+    // }
   };
   const getSelectedField = e => {
     const selectedId = e.target.value;
@@ -198,8 +254,9 @@ const SatelliteImages = () => {
           <div
             key={index}
             onClick={() => handleClick(image)}
-            className={`btn w-25 ${selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
-              }`}
+            className={`btn ${
+              selectedImageUrl !== image.image_url ? "btn-light" : "btn-primary"
+            }`}
           >
             <div
               style={{
@@ -212,26 +269,9 @@ const SatelliteImages = () => {
                 style={{ height: "32px", borderRadius: "50%" }}
               />
             </div>
-            <p className="mt-2">{designationImageMap[image.type]}</p>
+            <p>{designationImageMap[image.type]}</p>
           </div>
         ))}
-        <div
-          className={`btn w-25 ${selectedImageUrl === 'terrain' ? 'btn-primary' : 'btn-light'}`}
-          onClick={() => {
-            setSelectedImageUrl('');
-            setDataDisplayed([]);        // Clear data
-            setPolygonDisplayed([]);     // Clear polygons
-          }}
-        >
-          <div style={{ textAlign: 'center' }}>
-            <img
-              src={terrain} // Replace with the icon for terrain
-              alt="Terrain"
-              style={{ height: '32px', width:"32px", borderRadius: '50%',objectFit:"cover" }}
-            />
-          </div>
-          <p className="mt-1">Terrain </p>
-        </div>
       </div>
     );
   };
@@ -246,14 +286,14 @@ const SatelliteImages = () => {
       </Row>
 
       <Container className="main-content-container p-3 border bg-light rounded">
-        <Row className="gap-2 justify-content-between">
+        <Row>
           <Col lg="8" md="12" sm="12">
             <Row className="pt-4">
               <Col lg="8" md="12" sm="12" className="py-2 d-md-block d-lg-none">
                 {/* Select input on mobile view */}
                 <Card className="mt-0" style={{ height: "100%" }}>
-                  <Card.Header className="border-bottom">
-                    <Form.Select
+                  <CardHeader className="border-bottom">
+                    <FormSelect
                       value={selectedField}
                       onChange={getSelectedField}
                     >
@@ -265,8 +305,8 @@ const SatelliteImages = () => {
                           </option>
                         );
                       })}
-                    </Form.Select>
-                  </Card.Header>
+                    </FormSelect>
+                  </CardHeader>
                 </Card>
               </Col>
               <Col lg="12" md="12" sm="12">
@@ -288,14 +328,14 @@ const SatelliteImages = () => {
             </Row>
           </Col>
 
-          <Col lg="3" md="12" sm="12" className="my-2">
+          <Col lg="4" md="12" sm="12" className="my-2">
             <Card className="mt-0" style={{ height: "100%" }}>
               {fields.length === 0 ? (
                 <LinearProgress />
               ) : (
                 <>
-                  <Card.Header className="border-bottom d-none d-lg-block">
-                    <Form.Select
+                  <CardHeader className="border-bottom d-none d-lg-block">
+                    <FormSelect
                       value={selectedField}
                       onChange={getSelectedField}
                     >
@@ -307,9 +347,9 @@ const SatelliteImages = () => {
                           </option>
                         );
                       })}
-                    </Form.Select>
-                  </Card.Header>
-                  <Card.Body className="p-1">
+                    </FormSelect>
+                  </CardHeader>
+                  <CardBody className="p-1">
                     {selectedField.length > 0 &&
                       selectedField.map(field => {
                         return (
@@ -408,10 +448,10 @@ const SatelliteImages = () => {
                               locale={
                                 localStorage.getItem("local")
                                   ? `${localStorage.getItem(
-                                    "local"
-                                  )}-${localStorage
-                                    .getItem("local")
-                                    .toUpperCase()}`
+                                      "local"
+                                    )}-${localStorage
+                                      .getItem("local")
+                                      .toUpperCase()}`
                                   : "en-EN"
                               }
                               tileContent={({ date, view }) => {
@@ -442,7 +482,7 @@ const SatelliteImages = () => {
                         )}
                       </Col>
                     </Row>
-                  </Card.Body>
+                  </CardBody>
                 </>
               )}
             </Card>
