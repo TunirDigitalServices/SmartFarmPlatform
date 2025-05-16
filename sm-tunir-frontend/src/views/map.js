@@ -48,7 +48,6 @@ const MapViewUpdater = ({ center, zoom }) => {
   return null;
 };
 const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, farms, fields, zoom, center, fromAction, uid }) => {
-  console.log(data, "data--------");
 
   const mapRef = useRef(null);
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
@@ -134,7 +133,6 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
 
 
-
   const returnedMap = (L) => {
     switch (currentPage) {
       case '/AddSensor':
@@ -193,7 +191,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
               })
             }
           })
-          console.log(markers, "item");
+        
 
           return (
             <>
@@ -332,11 +330,22 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
   }
 
   let userSensorCenter = getCenterFromSensors()
-console.log(zoomLevel,"zl");
 
+useEffect(() => {
+  return () => {
+    if (mapRef.current) {
+      mapRef.current.eachLayer(layer => {
+        if (layer instanceof L.Control) {
+          mapRef.current.removeControl(layer);
+        }
+      });
+    }
+  };
+}, []);
   return (
     <div>
       <MapContainer
+      key="main-map"
         style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300, zIndex: 1 }}
         className="markercluster-map"
         zoom={zoomLevel}
@@ -348,9 +357,19 @@ console.log(zoomLevel,"zl");
          
         }}
       >
-        <FeatureGroup>
-          <EditControl draw={draw} edit={edit} position="topright" onCreated={_onCreated} onEdited={_onEdited} />
-        </FeatureGroup>
+   {(draw || edit) && (
+  <FeatureGroup>
+    <EditControl
+      draw={draw}
+      edit={edit}
+      position="topright"
+      onCreated={_onCreated}
+      onEdited={_onEdited}
+    />
+  </FeatureGroup>
+)}
+
+
         <TileLayer
 
           url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'

@@ -35,6 +35,7 @@ import ConfigurationCropsVariety from "../admin/ConfigurationCropsVariety"
 import ConfigurationSoils from "../admin/ConfigurationSoils"
 import ConfigurationIrrigation from "../admin/ConfigurationIrrigation"
 import Graph from "../views/Graph";
+import AddFram from '../views/AddFram';
 
 // import Profile from '../pages/Profile'
 
@@ -306,6 +307,14 @@ const protectedRoutes = [
     path: "/satellite-images",
 
     element: <SatelliteImages />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'add-farm',
+    path: "/add-farm",
+
+    element: <AddFram />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },
