@@ -1,16 +1,16 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { Button, ButtonGroup, Card, CardHeader, CardBody, ModalBody, ModalHeader, Row, Col, FormInput, Form, FormSelect,Slider } from 'shards-react'
 import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
 import CompositeSoil from '../components/FieldSettingForms/compositeSoilForm';
 import StandardSoil from '../components/FieldSettingForms/standardSoil';
-import {Modal,Form,Row, Col, Button, ButtonGroup} from "react-bootstrap"
+import { Modal, Form, Row, Col, Button, ButtonGroup } from "react-bootstrap"
 
 
 
 
-const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils }) => {
+const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }) => {
 
     const { t, i18n } = useTranslation();
     const [toggle, setToggle] = useState(false);
@@ -28,26 +28,26 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
     const [displayMsg, setDispMsg] = useState("hide")
     const [iconMsg, setIconMsg] = useState("info")
     const [SingleZone, setSingleZone] = useState([])
-    const [soilData,setSoilData] = useState({
+    const [soilData, setSoilData] = useState({
         irrigArea: "",
         RUmax: "",
         effPluie: "",
         ruPratique: "",
         effIrrig: "",
-        soilType :"",
-        dosePercentage:""
+        soilType: "",
+        dosePercentage: ""
 
     })
     const [currentDepthLevel, setDepthLevel] = useState(0);
 
     const [isStandardSoil, setSoilType] = useState(true);
 
-    const [compSoilData ,setCompSoilData] = useState({
-        pH : 0,
-        om : 0,
-        sand : 0,
-        clay : 0,
-        silt : 0
+    const [compSoilData, setCompSoilData] = useState({
+        pH: 0,
+        om: 0,
+        sand: 0,
+        clay: 0,
+        silt: 0
     })
     const handleDepth = (e) => {
         //setDepthData(e);
@@ -55,7 +55,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
 
     useEffect(() => {
         soilTypeForm();
-      }, [currentDepthLevel]);
+    }, [currentDepthLevel]);
 
     const getSingleZone = (zoneUid) => {
 
@@ -64,7 +64,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
             zone_uid: zoneUid,
         }
 
-         api.post('/zone', data)
+        api.post('/zone', data)
             .then(res => {
                 let ZoneData = res.data.zone
                 // let soilTypes = ZoneData.soiltypes
@@ -72,17 +72,23 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                 setName(ZoneData.name)
                 setSource(ZoneData.source)
                 setDescription(ZoneData.description)
-                setSoilData({RUmax : ZoneData.RUmax})
-                setSoilData({effPluie : ZoneData.effPluie})
-                setSoilData({soilType : ZoneData.soiltype_id})
-        
+                // setSoilData({ RUmax: ZoneData.RUmax })
+                // setSoilData({ effPluie: ZoneData.effPluie })
+                // setSoilData({ soilType: ZoneData.soiltype_id })
+                setSoilData({
+                    RUmax: ZoneData.RUmax,
+                    effPluie: ZoneData.effPluie,
+                    soilType: ZoneData.soiltype_id
+
+                })
+
                 setDepthData(JSON.parse(ZoneData.depth_data))
-                
+
                 setDepth(Object.keys(JSON.parse(ZoneData.depth_data)))
                 if (Object.keys(JSON.parse(ZoneData.depth_data)).length > 0) {
                     setDefaultDeth(Object.keys(JSON.parse(ZoneData.depth_data))[0])
                     setdefaultSoilProprety(JSON.parse(ZoneData.depth_data)[Object.keys(JSON.parse(ZoneData.depth_data))[0]].soil_property)
-                    setCompSoilData({...compSoilData , pH :  JSON.parse(ZoneData.depth_data)[Object.keys(JSON.parse(ZoneData.depth_data))[0]].soil_property})
+                    setCompSoilData({ ...compSoilData, pH: JSON.parse(ZoneData.depth_data)[Object.keys(JSON.parse(ZoneData.depth_data))[0]].soil_property })
 
                 }
 
@@ -113,8 +119,8 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
             field_uid: field,
             RUmax: soilData.RUmax,
             effPluie: soilData.effPluie,
-            soiltype_id : soilData.soilType,
-            dose_percentage : soilData.dosePercentage
+            soiltype_id: soilData.soilType,
+            dose_percentage: soilData.dosePercentage
         }
         api.post('/zone/edit-zone', data)
             .then(response => {
@@ -207,29 +213,29 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
     }
     const soilTypeForm = () => {
         if (isStandardSoil == true)
-          return (
-              null
-            // <StandardSoil
-            //   listSoils={otherInfo.listSoils}
-            //   key={currentDepthLevel}
-            //   depth={depthLevel[currentDepthLevel].depth}
-            //   uni={depthLevel[currentDepthLevel].uni}
-            //   onChange={value => {
-            //     depthLevel[currentDepthLevel].uni = value.uni;
-            //     depthLevel[currentDepthLevel].depth = value.depth;
-            //   }}
-            // />
-          );
+            return (
+                null
+                // <StandardSoil
+                //   listSoils={otherInfo.listSoils}
+                //   key={currentDepthLevel}
+                //   depth={depthLevel[currentDepthLevel].depth}
+                //   uni={depthLevel[currentDepthLevel].uni}
+                //   onChange={value => {
+                //     depthLevel[currentDepthLevel].uni = value.uni;
+                //     depthLevel[currentDepthLevel].depth = value.depth;
+                //   }}
+                // />
+            );
         else {
-          return (
-            <CompositeSoil
-            key={currentDepthLevel + 1}
-        
-            soilType={soilData.soilType}
-            />
-          );
+            return (
+                <CompositeSoil
+                    key={currentDepthLevel + 1}
+
+                    soilType={soilData.soilType}
+                />
+            );
         }
-      };
+    };
 
     const deleteDepthLevelButton = () => {
         if (Object.keys(depth_data).length > 0) {
@@ -268,7 +274,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                 ruPratique: soilType.practical_fraction,
                 effPluie: soilType.rain_eff
             });
-    
+
         }
     };
     console.log(soilData.soilType)
@@ -320,7 +326,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "",listSoils })
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-gap:"10px"
+                            gap: "10px"
                         }}
                     >
                         <Button
@@ -353,7 +359,7 @@ gap:"10px"
                                     required
                                     defaultValue={SingleZone.name}
                                     onChange={(e) => setName(e.target.value)}
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
                                 />
                             </Col>
                             <Col md="5" className="form-group">
@@ -372,21 +378,21 @@ gap:"10px"
 
                             </Col>
                             <Col lg='6' md="12" sm="12" className="form-group">
-                            <div>
-                                <p style={{ margin: "0px" }}>{t('soil_type')}</p>
-                                <Form.Select
-                                value={soilData.soilType}
-                                onChange={handleSoilPick}
-                                >
-                                <option value="">{t('select_soil')}</option>
-                                {
-                                    listSoils.map(soil=>{
-                                       return <option value={soil.id}>{soil.soil}</option>
-                                        
-                                    })
-                                }
-                                </Form.Select>
-                            </div>
+                                <div>
+                                    <p style={{ margin: "0px" }}>{t('soil_type')}</p>
+                                    <Form.Select
+                                        value={soilData.soilType}
+                                        onChange={handleSoilPick}
+                                    >
+                                        <option value="">{t('select_soil')}</option>
+                                        {
+                                            listSoils.map(soil => {
+                                                return <option value={soil.id}>{soil.soil}</option>
+
+                                            })
+                                        }
+                                    </Form.Select>
+                                </div>
                             </Col>
 
                             {/* <Col md="6" className="form-group">
@@ -416,7 +422,7 @@ gap:"10px"
                         <Col lg="4" md="8" sm="8">
                             <Form.Group>
                                 <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%)</p>
-                                <Form.Control type="number" value={soilData.effPluie} onChange={e => setSoilData({...soilData,effPluie : e.target.value})} id='effPluie' placeholder={t('efficacité_pluie')}
+                                <Form.Control type="number" value={soilData.effPluie} onChange={e => setSoilData({ ...soilData, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
                                 />
 
                             </Form.Group>
@@ -424,7 +430,7 @@ gap:"10px"
                         <Col lg="4" md="8" sm="8">
                             <Form.Group>
                                 <p style={{ margin: "0px" }}>RU max (mm/m)</p>
-                                <Form.Control type="number" value={soilData.RUmax} onChange={e => setSoilData({...soilData, RUmax : e.target.value})} id='ruMax' placeholder="RU max"
+                                <Form.Control type="number" value={soilData.RUmax} onChange={e => setSoilData({ ...soilData, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
                                 />
 
                             </Form.Group>

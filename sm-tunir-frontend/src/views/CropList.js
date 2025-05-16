@@ -9,6 +9,7 @@ import { Modal, Form, Row, Col, Button, ButtonGroup } from "react-bootstrap"
 
 
 const CropList = ({ cropsList, Crops, Fields, Zones }) => {
+    console.log(cropsList, "crops");
 
 
     const { t, i18n } = useTranslation();
@@ -34,6 +35,8 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
         surface: ""
 
     })
+
+
     const [msgServer, setMsg] = useState("")
 
     const [classMsg, setCmsg] = useState("")
@@ -87,6 +90,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
             api.post('/crop', data)
                 .then(res => {
                     let CropData = res.data.crop
+
                     setSingleCrop(CropData)
                     cropsList.map(crop => {
                         if (CropData.croptype_id === crop.croptype.id) {
@@ -94,16 +98,31 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
 
                         }
                     })
-                    setCropData({ rootDepth: CropData.rootDepth })
-                    setCropData({ days: CropData.days })
-                    setCropData({ plantingDate: CropData.plantingDate })
-                    setCropData({ cropVariety: CropData.crop_variety_id })
-                    setCropData({ density: CropData.density })
-                    setCropData({ ecartInter: CropData.ecart_inter })
-                    setCropData({ ecartIntra: CropData.ecart_intra })
-                    setCropData({ ruPratique: CropData.practical_fraction })
-                    setCropData({ growingDate: CropData.growingDate })
-                    setCropData({ surface: CropData.surface })
+
+                    // setCropData({ rootDepth: CropData.rootDepth })
+                    // setCropData({ days: CropData.days })
+                    // setCropData({ plantingDate: CropData.plantingDate })
+                    // setCropData({ cropVariety: CropData.crop_variety_id })
+                    // setCropData({ density: CropData.density })
+                    // setCropData({ ecartInter: CropData.ecart_inter })
+                    // setCropData({ ecartIntra: CropData.ecart_intra })
+                    // setCropData({ ruPratique: CropData.practical_fraction })
+                    // setCropData({ growingDate: CropData.growingDate })
+                    // setCropData({ surface: CropData.surface })
+                    setCropData({
+                        cropVariety: CropData.crop_variety_id,
+                        days: CropData.days,
+                        plantingDate: CropData.plantingDate,
+                        rootDepth: CropData.rootDepth,
+                        density: CropData.density,
+                        ecartInter: CropData.ecart_inter,
+                        ecartIntra: CropData.ecart_intra,
+                        ruPratique: CropData.practical_fraction,
+                        growingDate: CropData.growingDate,
+                        surface: CropData.surface
+                    });
+                    console.log(res, "res");
+
 
                     Fields.map((fieldData) => {
                         if (CropData.field_id == fieldData.Id) {
@@ -406,6 +425,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                             <Col lg="5" md="8" sm="8">
                                 <Form.Group>
                                     <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
+                                    {console.log(cropData, "cropppppdaata")}
                                     <Form.Select value={cropData.cropVariety} id="cropVariety" onChange={(e) => setCropData({ ...cropData, cropVariety: e.target.value })}>
                                         <option value="">{t('crop_type')}</option>
                                         {

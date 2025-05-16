@@ -289,14 +289,15 @@ class AddField extends React.Component {
                   irrigations: i.irrigations,
                   Id: i.id,
                   field_id: i.field_id,
-                  zone_id: i.zone_id
-
+                  zone_id: i.zone_id,
+                  rootDepth: i.rootDepth //tw ena zedtou
                 });
               });
             };
           });
         };
       });
+console.log(newDataCrop,"crops from get");
 
       this.setState({ cropsData: Crops })
     })
