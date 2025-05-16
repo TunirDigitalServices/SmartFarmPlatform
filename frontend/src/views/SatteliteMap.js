@@ -8,7 +8,14 @@ import L from 'leaflet';
 import LeafletGeoCoder from "./LeafletGeoCoder";
 import { ScaleControl } from 'react-leaflet';
 import Legend from "./Legend";
-import { Row } from "shards-react";
+import { Row } from "react-bootstrap";
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
+
 
 const SatteliteMap = ({
   data,
