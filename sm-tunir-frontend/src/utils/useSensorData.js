@@ -55,7 +55,7 @@ const useSensorData = () => {
             let min = parseFloat(dataMapping.min[keyDataMin]);
 
             // Debugging: log the values
-            console.log(`val: ${val}, max: ${max}, min: ${min}`);
+            // console.log(`val: ${val}, max: ${max}, min: ${min}`);
 
             // Adjust calculation for when min > max
             if (val >= max && val <= min) {

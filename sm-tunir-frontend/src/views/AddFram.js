@@ -9,13 +9,15 @@ import api from '../api/api';
 export default function AddFram() {
     const [farmParams, setFarmParams] = useState({
         name: "",
-        groupName: "",
-        cityId: ""
+        name_group: "",
+        user_id: "",
+        city_id: ""
     })
     const [country, setCountry] = useState('')
     const [cities, setCities] = useState('')
     const [allCities, setAllCities] = useState([])
     const [countries, setCountries] = useState([])
+    const [users, setUsers] = useState([])
     const [validated, setValidated] = useState(false);
     const { t } = useTranslation();
 
@@ -35,10 +37,22 @@ export default function AddFram() {
 
             })
         }
-        // getSoils()
+        const getUsers = async () => {
+            await api.get('/admin/users').then(res => {
+                const usersData = res.data.users
+                setUsers(usersData);
+
+            })
+        }
+
+
+
+
+        getUsers()
         getCountries()
         getCities()
     }, [])
+    console.log(users, "users");
 
     const handleCountryPick = (e) => {
         e.preventDefault();
@@ -63,37 +77,46 @@ export default function AddFram() {
 
         }
     };
-    const addFarm = async () => {
+  const addFarm = async () => {
+    console.log("addfarm triggered");
+    const data=farmParams
 
-        let data = {
-            name: farmParams.name,
-            name_group: farmParams.groupName,
-            // user_uid: userUid,
-            city_id: farmParams.cityId
-            // Coordinates : layer,
-            // Latitude : coords.Latitude,
-            // Longitude : coords.Longitude
+    try {
+        const response = await api.post('/farm/add-farm', data);
+
+        if (response.data.type === "success") {
+            swal('Farm Added', { icon: "success" });
+            // getLayerFarm()
+        } else {
+            swal(response.data.message || 'Something went wrong.', { icon: "error" });
         }
-        await api.post('/farm/add-farm', data)
-            .then(response => {
-                if (response.data.type === "success") {
-                    swal('Farm Added', { icon: "success" });
-                    // getLayerFarm()
 
-                }
-            }).catch(err => {
-                swal(err, { icon: "error" })
-            })
+    } catch (err) {
+        console.error("Error adding farm:", err);
+
+        const message =
+            err.response?.data?.message || 
+            err.message ||                 
+            "An unknown error occurred.";
+
+        swal("Error", message, "error");
     }
-    const handleSubmit = (event) => {
+};
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
+
             event.stopPropagation();
+        } else {
+            await addFarm();
         }
 
         setValidated(true);
     };
+    console.log(farmParams, "farrrm prams");
+
 
     return (
         <Container className="p-md-5 p-3">
@@ -171,73 +194,92 @@ export default function AddFram() {
                     <Form noValidate validated={validated} onSubmit={handleSubmit} className="p-md-5 p-3">
                         <Row className="mb-3 gx-3 gy-3 ">
                             <Form.Group as={Col} md="4" controlId="validationCustom01">
-                                <Form.Label>First name</Form.Label>
+                                <Form.Label>{t('name_farm')} *</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="First name"
-                                    defaultValue="Mark"
+                                    placeholder={t('name_farm')}
+                                    value={farmParams.name}
+                                    onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
+
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a Farm Name.
+                                </Form.Control.Feedback>
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustom02">
-                                <Form.Label>Last name</Form.Label>
+                                <Form.Label>{t('group_name')}</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="Last name"
-                                    defaultValue="Otto"
+                                    placeholder={t('group_name')}
+                                    value={farmParams.name_group}
+                                    onChange={(e) => setFarmParams({ ...farmParams, name_group: e.target.value })}
                                 />
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">
+                                    Please provide a valid group name.
+                                </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                                <Form.Label>Username</Form.Label>
-                                <InputGroup hasValidation>
-                                    <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Username"
-                                        aria-describedby="inputGroupPrepend"
-                                        required
-                                    />
-                                    <Form.Control.Feedback type="invalid">
-                                        Please choose a username.
-                                    </Form.Control.Feedback>
-                                </InputGroup>
+                                <Form.Label>{t('select_country')} *</Form.Label>
+
+
+                                <Form.Select
+                                    onChange={handleCountryPick}
+                                    value={country}
+
+                                >
+                                    {countries.map(country => (
+                                        <option key={country.id} value={country.iso}>{country.name}</option>
+                                    ))}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                                    Please choose a username.
+                                </Form.Control.Feedback>
+
                             </Form.Group>
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} md="6" controlId="validationCustom03">
-                                <Form.Label>City</Form.Label>
-                                <Form.Control type="text" placeholder="City" required />
+                                <Form.Label>{t('select_city')} *</Form.Label>
+                                <Form.Select
+                                    value={farmParams.city_id}
+                                    onChange={e => setFarmParams({ ...farmParams, city_id: e.target.value })}
+
+                                >
+                                    <option value="">{t('select_city')}</option>
+                                    {cities && cities.map(city => (
+                                        <option key={city.id} value={city.id}>{city.city}</option>
+                                    ))}
+                                </Form.Select>
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a valid city.
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="3" controlId="validationCustom04">
-                                <Form.Label>State</Form.Label>
-                                <Form.Control type="text" placeholder="State" required />
+                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                                <Form.Label>{t('select_user')} *</Form.Label>
+                                <Form.Select
+                                    value={farmParams.user_id}
+                                    onChange={e => setFarmParams({ ...farmParams, user_id: e.target.value })}
+
+                                >
+                                    <option value="">{t('select_user')}</option>
+                                    {users && users.map(user => (
+                                        <option key={user.id} value={user.id}>{user.name}</option>
+                                    ))}
+                                </Form.Select>
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid state.
+                                    Please provide a valid city.
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="3" controlId="validationCustom05">
-                                <Form.Label>Zip</Form.Label>
-                                <Form.Control type="text" placeholder="Zip" required />
-                                <Form.Control.Feedback type="invalid">
-                                    Please provide a valid zip.
-                                </Form.Control.Feedback>
-                            </Form.Group>
+
                         </Row>
-                        <Form.Group className="mb-3">
-                            <Form.Check
-                                required
-                                label="Agree to terms and conditions"
-                                feedback="You must agree before submitting."
-                                feedbackType="invalid"
-                            />
-                        </Form.Group>
-                        <Button type="submit">Submit form</Button>
+                        <div className="d-flex justify-content-end">
+
+                            <Button type="submit mt-4">Submit form</Button>
+                        </div>
                     </Form>
                 </Card>
             </Row>

@@ -25,6 +25,7 @@
     "select_farm": "اختر اسم المزرعة",
     "select_sensor": "اختر اسم الجهاز",
     "select_city": "اختر المدينة",
+    "select_user":"اختر مستخدمًا",
     "select_country": "اختر الدولة",
     "crop_added": "تمت إضافة زراعة",
     "fail_add_crop": "فشلت إضافة الزراعة",

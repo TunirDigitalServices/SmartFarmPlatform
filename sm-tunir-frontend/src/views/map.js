@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, Tooltip, useMapEvents, ScaleControl } from "react-leaflet";
+import { MapContainer, TileLayer, Polygon, Circle, FeatureGroup, Marker, Popup, useMap, Tooltip, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Styles.css";
 import useGeoLocation from "../utils/useGeoLocation";
@@ -11,7 +11,6 @@ import { useRef } from "react";
 import LeafletGeoCoder from "./LeafletGeoCoder";
 import icon from "../assets/images/icons/icon.png"
 import sensor from "../assets/images/icons/sensor.png"
-
 const zoomDefault = 14;
 let centerDefault = [36.806389, 10.181667];
 const myIcon = new L.Icon({
@@ -47,15 +46,14 @@ const MapViewUpdater = ({ center, zoom }) => {
 
   return null;
 };
+
+
 const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, farms, fields, zoom, center, fromAction, uid }) => {
 
-  const mapRef = useRef(null);
+
+  const mapRef = useRef();
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
   const [zoomLevel, setZoomLevel] = useState(10);
-  const [polygonCoords, setPolygonCoords] = useState([]);
-  const [markers, setMarkers] = useState([]);
-  const [bounds, setBounds] = useState(null);
-
   const getCenterFromSensors = () => {
     if (sensor && sensor.length > 0) {
       const firstSensor = sensor[0];
@@ -66,72 +64,26 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
     }
     return null;
   };
-  const calculateImageBounds = (coordinates) => {
-    if (!coordinates || coordinates.length === 0) return;
-
-    const lats = coordinates.map(coord => coord[0]);
-    const lngs = coordinates.map(coord => coord[1]);
-
-    const newBounds = [
-      [Math.min(...lats), Math.min(...lngs)], // South West corner
-      [Math.max(...lats), Math.max(...lngs)]  // North East corner
-    ];
-
-    setBounds(newBounds); // Update the bounds state
-  };
-
-
   useEffect(() => {
-    if (data && data.length > 0 && data[0]) {
-      const field = data?.[0]?.fields?.[0] ?? data?.[1]?.fields?.[0];
-      const latitude = Number(field.Latitude);
-      const longitude = Number(field.Longitude);
-
-
-      // Set marker position
-      setMarkers([latitude, longitude]);
-      setMapCenter([latitude, longitude]);
-
-      // Parse and set polygon coordinates
-      try {
-        if (field.coordinates) {
-          const parsedCoords = JSON.parse(field.coordinates);
-
-          // Ensure that parsedCoords is an array of objects like [{Lat: xx, Long: xx}, ...]
-          if (Array.isArray(parsedCoords)) {
-            const formattedCoords = parsedCoords.map(coord => {
-              return [coord.Lat, coord.Long]; // Ensure [Lat, Long] format for Leaflet
-            });
-
-
-            setPolygonCoords(formattedCoords); // Set the coordinates state
-            calculateImageBounds(formattedCoords); // Calculate the bounds based on the coordinates
-          }
-        }
-      } catch (e) {
-        console.error("Error parsing coordinates:", e);
+    const updateMapCenter = async () => {
+      console.log("updatercentermap working");
+      
+      const centerFromSensors = getCenterFromSensors();
+      if (centerFromSensors) {
+        setMapCenter(centerFromSensors);
+        setZoomLevel(16.5)
+        console.log(centerFromSensors,"centerFromSensors");
+        console.log(zoomLevel,"zoomLevel");
+        console.log(mapRef.current ," mapRef.current");
+        
+        
+        // mapRef.current.setView(centerFromSensors, zoomLevel);
       }
-    }
-  }, [data]);
+    };
 
-
-
-
-
-  useEffect(() => {
-    const centerFromSensors = getCenterFromSensors();
-    if (centerFromSensors && mapRef.current) {
-      setMapCenter(centerFromSensors);
-      setZoomLevel(16.5);
-      mapRef.current.setView(centerFromSensors, 16.5);
-    }
-  }, [sensor]);
-
-
-
+    updateMapCenter();
+  }, [sensor, mapRef, zoomLevel]);
   const location = useGeoLocation();
-
-
 
   const returnedMap = (L) => {
     switch (currentPage) {
@@ -164,7 +116,6 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
         })
       case '/':
-        
         return data.map((item, indx) => {
           let coordinates = []
           let fields = item.fields;
@@ -191,27 +142,40 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
               })
             }
           })
-        
+
 
           return (
             <>
-              {location.loaded && !location.error && (
-                <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
-                  <Popup>My position</Popup>
-                </Marker>
-              )}
-              {markers.length > 0 && data && data[0] && (
-                <Marker position={[markers[0], markers[1]]}>
-                  <Popup>{data?.[0]?.fields?.[0]?.name ?? data?.[1]?.fields?.[0]?.name }</Popup>
-                </Marker>
-              )}
-              {polygonCoords.length > 0 && (
-                <Polygon
-                  pathOptions={{ color: '#26A6B7', opacity: 0.2 }}
-                  positions={polygonCoords}
-                  fillColor="none"
-                />
-              )}
+              <Polygon color="#28A6B7" key={indx} positions={coordinates}>
+                {/* <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject> */}
+              </Polygon>
+              {/* <Polygon key={indx} positions={coordinates}> */}
+
+              {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
+                      <Popup>{item.name}</Popup>
+                    </Marker> */}
+              {/* </Polygon>  */}
+              {
+               
+                sensor && sensor.map((sensors, indx) => {
+             
+                  if (sensors.Latitude && sensors.Longitude) {
+
+                    return (
+              <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                <Popup >{sensors.code}</Popup>
+              </Marker>
+              )
+                  }
+                  // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
+
+
+
+                }
+
+              )
+
+              }
             </>
           )
 
@@ -331,50 +295,26 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
   let userSensorCenter = getCenterFromSensors()
 
-useEffect(() => {
-  return () => {
-    if (mapRef.current) {
-      mapRef.current.eachLayer(layer => {
-        if (layer instanceof L.Control) {
-          mapRef.current.removeControl(layer);
-        }
-      });
-    }
-  };
-}, []);
   return (
     <div>
       <MapContainer
-      key="main-map"
         style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300, zIndex: 1 }}
         className="markercluster-map"
         zoom={zoomLevel}
         center={mapCenter}
-        maxZoom={22}
+        maxZoom={18}
         whenCreated={(map) => {
-          mapRef.current = map;
-
-         
+          mapRef.current = map; // Assign the map instance to mapRef.current
         }}
       >
-   {(draw || edit) && (
-  <FeatureGroup>
-    <EditControl
-      draw={draw}
-      edit={edit}
-      position="topright"
-      onCreated={_onCreated}
-      onEdited={_onEdited}
-    />
-  </FeatureGroup>
-)}
-
-
+        <FeatureGroup>
+          <EditControl draw={draw} edit={edit} position="topright" onCreated={_onCreated} onEdited={_onEdited} />
+        </FeatureGroup>
         <TileLayer
 
           url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-          maxZoom={22}
+          attribution="© Google Maps"
         />
         <LeafletGeoCoder />
         {location.loaded && !location.error && (
@@ -391,7 +331,7 @@ useEffect(() => {
         }
 
         {returnedMap(L)}
-        <MapViewUpdater center={mapCenter} zoom={16.5} />
+          <MapViewUpdater center={mapCenter} zoom={16.5} />
       </MapContainer>
     </div>
   );
