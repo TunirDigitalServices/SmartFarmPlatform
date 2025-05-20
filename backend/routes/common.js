@@ -1,7 +1,7 @@
 const express = require('express')
 const {profil, uploadPicture,editProfil,validateProfil, changePassword} = require('../controllers/common/profil.js')
-const {getFarmsByConnectedUser, addFarm, editFarm, deleteFarm, validateFarm, getSingleFarm, setFarmPosition} = require('../controllers/common/farm.js')
-const {getFieldsByConnectedUser,getSingleField,searchField, addFiel, editField, deleteField, getFieldsByFarm, validateField, getFieldsByStatus, addEvent, getEvents, editEvent, deleteEvent, getSatteliteImages} = require('../controllers/common/field.js')
+const {getFarmsByConnectedUser, addFarm, editFarm, deleteFarm, validateFarm, getSingleFarm, setFarmPosition,  searchFarms} = require('../controllers/common/farm.js')
+const {getFieldsByConnectedUser,getSingleField,searchField, addFiel, editField, deleteField, getFieldsByFarm, validateField, getFieldsByStatus, addEvent, getEvents, editEvent, deleteEvent, getSatteliteImages, searchAllFields} = require('../controllers/common/field.js')
 const {getCropsByConnectedUser,getSingleCrop, getCropsByField, addCrop, editCrop, deleteCrop, validateCrop} = require('../controllers/common/crop.js')
 const {getSensorsByConnectedUser,getSingleSensor, getSensorsByField, addSensor, editSensor, deleteSensor, searchSensorsByCode, validateSensor, addSensorPosition, activateSynch, updateSensorsApiByUser, getSensorsHistory, getSunRadiation, mappingMv, getSingleSensorAllData, editDataMappingByUser} = require('../controllers/common/sensor.js')
 const {getIrrigationsByConnectedUser,getSingleIrrigation,getIrrigationsByCrop,searchIrrigationsByType,addIrrigation,deleteIrrigation,editIrrigation,validateIrrigation} = require('../controllers/common/irrigation');
@@ -38,6 +38,7 @@ router.post('/upload-avatar',auth, uploadPicture);
 
 /*********** FARM *********************/
 router.get('/farm/farms',auth, getFarmsByConnectedUser);
+router.get('/farm/all-farms',auth, searchFarms);
 router.post('/farm',auth,getSingleFarm)
 router.post('/farm/add-farm',auth, validateFarm('addEdit'), addFarm);
 router.post('/farm/edit-farm',auth, validateFarm('addEdit'), editFarm);
@@ -47,6 +48,7 @@ router.post('/farm/set-farm-position',auth, setFarmPosition);
 
 /*********** FIELD *********************/
 router.get('/field/fields',auth, getFieldsByConnectedUser);
+router.get('/field/search-all-fields',auth, searchAllFields);
 router.post('/field',auth,getSingleField);
 router.get('/farm/:uid/field',auth, getFieldsByFarm);
 router.post('/field/field-status',auth, getFieldsByStatus);

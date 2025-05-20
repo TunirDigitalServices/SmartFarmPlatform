@@ -1443,7 +1443,7 @@ const Overview = (props) => {
             <Row>
               <PageTitle subtitle={`${t('step')} ${steps + 1} - ${t('crop_info')}`} className=" mb-1" />
               <div style={{ backgroundColor: '#F7F7F7', padding: '20px', borderRadius: '10px' }}>
-                <p style={{ fontSize: '16px', lineHeight: '1.5', margin: '0' }}>"To add your crop type configuration, please provide the appropriate details and associate it with the appropriate field and soil type. This will help us to provide personalized recommendations for managing your crops and achieving optimal yields."</p>
+                <p style={{ fontSize: '16px', lineHeight: '1.5', margin: '0' }}>"crop_info"</p>
               </div>
             </Row>
             <Row className="py-2 d-flex justify-content-start border-bottom align-items-center">

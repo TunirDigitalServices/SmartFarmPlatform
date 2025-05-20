@@ -239,7 +239,7 @@ export default function SoilInfo() {
 
                                 <Form.Label>{t('efficacité_pluie')} (%) *</Form.Label>
                                 <Form.Control
-                                    type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
+                                    type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })}  placeholder={t('efficacité_pluie')}
                                     required
 
                                 />
@@ -255,7 +255,7 @@ export default function SoilInfo() {
 
                                 <Form.Label>RU max (mm/m) *</Form.Label>
                                 <Form.Control
-                                    type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
+                                    type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })}  placeholder="RU max"
                                     required
 
                                 />

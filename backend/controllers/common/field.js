@@ -22,12 +22,39 @@ const getFieldsByConnectedUser = async (req, res) => {
     }
 }
 
+const searchAllFields = async (req, res) => {
+    const { search = '' } = req.query;
+
+    try {
+        const fields = await Field.query(qb => {
+            qb.where('deleted_at', null);
+            if (search) {
+                qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
+            }
+        })
+            .fetchAll({ require: false });
+
+        const response = fields.toJSON().map(farm => ({
+            value: farm.uid,
+            label: farm.name
+        }));
+
+        console.log("Search:", search);
+        console.log("Result:", response);
+
+        return res.status(200).json(response);
+    } catch (error) {
+        console.error("searchFields error:", error);
+        return res.status(500).json({ type: "danger", message: "fields" });
+    }
+};
+
 const getSingleField = async (req, res) => {
     const field_uid  = req.body.field_uid;
     
     try {
       const field = new Field({'uid': field_uid, deleted_at: null})
-      .fetch({withRelated: [{'sensors': (qb) => { qb.where('deleted_at', null); }}], require: false})
+      .fetch({withRelated: [{'zones': (qb) => { qb.where('deleted_at', null); }}], require: false})
       .then(async result => {
           if (result === null) return res.status(404).json({ type:"danger", message: "no_field"});
           if(result){
@@ -328,4 +355,4 @@ const validateField =(method) => {
       }
     }
   }
-module.exports = {getFieldsByConnectedUser, getSingleField,addFiel, editField, deleteField, getFieldsByFarm, validateField,getFieldsByStatus,searchField,addEvent,getEvents,editEvent,deleteEvent,getSatteliteImages}
+module.exports = {getFieldsByConnectedUser,searchAllFields, getSingleField,addFiel, editField, deleteField, getFieldsByFarm, validateField,getFieldsByStatus,searchField,addEvent,getEvents,editEvent,deleteEvent,getSatteliteImages}
