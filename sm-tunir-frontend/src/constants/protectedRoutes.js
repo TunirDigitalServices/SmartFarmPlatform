@@ -36,6 +36,9 @@ import ConfigurationSoils from "../admin/ConfigurationSoils"
 import ConfigurationIrrigation from "../admin/ConfigurationIrrigation"
 import Graph from "../views/Graph";
 import AddFram from '../views/AddFram';
+import AddFarmField from '../views/AddFarmField';
+import SoilInfo from '../views/SoilInfo';
+import AddCropInfo from '../views/AddCropInfo';
 
 // import Profile from '../pages/Profile'
 
@@ -315,6 +318,30 @@ const protectedRoutes = [
     path: "/add-farm",
 
     element: <AddFram />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'add-field',
+    path: "/add-field",
+
+    element: <AddFarmField />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'add soil Info',
+    path: "/add-soil-info",
+
+    element: <SoilInfo />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'add crop Info',
+    path: "/add-crop-info",
+
+    element: <AddCropInfo />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

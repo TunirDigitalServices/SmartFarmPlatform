@@ -1852,7 +1852,7 @@ const Overview = (props) => {
         </Modal>
       </>
       {/* Page Header */}
-      <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between w-100 flex-nowrap align-items-center border-bottom">
+      <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between   align-items-center border-bottom">
         <PageTitle title={t('overview')} className=" mb-1" />
         <Dropdown open={toggle} toggle={toggleDropDown} className="d-table mr-5 custom-dropdown " style={{ width: '50px', height: '50px', all: "unset" }}>
           <Dropdown.Toggle className="d-flex justify-content-center align-items-center " style={{

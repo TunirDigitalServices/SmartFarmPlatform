@@ -10,7 +10,7 @@ export default function AddFram() {
     const [farmParams, setFarmParams] = useState({
         name: "",
         name_group: "",
-        user_id: "",
+        user_uid: "",
         city_id: ""
     })
     const [country, setCountry] = useState('')
@@ -77,31 +77,37 @@ export default function AddFram() {
 
         }
     };
-  const addFarm = async () => {
-    console.log("addfarm triggered");
-    const data=farmParams
+    const addFarm = async () => {
+        console.log("addfarm triggered");
+        const data = farmParams
 
-    try {
-        const response = await api.post('/farm/add-farm', data);
+        try {
+            const response = await api.post('/farm/add-farm', data);
 
-        if (response.data.type === "success") {
-            swal('Farm Added', { icon: "success" });
-            // getLayerFarm()
-        } else {
-            swal(response.data.message || 'Something went wrong.', { icon: "error" });
+            if (response.data.type === "success") {
+                swal('Farm Added', { icon: "success" });
+                setFarmParams({
+                    name: "",
+                    name_group: "",
+                    user_uid: "",
+                    city_id: ""
+                })
+                // getLayerFarm()
+            } else {
+                swal(response.data.message || 'Something went wrong.', { icon: "error" });
+            }
+
+        } catch (err) {
+            console.error("Error adding farm:", err);
+
+            const message =
+                err.response?.data?.message ||
+                err.message ||
+                "An unknown error occurred.";
+
+            swal("Error", message, "error");
         }
-
-    } catch (err) {
-        console.error("Error adding farm:", err);
-
-        const message =
-            err.response?.data?.message || 
-            err.message ||                 
-            "An unknown error occurred.";
-
-        swal("Error", message, "error");
-    }
-};
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -115,7 +121,7 @@ export default function AddFram() {
 
         setValidated(true);
     };
-    console.log(farmParams, "farrrm prams");
+  
 
 
     return (
@@ -127,72 +133,11 @@ export default function AddFram() {
                         <p style={{ fontSize: '16px', lineHeight: '1.5', margin: '0' }}>
                             "To get started, please provide a name and location for your farm. This will help us to identify and locate your farm accurately."
                         </p>
-                        {/* <Row>
-                            <div className="d-flex gap-2">
-                                <Col lg="6" md="12" sm="12">
-                                    <Form.Group controlId="farmName">
-                                        <Form.Label>{t('name_farm')} *</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder={t('name_farm')}
-                                            required
-                                            value={farmParams.name}
-                                            onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
-                                            style={{ border: '1px solid #0BAECB' }}
-                                        />
-                                    </Form.Group>
-                                </Col>
-                                <Col lg="6" md="12" sm="12">
-                                    <Form.Group controlId="groupName">
-                                        <Form.Label>{t('group_name')}</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder={t('group_name')}
-                                            value={farmParams.groupName}
-                                            onChange={(e) => setFarmParams({ ...farmParams, groupName: e.target.value })}
-                                        />
-                                    </Form.Group>
-                                </Col>
-                            </div>
-                        </Row>
 
-                        <Row className="pt-1">
-                            <div className="d-flex gap-2">
-                                <Col lg="6" md="12" sm="12">
-                                    <Form.Group controlId="country">
-                                        <Form.Label>{t('select_country')} *</Form.Label>
-                                        <Form.Select
-                                            onChange={handleCountryPick}
-                                            value={country}
-                                            style={{ border: '1px solid #0BAECB' }}
-                                        >
-                                            {countries.map(country => (
-                                                <option key={country.id} value={country.iso}>{country.name}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Col>
-                                <Col lg="6" md="12" sm="12">
-                                    <Form.Group controlId="city">
-                                        <Form.Label>{t('select_city')} *</Form.Label>
-                                        <Form.Select
-                                            value={farmParams.cityId}
-                                            onChange={e => setFarmParams({ ...farmParams, cityId: e.target.value })}
-                                            style={{ border: '1px solid #0BAECB' }}
-                                        >
-                                            <option value="">{t('select_city')}</option>
-                                            {cities && cities.map(city => (
-                                                <option key={city.id} value={city.id}>{city.city}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Col>
-                            </div>
-                        </Row> */}
 
                     </Card.Body>
                     <Form noValidate validated={validated} onSubmit={handleSubmit} className="p-md-5 p-3">
-                        <Row className="mb-3 gx-3 gy-3 ">
+                        <Row className="mb-3 gap-3 justify-content-between">
                             <Form.Group as={Col} md="4" controlId="validationCustom01">
                                 <Form.Label>{t('name_farm')} *</Form.Label>
                                 <Form.Control
@@ -201,21 +146,23 @@ export default function AddFram() {
                                     placeholder={t('name_farm')}
                                     value={farmParams.name}
                                     onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
-
+                                    style={{height:"40px"}}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a Farm Name.
                                 </Form.Control.Feedback>
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="4" controlId="validationCustom02">
+                            <Form.Group as={Col} md="3" controlId="validationCustom02">
                                 <Form.Label>{t('group_name')}</Form.Label>
                                 <Form.Control
-                                    required
+
                                     type="text"
                                     placeholder={t('group_name')}
                                     value={farmParams.name_group}
                                     onChange={(e) => setFarmParams({ ...farmParams, name_group: e.target.value })}
+                                    style={{height:"40px"}}
+
                                 />
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 <Form.Control.Feedback type="invalid">
@@ -229,8 +176,11 @@ export default function AddFram() {
                                 <Form.Select
                                     onChange={handleCountryPick}
                                     value={country}
+                                    required
+                                    style={{height:"40px"}}
 
                                 >
+                                    <option value="">{t('select_country')}</option>
                                     {countries.map(country => (
                                         <option key={country.id} value={country.iso}>{country.name}</option>
                                     ))}
@@ -241,12 +191,15 @@ export default function AddFram() {
 
                             </Form.Group>
                         </Row>
-                        <Row className="mb-3">
-                            <Form.Group as={Col} md="6" controlId="validationCustom03">
+                        <Row className="mb-3 gap-3 justify-content-between">
+                            <Form.Group as={Col} md="6" controlId="validationCustom03" className="mt-2">
                                 <Form.Label>{t('select_city')} *</Form.Label>
                                 <Form.Select
                                     value={farmParams.city_id}
                                     onChange={e => setFarmParams({ ...farmParams, city_id: e.target.value })}
+                                    required
+                                    style={{height:"40px"}}
+
 
                                 >
                                     <option value="">{t('select_city')}</option>
@@ -258,20 +211,23 @@ export default function AddFram() {
                                     Please provide a valid city.
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="6" controlId="validationCustom03">
-                                <Form.Label>{t('select_user')} *</Form.Label>
+                            <Form.Group as={Col} md="5" controlId="validationCustom03" className="mt-3">
+                                <Form.Label className="m-0">{t('select_user')} *</Form.Label>
                                 <Form.Select
-                                    value={farmParams.user_id}
-                                    onChange={e => setFarmParams({ ...farmParams, user_id: e.target.value })}
+                                    value={farmParams.user_uid}
+                                    onChange={e => setFarmParams({ ...farmParams, user_uid: e.target.value })}
+                                    required
+                                    style={{height:"40px"}}
+
 
                                 >
                                     <option value="">{t('select_user')}</option>
                                     {users && users.map(user => (
-                                        <option key={user.id} value={user.id}>{user.name}</option>
+                                        <option key={user.uid} value={user.uid}>{user.name}</option>
                                     ))}
                                 </Form.Select>
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    Please provide a valid user.
                                 </Form.Control.Feedback>
                             </Form.Group>
 
