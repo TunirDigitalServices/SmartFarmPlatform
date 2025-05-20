@@ -89,10 +89,10 @@ const FilterFields = ({ fieldStats, sensorsData, filteredByStatus, crops }) => {
     return (
         <Container fluid className="main-content-container px-4 py-5">
             <Row form className="d-flex justify-content-center gap-2 ">
-                <Col lg="4" md="6" sm="6" className="mb-4">
+                <Col  className="mb-4">
                     <Form.Control value={SearchName} onChange={(e) => setSearchName(e.target.value)} placeholder="Search by Field Name..." className="mb-2 h-100" />
                 </Col>
-                <Col lg="4" md="6" sm="6" className="mb-4">
+                <Col  className="mb-4">
                     <Form.Select id='myList' value={value} onChange={(e) => setValue(e.target.value)} className="mb-2 h-100">
                         {
                             selectSearch.map(({ value, label }) => (

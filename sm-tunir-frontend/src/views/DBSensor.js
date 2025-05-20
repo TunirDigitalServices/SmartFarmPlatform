@@ -49,15 +49,17 @@ export default function DBSensor({ filteredSensors }) {
   };
 
   return (
-    <Col className="w-100" >
-      <div className="sensor border">
-        <div className="sensorHeader">
+   <div className="row">
+      <div className="sensor border p-2 col-12 col-md-6">
+        <div className="sensorHeader d-flex">
+          <p>QR: {filteredSensors.code}</p>
+
           <div className="sensorNameWrapper">
             {/* <p>{fieldsData.name}</p>
               <p>{fieldsData.soil_zone}</p> */}
           </div>
 
-          <div className="sensorInfo">
+          <div className="sensorInfo d-flex flex-wrap">
             <div>
               <p style={{ marginRight: 5 }}>{parseInt(filteredSensors.signal).toFixed(0)}%</p>
               <i className="fas fa-signal"></i>
@@ -69,10 +71,10 @@ export default function DBSensor({ filteredSensors }) {
               {returnBL()}
             </div>
           </div>
+
         </div>
-        <div>
-          <p>QR: {filteredSensors.code}</p>
-        </div>
+       
+       
         {/* <section className="ProgressBarWrapper">
             <div className="stats-dates">
             <p style={{ fontSize: 13 }}>{t('niveau')} 1</p>
@@ -204,7 +206,7 @@ export default function DBSensor({ filteredSensors }) {
                 }}
               ></div>
             </div>
-            <div className="status">
+            <div className="status mt-4">
               <div>{t('Critical')}</div>
               <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
               <div>{t('Full')}</div>
@@ -222,7 +224,7 @@ export default function DBSensor({ filteredSensors }) {
         </div>
 
       </div>
-    </Col>
+</div>
 
 
 

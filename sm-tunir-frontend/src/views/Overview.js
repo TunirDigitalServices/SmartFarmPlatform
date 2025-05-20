@@ -1809,7 +1809,7 @@ const Overview = (props) => {
     }
   }
   return (
-    <Container fluid className="main-content-container px-5" style={{ overflowX: 'hidden', width: '100%', maxWidth: '100%' }}
+    <Container fluid className="main-content-container " style={{ overflowX: 'hidden', width: '100%', maxWidth: '100%' }}
     >
       <>
         <Modal size="lg" show={show} onHide={handleClose}>
@@ -1897,9 +1897,9 @@ const Overview = (props) => {
         </Dropdown>
       </Row>
       {/* Small Stats Blocks */}
-      <Row className="mt-4 gap-2">
-        <Col lg="4" md="6" sm="6" className="mb-4">
-          <p style={{ margin: 0 }}>{t('field_stats')}</p>
+      <Row className="mt-4 gap-2 align-items-stretch justify-content-center">
+        <Col lg="4"  sm="12" className=" ">
+          <p style={{ margin: 0 }} className="mb-2">{t('field_stats')}</p>
           <Card small className="stats-small h-100">
             <Card.Body className="p-2 d-flex  justify-content-center align-items-center">
               <div
@@ -1947,8 +1947,8 @@ const Overview = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col lg="3" md="6" sm="6" className="mb-4">
-          <p style={{ margin: 0 }}>{t('sensor_stats')}</p>
+        <Col lg="4" sm="12" className="">
+          <p style={{ margin: 0 }} className="mb-2">{t('sensor_stats')}</p>
           <Card small className="stats-small h-100">
             <Card.Body className="p-2 d-flex justify-content-center align-items-center">
               <div
@@ -1994,13 +1994,15 @@ const Overview = (props) => {
             </Card.Body>
           </Card>
         </Col>
-        <Col lg="4" md="12" sm="12" className="">
+        <Col lg="3" md="12" sm="12" className="h-100">
           {/* <h4 style={{ marginBottom: "-15px" }}>{t('map')}</h4> */}
+          <p style={{ margin: 0 }} className="mb-2">{t('map')}</p>
+
                  <LeafletMap data={layerFarm} sensor={sensorStats} draw={configMap.draw} zoom={mapConfig.zoom} center={mapConfig.center} fromAction={mapConfig.fromAction} />
 
         </Col>
       </Row>
-      <Row className="d-flex justify-content-center align-items-center">
+      <Row className="d-flex justify-content-center align-items-center mt-3">
       </Row>
       <Row>
         <FilterFields

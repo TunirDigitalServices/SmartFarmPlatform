@@ -1096,7 +1096,7 @@ const Field = () => {
                                   }}
                                 ></div>
                               </div>
-                              <div className="status">
+                              <div className="status mt-4">
                                 <div>{t('Critical')}</div>
                                 <div style={{ color: "#26cc94" }}>{t('Optimal')}</div>
                                 <div>{t('Full')}</div>

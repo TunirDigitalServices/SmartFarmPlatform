@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import { Container, Row, Col,Card,CardBody } from "shards-react";
-import {Container, Row, Col,Card } from "react-bootstrap"
+import { Container, Row, Col, Card } from "react-bootstrap"
 
 import "../assets/styling/Styles.css";
 import PageTitle from "../components/common/PageTitle";
@@ -16,12 +16,12 @@ import humidity from '../assets/images/humidity.png'
 import press from '../assets/images/press.png'
 import useSensorData from "../utils/useSensorData";
 import moment from "moment";
-import {  useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import SmallStatsFields from "../components/common/SmallStatsFields";
 
 export default function Sensors() {
   const { t, i18n } = useTranslation();
-  
+
   const location = useLocation()
   const [dataSensors, setDataSensors] = useState([]);
   const [dataFields, setDataFields] = useState([]);
@@ -31,35 +31,35 @@ export default function Sensors() {
   const [searchField, setSearchField] = useState('')
   const [searchState, setSearchState] = useState('')
   const [sensorData, setSensorData] = useState([]);
-  const [readingtime,setReadingTime] = useState('')
+  const [readingtime, setReadingTime] = useState('')
   const [batteryLevel, setBatteryLevel] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [crops , setCrops] = useState([])
-  const [dataSensor,setDataSensor] = useState({
-    id:'',
-    code :'',
-    time :'' ,
-    charge :'',
-    signal :'',
-    temp : '',
-    humidity :'',
-    pressure :'',
-    humidityMV1 :'',
-    humidityMV2 :'',
-    humidityMV3 :'' 
+  const [crops, setCrops] = useState([])
+  const [dataSensor, setDataSensor] = useState({
+    id: '',
+    code: '',
+    time: '',
+    charge: '',
+    signal: '',
+    temp: '',
+    humidity: '',
+    pressure: '',
+    humidityMV1: '',
+    humidityMV2: '',
+    humidityMV3: ''
   })
-  const fetchDataSensors =  () => {
+  const fetchDataSensors = () => {
     api.get(`/sensor/sensors`)
       .then(response => {
         let sensorData = response.data;
-        setTimeout(()=>{
+        setTimeout(() => {
           setDataSensors(sensorData);
-          if(sensorData.length > 0 ){
+          if (sensorData.length > 0) {
             let sensorCode = location.pathname.split('/')[2]
             setSearchCode(sensorCode)
           }
-        },2600)
-      }).catch(error=>{
+        }, 2600)
+      }).catch(error => {
         console.log(error)
       }).finally(() => setIsLoading(false))
   };
@@ -71,7 +71,7 @@ export default function Sensors() {
       })
   };
 
-  let sensorsData = useSensorData('/sensor/sensor-update-data')  
+  let sensorsData = useSensorData('/sensor/sensor-update-data')
 
   useEffect(() => {
     fetchDataSensors();
@@ -88,7 +88,7 @@ export default function Sensors() {
             name: field.name,
             id: field.id,
             uid: field.uid,
-            sensors : field.sensors,
+            sensors: field.sensors,
           })
         })
       }
@@ -122,11 +122,11 @@ export default function Sensors() {
   useEffect(() => {
     // Filter sensorsData based on searchCode
     const filteredData = sensorsData.filter(data => data.code === searchCode);
-    
+
     // Update sensorData state with the filtered data
     if (filteredData.length > 0) {
       setDataSensor({
-        id :filteredData[0].sensor_id,
+        id: filteredData[0].sensor_id,
         code: filteredData[0].code,
         time: filteredData[0].time,
         charge: filteredData[0].charge,
@@ -141,7 +141,7 @@ export default function Sensors() {
     } else {
       // If no matching data, reset the sensorData state
       setDataSensor({
-        id :'',
+        id: '',
         code: '',
         time: '',
         charge: '',
@@ -155,32 +155,32 @@ export default function Sensors() {
     }
   }, [sensorsData, searchCode]);
 
-  const [mappingMv1,setMappingMv1] = useState("")
-  const [mappingMv2,setMappingMv2] = useState("")
-  const [mappingMv3,setMappingMv3] = useState("")
-  
-//   const mappingMv = async (date, idSensor, vals) => {
-//     setMappingMv1(sensorsData[0].mv1)
-//     setMappingMv2(sensorsData[0].mv2)
-//     setMappingMv3(sensorsData[0].mv3)
+  const [mappingMv1, setMappingMv1] = useState("")
+  const [mappingMv2, setMappingMv2] = useState("")
+  const [mappingMv3, setMappingMv3] = useState("")
 
-//     let result = (Number(sensorsData[0].mv1) +  Number(sensorsData[0].mv2) + Number(sensorsData[0].mv3)) / 3
-//     let stateCourbe = 'Critical';
-//     // A voir avec bechir les status 
-//     if(result > 80){
-//       stateCourbe = 'Full';
-//     }
-//     if(result < 80 && result > 40){
-//       stateCourbe = 'Optimal';
-//     }
-    
-//     // setFS({resultState : result, state : stateCourbe})
-// }
+  //   const mappingMv = async (date, idSensor, vals) => {
+  //     setMappingMv1(sensorsData[0].mv1)
+  //     setMappingMv2(sensorsData[0].mv2)
+  //     setMappingMv3(sensorsData[0].mv3)
+
+  //     let result = (Number(sensorsData[0].mv1) +  Number(sensorsData[0].mv2) + Number(sensorsData[0].mv3)) / 3
+  //     let stateCourbe = 'Critical';
+  //     // A voir avec bechir les status 
+  //     if(result > 80){
+  //       stateCourbe = 'Full';
+  //     }
+  //     if(result < 80 && result > 40){
+  //       stateCourbe = 'Optimal';
+  //     }
+
+  //     // setFS({resultState : result, state : stateCourbe})
+  // }
 
   let smallStats3 = [
     {
       state: `20 cm (%)`,
-      icon: <img style={{color:"#F6BE47"}} src={drop} alt="" />,
+      icon: <img style={{ color: "#F6BE47" }} src={drop} alt="" />,
       label: dataSensor.humidityMV1,
       chartLabels: [null, null, null, null, null, null, null],
       attrs: { md: "4", sm: "6" },
@@ -232,8 +232,8 @@ export default function Sensors() {
   ]
   let smallStats4 = [
     {
-      state: `${t('Temp.')} (°C)`    ,
-      icon: <img  src={temp} alt="" />,
+      state: `${t('Temp.')} (°C)`,
+      icon: <img src={temp} alt="" />,
       label: dataSensor.temp,
       chartLabels: [null, null, null, null, null, null, null],
       attrs: { md: "4", sm: "6" },
@@ -283,7 +283,7 @@ export default function Sensors() {
       ]
     }
   ]
-  
+
   return (
     <Container fluid className="main-content-container px-4">
       {/* Page Header */}
@@ -332,132 +332,133 @@ export default function Sensors() {
             }
           </FormSelect>
         </Col> */}
-        
-         {
-         fields.map(field => {
-          const matchingSensors = field.sensors.filter(sensor => (sensor.field_id === field.id) && (sensor.code === dataSensor.code));
-          const fieldNames = matchingSensors.map(sensor => field.name);
-          return (
-            <div>
-              {fieldNames.map(fieldName => (
+
+        {
+          fields.map(field => {
+            const matchingSensors = field.sensors.filter(sensor => (sensor.field_id === field.id) && (sensor.code === dataSensor.code));
+            const fieldNames = matchingSensors.map(sensor => field.name);
+            return (
+              <div>
+                {fieldNames.map(fieldName => (
                   <h4>{t('fields')} : {fieldName}</h4>
-              ))}
-            </div>
-          );
-        })
+                ))}
+              </div>
+            );
+          })
         }
-        
-        
+
+
 
       </Row>
       <Row className="gap-2">
-            <Col lg="5" md="6" sm="6" className="mb-4">
-            <p style={{ margin: 0 }}>{t('sensor_stats_air')}</p>
-            <Card small className="stats-small">
-                <Card.Body className="p-0 d-flex">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      width: "100%"
-                    }}
-                  >
-                    {smallStats4.map((stats, idx) => (
-                      <>
-                        <SmallStatsFields
-                        // ToSensorPage={ToSensorPage}
-                          style={{
-                            borderColor: "blue",
-                            borderWidth: 2,
-                            borderStyle: "solid"
-                          }}
-                          id={`small-stats-${idx}`}
-                          variation="1"
-                          // chartData={stats.datasets}
-                          // chartLabels={stats.chartLabels}
-                          label={stats.label}
-                          value={stats.value}
-                          icon={stats.icon}
-                          state={stats.state}
-                        />
-                        {idx != 2 ? (
-                          <hr
-                            style={{
-                              backgroundColor: "#ebebeb",
-                              width: "1px",
-                              height: "75%"
-                            }}
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
-                  </div>
-                </Card.Body>
-            </Card>
-          </Col>
-          <Col lg="5" md="6" sm="6" className="mb-4">
-            <p style={{ margin: 0 }}>{t('sensor_stats_soil')}</p>
-            <Card small className="stats-small">
-              <Card.Body className="p-0 d-flex">
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    width: "100%"
-                  }}
-                >
-                  {smallStats3.map((stats, idx) => (
-                    <>
-                      <SmallStatsFields
+        <Col lg="6" md="6" sm="6" className="mb-4 ">
+          <p style={{ margin: 0 }}>{t('sensor_stats_air')}</p>
+          <Card small className="stats-small ">
+            <Card.Body className="p-0 d-flex">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  width: "100%"
+                }}
+              >
+                {smallStats4.map((stats, idx) => (
+                  <>
+                    <SmallStatsFields
                       // ToSensorPage={ToSensorPage}
+                      style={{
+                        borderColor: "blue",
+                        borderWidth: 2,
+                        borderStyle: "solid"
+                      }}
+                      id={`small-stats-${idx}`}
+                      variation="1"
+                      // chartData={stats.datasets}
+                      // chartLabels={stats.chartLabels}
+                      label={stats.label}
+                      value={stats.value}
+                      icon={stats.icon}
+                      state={stats.state}
+                    />
+                    {idx != 2 ? (
+                      <hr
                         style={{
-                          borderColor: "blue",
-                          borderWidth: 2,
-                          borderStyle: "solid"
+                          backgroundColor: "#ebebeb",
+                          width: "1px",
+                          height: "75%"
                         }}
-                        id={`small-stats-${idx}`}
-                        variation="1"
-                        // chartData={stats.datasets}
-                        // chartLabels={stats.chartLabels}
-                        label={stats.label}
-                        value={stats.value}
-                        icon={stats.icon}
-                        state={stats.state}
                       />
-                      {idx != 2 ? (
-                        <hr
-                          style={{
-                            backgroundColor: "#ebebeb",
-                            width: "1px",
-                            height: "75%"
-                          }}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </>
-                  ))}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ))}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col lg="5" md="6" sm="6" className="mb-4 ">
+          <p style={{ margin: 0 }}>{t('sensor_stats_soil')}</p>
+          <Card small className="stats-small">
+            <Card.Body className="p-0 d-flex">
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  width: "100%"
+                }}
+              >
+                {smallStats3.map((stats, idx) => (
+                  <>
+                    <SmallStatsFields
+                      // ToSensorPage={ToSensorPage}
+                      style={{
+                        borderColor: "blue",
+                        borderWidth: 2,
+                        borderStyle: "solid"
+                      }}
+                      id={`small-stats-${idx}`}
+                      variation="1"
+                      // chartData={stats.datasets}
+                      // chartLabels={stats.chartLabels}
+                      label={stats.label}
+                      value={stats.value}
+                      icon={stats.icon}
+                      state={stats.state}
+                    />
+                    {idx != 2 ? (
+                      <hr
+                        style={{
+                          backgroundColor: "#ebebeb",
+                          width: "1px",
+                          height: "75%"
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ))}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
 
-        </Row>
-     
+      </Row>
 
-        {
-          isLoading ?
+
+      {
+        isLoading ?
           <LoadingSpinner />
-      
-            : 
-            <Row>
-              <DBSensor filteredSensors={dataSensor} chargeLevel={batteryLevel} readingtime={readingtime}/>
-          </Row>
-        }
+
+          :
+         
+              <DBSensor filteredSensors={dataSensor} chargeLevel={batteryLevel} readingtime={readingtime} />
+           
+
+      }
 
     </Container>
   );

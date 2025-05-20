@@ -46,4 +46,27 @@
     background-color: #fff !important;
     color: #000 !important; /* black text */
   }
+  .marker-tooltip {
+  position: absolute;
+  background: #222;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+ transform: rotate(180deg);
+
+  top: -25px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.Marker:hover .marker-tooltip,
+.Marker-tomorrow:hover .marker-tooltip,
+.Marker-yesterday:hover .marker-tooltip {
+  opacity: 1;
   
+
+}
