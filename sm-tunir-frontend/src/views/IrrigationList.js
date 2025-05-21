@@ -70,10 +70,17 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                 setIrrigAlready(IrrigationData.irrigated_already)
                 setIrrigSyst(IrrigationData.irrigation_syst)
                 setDrippers(IrrigationData.drippers)
-                setIrrigationData({ effIrrig: IrrigationData.effIrrig })
-                setIrrigationData({ pumpFlow: IrrigationData.pumpFlow })
-                setIrrigationData({ pumpType: IrrigationData.pumpType })
-                setIrrigationData({ linesNumber: IrrigationData.lines_number })
+                // setIrrigationData({ effIrrig: IrrigationData.effIrrig })
+                // setIrrigationData({ pumpFlow: IrrigationData.pumpFlow })
+                // setIrrigationData({ pumpType: IrrigationData.pumpType })
+                // setIrrigationData({ linesNumber: IrrigationData.lines_number })
+                // Combine all irrigationData fields into one object
+                setIrrigationData({
+                    effIrrig: IrrigationData.effIrrig,
+                    pumpFlow: IrrigationData.pumpFlow,
+                    pumpType: IrrigationData.pumpType,
+                    linesNumber: IrrigationData.lines_number
+                });
                 setDrippersSpacing(IrrigationData.drippers_spacing)
 
                 Crops.map((cropData) => {

@@ -24,6 +24,39 @@ const getZonesByConnectedUser = async (req, res) => {
     }
 }
 
+const searchAllZones = async (req, res) => {
+    const { search = '' } = req.query;
+
+    try {
+        const zones = await Zone.query(qb => {
+            qb.where('deleted_at', null);
+            if (search) {
+                qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
+            }
+        })
+            .fetchAll({ require: false });
+
+        const response = zones.toJSON().map(zone => ({
+            value: zone.uid,
+            label: zone.name
+        }));
+
+        console.log("Search:", search);
+        console.log("Result:", response);
+
+        return res.status(200).json(response);
+    } catch (error) {
+        console.error("searchZone error:", error);
+        return res.status(500).json({ type: "danger", message: "zones" });
+    }
+};
+
+
+
+
+
+
+
 const getSingleZone = async (req, res) => {
     const zone_uid  = req.body.zone_uid;
     
@@ -270,4 +303,4 @@ const validateZone =(method) => {
   }
 
 
-module.exports = {validateZone,getSingleZone,getZonesByField,getZonesByCrop,addZone,editZone,deleteZone,getZonesByConnectedUser}
+module.exports = {validateZone,getSingleZone,searchAllZones,getZonesByField,getZonesByCrop,addZone,editZone,deleteZone,getZonesByConnectedUser}

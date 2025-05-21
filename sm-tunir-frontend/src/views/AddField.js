@@ -172,7 +172,7 @@ class AddField extends React.Component {
 
  
   componentDidMount = async () => {
-
+ 
     this.getDataFields();
     this.getDataZones();
     this.getDataCrops();
@@ -180,6 +180,7 @@ class AddField extends React.Component {
     this.getSoils();
 
   }
+   
 
   // componentWillUnmount() {
   //   this.setState = (state, callback) => {

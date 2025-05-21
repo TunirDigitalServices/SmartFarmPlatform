@@ -6,7 +6,7 @@ const {getCropsByConnectedUser,getSingleCrop, getCropsByField, addCrop, editCrop
 const {getSensorsByConnectedUser,getSingleSensor, getSensorsByField, addSensor, editSensor, deleteSensor, searchSensorsByCode, validateSensor, addSensorPosition, activateSynch, updateSensorsApiByUser, getSensorsHistory, getSunRadiation, mappingMv, getSingleSensorAllData, editDataMappingByUser} = require('../controllers/common/sensor.js')
 const {getIrrigationsByConnectedUser,getSingleIrrigation,getIrrigationsByCrop,searchIrrigationsByType,addIrrigation,deleteIrrigation,editIrrigation,validateIrrigation} = require('../controllers/common/irrigation');
 const { getOverviewFields, getOverviewSensors} = require('../controllers/common/dashboard')
-const {getZonesByField,getSingleZone,getZonesByCrop,addZone,getZonesByConnectedUser , editZone ,deleteZone ,validateZone} = require('../controllers/common/zone')
+const {getZonesByField,getSingleZone,getZonesByCrop,addZone,getZonesByConnectedUser , editZone ,deleteZone ,validateZone, searchAllZones} = require('../controllers/common/zone')
 
 const {auth} = require('../middelwares/auth.js')
 
@@ -103,6 +103,8 @@ router.get('/dashboard/sensors',auth,getOverviewSensors)
 
 /***************ZONE*********************/
 router.get('/zone/zones',auth,getZonesByConnectedUser)
+router.get('/zone/search-all-zones',auth, searchAllZones);
+
 router.post('/zone',auth,getSingleZone);
 router.get('/field/:uid/zones', auth , getZonesByField)
 router.get('/crop/:uid/zones', auth , getZonesByCrop)

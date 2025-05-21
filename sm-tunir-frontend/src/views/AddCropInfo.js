@@ -6,9 +6,16 @@ import PageTitle from '../components/common/PageTitle';
 import swal from "sweetalert";
 import api from '../api/api';
 import FarmSelect from "../components/FarmSelect";
+import { useLocation, useNavigate } from "react-router";
 
 export default function AddCropInfo() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
+    const { fieldId, fieldName, zoneId, zoneName } = location.state || {};
+    console.log(zoneId, zoneName);
 
     const [validated, setValidated] = useState(false);
     const [listCrop, setListCrop] = useState([])
@@ -21,8 +28,8 @@ export default function AddCropInfo() {
     const [fields, setFields] = useState([])
 
     const [cropData, setCropData] = useState({
-        field_uid: "",
-        zone_uid: "",
+        field_uid: fieldId ? fieldId : "",
+        zone_uid: zoneId ? zoneId : "",
         cropType: "",
         variety: '',
         cropVariety: [],
@@ -184,8 +191,8 @@ export default function AddCropInfo() {
     const addCrop = () => {
 
         let data = {
-            zone_uid: cropData.zone_uid,
-            field_uid: cropData.field_uid,
+            zone_uid: cropData.zone_uid ? cropData.zone_uid : zoneId,
+            field_uid: cropData.field_uid ? cropData.field_uid : fieldId,
             croptype_id: cropData.cropType,
             previous_type: cropData.previous_type,
             plantingDate: cropData.plantingDate,
@@ -209,9 +216,30 @@ export default function AddCropInfo() {
                     });
                 }
                 if (res.data.type && res.data.type == "success") {
-                    swal(`${t('crop_added')}`, {
+                    // swal(`${t('crop_added')}`, {
+                    //     icon: "success",
+                    // });
+                    setValidated(false);
+                    console.log(res.data);
+
+                    swal({
+                        title: `${t('crop_added')}`,
+                        text: "Would you like to continue to create an irrigation type ?",
                         icon: "success",
-                    });
+                        buttons: {
+                            cancel: "No",
+                            confirm: {
+                                text: "Yes",
+                                value: true,
+                            }
+                        }
+                    }).then((willContinue) => {
+                        if (willContinue) {
+
+
+                            navigate('/add-irrigation', { state: { fieldId, fieldName, zoneId, zoneName } });
+                        }
+                    })
 
                 }
             })
@@ -229,9 +257,12 @@ export default function AddCropInfo() {
         if (form.checkValidity() === false) {
 
             event.stopPropagation();
+            setValidated(true);
+
         } else {
             await addCrop();
-            console.log(cropData, "cropData");
+            setValidated(false);
+            form.reset();
 
         }
 
@@ -328,7 +359,7 @@ export default function AddCropInfo() {
                                         })
                                     }
                                 </Form.Select> */}
-                                <FarmSelect url='/field/search-all-fields' onChange={selected => setCropData({ ...cropData, field_uid: selected?.value || '' })} placeholder={"Search fields..."} />
+                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url='/field/search-all-fields' onChange={selected => setCropData({ ...cropData, field_uid: selected?.value || '' })} placeholder={"Search fields..."} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please select the crop field.
@@ -338,7 +369,6 @@ export default function AddCropInfo() {
                         <Row className="mb-3 gap-3 justify-content-between">
                             <Form.Group as={Col} md="4" controlId="validationCustomUsername">
                                 <Form.Label>{t('crop_zone')} *</Form.Label>
-
                                 <Form.Select
                                     value={cropData.zone_uid}
                                     onChange={e => setCropData({ ...cropData, zone_uid: e.target.value })}
@@ -359,6 +389,7 @@ export default function AddCropInfo() {
                                     }
 
                                 </Form.Select>
+
                                 <Form.Control.Feedback type="invalid">
                                     Please choose the crop zone.
                                 </Form.Control.Feedback>
@@ -387,7 +418,7 @@ export default function AddCropInfo() {
 
                             <Form.Group as={Col} md="4" controlId="validationCustom03" className="mt-3">
                                 <Form.Label className="m-0">{t('Days')} *</Form.Label>
-                                <Form.Control type="number" value={cropData.days}  onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
+                                <Form.Control type="number" value={cropData.days} onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please provide the days .
@@ -415,7 +446,7 @@ export default function AddCropInfo() {
                         <Row className="mb-3 gap-3 justify-content-between">
                             <Form.Group as={Col} md="4" controlId="validationCustom05" className="mt-2">
                                 <Form.Label>{t('fraction_pratique')} (%) *</Form.Label>
-                                <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })}  placeholder={t('fraction_pratique')}
+                                <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} placeholder={t('fraction_pratique')}
 
 
                                 />
@@ -425,7 +456,7 @@ export default function AddCropInfo() {
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom06" className="mt-3">
                                 <Form.Label className="m-0">{t('ecart_inter')} (m)</Form.Label>
-                                <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })}  placeholder={t('ecart_inter')}
+                                <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} placeholder={t('ecart_inter')}
                                 />
 
 
@@ -446,7 +477,7 @@ export default function AddCropInfo() {
 
                             <Form.Group as={Col} md="4" controlId="validationCustom06" className="mt-3">
                                 <Form.Label className="m-0">{t('densité')} (plants/ha)</Form.Label>
-                                <Form.Control type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })}  placeholder={t('densité')}
+                                <Form.Control type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} placeholder={t('densité')}
                                 />
 
 

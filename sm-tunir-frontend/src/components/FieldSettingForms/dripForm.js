@@ -9,7 +9,7 @@ function DripForm(props) {
 
 
   return (
-    <div className="d-flex gap-2">
+    <Row className="d-flex gap-2 justify-content-between">
       <Col lg="4" md="12" sm="12" className="form-group">
         <p style={{ margin: "0px" }}>{t('FlowRate')} (l/h)</p>
         <Form.Control
@@ -20,7 +20,7 @@ function DripForm(props) {
           onChange={props.handleFlowRate}
         />
       </Col>
-      <Col lg="4" md="12" sm="12" className="form-group">
+      <Col lg="3" md="12" sm="12" className="form-group">
         <p style={{ margin: "0px" }}>{t('Drippers')} (pieds)</p>
         <Form.Control
           type="number"
@@ -40,7 +40,7 @@ function DripForm(props) {
           onChange={props.handleDrippersSpacing}
         />
       </Col>
-    </div>
+    </Row>
   );
 }
 

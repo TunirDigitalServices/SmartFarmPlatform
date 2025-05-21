@@ -11,12 +11,18 @@ import CompositeSoil from "../components/FieldSettingForms/compositeSoilForm";
 import api from '../api/api';
 import FarmSelect from "../components/FarmSelect";
 import swal from "sweetalert";
+import { useLocation, useNavigate } from "react-router";
 
 
 
 
 export default function SoilInfo() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+
+    const { fieldId, fieldName } = location.state || {};
     const [validated, setValidated] = useState(false);
     const [isStandardSoil, setSoilType] = useState(true);
     const [listSoils, setListSoil] = useState([])
@@ -26,49 +32,84 @@ export default function SoilInfo() {
     const [soilParams, setSoilParams] = useState({
         soilProperty: "",
         soilType: "",
-        field_uid: "",
+        field_uid: fieldId ? fieldId : "",
         zone_uid: "",
         name: "",
         RUmax: "",
         effPluie: "",
     })
 
- const addZone = () => {
 
-    let data = {
-      soilProperty: soilParams.soilProperty,
-      field_uid: soilParams.field_uid,
-      zone_uid: soilParams.zone_uid,
-      name: soilParams.name,
-      RUmax: soilParams.RUmax,
-      effPluie: soilParams.effPluie,
+
+    const addZone = () => {
+
+        let data = {
+            soilProperty: soilParams.soilProperty,
+            field_uid: soilParams.field_uid ? soilParams.field_uid : fieldId,
+            zone_uid: soilParams.zone_uid,
+            name: soilParams.name,
+            RUmax: soilParams.RUmax,
+            effPluie: soilParams.effPluie,
+        }
+        api.post('/zone/add-zone', data)
+            .then(res => {
+                if (res.data.type && res.data.type == "danger") {
+
+                    swal({
+                        title: 'Cannot add soil',
+                        icon: "error",
+
+                    });
+                }
+                if (res.data.type && res.data.type == "success") {
+                    setValidated(false);
+
+                    // swal({
+                    //     title: 'Soil added',
+                    //     icon: "success",
+                    //     text: 'Soil added successfully '
+
+                    // });
+                    swal({
+                        title: "Soil added",
+                        text: "Would you like to continue to create a crop ?",
+                        icon: "success",
+                        buttons: {
+                            cancel: "No",
+                            confirm: {
+                                text: "Yes",
+                                value: true,
+                            }
+                        }
+                    }).then((willContinue) => {
+                        if (willContinue) {
+
+                            const zoneId = res.data.zone.uid;
+                            const zoneName = res.data.zone.name;
+                            console.log(zoneName,"zn");
+                            
+                            navigate('/add-crop-info', { state: { fieldId, fieldName, zoneId, zoneName } });
+                        }
+                    });
+                    setSoilParams({
+                        soilProperty: "",
+                        soilType: "",
+                        field_uid: fieldId ? fieldId : "",
+                        zone_uid: "",
+                        name: "",
+                        RUmax: "",
+                        effPluie: "",
+                    })
+                }
+                // getDataFields()
+
+            })
+            .catch((err) => {
+
+                console.log(err)
+
+            });
     }
-    api.post('/zone/add-zone', data)
-      .then(res => {
-        if (res.data.type && res.data.type == "danger") {
-          swal({
-            title: 'Cannot add soil',
-            icon: "error",
-
-          });
-        }
-        if (res.data.type && res.data.type == "success") {
-          swal({
-            title: 'Soil added',
-            icon: "success",
-            text: 'Soil added successfully '
-
-          });
-        }
-        // getDataFields()
-    
-      })
-      .catch((err) => {
-
-        console.log(err)
-
-      });
-  }
 
 
     const handleSubmit = async (event) => {
@@ -77,8 +118,12 @@ export default function SoilInfo() {
         if (form.checkValidity() === false) {
 
             event.stopPropagation();
+            setValidated(true);
+
         } else {
             await addZone();
+            setValidated(false);
+            form.reset();
         }
 
         setValidated(true);
@@ -131,7 +176,7 @@ export default function SoilInfo() {
         }
     }
     useEffect(() => {
-        
+
         getSoils()
     }, [])
     return (
@@ -162,7 +207,7 @@ export default function SoilInfo() {
                                         return <option value={item.Uid}>{item.title}</option>;
                                     })}
                                 </Form.Select> */}
-                                <FarmSelect url='/field/search-all-fields' placeholder={"Search fields..."} onChange={selected => setSoilParams({ ...soilParams, field_uid: selected?.value || '' })} />
+                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url='/field/search-all-fields' placeholder={"Search fields..."} onChange={selected => setSoilParams({ ...soilParams, field_uid: selected?.value || '' })} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please select a field.
@@ -239,7 +284,7 @@ export default function SoilInfo() {
 
                                 <Form.Label>{t('efficacité_pluie')} (%) *</Form.Label>
                                 <Form.Control
-                                    type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })}  placeholder={t('efficacité_pluie')}
+                                    type="number" value={soilParams.effPluie} onChange={e => setSoilParams({ ...soilParams, effPluie: e.target.value })} placeholder={t('efficacité_pluie')}
                                     required
 
                                 />
@@ -255,7 +300,7 @@ export default function SoilInfo() {
 
                                 <Form.Label>RU max (mm/m) *</Form.Label>
                                 <Form.Control
-                                    type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })}  placeholder="RU max"
+                                    type="number" value={soilParams.RUmax} onChange={e => setSoilParams({ ...soilParams, RUmax: e.target.value })} placeholder="RU max"
                                     required
 
                                 />

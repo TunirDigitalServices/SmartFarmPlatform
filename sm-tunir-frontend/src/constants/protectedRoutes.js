@@ -39,6 +39,7 @@ import AddFram from '../views/AddFram';
 import AddFarmField from '../views/AddFarmField';
 import SoilInfo from '../views/SoilInfo';
 import AddCropInfo from '../views/AddCropInfo';
+import AddIrrigation from '../views/AddIrrigation';
 
 // import Profile from '../pages/Profile'
 
@@ -342,6 +343,14 @@ const protectedRoutes = [
     path: "/add-crop-info",
 
     element: <AddCropInfo />,
+    roles: ['ROLE_ADMIN',"ROLE_USER"] 
+
+  },
+  {
+    name: 'addIrrigation',
+    path: "/add-irrigation",
+
+    element: <AddIrrigation />,
     roles: ['ROLE_ADMIN',"ROLE_USER"] 
 
   },

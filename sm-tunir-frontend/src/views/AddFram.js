@@ -5,7 +5,7 @@ import { Container, Row, Col, Form, Card, InputGroup, Button } from 'react-boots
 import PageTitle from '../components/common/PageTitle';
 import swal from "sweetalert";
 import api from '../api/api';
-
+import { useNavigate } from "react-router";
 export default function AddFram() {
     const [farmParams, setFarmParams] = useState({
         name: "",
@@ -20,6 +20,7 @@ export default function AddFram() {
     const [users, setUsers] = useState([])
     const [validated, setValidated] = useState(false);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getCities = async () => {
@@ -85,15 +86,27 @@ export default function AddFram() {
             const response = await api.post('/farm/add-farm', data);
 
             if (response.data.type === "success") {
-                swal('Farm Added', { icon: "success" });
-                setFarmParams({
-                    name: "",
-                    name_group: "",
-                    user_uid: "",
-                    city_id: ""
-                })
-                // getLayerFarm()
-            } else {
+                swal({
+                    title: "Farm Added",
+                    text: "Would you like to continue to create a field?",
+                    icon: "success",
+                    buttons: {
+                        cancel: "No",
+                        confirm: {
+                            text: "Yes",
+                            value: true,
+                        }
+                    }
+                }).then((willContinue) => {
+                    if (willContinue) {
+                        const farmId = response.data.farm.uid;
+                        const farmName = response.data.farm.name;
+
+                        navigate('/add-field', { state: { farmId, farmName } });
+                    }
+                });
+            }
+            else {
                 swal(response.data.message || 'Something went wrong.', { icon: "error" });
             }
 
@@ -110,18 +123,35 @@ export default function AddFram() {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
 
+        // Enable validation feedback
+        if (!form.checkValidity()) {
             event.stopPropagation();
-        } else {
-            await addFarm();
+            setValidated(true); // Shows errors
+            return;
         }
 
-        setValidated(true);
+
+        await addFarm();
+
+
+        setFarmParams({
+            name: "",
+            name_group: "",
+            user_uid: "",
+            city_id: ""
+        });
+        setCountry("");
+
+
+        setValidated(false);
+
+
+        form.reset();
     };
-  
+
 
 
     return (
@@ -146,7 +176,7 @@ export default function AddFram() {
                                     placeholder={t('name_farm')}
                                     value={farmParams.name}
                                     onChange={(e) => setFarmParams({ ...farmParams, name: e.target.value })}
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a Farm Name.
@@ -161,7 +191,7 @@ export default function AddFram() {
                                     placeholder={t('group_name')}
                                     value={farmParams.name_group}
                                     onChange={(e) => setFarmParams({ ...farmParams, name_group: e.target.value })}
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
 
                                 />
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -177,7 +207,7 @@ export default function AddFram() {
                                     onChange={handleCountryPick}
                                     value={country}
                                     required
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
 
                                 >
                                     <option value="">{t('select_country')}</option>
@@ -198,7 +228,7 @@ export default function AddFram() {
                                     value={farmParams.city_id}
                                     onChange={e => setFarmParams({ ...farmParams, city_id: e.target.value })}
                                     required
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
 
 
                                 >
@@ -217,7 +247,7 @@ export default function AddFram() {
                                     value={farmParams.user_uid}
                                     onChange={e => setFarmParams({ ...farmParams, user_uid: e.target.value })}
                                     required
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
 
 
                                 >

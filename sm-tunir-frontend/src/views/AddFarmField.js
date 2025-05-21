@@ -8,16 +8,20 @@ import swal from "sweetalert";
 import api from '../api/api';
 import EditableMap from "./EditableMap";
 import FarmSelect from "../components/FarmSelect";
+import { useLocation, useNavigate } from "react-router";
 
 export default function AddFarmField() {
     const { t } = useTranslation();
+    const location = useLocation();
+    const navigate = useNavigate();
 
+    const { farmId, farmName } = location.state || {};
     const [validated, setValidated] = useState(false);
     const [layerFarm, setLayerFarm] = useState([])
 
     const [dataField, setDataField] = useState({
         name: "",
-        farm_uid: "",
+        farm_uid: farmId ? farmId : "",
         width: "",
         length: "",
         Latitude: "",
@@ -36,11 +40,14 @@ export default function AddFarmField() {
         fromAction: false
     })
     const [userMapDetails, setUserMapDetails] = useState("#")
-   
+
     const [fields, setFields] = useState([])
     const [zones, setZones] = useState([]);
- 
+
     const [sensorStats, setSensorStats] = useState([])
+
+    console.log(farmId, "farmId");
+
 
     const getLayerFarm = async () => {
         await api.get('/farm/farms').then(res => {
@@ -49,14 +56,14 @@ export default function AddFarmField() {
         })
     }
 
-console.log(dataField,"dataFieldd");
+    console.log(dataField, "dataFieldd");
 
     const addField = () => {
 
         let data = {
             name: dataField.name,
             farmName: dataField.farmName,
-            farm_uid: dataField.farm_uid,
+            farm_uid: dataField.farm_uid ? dataField.farm_uid : farmId,
             largeur: dataField.width,
             longueur: dataField.length,
             coordinates: layer,
@@ -68,12 +75,40 @@ console.log(dataField,"dataFieldd");
             .then(res => {
 
                 if (res.data.type && res.data.type == "success") {
-                    swal(`${t('field_added')}`, {
+                    // swal(`${t('field_added')}`, {
+                    //     icon: "success",
+                    // });
+                    setValidated(false);
+                    swal({
+                        title: `${t('field_added')}`,
+                        text: "Would you like to continue to create a zone (soil info ) ?",
                         icon: "success",
+                        buttons: {
+                            cancel: "No",
+                            confirm: {
+                                text: "Yes",
+                                value: true,
+                            }
+                        }
+                    }).then((willContinue) => {
+                        if (willContinue) {
+                            const fieldId = res.data.field.uid;
+                            const fieldName = res.data.field.name;
+
+                            navigate('/add-soil-info', { state: { fieldId, fieldName } });
+                        }
                     });
 
                     getDataFields()
                     // setSteps(steps + 1)
+                    setDataField({
+                        name: "",
+                        farm_uid: "",
+                        width: "",
+                        length: "",
+                        Latitude: "",
+                        Longitude: ""
+                    })
                 }
 
             })
@@ -92,7 +127,7 @@ console.log(dataField,"dataFieldd");
         getSensorsStats();
         // fetchDataCrops()
     }, [])
-   
+
     const getDataFields = async () => {
         await api.get('/field/fields').then(res => {
             const newData = res.data.farms;
@@ -167,11 +202,16 @@ console.log(dataField,"dataFieldd");
     const handleSubmit = async (event) => {
         event.preventDefault()
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        if (!form.checkValidity()) {
 
             event.stopPropagation();
+            setValidated(true);
         } else {
             await addField();
+
+            setValidated(false);
+            form.reset();
+
         }
 
         setValidated(true);
@@ -223,7 +263,7 @@ console.log(dataField,"dataFieldd");
                                         return <option value={item.uid}>{item.name}</option>;
                                     })}
                                 </Form.Select> */}
-                                        <FarmSelect userUid="477" url='/farm/all-farms' onChange={selected => setDataField({ ...dataField, farm_uid: selected?.value || '' })} placeholder={"Search farm..."}/>
+                                        <FarmSelect defaultval={{ value: farmId, label: farmName }} userUid="477" url='/farm/all-farms' onChange={selected => setDataField({ ...dataField, farm_uid: selected?.value || '' })} placeholder={"Search farm..."} />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a Farm.

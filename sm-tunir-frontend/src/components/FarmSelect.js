@@ -3,7 +3,7 @@ import AsyncSelect from 'react-select/async';
 import api from '../api/api';
 
 
-const FarmSelect = ({ userUid, onChange,url ,placeholder}) => {
+const FarmSelect = ({ userUid, onChange, url, placeholder, defaultval }) => {
   // Load options as the user types
   const loadOptions = async (inputValue) => {
     if (!inputValue || inputValue.length < 2) return [];
@@ -20,16 +20,27 @@ const FarmSelect = ({ userUid, onChange,url ,placeholder}) => {
     }
   };
 
+
   return (
     <div >
-      <AsyncSelect
-        cacheOptions
-        loadOptions={loadOptions}
-        defaultOptions={false}
-        placeholder={placeholder}
-        onChange={onChange}
-        
-      />
+      {defaultval.value ? (
+        <AsyncSelect
+          cacheOptions
+          loadOptions={loadOptions}
+          defaultOptions={false}
+          placeholder={placeholder}
+          onChange={onChange}
+          defaultValue={defaultval}
+        />
+      ) : (
+        <AsyncSelect
+          cacheOptions
+          loadOptions={loadOptions}
+          defaultOptions={false}
+          placeholder={placeholder}
+          onChange={onChange}
+        />
+      )}
     </div>
   );
 };
