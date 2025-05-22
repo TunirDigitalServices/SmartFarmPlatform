@@ -46,6 +46,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
 
     const [SingleIrrigation, setSingleIrrigation] = useState([])
 
+    console.log(irrigationsList, "irriglist");
 
 
 

@@ -298,51 +298,61 @@ class AddField extends React.Component {
           });
         };
       });
-console.log(newDataCrop,"crops from get");
+
 
       this.setState({ cropsData: Crops })
     })
   }
 
-  getDataIrrigations = async () => {
-    await api.get('/irrigation/irrigations').then(res => {
-      const newDataIrrig = res.data;
-      this.setState({ irrigation: newDataIrrig });
+getDataIrrigations = async () => {
+  try {
+    const res = await api.get('/irrigation/irrigations');
+    const newDataIrrig = res.data;
+    console.log(newDataIrrig,"newdata");
+    
+    this.setState({ irrigation: newDataIrrig });
 
-      let Irrigations = [];
-      this.state.irrigation.map(item => {
-        let fields = item.fields;
-        if (fields) {
-          fields.map(itemCrop => {
-            let crops = itemCrop.crops;
-            if (crops) {
-              crops.map(i => {
-                let irrigations = i.irrigations
-                if (irrigations) {
-                  irrigations.map(itemIrrig => {
-                    Irrigations.push({
-                      type: itemIrrig.type,
-                      address: itemIrrig.address,
-                      pivotShape: itemIrrig.pivot_shape,
-                      flowrate: itemIrrig.flowrate,
-                      lateral: itemIrrig.lateral,
-                      Uid: itemIrrig.uid,
-                      crop_id: itemIrrig.crop_id,
-                      zone_id: itemIrrig.zone_id,
+    let irrigationsData = [];
 
-                    });
+    // Loop through the data more efficiently using nested `forEach` loops
+    newDataIrrig.forEach(item => {
+      const fields = item.fields;
+      if (fields) {
+        fields.forEach(field => {
+          const crops = field.crops;
+          if (crops) {
+            crops.forEach(crop => {
+              const irrigations = crop.irrigations;
+              if (irrigations) {
+                irrigations.forEach(irrigation => {
+                  irrigationsData.push({
+                    type: irrigation.type,
+                    address: irrigation.address,
+                    pivotShape: irrigation.pivot_shape,
+                    flowrate: irrigation.flowrate,
+                    lateral: irrigation.lateral,
+                    Uid: irrigation.uid,
+                    crop_id: irrigation.crop_id,
+                    zone_id: irrigation.zone_id,
+                  });
+                });
+              }
+            });
+          }
+        });
+      }
+    });
 
-                  })
-                }
-              });
-            };
-          });
-        };
-      });
+    console.log("Processed Irrigations Data: ", irrigationsData);
 
-      this.setState({ irrigationsData: Irrigations })
-    })
+    // Set the processed irrigations data into state
+    this.setState({ irrigationsData });
+
+  } catch (error) {
+    console.error("Error fetching irrigations data: ", error);
+    // Optionally handle error state here
   }
+}
 
 
   getDataFields = async () => {
@@ -1102,7 +1112,7 @@ console.log(newDataCrop,"crops from get");
   render() {
     const { t } = this.props;
     const renderAddSetup = () => {
-      console.log("Rendering with zonesData:", this.state.zonesData);
+    
 
       switch (this.state.elemValue) {
         case 'field':

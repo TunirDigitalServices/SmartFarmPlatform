@@ -50,7 +50,10 @@ export default function SoilInfo() {
             name: soilParams.name,
             RUmax: soilParams.RUmax,
             effPluie: soilParams.effPluie,
+            soiltype_id:soilParams.soilType
         }
+        console.log(data,"data");
+        
         api.post('/zone/add-zone', data)
             .then(res => {
                 if (res.data.type && res.data.type == "danger") {
@@ -86,8 +89,8 @@ export default function SoilInfo() {
 
                             const zoneId = res.data.zone.uid;
                             const zoneName = res.data.zone.name;
-                            console.log(zoneName,"zn");
-                            
+                            console.log(zoneName, "zn");
+
                             navigate('/add-crop-info', { state: { fieldId, fieldName, zoneId, zoneName } });
                         }
                     });
@@ -121,32 +124,32 @@ export default function SoilInfo() {
             setValidated(true);
 
         } else {
-            await addZone();
-            setValidated(false);
-            form.reset();
+             await addZone();
+             setValidated(false);
+             form.reset();
+            console.log(soilParams,"sp");
+            
         }
 
         setValidated(true);
     };
     const handleSoilPick = (e) => {
         e.preventDefault()
-        const soilType = listSoils.find(
+        const selectedSoil = listSoils.find(
             (soil) => soil.soil == e.target.value
         );
-        if (e.target.value !== "") {
-            setSoilParams({ effPluie: soilType.rain_eff })
-            setSoilParams({ RUmax: soilType.ru })
+        console.log(selectedSoil,"selected soil");
+        
+        if (selectedSoil) {
+          setSoilParams((prevState) => ({
+            ...prevState,
+            soilType: selectedSoil.id,
+            RUmax: selectedSoil.ru,
+            effPluie: selectedSoil.rain_eff,
+        }));
 
         }
-        if (typeof soilType !== "undefined") {
-            setSoilParams({
-                ...soilParams,
-                soilType: soilType.soil,
-                RUmax: soilType.ru,
-                effPluie: soilType.rain_eff
-            });
-
-        }
+       
     };
     const soilTypeForm = () => {
         if (isStandardSoil == true)

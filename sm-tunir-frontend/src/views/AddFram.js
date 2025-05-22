@@ -7,6 +7,9 @@ import swal from "sweetalert";
 import api from '../api/api';
 import { useNavigate } from "react-router";
 export default function AddFram() {
+    let role = JSON.parse(localStorage.getItem('user')).role
+    let user_uid = JSON.parse(localStorage.getItem('user')).id
+
     const [farmParams, setFarmParams] = useState({
         name: "",
         name_group: "",
@@ -19,6 +22,8 @@ export default function AddFram() {
     const [countries, setCountries] = useState([])
     const [users, setUsers] = useState([])
     const [validated, setValidated] = useState(false);
+
+
     const { t } = useTranslation();
     const navigate = useNavigate();
 
@@ -80,7 +85,11 @@ export default function AddFram() {
     };
     const addFarm = async () => {
         console.log("addfarm triggered");
-        const data = farmParams
+       
+         const data = {
+        ...farmParams,
+        user_uid: role === "ROLE_ADMIN" ? farmParams.user_uid : user_uid
+    };
 
         try {
             const response = await api.post('/farm/add-farm', data);
@@ -241,7 +250,7 @@ export default function AddFram() {
                                     Please provide a valid city.
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} md="5" controlId="validationCustom03" className="mt-3">
+                            {role === "ROLE_ADMIN" && <Form.Group as={Col} md="5" controlId="validationCustom03" className="mt-3">
                                 <Form.Label className="m-0">{t('select_user')} *</Form.Label>
                                 <Form.Select
                                     value={farmParams.user_uid}
@@ -259,7 +268,7 @@ export default function AddFram() {
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a valid user.
                                 </Form.Control.Feedback>
-                            </Form.Group>
+                            </Form.Group>}
 
                         </Row>
                         <div className="d-flex justify-content-end">

@@ -99,7 +99,6 @@ const goSensor = () => {
 }
 const _onCreated = e => {
   let type = e.layerType;
-  console.log(type)
   setLayerType(type)
   let layer = e.layer;
   if (type === "polygon") {

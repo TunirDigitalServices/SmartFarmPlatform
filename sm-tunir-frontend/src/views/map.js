@@ -67,16 +67,16 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
   useEffect(() => {
     const updateMapCenter = async () => {
       console.log("updatercentermap working");
-      
+
       const centerFromSensors = getCenterFromSensors();
       if (centerFromSensors) {
         setMapCenter(centerFromSensors);
         setZoomLevel(16.5)
-        console.log(centerFromSensors,"centerFromSensors");
-        console.log(zoomLevel,"zoomLevel");
-        console.log(mapRef.current ," mapRef.current");
-        
-        
+        console.log(centerFromSensors, "centerFromSensors");
+        console.log(zoomLevel, "zoomLevel");
+        console.log(mapRef.current, " mapRef.current");
+
+
         // mapRef.current.setView(centerFromSensors, zoomLevel);
       }
     };
@@ -120,14 +120,25 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
           let coordinates = []
           let fields = item.fields;
           let sensorsCoord = []
-          fields.map(field => {
-            let coord = JSON.parse(field.coordinates)
-            if (coord) {
-              coord.map(co => {
-                coordinates.push(Object.values(co))
-              })
+          // fields?.map(field => {
+          //   let coord = JSON.parse(field?.coordinates)
+          //   if (coord) {
+          //     coord.map(co => {
+          //       coordinates.push(Object.values(co))
+          //     })
+          //   }
+          fields?.forEach(field => {
+            if (field?.coordinates) {
+              try {
+                let coord = JSON.parse(field.coordinates);
+                coord?.forEach(co => {
+                  coordinates.push(Object.values(co));
+                });
+              } catch (error) {
+                console.error("Invalid JSON in coordinates:", field.coordinates, error);
+              }
             }
-            let sensors = field.sensors;
+            let sensors = field?.sensors;
             if (sensors) {
 
               sensors.map(sensor => {
@@ -156,16 +167,16 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
                     </Marker> */}
               {/* </Polygon>  */}
               {
-               
+
                 sensor && sensor.map((sensors, indx) => {
-             
+
                   if (sensors.Latitude && sensors.Longitude) {
 
                     return (
-              <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
-                <Popup >{sensors.code}</Popup>
-              </Marker>
-              )
+                      <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
+                        <Popup >{sensors.code}</Popup>
+                      </Marker>
+                    )
                   }
                   // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
 
@@ -173,7 +184,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
                 }
 
-              )
+                )
 
               }
             </>
@@ -331,7 +342,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
         }
 
         {returnedMap(L)}
-          <MapViewUpdater center={mapCenter} zoom={16.5} />
+        <MapViewUpdater center={mapCenter} zoom={16.5} />
       </MapContainer>
     </div>
   );

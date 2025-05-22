@@ -20,10 +20,20 @@ const getFarmsByConnectedUser = async (req, res) => {
 
 const searchFarms = async (req, res) => {
     const { search = '' } = req.query;
-
+    const userUid = req.userUid;
+    if (!userUid) {
+        return res.status(401).json({ type: "danger", message: "unauthenticated" });
+    }
     try {
+        const user = await new User({ uid: userUid }).fetch({ require: true });
+        const role = user.get('role');
+        console.log(role);
+        
         const farms = await Farm.query(qb => {
             qb.where('deleted_at', null);
+            if (role !== "ROLE_ADMIN") {
+                qb.andWhere('user_id', user.get('id'));
+            }
             if (search) {
                 qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
             }
@@ -67,7 +77,9 @@ const addFarm = async (req, res) => {
     const errors = validationResult(req);
 
 
+
     if (!errors.isEmpty()) {
+        console.log("Validation errors:", errors.array());
         res.status(422).json({ errors: errors.array() });
         return;
     }
