@@ -26,23 +26,27 @@ const searchAllFields = async (req, res) => {
     const { search = '' } = req.query;
     const uid = req.userUid;
 
+    
+
     try {
-          const user = await new User({ uid }).fetch({ require: true });
+        const user = await new User({ uid }).fetch({ require: true });
         const role = user.get('role');
         const userId = user.get('id');
-console.log({ role, userId, uid, search });
+
+      
 
         const fields = await Field.query(qb => {
+            console.log("[STEP 4] Building query for fields...");
+
             qb.where('deleted_at', null);
 
-          
-
             if (search) {
+                console.log("[STEP 5] Applying search filter...");
                 qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
             }
 
-              if (role !== 'ROLE_ADMIN') {
-                // Only get fields for farms owned by the user
+            if (role !== 'ROLE_ADMIN') {
+                console.log("[STEP 6] Filtering by user-owned farms...");
                 qb.whereIn('fields.farm_id', function () {
                     this.select('id')
                         .from('farms')
@@ -51,28 +55,24 @@ console.log({ role, userId, uid, search });
                 });
             }
 
-console.log("Fields fetched:", fields.length);
+        }).fetchAll({ require: false });
 
-
-
-
-        })
-            .fetchAll({ require: false });
+    
 
         const response = fields.toJSON().map(farm => ({
             value: farm.uid,
             label: farm.name
         }));
 
-        console.log("Search:", search);
-        console.log("Result:", response);
+        console.log("[STEP 8] Final response prepared:", response);
 
         return res.status(200).json(response);
     } catch (error) {
-        console.error("searchFields error:", error);
+        console.error("[ERROR] searchAllFields:", error);
         return res.status(500).json({ type: "danger", message: "fields" });
     }
 };
+
 
 const getSingleField = async (req, res) => {
     const field_uid = req.body.field_uid;
