@@ -137,7 +137,7 @@ const WaterChart = ({ data }) => {
 
       {chartData && (
         <Line data={chartData} options={options}  height={263}
-        style={{ height: '100%', width: '80%', margin: '0 auto' }} />
+        style={{ height: '100%', width: '100%', margin: '0 auto' }} />
         )}
     </div>
   )

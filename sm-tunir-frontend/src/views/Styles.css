@@ -566,15 +566,14 @@ h5.modal-title h6 {
 }
 
 #table-scroll {
-  height: 50rem;
-  overflow: auto;
+  /* height: 50rem; */
+  overflow: hidden;
   margin-top: 20px;
 }
+ #table-wrapper table {
+  width: 50% !important;
 
-#table-wrapper table {
-  width: 100%;
-
-}
+} 
 
 #table-wrapper table * {
   color: black;

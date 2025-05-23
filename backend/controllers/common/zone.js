@@ -26,28 +26,68 @@ const getZonesByConnectedUser = async (req, res) => {
 
 const searchAllZones = async (req, res) => {
     const { search = '' } = req.query;
+    const uid = req.userUid
 
     try {
-        const zones = await Zone.query(qb => {
-            qb.where('deleted_at', null);
-            if (search) {
-                qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
-            }
-        })
-            .fetchAll({ require: false });
 
-        const response = zones.toJSON().map(zone => ({
+        const user = await new User({ uid }).fetch({
+            withRelated: [
+                { 'farms': qb => qb.where('deleted_at', null) },
+                { 'farms.fields': qb => qb.where('deleted_at', null) },
+                { 'farms.fields.zones': qb => qb.where('deleted_at', null) }
+            ],
+            require: false
+        });
+
+        if (!user) {
+            return res.status(404).json({ type: "danger", message: "User not found" });
+        }
+
+        const role = user.get('role');
+
+      
+        
+        let zones;
+        if (role === "ROLE_ADMIN") {
+          zones = await Zone.query(qb => {
+                qb.where('deleted_at', null);
+                if (search) {
+                    qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
+                }
+            }).fetchAll({ require: false });
+        } else {
+          
+
+              const userZones = user.related('farms')
+                .reduce((acc, farm) => {
+                    const fields = farm.related('fields');
+                    fields.forEach(field => {
+                        const zones = field.related('zones').filter(zone => {
+                            if (!zone || zone.get('deleted_at')) return false;
+                            return !search || zone.get('name').toLowerCase().includes(search.toLowerCase());
+                        });
+                        acc = acc.concat(zones);
+                    });
+                    return acc;
+                }, []);
+
+            zones = {
+                toJSON: () => userZones.map(zone => zone.toJSON())
+            };
+        }
+
+
+
+           const response = zones.toJSON().map(zone => ({
             value: zone.uid,
             label: zone.name
         }));
 
-        console.log("Search:", search);
-        console.log("Result:", response);
 
         return res.status(200).json(response);
     } catch (error) {
-        console.error("searchZone error:", error);
-        return res.status(500).json({ type: "danger", message: "zones" });
+        console.error("searchFields error:", error);
+        return res.status(500).json({ type: "danger", message: "fields" });
     }
 };
 

@@ -85,11 +85,11 @@ export default function AddFram() {
     };
     const addFarm = async () => {
         console.log("addfarm triggered");
-       
-         const data = {
-        ...farmParams,
-        user_uid: role === "ROLE_ADMIN" ? farmParams.user_uid : user_uid
-    };
+
+        const data = {
+            ...farmParams,
+            user_uid: role === "ROLE_ADMIN" ? farmParams.user_uid : user_uid
+        };
 
         try {
             const response = await api.post('/farm/add-farm', data);

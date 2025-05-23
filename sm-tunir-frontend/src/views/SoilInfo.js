@@ -20,6 +20,7 @@ export default function SoilInfo() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const location = useLocation();
+    let role = JSON.parse(localStorage.getItem('user')).role
 
 
     const { fieldId, fieldName } = location.state || {};
@@ -50,10 +51,10 @@ export default function SoilInfo() {
             name: soilParams.name,
             RUmax: soilParams.RUmax,
             effPluie: soilParams.effPluie,
-            soiltype_id:soilParams.soilType
+            soiltype_id: soilParams.soilType
         }
-        console.log(data,"data");
-        
+        console.log(data, "data");
+
         api.post('/zone/add-zone', data)
             .then(res => {
                 if (res.data.type && res.data.type == "danger") {
@@ -124,11 +125,11 @@ export default function SoilInfo() {
             setValidated(true);
 
         } else {
-             await addZone();
-             setValidated(false);
-             form.reset();
-            console.log(soilParams,"sp");
-            
+            await addZone();
+            setValidated(false);
+            form.reset();
+            console.log(soilParams, "sp");
+
         }
 
         setValidated(true);
@@ -138,18 +139,18 @@ export default function SoilInfo() {
         const selectedSoil = listSoils.find(
             (soil) => soil.soil == e.target.value
         );
-        console.log(selectedSoil,"selected soil");
-        
+        console.log(selectedSoil, "selected soil");
+
         if (selectedSoil) {
-          setSoilParams((prevState) => ({
-            ...prevState,
-            soilType: selectedSoil.id,
-            RUmax: selectedSoil.ru,
-            effPluie: selectedSoil.rain_eff,
-        }));
+            setSoilParams((prevState) => ({
+                ...prevState,
+                soilType: selectedSoil.id,
+                RUmax: selectedSoil.ru,
+                effPluie: selectedSoil.rain_eff,
+            }));
 
         }
-       
+
     };
     const soilTypeForm = () => {
         if (isStandardSoil == true)
@@ -210,7 +211,7 @@ export default function SoilInfo() {
                                         return <option value={item.Uid}>{item.title}</option>;
                                     })}
                                 </Form.Select> */}
-                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url='/field/search-all-fields' placeholder={"Search fields..."} onChange={selected => setSoilParams({ ...soilParams, field_uid: selected?.value || '' })} />
+                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url={'/field/search-all-fields'} placeholder={"Search fields..."} onChange={selected => setSoilParams({ ...soilParams, field_uid: selected?.value || '' })} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please select a field.

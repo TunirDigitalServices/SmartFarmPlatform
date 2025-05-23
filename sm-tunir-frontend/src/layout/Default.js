@@ -6,21 +6,21 @@ import MainNavbar from "../components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "../components/layout/MainSidebar/MainSidebar";
 import { Outlet } from "react-router";
 
-const DefaultLayout = ({  noNavbar, noFooter }) => (
+const DefaultLayout = ({ noNavbar, noFooter }) => (
   <div fluid>
-  {!noNavbar && <MainNavbar />} 
-  <Row>
-    <MainSidebar />
-    <Col
-      className="main-content p-0"
-      lg={{ size: 10, offset: 2 }}
-      md={{ size: 9, offset: 3 }}
-    
-    >
-      <Outlet />
-    </Col>
-  </Row>
-</div>
+    {!noNavbar && <MainNavbar />}
+    <Row>
+      <MainSidebar />
+      <Col
+        className="main-content p-0"
+        lg={10}
+        md={9}
+
+      >
+        <Outlet />
+      </Col>
+    </Row>
+  </div>
 
 );
 

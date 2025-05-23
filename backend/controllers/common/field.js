@@ -24,51 +24,67 @@ const getFieldsByConnectedUser = async (req, res) => {
 
 const searchAllFields = async (req, res) => {
     const { search = '' } = req.query;
-    const uid = req.userUid;
-
-    
+    const uid = req.userUid
 
     try {
-        const user = await new User({ uid }).fetch({ require: true });
-        const role = user.get('role');
-        const userId = user.get('id');
+
+        const user = await new User({ 'uid': uid }).fetch({
+            withRelated: [{ 'farms': (qb) => { qb.where('deleted_at', null); } },
+            { 'farms.fields': (qb) => { qb.where('deleted_at', null); } },
+            { 'farms.fields.zones': (qb) => { qb.where('deleted_at', null); } },
+            { 'farms.fields.crops': (qb) => { qb.where('deleted_at', null); } },
+            { 'farms.fields.sensors': (qb) => { qb.where('deleted_at', null); } },
+            { 'farms.fields.reports': (qb) => { qb.where('deleted_at', null).orderBy('id', 'DESC') } }],
+            require: false
+        })
+        if (!user) {
+            return res.status(404).json({ type: "danger", message: "User not found" });
+        }
+                const role = user.get('role');
 
       
+        
+        let fields;
+        if (role === "ROLE_ADMIN") {
+            // Admin: search all fields
+          
+            
+            fields = await Field.query(qb => {
+                qb.where('deleted_at', null);
+                if (search) {
+                    qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
+                }
+            }).fetchAll({ require: false });
+        } else {
+          
 
-        const fields = await Field.query(qb => {
-            console.log("[STEP 4] Building query for fields...");
+            const userFields = user.related('farms')
+                .reduce((acc, farm) => {
+                    const farmFields = farm.related('fields').filter(field => {
+                        if (!field || field.get('deleted_at')) return false;
+                        return !search || field.get('name').toLowerCase().includes(search.toLowerCase());
+                    });
+                    return acc.concat(farmFields);
+                }, []);
 
-            qb.where('deleted_at', null);
+            fields = {
+                toJSON: () => userFields.map(field => field.toJSON())
+            };
+        }
 
-            if (search) {
-                console.log("[STEP 5] Applying search filter...");
-                qb.andWhereRaw('LOWER(name) LIKE ?', [`%${search.toLowerCase()}%`]);
-            }
 
-            if (role !== 'ROLE_ADMIN') {
-                console.log("[STEP 6] Filtering by user-owned farms...");
-                qb.whereIn('fields.farm_id', function () {
-                    this.select('id')
-                        .from('farms')
-                        .where('user_id', userId)
-                        .andWhere('deleted_at', null);
-                });
-            }
-
-        }).fetchAll({ require: false });
-
-    
 
         const response = fields.toJSON().map(farm => ({
             value: farm.uid,
             label: farm.name
         }));
 
-        console.log("[STEP 8] Final response prepared:", response);
+        console.log("Search:", search);
+        console.log("Result:", response);
 
         return res.status(200).json(response);
     } catch (error) {
-        console.error("[ERROR] searchAllFields:", error);
+        console.error("searchFields error:", error);
         return res.status(500).json({ type: "danger", message: "fields" });
     }
 };

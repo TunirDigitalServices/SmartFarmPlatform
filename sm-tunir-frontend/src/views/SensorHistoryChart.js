@@ -9,6 +9,8 @@ const SensorHistoryChart = ({ data }) => {
   const [legendItems, setLegendItems] = useState([]); // State to hold legend items
 
   const getChartData = () => {
+    console.log("Sensor data input:", data);
+
     let labels = [];
     let dataMv1 = [];
     let dataMv2 = [];
@@ -55,7 +57,7 @@ const SensorHistoryChart = ({ data }) => {
           fill: false,
           backgroundColor: "rgba(75,192,192,0.2)",
           borderColor: "#f46835",
-          hidden: true, // Initially hidden
+          hidden: false, // Initially hidden
         },
         {
           label: 'Humidity',
@@ -135,7 +137,7 @@ const SensorHistoryChart = ({ data }) => {
   useEffect(() => {
     getChartData();
   }, [data]);
-  
+
   useEffect(() => {
     if (state) {
       // Generate legend items based on dataset labels and fillStyles
@@ -149,16 +151,24 @@ const SensorHistoryChart = ({ data }) => {
     }
   }, [state]);
 
-  const handleCheckboxChange = (index) => {
-    // Toggle visibility of dataset based on index
-    const updatedState = { ...state };
-    updatedState.datasets[index].hidden = !updatedState.datasets[index].hidden;
-    setState(updatedState);
-  };
-  
+ const handleCheckboxChange = (index) => {
+  const updatedDatasets = state.datasets.map((dataset, i) => {
+    if (i === index) {
+      return { ...dataset, hidden: !dataset.hidden };
+    }
+    return dataset;
+  });
+
+  setState({ ...state, datasets: updatedDatasets });
+};
+
+console.log("Final Chart State:", state);
+
   return (
     <>
-     { state && <Line
+    
+ 
+    { state && <Line
         data={state}
         options={{
           plugins:{
@@ -207,7 +217,10 @@ const SensorHistoryChart = ({ data }) => {
           }
         }}
       />}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',flexWrap:'wrap', padding: '10px' }}>
+  
+
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', padding: '10px' }}>
         {legendItems.map((item, index) => (
           <div key={index} style={{ display: 'inline-block', marginRight: '10px' }}>
             <input
@@ -216,7 +229,7 @@ const SensorHistoryChart = ({ data }) => {
               checked={!state.datasets[index].hidden} // Set checked based on hidden property
               onChange={() => handleCheckboxChange(index)}
             />
-            <label htmlFor={`checkbox-${index}`} style={{ color: item.fillStyle , marginLeft : '4px'}}>{item.text}</label>
+            <label htmlFor={`checkbox-${index}`} style={{ color: item.fillStyle, marginLeft: '4px' }}>{item.text}</label>
           </div>
         ))}
       </div>

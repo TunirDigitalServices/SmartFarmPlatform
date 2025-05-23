@@ -268,22 +268,25 @@ const SensorHistory = () => {
 
 
     return (
-        <Container fluid className="main-content-container p-4" style={{ overflowX: "auto" }}>
-            <Row noGutters className="page-header  py-4">
-                <div className='d-flex justify-content-between align-items-center'>
-                    <PageTitle
-                        sm="4"
-                        subtitle={t('View your sensors data history')}
-                        title='My Sensors History'
-                    //  className="text-sm-left"
-                    />
-                    <div className=''>
-                        <Button theme="info" onClick={() => navigate('/AddSensor')}><i className='material-icons'>&#xe145;</i> Add Sensor</Button>
-
+        < div className=" p-4" >
+            <Row className="page-header w-100 py-4">
+                <Col xs={12}>
+                    <div className="d-flex flex-wrap  justify-content-between align-items-center">
+                        <PageTitle
+                            sm="4"
+                            subtitle={t("View your sensors data history")}
+                            title="My Sensors History"
+                        />
+                        <div className="mt-3 mt-md-0"> {/* Only this needs margin control */}
+                            <Button variant="info" onClick={() => navigate('/AddSensor')}>
+                                <i className="material-icons">&#xe145;</i> Add Sensor
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                </Col>
             </Row>
-            <Row className="d-flex gap-2 justify-content-between align-items-center">
+
+            <Row className="d-flex  justify-content-between align-items-center">
                 {
                     (typeof id === 'undefined')
                         ?
@@ -320,9 +323,12 @@ const SensorHistory = () => {
 
 
                 </Col>
-                <Col lg='3' md="12" sm='12' className="form-group">
+                <Col lg='2' md="12" sm='12' className="form-group">
                     <p style={{ margin: "0px" }}>{t('search')}</p>
-                    <Button onClick={() => setClicked(true)}>{t('search')}</Button>
+                    {/* <Button className='px-4' >{t('search')}</Button>
+                     */}
+                    <Button onClick={() => setClicked(true)}><i className='material-icons'>&#xe8b6;</i> Search ... </Button>
+
 
                 </Col>
                 {/* {totalPages > 0 && (
@@ -347,7 +353,8 @@ const SensorHistory = () => {
                                             {
                                                 historyData.length > 0
                                                     ?
-                                                    <div className='d-flex justify-content-end'>
+                                                    <div className='d-flex flex-wrap gap-2 mt-3 justify-content-md-end justify-content-start'>
+
                                                         <DownloadTableExcel
                                                             filename="history table"
                                                             sheet="history"
@@ -356,10 +363,10 @@ const SensorHistory = () => {
                                                             <Button theme="info" ><i className='material-icons'>&#xf090;</i> Download this page</Button>
 
                                                         </DownloadTableExcel>
-                                                        <Button className="mx-2" theme="info" onClick={downloadHistoryData}>
+                                                        <Button  theme="info" onClick={downloadHistoryData}>
                                                             <i className='material-icons'>&#xf090;</i> Download History
                                                         </Button>
-                                                        <Button className="mx-2" onClick={() => setToggle(!toggle)}>{toggle ? "View Chart" : "View Table"}</Button>
+                                                        <Button  onClick={() => setToggle(!toggle)}>{toggle ? "View Chart" : "View Table"}</Button>
 
                                                     </div>
 
@@ -367,8 +374,8 @@ const SensorHistory = () => {
                                                     null
                                             }
                                             <div id="table-wrapper" className={`${toggle ? '' : 'd-none'}`}>
-                                                <div id="table-scroll">
-                                                    <table ref={table} className="table mb-4 table-hover table-bordered  tabel-responsive-lg " style={{ overflowX: "scroll" }}>
+                                                <div id="table-scroll" style={{ overflowX: "scroll" }}>
+                                                    <table ref={table} className="table mb-4 table-hover table-bordered  tabel-responsive-lg " >
                                                         <thead className="bg-light text-center">
                                                             <tr>
                                                                 <th style={{ fontSize: 12 }} scope="col" className="border-0">{t('Date')} (GMT)</th>
@@ -441,6 +448,8 @@ const SensorHistory = () => {
                                             </div>
                                         </Col>
                                         <Col className={`${toggle ? 'd-none' : ''}`} lg="12" md="8" sm="8">
+
+
                                             <SensorHistoryChart data={historyData} />
                                         </Col>
                                     </Row>
@@ -507,7 +516,7 @@ const SensorHistory = () => {
 
                 </Col>
             </Row>
-        </Container>
+        </div>
     )
 }
 
