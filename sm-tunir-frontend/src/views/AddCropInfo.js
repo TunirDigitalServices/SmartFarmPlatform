@@ -244,9 +244,12 @@ export default function AddCropInfo() {
                 }
             })
             .catch((err) => {
-                swal(`Error`, {
-                    icon: "error",
-                });
+                const message =
+                    err.response?.data?.message ||
+                    err.message ||
+                    "An unknown error occurred.";
+
+                swal("Error", message, "error");
 
 
             });
@@ -291,7 +294,7 @@ export default function AddCropInfo() {
                                     onChange={handleCropPick}
                                     placeholder={t('crop_type')}
                                     value={cropData.cropType}
-
+                                    required
 
                                 >
                                     <option value="">Select Crop</option>
@@ -310,8 +313,8 @@ export default function AddCropInfo() {
                                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom02">
-                                <Form.Label>{t('crop_variety')}</Form.Label>
-                                <Form.Select value={cropData.variety} onChange={handleVarietyPick} >
+                                <Form.Label>{t('crop_variety')} *</Form.Label>
+                                <Form.Select value={cropData.variety} onChange={handleVarietyPick} required >
                                     <option value="">{t('crop_variety')}</option>
                                     {
                                         cropData.cropVariety.map(variety => (
@@ -373,10 +376,10 @@ export default function AddCropInfo() {
                                     value={cropData.zone_uid}
                                     onChange={e => setCropData({ ...cropData, zone_uid: e.target.value })}
                                     placeholder={t('crop_zone')}
-
+                                    required
 
                                 >
-                                    <option>{t('select_zone')}</option>
+                                    <option value="" disabled>{t('select_zone')}</option>
 
 
                                     {
@@ -396,15 +399,15 @@ export default function AddCropInfo() {
 
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom03" className="mt-3">
-                                <Form.Label className="m-0">{t('surface')} (m²)</Form.Label>
-                                <Form.Control type="number" value={cropData.surface} onChange={e => setCropData({ ...cropData, surface: e.target.value })} placeholder={t('surface')}
+                                <Form.Label className="m-0">{t('surface')} (m²) *</Form.Label>
+                                <Form.Control type="number" required value={cropData.surface} onChange={e => setCropData({ ...cropData, surface: e.target.value })} placeholder={t('surface')}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide the surface .
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustom04" className="mt-2">
-                                <Form.Label>{t('depth')} (m) *</Form.Label>
+                                <Form.Label>{t('depth')} (m) </Form.Label>
                                 <Form.Control type="number" value={cropData.rootDepth} onChange={e => setCropData({ ...cropData, rootDepth: e.target.value })} placeholder={t('depth')}
 
 
@@ -417,7 +420,7 @@ export default function AddCropInfo() {
                         <Row className="mb-3 gap-3 justify-content-between">
 
                             <Form.Group as={Col} md="4" controlId="validationCustom03" className="mt-3">
-                                <Form.Label className="m-0">{t('Days')} *</Form.Label>
+                                <Form.Label className="m-0">{t('Days')} </Form.Label>
                                 <Form.Control type="number" value={cropData.days} onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
 
                                 <Form.Control.Feedback type="invalid">
@@ -426,7 +429,7 @@ export default function AddCropInfo() {
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom05" className="mt-2">
                                 <Form.Label>{t('planting_date')} *</Form.Label>
-                                <Form.Control type="date" value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} />
+                                <Form.Control type="date" required value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please provide the plantingDate.
@@ -445,7 +448,7 @@ export default function AddCropInfo() {
 
                         <Row className="mb-3 gap-3 justify-content-between">
                             <Form.Group as={Col} md="4" controlId="validationCustom05" className="mt-2">
-                                <Form.Label>{t('fraction_pratique')} (%) *</Form.Label>
+                                <Form.Label>{t('fraction_pratique')} (%) </Form.Label>
                                 <Form.Control type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} placeholder={t('fraction_pratique')}
 
 
@@ -455,8 +458,8 @@ export default function AddCropInfo() {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom06" className="mt-3">
-                                <Form.Label className="m-0">{t('ecart_inter')} (m)</Form.Label>
-                                <Form.Control type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} placeholder={t('ecart_inter')}
+                                <Form.Label className="m-0">{t('ecart_inter')} (m) *</Form.Label>
+                                <Form.Control type="number" required value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} placeholder={t('ecart_inter')}
                                 />
 
 
@@ -465,8 +468,8 @@ export default function AddCropInfo() {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustom05" className="mt-2">
-                                <Form.Label>{t('ecart_intra')} (m)</Form.Label>
-                                <Form.Control type="number" value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} placeholder={t('ecart_intra')}
+                                <Form.Label>{t('ecart_intra')} (m) *</Form.Label>
+                                <Form.Control type="number" required value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} placeholder={t('ecart_intra')}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide the fraction pratique.
@@ -476,8 +479,8 @@ export default function AddCropInfo() {
                         <Row className="mb-3 gap-3 justify-content-between">
 
                             <Form.Group as={Col} md="4" controlId="validationCustom06" className="mt-3">
-                                <Form.Label className="m-0">{t('densité')} (plants/ha)</Form.Label>
-                                <Form.Control type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} placeholder={t('densité')}
+                                <Form.Label className="m-0">{t('densité')} (plants/ha) *</Form.Label>
+                                <Form.Control type="number" required value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} placeholder={t('densité')}
                                 />
 
 

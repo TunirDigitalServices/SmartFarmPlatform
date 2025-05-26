@@ -143,6 +143,7 @@ export default function AddIrrigation() {
                         handleDrippers={(e) => setIrrigData({ ...irrigData, drippers: e.target.value })}
                         handleIrrigAlrd={(e) => setIrrigData({ ...irrigData, irrigated_already: e.target.value })}
                         handleFlowRate={(e) => setIrrigData({ ...irrigData, flowrate: e.target.value })}
+                        handleDrippersSpacing={(e) => setIrrigData({ ...irrigData, drippersSpacing: e.target.value })}
                         flowrate={irrigData.flowrate}
                         drippers={irrigData.drippers}
                         irrigated_already={irrigData.irrigated_already}
@@ -173,6 +174,7 @@ export default function AddIrrigation() {
             lines_number: irrigData.linesNumber,
             drippers_spacing: irrigData.drippersSpacing
         }
+
 
 
         api.post('/irrigation/add-irrigation', data)
@@ -298,7 +300,7 @@ export default function AddIrrigation() {
                                 {/* <Form.Select
                                     value={irrigData.zone_uid}
                                     onChange={e => setIrrigData({ ...irrigData, zone_uid: e.target.value })}
-                                    style={{ border: '1px solid #0BAECB' }}
+                                    
 
                                 >
                                     <option>{t('select_zone')}</option>
@@ -321,14 +323,14 @@ export default function AddIrrigation() {
                                 <Form.Select
                                     value={irrigData.crop_uid}
                                     onChange={e => setIrrigData({ ...irrigData, crop_uid: e.target.value })}
-                                    style={{ border: '1px solid #0BAECB' }}
+required
                                 >
                                     <option value="">{t('select_crop')}</option>
 
-                                   {
+                                    {
                                         crops.map(crop => {
-                                          
-                                            
+
+
                                             let cropType = ""
                                             listCrop.map(croptype => {
                                                 if (croptype.id === crop.croptype_id) {
@@ -356,7 +358,7 @@ export default function AddIrrigation() {
                                     onChange={evt => {
                                         handleIrrigPick(evt)
                                     }}
-                                    style={{ border: '1px solid #0BAECB' }}
+required
 
                                 >
                                     <option disabled selected value="">{t('select_irriagtion')}</option>
@@ -379,9 +381,9 @@ export default function AddIrrigation() {
                         </Row>
                         <Row className="mb-3 gap-3 justify-content-between">
                             <Form.Group as={Col} md="4" controlId="validationCustom03" className="mt-2">
-                                <Form.Label>{t('efficience_irrigation')} (%) *</Form.Label>
+                                <Form.Label>{t('efficience_irrigation')} (%) </Form.Label>
                                 <Form.Control type="number" value={irrigData.effIrrig} onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} placeholder={t('efficience_irrigation')}
-                                    style={{ border: '1px solid #0BAECB', height: 41 }}
+
 
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -389,16 +391,20 @@ export default function AddIrrigation() {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="3" controlId="validationCustom03" className="mt-3">
-                                <Form.Label className="m-0">{t('type_reseau')}</Form.Label>
-                                <Form.Control value={irrigData.pumpType} onChange={e => setIrrigData({ ...irrigData, pumpType: e.target.value })} placeholder={t('type_reseau')}
+                                <Form.Label className="m-0">{t('type_reseau')} *</Form.Label>
+                                <Form.Control onBeforeInput={(e) => {
+                                    if (/\d/.test(e.data)) {
+                                        e.preventDefault();
+                                    } // juste letters
+                                }} required value={irrigData.pumpType} onChange={e => setIrrigData({ ...irrigData, pumpType: e.target.value })} placeholder={t('type_reseau')}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide reseau type.
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} md="4" controlId="validationCustom03" className="mt-2">
-                                <Form.Label>{t('debit_reseau')} (l/s)</Form.Label>
-                                <Form.Control type="number" value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} placeholder={t('debit_reseau')}
+                                <Form.Label>{t('debit_reseau')} (l/s) *</Form.Label>
+                                <Form.Control type="number" required value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} placeholder={t('debit_reseau')}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide the debit of the reseau .
@@ -408,8 +414,8 @@ export default function AddIrrigation() {
                         <Row className="mb-3 gap-5 justify-content-between">
 
                             <Form.Group as={Col} md="6" controlId="validationCustom03" className="mt-3">
-                                <Form.Label className="m-0">{t('nbr_ligne')}</Form.Label>
-                                <Form.Control type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} placeholder={t('nbr_ligne')}
+                                <Form.Label className="m-0">{t('nbr_ligne')} *</Form.Label>
+                                <Form.Control required type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} placeholder={t('nbr_ligne')}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide reseau type.

@@ -5076,6 +5076,16 @@ a.text-accent:hover {
 }
 
 /* Below 1400px */
+@media (max-width: 2300.98px) {
+  .main-content {
+    margin-left: 310px;
+  }
+}
+@media (max-width: 1600.98px) {
+  .main-content {
+    margin-left: 250px;
+  }
+}
 @media (max-width: 1399.98px) {
   .main-content {
     margin-left: 210px;

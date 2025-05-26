@@ -13,7 +13,7 @@ const getIrrigationsByConnectedUser = async (req, res) => {
         const user = await new User({ 'uid': uid })
             .fetch({ withRelated: [{ 'farms': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields.crops': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields.crops.irrigations': (qb) => { qb.where('deleted_at', null); } }], require: false })
             .then(async result => {
-                
+
                 if (result == null) return res.status(404).json({ type: "danger", message: "no_user" });
                 let data = result.related('farms');
                 console.log("Fetched user:", data.toJSON());
@@ -89,42 +89,46 @@ const searchIrrigationsByType = async (req, res) => {
 
 
 //Add Irrigations
-const addIrrigation = async (req,res) => {
+const addIrrigation = async (req, res) => {
 
-    const {type,address,crop_uid,zone_uid,flowrate,irrigated_already,pivot_shape,irrigation_syst,name,pivot_length,pivot_coord,full_runtime,lateral,drippers,effIrrig,pumpFlow,drippers_spacing,pumpType,lines_number} = req.body;
+    const { type, address, crop_uid, zone_uid, flowrate, irrigated_already, pivot_shape, irrigation_syst, name, pivot_length, pivot_coord, full_runtime, lateral, drippers, effIrrig, pumpFlow, drippers_spacing, pumpType, lines_number } = req.body;
     const errors = validationResult(req);
-    
+
     if (!errors.isEmpty()) {
         res.status(422).json({ errors: errors.array() });
         return;
     }
 
-    if(!(req.body.crop_uid) || req.body.crop_uid == "") return res.status(404).json({ type:"danger", message: "no_crop_selected"});
+    if (!(req.body.crop_uid) || req.body.crop_uid == "") return res.status(404).json({ type: "danger", message: "no_crop_selected" });
     let zone_id = "";
-    const zone = await new Zone({'uid': zone_uid, deleted_at: null})
-    .fetch({require: false})
-    .then(async result => {
-      if(result === null) return res.status(404).json({ type:"danger", message: "no_zone_selected"});
-      zone_id = result.get('id');
-    });
-     try{
-        const crop = new Crop({'uid': crop_uid, deleted_at: null})
-        .fetch({require: false})
+    const zone = await new Zone({ 'uid': zone_uid, deleted_at: null })
+        .fetch({ require: false })
         .then(async result => {
-            if (result === null) return res.status(404).json({ type:"danger", message: "no_crop_found"});
-            if(result){
-                await new Irrigation({type, address,flowrate,irrigated_already,pivot_shape,irrigation_syst,name,pivot_length,pivot_coord,full_runtime,lateral ,drippers,effIrrig,pumpFlow,drippers_spacing,pumpType,crop_id: result.get('id'),zone_id :zone_id,lines_number}).save()
-                .then((result) => {
-                     return res.status(201).json({ type:"success", irrigation : result });
-                }).catch(err => {
-                     return res.status(500).json({ type:"danger", message: err });
-                });
-            }
-        });  
+            if (result === null) return res.status(404).json({ type: "danger", message: "no_zone_selected" });
+            zone_id = result.get('id');
+        });
+    try {
+        const crop = new Crop({ 'uid': crop_uid, deleted_at: null })
+            .fetch({ require: false })
+            .then(async result => {
+                if (result === null) return res.status(404).json({ type: "danger", message: "no_crop_found" });
+                if (result) {
+                    await new Irrigation({ type, address, flowrate, irrigated_already, pivot_shape, irrigation_syst, 
+                        name, pivot_length, pivot_coord, full_runtime, lateral, drippers, effIrrig, pumpFlow,
+                         drippers_spacing, pumpType, crop_id: result.get('id'), zone_id: zone_id, lines_number }).save()
+                        .then((result) => {
+                            console.log(result,"resl");
+                            
+                            return res.status(201).json({ type: "success", irrigation: result });
+                        }).catch(err => {
+                            return res.status(500).json({ type: "danger", message: err });
+                        });
+                }
+            });
 
-     } catch (error) {
-            res.status(500).json({ type:"danger", message: "error_user" });
-        }
+    } catch (error) {
+        res.status(500).json({ type: "danger", message: "error_user" });
+    }
 }
 
 

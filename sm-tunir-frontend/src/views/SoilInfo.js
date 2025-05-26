@@ -137,7 +137,7 @@ export default function SoilInfo() {
     const handleSoilPick = (e) => {
         e.preventDefault()
         const selectedSoil = listSoils.find(
-            (soil) => soil.soil == e.target.value
+            (soil) => soil.id == e.target.value
         );
         console.log(selectedSoil, "selected soil");
 
@@ -242,12 +242,12 @@ export default function SoilInfo() {
                                 <Form.Select
                                     value={soilParams.soilType}
                                     onChange={handleSoilPick}
-
+                                  
                                 >
                                     <option value="">{t('select_soil')}</option>
                                     {
                                         listSoils.map((item, index) => {
-                                            return <option value={item.soil} >{item.soil}</option>;
+                                            return <option value={item.id} >{item.soil}</option>;
 
                                         })
                                     }

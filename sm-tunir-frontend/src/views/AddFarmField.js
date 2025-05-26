@@ -280,7 +280,7 @@ export default function AddFarmField() {
                                             placeholder={t('width')}
                                             value={dataField.width}
                                             onChange={e => setDataField({ ...dataField, width: e.target.value })}
-                                            required
+                                          
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a valid width.
@@ -295,7 +295,7 @@ export default function AddFarmField() {
                                             placeholder={t('length')}
                                             value={dataField.length}
                                             onChange={e => setDataField({ ...dataField, length: e.target.value })}
-                                            required
+                                           
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             Please provide a valid length.

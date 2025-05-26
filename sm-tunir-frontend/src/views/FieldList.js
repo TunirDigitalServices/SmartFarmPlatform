@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import api from '../api/api'
 import swal from 'sweetalert'
 import { useTranslation } from "react-i18next";
-import {Modal, Button, ButtonGroup, Row, Col, Form} from "react-bootstrap"
+import { Modal, Button, ButtonGroup, Row, Col, Form } from "react-bootstrap"
 
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
@@ -11,7 +11,7 @@ import LeafletMap from './map';
 import EditableMap from './EditableMap';
 
 
-const FieldList = ({ FieldsList, Fields ,Uid}) => {
+const FieldList = ({ FieldsList, Fields, Uid }) => {
     const { t, i18n } = useTranslation();
 
     const [toggle, setToggle] = useState(false);
@@ -34,36 +34,36 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
         center: [],
         fromAction: false,
         draw: {
-          polygon: true,
-          circle: false,
-          rectangle: false,
-          polyline: false,
-          marker: false,
-          circlemarker: false,
+            polygon: true,
+            circle: false,
+            rectangle: false,
+            polyline: false,
+            marker: false,
+            circlemarker: false,
         }
-      })
-      const [layer, setLayer] = useState('')
+    })
+    const [layer, setLayer] = useState('')
 
-      const [coords, setCoords] = useState({
+    const [coords, setCoords] = useState({
         Latitude: "",
         Longitude: "",
         zoom: "",
         center: [],
         fromAction: false
-      })
-      useEffect(() => {   
+    })
+    useEffect(() => {
         const getFarms = async () => {
             let url = '/farm/farms';
-             if(Uid){
-                 url = `/admin/user/${Uid}/farms`;
-             }
-             await api.get(url)
-             .then(response => {
-                     let farms = response.data.farms
-                     setData(farms);
-                 }).catch(err=>{
+            if (Uid) {
+                url = `/admin/user/${Uid}/farms`;
+            }
+            await api.get(url)
+                .then(response => {
+                    let farms = response.data.farms
+                    setData(farms);
+                }).catch(err => {
                     console.log(err)
-                 })
+                })
 
         }
 
@@ -79,11 +79,11 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
         await api.post('/field', dataField)
             .then(res => {
                 let fieldData = res.data.field
-                setSingleField(fieldData) 
-                setName(fieldData.name)      
+                setSingleField(fieldData)
+                setName(fieldData.name)
                 setDesc(fieldData.description)
                 data.map((farmData) => {
-                    if(fieldData.farm_id == farmData.id){
+                    if (fieldData.farm_id == farmData.id) {
                         setFarmUid(farmData.uid)
                     }
                     let sensorsCoord = []
@@ -91,26 +91,26 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                     console.log(fields)
                     fields.map(field => {
                         let sensors = field.sensors;
-                        if(sensors){
+                        if (sensors) {
                             sensors.map(sensor => {
-                            sensorsCoord.push({
-                                code: sensor.code,
-                                Latitude: sensor.Latitude,
-                                Longitude: sensor.Longitude
-                            })
+                                sensorsCoord.push({
+                                    code: sensor.code,
+                                    Latitude: sensor.Latitude,
+                                    Longitude: sensor.Longitude
+                                })
                             })
                         }
                     })
                     setSensorsCoords(sensorsCoord)
-                    })                
-                }).catch(error => {
-                    swal({
-                        title: "Error",
-                        icon: "error",
-
-                    });
-
                 })
+            }).catch(error => {
+                swal({
+                    title: "Error",
+                    icon: "error",
+
+                });
+
+            })
         setToggle(!toggle)
     }
     const handleEdit = (fieldUid) => {
@@ -121,9 +121,9 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
             farm_uid: farm,
             field_uid: fieldUid,
             description: description,
-            coordinates : layer,
-            Latitude :coords.Latitude,
-            Longitude:coords.Longitude
+            coordinates: layer,
+            Latitude: coords.Latitude,
+            Longitude: coords.Longitude
         }
 
 
@@ -218,9 +218,9 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                 });
             })
 
-    }   
-    console.log(FieldsList,"FieldsList");
-    
+    }
+    console.log(FieldsList, "FieldsList");
+
 
 
     return (
@@ -228,43 +228,44 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
             <div className={`mb-0 alert alert-${classMsg} fade ${displayMsg}`}>
                 <i class={`fa fa-${iconMsg} mx-2`}></i> {t(msgServer)}
             </div>
-            <table className="table mb-4 text-center table-bordered table-responsive-lg">
-                <thead className="bg-light">
-                    <tr>
-                        <th scope="col" className="border-0">{t('name')}</th>
-                        <th scope="col" className="border-0">{t('status')}</th>
-                        <th scope="col" className="border-0">{t('name_farm')}</th>
-                        <th scope="col" className="border-0"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        FieldsList?.map((item, indx) => {
-                            let nameFarm = "";
-                            data.map((farmData) => {
-                                if(farmData.id == item.farm_id){
-                                    nameFarm =  farmData.name
-                                }
+            <div style={{ overflowX: 'auto' }}>
+                <table className="table mb-4 text-center table-bordered table-responsive-lg" >
+                    <thead className="bg-light">
+                        <tr>
+                            <th scope="col" className="border-0">{t('name')}</th>
+                            <th scope="col" className="border-0">{t('status')}</th>
+                            <th scope="col" className="border-0">{t('name_farm')}</th>
+                            <th scope="col" className="border-0"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            FieldsList?.map((item, indx) => {
+                                let nameFarm = "";
+                                data.map((farmData) => {
+                                    if (farmData.id == item.farm_id) {
+                                        nameFarm = farmData.name
+                                    }
+                                })
+                                return (
+
+                                    <tr>
+                                        <td>{item.title}</td>
+                                        <td>{item.status}</td>
+                                        <td>{nameFarm}</td>
+                                        <td>
+                                            <ButtonGroup size="sm" className="mr-2 gap-2">
+                                                <Button onClick={() => getSingleField(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                                <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
+                                            </ButtonGroup>
+                                        </td>
+                                    </tr>
+                                )
                             })
-                            return (
-
-                                <tr>
-                                    <td>{item.title}</td>
-                                    <td>{item.status}</td>
-                                    <td>{nameFarm}</td>
-                                    <td>
-                                        <ButtonGroup size="sm" className="mr-2 gap-2">
-                                            <Button onClick={() => getSingleField(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
-                                        </ButtonGroup>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
-
+                        }
+                    </tbody>
+                </table>
+            </div>
 
             <Modal size="lg" show={toggle} aria-labelledby="contained-modal-title-vcenter" centered>
                 <Modal.Header>
@@ -275,7 +276,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-                             gap:"10px"
+                            gap: "10px"
                         }}
                     >
                         <Button
@@ -303,6 +304,7 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
 
 
                     <Form>
+                        {console.log(sensorsCoords,"sensorsCoords")}
                         <Row form className='gap-2 justify-content-between'>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_farm')}</p>
@@ -312,13 +314,13 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                                     required
                                 >
 
-                                    {   
+                                    {
                                         data.map((farmData) => {
                                             return (<option value={farmData.uid}>{farmData.name}</option>)
-                                            
+
                                         })
                                     }
-                                   
+
                                 </Form.Select>
                             </Col>
                             <Col md="5" className="form-group">
@@ -326,14 +328,14 @@ const FieldList = ({ FieldsList, Fields ,Uid}) => {
                                 <Form.Control
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    style={{height:"40px"}}
+                                    style={{ height: "40px" }}
                                 />
 
                                 <div className="invalid-feedback">{t('no_empty')}</div>
 
                             </Col>
                             <Col lg='12' md="12" sm='12' className="form-group">
-                                 <EditableMap sensorsCoords={sensorsCoords} setLayer={setLayer} setCoords={setCoords} />
+                                <EditableMap sensorsCoords={sensorsCoords} setLayer={setLayer} setCoords={setCoords} />
 
                             </Col>
                         </Row>

@@ -363,10 +363,10 @@ const SensorHistory = () => {
                                                             <Button theme="info" ><i className='material-icons'>&#xf090;</i> Download this page</Button>
 
                                                         </DownloadTableExcel>
-                                                        <Button  theme="info" onClick={downloadHistoryData}>
+                                                        <Button theme="info" onClick={downloadHistoryData}>
                                                             <i className='material-icons'>&#xf090;</i> Download History
                                                         </Button>
-                                                        <Button  onClick={() => setToggle(!toggle)}>{toggle ? "View Chart" : "View Table"}</Button>
+                                                        <Button onClick={() => setToggle(!toggle)}>{toggle ? "View Chart" : "View Table"}</Button>
 
                                                     </div>
 
@@ -374,7 +374,13 @@ const SensorHistory = () => {
                                                     null
                                             }
                                             <div id="table-wrapper" className={`${toggle ? '' : 'd-none'}`}>
-                                                <div id="table-scroll" style={{ overflowX: "scroll" }}>
+                                                <div id="table-scroll" style={{ overflowX: "scroll" }} onWheel={(e) => {
+                                                    const container = e.currentTarget;
+                                                    if (e.deltaY !== 0) {
+                                                        e.preventDefault();
+                                                        container.scrollLeft += e.deltaY;
+                                                    }
+                                                }}>
                                                     <table ref={table} className="table mb-4 table-hover table-bordered  tabel-responsive-lg " >
                                                         <thead className="bg-light text-center">
                                                             <tr>
