@@ -9,6 +9,7 @@ import translationEN from "./locales/en/translation.json";
 import translationFR from "./locales/fr/translation.json";
 import translationIT from "./locales/it/translation.json";
 import translationAR from "./locales/ar/translation.json";
+import translationWF from "./locales/wolof/translation.json";
 
 
 //Creating object with the variables of imported translation files
@@ -24,6 +25,10 @@ const resources = {
   },
   ar: {
     translation: translationAR,
+  },
+  wf:{
+    translation: translationWF,
+
   }
 };
 
