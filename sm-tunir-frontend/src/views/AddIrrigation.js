@@ -193,8 +193,8 @@ export default function AddIrrigation() {
             lines_number: irrigData.linesNumber,
             drippers_spacing: irrigData.drippersSpacing
         }
-        console.log(data,"deyta");
-        
+        console.log(data, "deyta");
+
 
 
 
@@ -208,7 +208,26 @@ export default function AddIrrigation() {
                 }
                 if (res.data.type && res.data.type == "success") {
                     setValidated(false);
-
+                    setIrrigData({
+                        irrigType: "",
+                        zone_uid: zoneId ? zoneId : "",
+                        crop_uid: "",
+                        flowrate: "",
+                        irrigated_already: "",
+                        name: "",
+                        pivot_shape: "",
+                        irrigation_syst: "",
+                        pivot_length: "",
+                        pivot_coord: "",
+                        full_runtime: "",
+                        lateral: "",
+                        drippers: "",
+                        effIrrig: "",
+                        pumpFlow: "",
+                        pumpType: "",
+                        linesNumber: "",
+                        drippersSpacing: ""
+                    });
                     swal(`${t('irrigation_added')}`, {
                         icon: "success",
                     });

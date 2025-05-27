@@ -24,6 +24,7 @@ const FieldList = ({ FieldsList, Fields, Uid }) => {
     const [displayMsg, setDispMsg] = useState("hide")
     const [iconMsg, setIconMsg] = useState("info")
     const [sensorsCoords, setSensorsCoords] = useState([])
+    const [localFields, setLocalFields] = useState(FieldsList || []);
 
     const [SingleField, setSingleField] = useState([]);
     const [name, setName] = useState('');
@@ -69,6 +70,9 @@ const FieldList = ({ FieldsList, Fields, Uid }) => {
 
         getFarms();
     }, []);
+    useEffect(() => {
+        setLocalFields(FieldsList);
+    }, [FieldsList]);
 
     const getSingleField = async (fieldUid) => {
 
@@ -169,7 +173,7 @@ const FieldList = ({ FieldsList, Fields, Uid }) => {
                     });
                 }
                 if (response.data.type == "success") {
-                    Fields()
+                    setLocalFields(prev => prev.filter(field => field.Uid !== fieldUid));
                     setMsg(`${t('delete_success_field')}`)
                     setCmsg("success")
                     setDispMsg("show")
@@ -240,7 +244,7 @@ const FieldList = ({ FieldsList, Fields, Uid }) => {
                     </thead>
                     <tbody>
                         {
-                            FieldsList?.map((item, indx) => {
+                            localFields ?.map((item, indx) => {
                                 let nameFarm = "";
                                 data.map((farmData) => {
                                     if (farmData.id == item.farm_id) {
@@ -304,7 +308,7 @@ const FieldList = ({ FieldsList, Fields, Uid }) => {
 
 
                     <Form>
-                        {console.log(sensorsCoords,"sensorsCoords")}
+                        {console.log(sensorsCoords, "sensorsCoords")}
                         <Row form className='gap-2 justify-content-between'>
                             <Col md="6" className="form-group">
                                 <p style={{ margin: "0px" }}>{t('name_farm')}</p>
