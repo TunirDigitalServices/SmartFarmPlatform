@@ -16,8 +16,8 @@ const legends = {
   },
   NDWI: {
     title: 'NDWI',
-    gradient: 'linear-gradient(to top, #004cff, #66b2ff, #ffffff, #66ff66, #00cc00)',
-    labels: ['-0.8', '-0.2', '0', '0.5', '0.8'],
+    gradient: 'linear-gradient(to bottom, #004cff, #66b2ff, #ffffff, #66ff66, #00cc00)',
+    labels:  ['0.8', '0.5', '0', '-0.2', '-0.8'], 
     description: `water presence<br>Low = dry<br>High = water`,
   },
 };
