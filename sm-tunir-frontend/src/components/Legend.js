@@ -5,13 +5,13 @@ const legends = {
   NDVI: {
     title: 'NDVI',
     gradient: 'linear-gradient(to top, #000000, #8c8c8c, #b6ff00, #4aff00, #009600)',
-    labels: ['-1', '0', '0.2', '0.4', '1'],
+    labels: ['1', '0.4', '0.2', '0', '-1'],
     description: `plant health<br>Low = barren/dry<br>High = lush/green`,
   },
   MOISTURE: {
     title: 'MOISTURE',
     gradient: 'linear-gradient(to top, #ff0000, #ffaa7f, #ffffff, #aaffff, #0000ff)',
-    labels: ['-0.8', '-0.24', '0', '0.24', '0.8'],
+    labels: ['0.8', '0.24', '0', '-0.24', '-0.8'],
     description: `vegetation moisture<br>Low = dry<br>High = moist`,
   },
   NDWI: {
