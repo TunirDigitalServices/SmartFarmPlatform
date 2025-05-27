@@ -26,6 +26,8 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }
     const [msgServer, setMsg] = useState("")
     const [classMsg, setCmsg] = useState("")
     const [displayMsg, setDispMsg] = useState("hide")
+    const [localZoneList, setLocalZoneList] = useState(zonesList || []);
+
     const [iconMsg, setIconMsg] = useState("info")
     const [SingleZone, setSingleZone] = useState([])
     const [soilData, setSoilData] = useState({
@@ -55,7 +57,8 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }
 
     useEffect(() => {
         soilTypeForm();
-    }, [currentDepthLevel]);
+        setLocalZoneList(zonesList)
+    }, [currentDepthLevel, zonesList]);
 
     const getSingleZone = (zoneUid) => {
 
@@ -162,7 +165,8 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }
                     });
                 }
                 if (response.data.type == "success") {
-                    Zones()
+                    setLocalZoneList(prev => prev.filter(zone => zone.Uid !== zoneUid));
+
                     setMsg(`${t('delete_success_zone')}`)
                     setCmsg("success")
                     setDispMsg("show")
@@ -293,7 +297,7 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }
                 </thead>
                 <tbody>
                     {
-                        zonesList?.map((item, indx) => {
+                        localZoneList?.map((item, indx) => {
                             let nameField = "";
                             Fields.map((fieldData) => {
                                 if (fieldData.Id == item.field_id) {
