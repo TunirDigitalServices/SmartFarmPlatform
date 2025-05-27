@@ -60,6 +60,7 @@ const SatelliteImages = () => {
   const [selectedDate, setSelectedDate] = useState(
     moment().format("D MMM YYYY")
   );
+  const [selectedImageType, setSelectedImageType] = useState(null);
 
   const getSatelliteImages = async () => {
     try {
@@ -158,6 +159,9 @@ const SatelliteImages = () => {
       setSelectedImageUrl(imageUrl); // Save the full image URL with localhost
       setDataDisplayed(image.data || []); // Save data for the selected image (e.g., coordinates or metadata)
       setPolygonDisplayed(image.polygon || []); // Save polygon data if applicable
+      setSelectedImageType(image.type);
+      console.log(image.type, "ttttype");
+
     }
   };
   const designationImageMap = {
@@ -172,6 +176,7 @@ const SatelliteImages = () => {
     moisture,
     swir
   };
+  console.log(selectedImageType, "image type");
 
   const renderImageGallery = () => {
     if (loadingImages) {
@@ -219,15 +224,16 @@ const SatelliteImages = () => {
           className={`btn w-25 ${selectedImageUrl === 'terrain' ? 'btn-primary' : 'btn-light'}`}
           onClick={() => {
             setSelectedImageUrl('');
-            setDataDisplayed([]);        // Clear data
-            setPolygonDisplayed([]);     // Clear polygons
+            setDataDisplayed([]);
+            setSelectedImageType(null);
+            setPolygonDisplayed([]);
           }}
         >
           <div style={{ textAlign: 'center' }}>
             <img
               src={terrain} // Replace with the icon for terrain
               alt="Terrain"
-              style={{ height: '32px', width:"32px", borderRadius: '50%',objectFit:"cover" }}
+              style={{ height: '32px', width: "32px", borderRadius: '50%', objectFit: "cover" }}
             />
           </div>
           <p className="mt-1">Terrain </p>
@@ -283,6 +289,7 @@ const SatelliteImages = () => {
                   fromAction={coords.fromAction}
                   selectedImageUrl={selectedImageUrl}
                   renderImageGallery={renderImageGallery}
+                  selectedImageType={selectedImageType}
                 />
               </Col>
             </Row>

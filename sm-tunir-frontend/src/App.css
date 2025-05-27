@@ -70,3 +70,11 @@
   
 
 }
+/* Styles.css */
+.leaflet-control .legend {
+  line-height: 1.2;
+  background: white;
+  padding: 8px;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+}

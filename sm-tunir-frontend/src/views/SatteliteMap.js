@@ -7,8 +7,9 @@ import { EditControl } from "react-leaflet-draw";
 import L from 'leaflet';
 import LeafletGeoCoder from "./LeafletGeoCoder";
 import { ScaleControl } from 'react-leaflet';
-import Legend from "./Legend";
+// import Legend from "./Legend";
 import { Row } from "react-bootstrap";
+import Legend from "../components/Legend";
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -20,7 +21,8 @@ L.Icon.Default.mergeOptions({
 const SatteliteMap = ({
   data,
   selectedImageUrl,
-  renderImageGallery
+  renderImageGallery,
+  selectedImageType
 }) => {
   const location = useGeoLocation();
   const [polygonCoords, setPolygonCoords] = useState([]);
@@ -30,6 +32,10 @@ const SatteliteMap = ({
   const mapRef = useRef(null);
   const imageOverlayRef = useRef(null);
   const [bounds, setBounds] = useState(null);
+ console.log(selectedImageType,"  selectedImageType legend");
+ console.log(selectedImageUrl,"  selectedImageType url");
+ 
+
   // Initialize map with field data
   useEffect(() => {
     if (data && data.length > 0 && data[0]) {
@@ -148,8 +154,8 @@ useEffect(() => {
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
         />
         
-        <Legend map={mapRef.current} />
-        <LeafletGeoCoder />
+        {/* <Legend map={mapRef.current} /> */}
+        {/* <LeafletGeoCoder /> */}
 
         {location.loaded && !location.error && (
           <Marker position={[location.coordinates.lat, location.coordinates.lng]}>
@@ -170,6 +176,7 @@ useEffect(() => {
             fillColor="none"
           />
         )}
+        <Legend map={mapRef.current} selectedType={selectedImageType} />
       </MapContainer>
       <Row style={{marginTop: "20px",marginRight: "0px",marginLeft: "0px" }}>
         {renderImageGallery()}

@@ -112,6 +112,7 @@ function Login() {
                     <option value="fr">Fr</option>
                     <option value="it">It</option>
                     <option value="ar">Ar</option>
+                    <option value="wf">Wf</option>
 
                   </select>
                 </div>
