@@ -207,6 +207,7 @@ export default function AddCropInfo() {
             growingDate: cropData.growingDate,
 
         }
+        console.log(data, "deyta 2");
 
         api.post('/crop/add-crop', data)
             .then(res => {
@@ -263,6 +264,10 @@ export default function AddCropInfo() {
             setValidated(true);
 
         } else {
+            if (!cropData.zone_uid || cropData.zone_uid === "") {
+                swal("Error", "Please select a crop zone before submitting.", "error");
+                return;
+            }
             await addCrop();
             setValidated(false);
             form.reset();
@@ -362,7 +367,13 @@ export default function AddCropInfo() {
                                         })
                                     }
                                 </Form.Select> */}
-                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url='/field/search-all-fields' onChange={selected => setCropData({ ...cropData, field_uid: selected?.value || '' })} placeholder={"Search fields..."} />
+                                <FarmSelect defaultval={{ value: fieldId, label: fieldName }} url='/field/search-all-fields'  onChange={selected => {
+        setCropData(prev => ({
+            ...prev,
+            field_uid: selected?.value || '',
+            zone_uid: '' // reset zone_uid so user must pick a new one
+        }));
+    }} placeholder={"Search fields..."} />
 
                                 <Form.Control.Feedback type="invalid">
                                     Please select the crop field.

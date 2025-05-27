@@ -21,6 +21,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
     const [zone, setZone] = useState('');
     const [allVarieties, setAllVarieties] = useState([])
     const [listCrop, setListCrop] = useState([])
+    const [localCrops, setLocalCrops] = useState(cropsList || []);
 
     const [cropData, setCropData] = useState({
         cropVariety: "",
@@ -80,7 +81,8 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
     useEffect(() => {
         getCropType()
         getVarieties()
-    }, [])
+        setLocalCrops(cropsList)
+    }, [cropsList])
 
     const getSingleCrop = (cropUid) => {
         let data = {
@@ -216,7 +218,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                     });
                 }
                 if (response.data.type == "success") {
-                    Crops()
+                    setLocalCrops(prev => prev.filter(crop => crop.Uid !== cropUid));
                     setMsg(`${t('delete_success')}`)
                     setCmsg("success")
                     setDispMsg("show")
@@ -301,7 +303,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                 </thead>
                 <tbody>
                     {
-                        cropsList.map((item, indx) => {
+                        localCrops.map((item, indx) => {
                             let croptype = item.croptype
                             let nameField = "";
                             let nameZone = "";
