@@ -102,8 +102,10 @@ const getSingleZone = async (req, res) => {
 
     try {
         const zone = new Zone({ 'uid': zone_uid, deleted_at: null })
-            .fetch({ require: false })
+            .fetch({withRelated:[{'field':(qb)=>{qb.where('deleted_at', null)}},'field.crops'], require: false })
             .then(async result => {
+                console.log(result,"rezalt");
+                
                 if (result === null) return res.status(404).json({ type: "danger", message: "no_zone" });
                 if (result) {
                     return res.status(201).json({ type: "success", zone: result });

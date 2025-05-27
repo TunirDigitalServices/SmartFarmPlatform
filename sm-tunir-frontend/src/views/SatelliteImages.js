@@ -87,7 +87,7 @@ const SatelliteImages = () => {
     }
   };
 
-  console.log(satellitesImages);
+
   useEffect(() => {
     const getDataFields = async () => {
       await api.get("/field/fields").then(res => {
@@ -160,7 +160,7 @@ const SatelliteImages = () => {
       setDataDisplayed(image.data || []); // Save data for the selected image (e.g., coordinates or metadata)
       setPolygonDisplayed(image.polygon || []); // Save polygon data if applicable
       setSelectedImageType(image.type);
-      console.log(image.type, "ttttype");
+      
 
     }
   };
@@ -176,7 +176,7 @@ const SatelliteImages = () => {
     moisture,
     swir
   };
-  console.log(selectedImageType, "image type");
+ 
 
   const renderImageGallery = () => {
     if (loadingImages) {

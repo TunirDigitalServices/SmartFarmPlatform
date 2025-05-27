@@ -20,8 +20,9 @@ export default function AddIrrigation() {
     const [validated, setValidated] = useState(false);
     const [listIrrigations, setListIrrigations] = useState([])
     const [listCrop, setListCrop] = useState([])
-    const [zones, setZones] = useState([]);
+    // const [zones, setZones] = useState([]);
     const [crops, setCrops] = useState([])
+    // const [selectedZone, setSelectedZone] = useState(null)
 
 
     const [irrigData, setIrrigData] = useState({
@@ -81,6 +82,7 @@ export default function AddIrrigation() {
             }
         }
 
+
         const getIrrigations = async () => {
             try {
                 await api.get('/irrigations/get-irrigations')
@@ -100,7 +102,24 @@ export default function AddIrrigation() {
 
         getCropType()
     }, [])
+    useEffect(() => {
+        const getZone = async () => {
+            if (!irrigData.zone_uid) return;
 
+            try {
+                const response = await api.post('/zone', { zone_uid: irrigData.zone_uid });
+                if (response && response.data?.zone?.field?.crops) {
+                    setCrops(response.data.zone.field.crops);
+                } else {
+                    setCrops([]);
+                }
+            } catch (error) {
+                console.error("Failed to fetch zone details:", error);
+            }
+        };
+
+        getZone();
+    }, [irrigData.zone_uid]);
 
 
 
@@ -174,6 +193,8 @@ export default function AddIrrigation() {
             lines_number: irrigData.linesNumber,
             drippers_spacing: irrigData.drippersSpacing
         }
+        console.log(data,"deyta");
+        
 
 
 
@@ -202,67 +223,67 @@ export default function AddIrrigation() {
 
             });
     }
-    useEffect(() => {
-        const getDataFields = async () => {
-            await api.get('/field/fields').then(res => {
-                const newData = res.data.farms;
-                // setFarms(newData);
-                let Fields = [];
-                let Zones = [];
-                let Crops = []
-                newData.map(item => {
-                    let fields = item.fields
-                    if (fields) {
-                        fields.map(itemfield => {
-                            Fields.push({
-                                title: itemfield.name,
-                                status: itemfield.status,
-                                description: itemfield.description,
-                                Uid: itemfield.uid,
-                                farm_id: itemfield.farm_id,
-                                Latitude: itemfield.Latitude,
-                                Longitude: itemfield.Longitude,
-                                Id: itemfield.id
-                            });
-                            let zones = itemfield.zones;
-                            let crops = itemfield.crops
-                            if (crops) {
-                                crops.map(crop => {
-                                    Crops.push({
-                                        type: crop.type,
-                                        id: crop.id,
-                                        Uid: crop.uid,
-                                        fieldId: crop.field_id,
-                                        zone_id: crop.zone_id,
-                                        croptype_id: crop.croptype_id,
-                                        croptype: crop.croptypes
-                                    })
-                                })
-                            }
-                            if (zones) {
-                                zones.map(i => {
-                                    Zones.push({
-                                        Id: i.id,
-                                        name: i.name,
-                                        Uid: i.uid,
-                                        source: i.source,
-                                        description: i.description,
-                                        field_id: i.field_id
+    // useEffect(() => {
+    //     const getDataFields = async () => {
+    //         await api.get('/field/fields').then(res => {
+    //             const newData = res.data.farms;
+    //             // setFarms(newData);
+    //             let Fields = [];
+    //             let Zones = [];
+    //             let Crops = []
+    //             newData.map(item => {
+    //                 let fields = item.fields
+    //                 if (fields) {
+    //                     fields.map(itemfield => {
+    //                         Fields.push({
+    //                             title: itemfield.name,
+    //                             status: itemfield.status,
+    //                             description: itemfield.description,
+    //                             Uid: itemfield.uid,
+    //                             farm_id: itemfield.farm_id,
+    //                             Latitude: itemfield.Latitude,
+    //                             Longitude: itemfield.Longitude,
+    //                             Id: itemfield.id
+    //                         });
+    //                         let zones = itemfield.zones;
+    //                         let crops = itemfield.crops
+    //                         if (crops) {
+    //                             crops.map(crop => {
+    //                                 Crops.push({
+    //                                     type: crop.type,
+    //                                     id: crop.id,
+    //                                     Uid: crop.uid,
+    //                                     fieldId: crop.field_id,
+    //                                     zone_id: crop.zone_id,
+    //                                     croptype_id: crop.croptype_id,
+    //                                     croptype: crop.croptypes
+    //                                 })
+    //                             })
+    //                         }
+    //                         if (zones) {
+    //                             zones.map(i => {
+    //                                 Zones.push({
+    //                                     Id: i.id,
+    //                                     name: i.name,
+    //                                     Uid: i.uid,
+    //                                     source: i.source,
+    //                                     description: i.description,
+    //                                     field_id: i.field_id
 
-                                    });
-                                });
-                            };
-                        })
-                    }
-                });
-                // setFields(Fields)
-                setZones(Zones)
-                setCrops(Crops)
+    //                                 });
+    //                             });
+    //                         };
+    //                     })
+    //                 }
+    //             });
+    //             // setFields(Fields)
+    //             setZones(Zones)
+    //             // setCrops(Crops)
 
-            })
-        }
-        getDataFields()
-    }, [])
+    //         })
+    //     }
+    //     getDataFields()
+    // }, [])
     const handleSubmit = async (event) => {
         event.preventDefault()
         const form = event.currentTarget;
@@ -323,11 +344,15 @@ export default function AddIrrigation() {
                                 <Form.Select
                                     value={irrigData.crop_uid}
                                     onChange={e => setIrrigData({ ...irrigData, crop_uid: e.target.value })}
-required
+                                    required
                                 >
+                                    {console.log(crops, "cropsss")}
+
                                     <option value="">{t('select_crop')}</option>
 
+
                                     {
+
                                         crops.map(crop => {
 
 
@@ -337,7 +362,7 @@ required
                                                     cropType = croptype.crop
                                                 }
                                             })
-                                            return <option value={crop.Uid} >{cropType}</option>
+                                            return <option value={crop.uid} >{cropType}</option>
 
                                         })
                                     }
@@ -358,7 +383,7 @@ required
                                     onChange={evt => {
                                         handleIrrigPick(evt)
                                     }}
-required
+                                    required
 
                                 >
                                     <option disabled selected value="">{t('select_irriagtion')}</option>

@@ -23,7 +23,7 @@ const legends = {
 };
 
 const Legend = ({ map, selectedType  }) => {
-    console.log(selectedType);
+ 
     
 useEffect(() => {
   const normalizedType = selectedType?.toUpperCase();
