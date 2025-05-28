@@ -292,6 +292,8 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
             <div className={`mb-0 alert alert-${classMsg} fade ${displayMsg}`}>
                 <i class={`fa fa-${iconMsg} mx-2`}></i> {t(msgServer)}
             </div>
+            <div style={{ overflowX: 'auto' }}>
+
             <table className="table mb-4 text-center table-bordered tabel-responsive-lg">
                 <thead className="bg-light">
                     <tr>
@@ -340,6 +342,7 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
                     }
                 </tbody>
             </table>
+            </div>
             <Modal size='lg' centered show={toggle} >
                 <Modal.Header>
                     <h6 className="m-0">{t('edit_crop')}</h6>{" "}

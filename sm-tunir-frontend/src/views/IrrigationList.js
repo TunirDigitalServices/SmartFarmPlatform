@@ -291,6 +291,8 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
             <div className={`mb-0 alert alert-${classMsg} fade ${displayMsg}`}>
                 <i class={`fa fa-${iconMsg} mx-2`}></i> {t(msgServer)}
             </div>
+            <div style={{ overflowX: 'auto' }}>
+
             <table className="table mb-4 text-center table-bordered table-responsive-lg">
                 <thead className="bg-light">
                     <tr>
@@ -337,6 +339,7 @@ const IrrigationList = ({ irrigationsList, Irrigations, Crops, Zones }) => {
                     }
                 </tbody>
             </table>
+            </div>
             <Modal size='lg' centered show={toggle} >
                 <Modal.Header closeAriaLabel>
                     <h6 className="m-0">{t('edit_irrigation')}</h6>{" "}

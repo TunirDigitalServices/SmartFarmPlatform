@@ -57,6 +57,10 @@ const Field = () => {
   const [modifiedTime, setModifiedTime] = useState('');
   const [eventSource, setEventSource] = useState('');
   const [allCalcul, setAllCalcul] = useState([])
+  const [manualStartDate, setManualStartDate] = useState("");
+  const [manualEndDate, setManualEndDate] = useState("");
+  const [modifiedStart, setModifiedStart] = useState('');
+  const [modifiedEnd, setModifiedEnd] = useState('');
 
 
   const [weatherData, setWeatherData] = useState([]);
@@ -368,15 +372,24 @@ const Field = () => {
     calculateProgressData();
   }, [resultCalcul]);
 
-
+  const handleSelectSlot = (slotInfo) => {
+    const clickedDate = moment(slotInfo.start).startOf('day').toDate();
+    setSelectedSlot({
+      start: clickedDate,
+      end: moment(clickedDate).add(1, 'days').toDate(),
+    });
+    setManualStartDate(moment(clickedDate).format("YYYY-MM-DD"));
+    setManualEndDate(moment(clickedDate).format("YYYY-MM-DD")); // Optional
+    setShowForNew(true); // open the modal
+  };
   const recomBasedOnDate = () => {
     if (loadingCalcul) {
       return (
         <Col lg="4" md="12" sm="12" className="mb-4 h-100">
           <Card className="mb-4">
             <Card.Body className="d-flex flex-column justify-content-center align-items-center" style={{ height: 250 }}>
-              <img src={logo} alt="Loading" className="loading-logo mb-2" style={{height:70,objectFit:"cover"}} />
-              <p style={{ margin: 0, fontWeight: '300', color: '#555',fontSize:"15px" }}>Loading recommendation...</p>
+              <img src={logo} alt="Loading" className="loading-logo mb-2" style={{ height: 70, objectFit: "cover" }} />
+              <p style={{ margin: 0, fontWeight: '300', color: '#555', fontSize: "15px" }}>Loading recommendation...</p>
             </Card.Body>
           </Card>
         </Col>
@@ -537,15 +550,20 @@ const Field = () => {
   // Calendar Events
 
   const handleEventUpdate = (eventToUpdate, updatedEvent) => {
-    setEvents(
-      events.map((event) => (event === eventToUpdate ? updatedEvent : event))
-    );
+    setEvents(events.map((event) =>
+      event.event_id === eventToUpdate.event_id ? updatedEvent : event
+    ));
   };
 
+
   const handleEventSelect = (event) => {
+    console.log(event,"evv");
+    
     if (event.source !== "rain") {
       const doseValue = event.title.props.children[0].props.children.split(": ")[1];
       const timeValue = event.title.props.children[1].props.children.split(": ")[1];
+      setModifiedStart(event.start.toISOString().slice(0, 10));
+      setModifiedEnd(event.end.toISOString().slice(0, 10));
 
       setSelectedEvent(event);
       setModifiedDose(parseFloat(doseValue).toFixed(2));
@@ -569,7 +587,12 @@ const Field = () => {
 
 
   const handleSaveEvent = async () => {
-    if (!selectedSlot || !dose || !time) {
+    if (!manualStartDate || !manualEndDate || !time || !dose) {
+      swal({ icon: "error", text: "Please fill in all fields." });
+      return;
+    }
+    if (manualEndDate < manualStartDate) {
+      swal({ icon: "error", text: "End date must be after start date." });
       return;
     }
     // Create a new event object with the provided dose and time values
@@ -585,8 +608,8 @@ const Field = () => {
     let data = {
       field_uid: Uid,
       title: 'Irrigation Event',
-      start: selectedSlot.start.toISOString().slice(0, 10),
-      end: selectedSlot.end.toISOString().slice(0, 10),
+      start: moment(manualStartDate).format("YYYY-MM-DD"),
+      end: moment(manualEndDate).format("YYYY-MM-DD"),
       time: time,
       dose: dose
     }
@@ -626,6 +649,10 @@ const Field = () => {
     getEvents()
   }, [])
 
+
+  console.log(eventList, "eventList");
+
+
   useEffect(() => {
     let data = [];
     eventList && eventList.forEach((irrigDay) => {
@@ -644,7 +671,10 @@ const Field = () => {
       });
     });
     // Merge existing events with new data
-    setEvents((prevEvents) => [...prevEvents, ...data]);
+    setEvents((prevEvents) => [
+      ...prevEvents.filter(e => e.source !== 'user'),
+      ...data
+    ]);
   }, [eventList, resultCalcul]);
 
   // Update event By USER
@@ -737,7 +767,7 @@ const Field = () => {
 
         // });
       });
-    setEvents(data);
+    setEvents((prev) => [...prev.filter(e => e.source !== 'resultCalcul'), ...data]);
   }, [allCalcul]);
   console.log(events, "events");
 
@@ -1190,13 +1220,15 @@ const Field = () => {
                     <Row className="d-flex flex-wrap align-items-center justify-content-center" >
                       <Col>
                         <label style={{ fontWeight: "500", textAlign: "center", margin: 4 }} htmlFor="start">{t('start_date')}</label>
-                        <Form.Control id="start" type="date" defaultValue={selectedEvent.start.toISOString().slice(0, 10)} />
+                        <Form.Control id="start" type="date"  value={modifiedStart || ''}
+                          onChange={(e) => setModifiedStart(e.target.value)} />
 
                       </Col>
                       <Col>
                         <label style={{ fontWeight: "500", textAlign: "center", margin: 4 }} htmlFor="end">{t('end_date')}</label>
 
-                        <Form.Control id="end" type="date" defaultValue={selectedEvent.end.toISOString().slice(0, 10)} />
+                        <Form.Control id="end" type="date"   value={modifiedEnd || ''}
+                          onChange={(e) => setModifiedEnd(e.target.value)} />
 
                       </Col>
                     </Row>
@@ -1237,7 +1269,10 @@ const Field = () => {
           <Modal.Footer>
             {eventSource === 'user' && (
               <>
-                <Button variant="primary" onClick={() => handleModalUpdate({ dose: modifiedDose, time: modifiedTime })}>
+                <Button variant="primary" onClick={() => handleModalUpdate({
+                  dose: modifiedDose, time: modifiedTime, start: new Date(modifiedStart),
+                  end: new Date(modifiedEnd)
+                })}>
                   Update
                 </Button>
                 <Button variant="primary" onClick={() => handleEventDelete(selectedEvent.event_id)}>
@@ -1266,7 +1301,7 @@ const Field = () => {
               value={dose}
               onChange={(e) => setDose(e.target.value)}
             />
-            <label htmlFor="time">Irrigation Duration (mn)</label>
+            <label htmlFor="time" className="mt-2">Irrigation Duration (mn)</label>
             <Form.Control
               type="number"
               id="time"
@@ -1274,6 +1309,25 @@ const Field = () => {
               value={time}
               onChange={(e) => setTime(e.target.value)}
             />
+
+            <label className="mt-2">Start Date</label>
+            <Form.Control
+
+              type="date"
+              value={manualStartDate}
+              onChange={(e) => setManualStartDate(e.target.value)}
+            />
+
+
+
+            <label className="mt-2">End Date</label>
+            <Form.Control
+              type="date"
+              value={manualEndDate}
+              onChange={(e) => setManualEndDate(e.target.value)}
+            />
+
+
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleNewIrrigCloseModal}>
@@ -1302,10 +1356,7 @@ const Field = () => {
                 selectable={true} // Enable event selection
                 resizable={true} // Enable event resizing
                 draggable={true} // Enable event dragging
-                onSelectSlot={(slotInfo) => {
-                  setSelectedSlot(slotInfo);
-                  setShowForNew(true);
-                }}
+                onSelectSlot={handleSelectSlot}
                 onSelectEvent={(event, e) => {
                   handleEventSelect(event, event.source);
                 }}

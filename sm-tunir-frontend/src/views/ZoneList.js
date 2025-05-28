@@ -287,40 +287,44 @@ const ZoneList = ({ zonesList, Zones, Fields, state, className = "", listSoils }
             <div className={`mb-0 alert alert-${classMsg} fade ${displayMsg}`}>
                 <i class={`fa fa-${iconMsg} mx-2`}></i> {t(msgServer)}
             </div>
-            <table className="table mb-4 text-center table-bordered table-responsive-lg">
-                <thead className="bg-light">
-                    <tr>
-                        <th scope="col" className="border-0">{t('name')}</th>
-                        <th scope="col" className="border-0">{t('name_field')}</th>
-                        <th scope="col" className="border-0"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        localZoneList?.map((item, indx) => {
-                            let nameField = "";
-                            Fields.map((fieldData) => {
-                                if (fieldData.Id == item.field_id) {
-                                    nameField = fieldData.title
-                                }
-                            })
-                            return (
+            <div style={{ overflowX: 'auto' }}>
 
-                                <tr>
-                                    <td>{item.name}</td>
-                                    <td>{nameField}</td>
-                                    <td>
-                                        <ButtonGroup size="sm" className="mr-2 gap-2">
-                                            <Button onClick={() => getSingleZone(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
-                                        </ButtonGroup>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+                <table className="table mb-4 text-center table-bordered table-responsive-lg">
+                    <thead className="bg-light">
+                        <tr>
+                            <th scope="col" className="border-0">{t('name')}</th>
+                            <th scope="col" className="border-0">{t('name_field')}</th>
+                            <th scope="col" className="border-0"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            localZoneList?.map((item, indx) => {
+                                let nameField = "";
+                                Fields.map((fieldData) => {
+                                    if (fieldData.Id == item.field_id) {
+                                        nameField = fieldData.title
+                                    }
+                                })
+                                return (
+
+                                    <tr>
+                                        <td>{item.name}</td>
+                                        <td>{nameField}</td>
+                                        <td>
+                                            <ButtonGroup size="sm" className="mr-2 gap-2">
+                                                <Button onClick={() => getSingleZone(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                                <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
+                                            </ButtonGroup>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </div>
+
             {<Modal size='lg' centered show={toggle} >
                 <Modal.Header closeAriaLabel>
 
