@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from "react-bootstrap";
 import swal from 'sweetalert';
 
-import {Button, IconButton} from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { Recommend } from '@mui/icons-material';
 import SmsIcon from '@mui/icons-material/Sms';
@@ -32,9 +32,11 @@ const FieldsManagement = () => {
   const [reports, setReports] = useState([])
   const [show, setShow] = useState(false);
   const [showRecomnd, setShowRecomnd] = useState(false);
-  const [clicked,setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false)
   const [isGenerated, setIsGenerated] = useState(false)
   const [calculData, setCalculData] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleShowRecomnd = () => setShowRecomnd(true);
@@ -89,7 +91,7 @@ const FieldsManagement = () => {
   }
   const [recommendations, setRecmnd] = useState([])
   const [message, setMessage] = useState("")
-  const [userId,setUserId] = useState('')
+  const [userId, setUserId] = useState('')
   const getSingleFieldRecmnds = async (fieldId, userId) => {
     await api.get(`/recommendations/${userId}/${fieldId}`)
       .then(response => {
@@ -104,19 +106,22 @@ const FieldsManagement = () => {
       })
   }
 
-  const calculSimulation = async (fieldId,userId) => {
+
+  const calculSimulation = async (fieldId, userId) => {
     try {
-      const response = await api.post('/admin/field-sensor-calcul',{fieldId,userId});
-      const data = await response.data.data; 
+      const response = await api.post('/admin/field-sensor-calcul', { fieldId, userId });
+      const data = await response.data.data;
       if (data && data.length > 0) {
 
-      navigate(`/admin/calcul-fields/${fieldId}`,{state:{
-        calculData: data
-      }})
+        navigate(`/admin/calcul-fields/${fieldId}`, {
+          state: {
+            calculData: data
+          }
+        })
       } else {
         console.error('No data found');
       }
-      setCalculData(data); 
+      setCalculData(data);
     } catch (error) {
       console.log(error)
     }
@@ -170,11 +175,11 @@ const FieldsManagement = () => {
     } else {
       localStorage.setItem("Field", 0);
     }
-   navigate(`/Fields/${uid}`)
+    navigate(`/Fields/${uid}`)
   }
   const goToHistory = (code) => {
 
-   navigate(`/my-history/${code}`)
+    navigate(`/my-history/${code}`)
   }
 
   const getUserName = (userId) => {
@@ -215,9 +220,9 @@ const FieldsManagement = () => {
 
   }
 
-  const sendToUser = async (reportId , userId) => {
+  const sendToUser = async (reportId, userId) => {
     try {
-      const response = await api.post(`/admin/send-report-email`, { reportId , userId});
+      const response = await api.post(`/admin/send-report-email`, { reportId, userId });
       if (response.data.type === "success") {
         swal({
           icon: "success",
@@ -233,9 +238,31 @@ const FieldsManagement = () => {
 
     }
   }
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+
+  const filteredFields = fields.filter((field) => {
+    const farm = farms.find(f => f.id === field.farm_id);
+    const farmName = farm ? farm.name.toLowerCase() : "";
+    const fieldName = field.name?.toLowerCase() || "";
+
+    return (
+      farmName.includes(searchTerm.toLowerCase()) ||
+      fieldName.includes(searchTerm.toLowerCase())
+    );
+  });
+
+  const sortedFields = filteredFields.sort((a, b) => a.name.localeCompare(b.name));
+
   const indexOfLastPost = currentPage * fieldsPerPage;
   const indexOfFirstPost = indexOfLastPost - fieldsPerPage;
-  const currentFields = fields.sort((a, b) => a.name.localeCompare(b.name)).slice(indexOfFirstPost, indexOfLastPost);
+  const currentFields = sortedFields.slice(indexOfFirstPost, indexOfLastPost);
+
+
+
+
 
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
@@ -250,17 +277,25 @@ const FieldsManagement = () => {
             className="text-sm-left"
           />
         </Row>
-        <Row className="d-flex justify-content-center p-4">
-          <Col lg="3" md="12" sm="12">
-            <Button size="small" variant="contained" disabled={isGenerated} onClick={() => generateReport()} endIcon={<AddIcon />}> Generate Reports</Button>
+        <Row className="mb-3 gap-2 d-flex justify-content-between align-items-center w-100">
+          <Col lg="6" md="12">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by farm or field..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
           </Col>
-          {/* <Col lg="3" md="12" sm="12">
-            <Button size="small" variant="contained" disabled={''} onClick={''} endIcon={<AddIcon />}> Test Calcul</Button>
-
-          </Col> */}
+          <Col lg="5" md="12">
+          <div className='d-flex justify-content-end'>
+            <Button size="small" variant="contained" disabled={isGenerated} onClick={() => generateReport()} endIcon={<AddIcon />}> Generate Reports</Button>
+            </div>
+          </Col>
         </Row>
-        <Card style={{overflowX:"auto"}}>
+
+        <Card style={{ overflowX: "auto" }}>
           <table className="table mb-0 text-center table-responsive-lg table-hover table-bordered">
             <thead className="bg-light">
               <tr>
@@ -284,7 +319,7 @@ const FieldsManagement = () => {
             <tbody>
               {
 
-          currentFields && currentFields.map(field => {
+                currentFields.map(field => {
                   let croptype = "-"
                   let variety = "-"
                   let farmName = "-"
@@ -351,7 +386,7 @@ const FieldsManagement = () => {
 
                         <IconButton onClick={() => calculSimulation(field.id)}><CalculateIcon /></IconButton>
 
-                        </td>
+                      </td>
                     </tr>
                   )
                 })
@@ -362,7 +397,7 @@ const FieldsManagement = () => {
 
         </Card>
         <Row className=" py-2 justify-content-center">
-                      <Pagination usersPerPage={fieldsPerPage} totalUsers={fields.length} paginate={paginate} />
+          <Pagination usersPerPage={fieldsPerPage} totalUsers={filteredFields.length} paginate={paginate} />
 
         </Row>
       </Container>
@@ -389,13 +424,13 @@ const FieldsManagement = () => {
 
                   return (
                     <tr key={report.id}>
-                     
+
                       <td> {t('from')} {report.filename.slice(37, 47)} {t('to')} {report.filename.slice(48, 58)} </td>
                       <td>
-                           <IconButton onClick={() => handleClick(report.filename)}><DownloadIcon /></IconButton>
+                        <IconButton onClick={() => handleClick(report.filename)}><DownloadIcon /></IconButton>
                       </td>
                       <td>
-                          <IconButton onClick={() => sendToUser(report.id , report.user_id)}><SendIcon /></IconButton>
+                        <IconButton onClick={() => sendToUser(report.id, report.user_id)}><SendIcon /></IconButton>
 
                       </td>
 
@@ -419,67 +454,67 @@ const FieldsManagement = () => {
           <Modal.Title> <h5>Recommendations</h5></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-             <div style={{border:"1px solid #bbb" , padding:6,margin:8 }}>
-                <h4 className='text-center'>{t('title_recomnd')}</h4>
-                <p className='text-center'>{t('nb_recomnd')} </p>
-                <div className="d-flex justify-content-center align-items-center flex-column">
-                      <textarea value={message} onChange={(e) => setMessage(e.target.value)} name="" id="" cols="50" rows="5" style={{ outline: "none", border: "1px solid lightgray" , borderRadius:12,padding:8,margin:8 }}> </textarea>
-                      <Button className="my-2" outline onClick={() => { sendSMSToUser(getUserPhone(userId)) }}><i className='material-icons'>&#xe163;</i></Button>
-                  
-                  
-
-                </div>
-
-              </div>    
-              <Row className="d-flex justify-content-center align-items-center my-2">
-                <Button onClick={() => setClicked(!clicked)}>{t('see_all')}</Button>
-
-              </Row>
-              {
-                clicked 
-                ?
-                <table className="table mb-0 text-center table-responsive-lg table-bordered">
-                  <thead className="bg-light">
-                    <tr>
-                      <th scope="col" className="border-0">{t('Date')}</th>
-                      <th scope="col" className="border-0">{t('Message')}</th>
-                      {/* <th scope="col" className="border-0">{t('Send SmS')}</th> */}
+          <div style={{ border: "1px solid #bbb", padding: 6, margin: 8 }}>
+            <h4 className='text-center'>{t('title_recomnd')}</h4>
+            <p className='text-center'>{t('nb_recomnd')} </p>
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <textarea value={message} onChange={(e) => setMessage(e.target.value)} name="" id="" cols="50" rows="5" style={{ outline: "none", border: "1px solid lightgray", borderRadius: 12, padding: 8, margin: 8 }}> </textarea>
+              <Button className="my-2" outline onClick={() => { sendSMSToUser(getUserPhone(userId)) }}><i className='material-icons'>&#xe163;</i></Button>
 
 
-                    </tr>
-                  </thead>
-                  <tbody>
 
-                    {
+            </div>
 
-                      recommendations && recommendations.map(recomnd => {
-                        return (
-                          <tr key={recomnd.id}>
-                            <td>
-                              {new Date(recomnd.created_at).toISOString().slice(0, 10)}
-                            </td>
-                            <td>
-                              <textarea readOnly style={{ outline: "none", border: "1px solid lightgray" , borderRadius:12,padding:8,margin:8 }} name="" id="" cols="40" rows="5" >
-                                  {recomnd.message} 
-                              </textarea>
+          </div>
+          <Row className="d-flex justify-content-center align-items-center my-2">
+            <Button onClick={() => setClicked(!clicked)}>{t('see_all')}</Button>
 
-                            </td>
-                            {/* <td>
+          </Row>
+          {
+            clicked
+              ?
+              <table className="table mb-0 text-center table-responsive-lg table-bordered">
+                <thead className="bg-light">
+                  <tr>
+                    <th scope="col" className="border-0">{t('Date')}</th>
+                    <th scope="col" className="border-0">{t('Message')}</th>
+                    {/* <th scope="col" className="border-0">{t('Send SmS')}</th> */}
+
+
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {
+
+                    recommendations && recommendations.map(recomnd => {
+                      return (
+                        <tr key={recomnd.id}>
+                          <td>
+                            {new Date(recomnd.created_at).toISOString().slice(0, 10)}
+                          </td>
+                          <td>
+                            <textarea readOnly style={{ outline: "none", border: "1px solid lightgray", borderRadius: 12, padding: 8, margin: 8 }} name="" id="" cols="40" rows="5" >
+                              {recomnd.message}
+                            </textarea>
+
+                          </td>
+                          {/* <td>
                               <Button outline onClick={() => { sendSMSToUser(getUserPhone(recomnd.user_id)) }}><i className='material-icons'>&#xe163;</i></Button>
 
 
                             </td> */}
-                          </tr>
-                        )
+                        </tr>
+                      )
 
-                      })
-                    }
+                    })
+                  }
 
-                  </tbody>
-                </table>
-                :
-                null
-              }
+                </tbody>
+              </table>
+              :
+              null
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRecomnd}>
