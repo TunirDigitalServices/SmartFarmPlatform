@@ -78,7 +78,7 @@ const Field = () => {
 
   const [et0, setET0] = useState(2)
 
-  console.log(resultCalcul, "resultCalcul");
+
 
 
   useEffect(() => {
@@ -169,7 +169,7 @@ const Field = () => {
   useEffect(() => {
     localStorage.setItem('code', sensorCode)
   }, [sensorCode])
-  console.log(sensorCode);
+
 
   let role = JSON.parse(localStorage.getItem('user')).role
   let userId = location.pathname.split('/')[2]
@@ -557,7 +557,7 @@ const Field = () => {
 
 
   const handleEventSelect = (event) => {
-    console.log(event,"evv");
+ 
     
     if (event.source !== "rain") {
       const doseValue = event.title.props.children[0].props.children.split(": ")[1];
@@ -650,7 +650,7 @@ const Field = () => {
   }, [])
 
 
-  console.log(eventList, "eventList");
+ 
 
 
   useEffect(() => {
@@ -769,7 +769,7 @@ const Field = () => {
       });
     setEvents((prev) => [...prev.filter(e => e.source !== 'resultCalcul'), ...data]);
   }, [allCalcul]);
-  console.log(events, "events");
+
 
 
   const calculateLeftPosition = (value) => {

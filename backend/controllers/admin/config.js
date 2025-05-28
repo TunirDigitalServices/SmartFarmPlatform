@@ -377,6 +377,9 @@ const getCrops = async (req,res) => {
 const editCrop = async (req,res) => {
 
     const {crop_id , crop,plant_date,init,dev,mid,late,kc_init,kc_dev,kc_mid,kc_late,all_kc,crop_variety,root_min,root_max,hours,temperature,practical_fraction} = req.body
+
+  
+    
     let total = ""
     if(init && dev && mid && late) {
         total = Number(init) + Number(dev) +  Number(mid) + Number(late)

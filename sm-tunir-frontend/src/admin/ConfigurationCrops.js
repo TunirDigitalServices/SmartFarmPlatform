@@ -38,6 +38,7 @@ const ConfigurationCrops = () => {
 
     const [cropData, setCropData] = useState({
         crop: '',
+        crop_id:"",
         cropVariety: '',
         init: "",
         dev: "",
@@ -91,6 +92,7 @@ const ConfigurationCrops = () => {
     }, [])
 
     const getSingleCrop = (cropId, title) => {
+        
 
         let data = {
             crop_id: cropId,
@@ -101,23 +103,45 @@ const ConfigurationCrops = () => {
                 let dataCrops = res.data.crop
                 let date = dataCrops.plant_date
                 setSingleCrop(dataCrops)
-                setCropData({ crop: dataCrops.crop })
-                setCropData({ cropVariety: dataCrops.crop_variety })
-                setCropData({ fractionRuPratique: dataCrops.practical_fraction })
-                setCropData({ plantDate: date.slice(0, 10) })
-                setCropData({ init: dataCrops.init })
-                setCropData({ dev: dataCrops.dev })
-                setCropData({ mid: dataCrops.mid })
-                setCropData({ late: dataCrops.late })
-                setCropData({ rootMin: dataCrops.root_min })
-                setCropData({ rootMax: dataCrops.root_max })
-                setCropData({ minTemp: dataCrops.temperature })
-                setCropData({ totalHours: dataCrops.hours })
-                setCropData({ kcInit: dataCrops.kc_init })
-                setCropData({ kcDev: dataCrops.kc_dev })
-                setCropData({ kcMid: dataCrops.kc_mid })
-                setCropData({ kcLate: dataCrops.kc_late })
-                setCropData({ allKcList: dataCrops.all_kc })
+                // setCropData({ crop: dataCrops.crop })
+                // setCropData({ cropVariety: dataCrops.crop_variety })
+                // setCropData({ fractionRuPratique: dataCrops.practical_fraction })
+                // setCropData({ plantDate: date.slice(0, 10) })
+                // setCropData({ init: dataCrops.init })
+                // setCropData({ dev: dataCrops.dev })
+                // setCropData({ mid: dataCrops.mid })
+                // setCropData({ late: dataCrops.late })
+                // setCropData({ rootMin: dataCrops.root_min })
+                // setCropData({ rootMax: dataCrops.root_max })
+                // setCropData({ minTemp: dataCrops.temperature })
+                // setCropData({ totalHours: dataCrops.hours })
+                // setCropData({ kcInit: dataCrops.kc_init })
+                // setCropData({ kcDev: dataCrops.kc_dev })
+                // setCropData({ kcMid: dataCrops.kc_mid })
+                // setCropData({ kcLate: dataCrops.kc_late })
+                // setCropData({ allKcList: dataCrops.all_kc })
+                setCropData(prev => ({
+                    ...prev,
+                    crop_id:dataCrops.crop_id,
+                    crop: dataCrops.crop,
+                    cropVariety: dataCrops.crop_variety,
+                    fractionRuPratique: dataCrops.practical_fraction,
+                    plantDate: date.slice(0, 10),
+                    init: dataCrops.init,
+                    dev: dataCrops.dev,
+                    mid: dataCrops.mid,
+                    late: dataCrops.late,
+                    rootMin: dataCrops.root_min,
+                    rootMax: dataCrops.root_max,
+                    minTemp: dataCrops.temperature,
+                    totalHours: dataCrops.hours,
+                    kcInit: dataCrops.kc_init,
+                    kcDev: dataCrops.kc_dev,
+                    kcMid: dataCrops.kc_mid,
+                    kcLate: dataCrops.kc_late,
+                    allKcList: dataCrops.all_kc
+                }));
+
             }).catch(error => {
                 console.log(error)
 
@@ -128,6 +152,8 @@ const ConfigurationCrops = () => {
         }
 
     }
+    
+    
     const onFileChange = e => {
         setSelectedFile(e.target.files[0]);
     };
@@ -242,6 +268,7 @@ const ConfigurationCrops = () => {
             practical_fraction: cropData.fractionRuPratique
 
         }
+      
 
         api.post('/crops/edit-crop', data)
             .then(response => {
@@ -269,7 +296,7 @@ const ConfigurationCrops = () => {
             })
 
     }
-    console.log(cropData)
+   
 
     const handleDelete = async cropId => {
 
@@ -378,7 +405,7 @@ const ConfigurationCrops = () => {
     }, [cropData])
 
     const onChangeHandler = async (e, idx) => {
-        console.log(e)
+       
         //modifier le setResultCalculKc pour ensuite ajouter le resultCalculKc dans l'action save pour inserer un objet clé (1,2,3..) valeur (kc dans le tableau html) dans la base de données colonne kc par jour
         // setResultCalculKc(state => ([...state ,{['day'] : day ,  ['kc'] : value }]), [])
         let clone = [...cropData.allKcList];
@@ -541,6 +568,7 @@ const ConfigurationCrops = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                              
                                 {
                                     currentCrops.map(crop => {
                                         let plantDate = moment(crop.plant_date).locale('En').format('MMM Do YYYY ')
@@ -815,8 +843,8 @@ const ConfigurationCrops = () => {
                         style={{
                             display: "flex",
                             justifyContent: "flex-end",
-                            width:"100%",
-                            gap:"10px"
+                            width: "100%",
+                            gap: "10px"
 
                         }}
                     >
@@ -839,8 +867,8 @@ const ConfigurationCrops = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body>
-                    <Row className='gap-2'> 
-                        <Col lg="8" md="12" sm="12" className="border-right" >
+                    <Row className=''>
+                        <Col lg="7" md="12" sm="12"  >
 
                             <Card.Body>
                                 <Row className='gap-3'>
@@ -952,13 +980,14 @@ const ConfigurationCrops = () => {
                             </Card.Body>
                         </Col>
 
-                        <Col lg="3" md="12" sm="12" className="">
+                        <Col lg="5" md="12" sm="12" className="">
                             <h6>Kc</h6>
                             <div className='d-flex justify-content-center align-items-center'>
 
                                 <Form.Control
                                     placeholder=""
                                     className="m-1"
+
                                     value={cropData.kcInit}
                                     onChange={e => setCropData({ ...cropData, kcInit: e.target.value })}
                                 />
@@ -978,6 +1007,7 @@ const ConfigurationCrops = () => {
                                 <Form.Control
                                     placeholder=""
                                     value={cropData.kcLate}
+                                    className='px-2'
                                     onChange={e => setCropData({ ...cropData, kcLate: e.target.value })}
 
                                 />
