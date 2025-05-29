@@ -43,6 +43,7 @@ import AddCropInfo from '../views/AddCropInfo';
 import AddIrrigation from '../views/AddIrrigation';
 import FarmList from "../admin/FarmsList"
 import FieldList from "../admin/FieldsList"
+import SensorList from "../admin/SensorsList"
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -151,17 +152,14 @@ const protectedRoutes = [
     roles: ['ROLE_ADMIN'] 
 
   },
-    
-  // {
-  //   path : "/admin/user/:uid/sensors",
-  //   layout : DefaultLayout,
-  //   component : SensorsList
-  // },
-  // {
-  //   path : "/admin/user/:uid/fields",
-  //   layout : DefaultLayout,
-  //   component : FieldsList
-  // },
+  {
+    name: 'user sensor list ',
+    path : "/admin/user/:uid/sensors",
+    element: <SensorList />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+ 
   {
     name: 'admin Board',
     path : "/admin/sensors",
