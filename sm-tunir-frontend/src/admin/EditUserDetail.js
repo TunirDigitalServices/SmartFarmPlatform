@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Container, Card, CardHeader, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormInput, FormSelect, FormTextarea, ButtonGroup, Button, Progress, Modal, ModalHeader, ModalBody, BreadcrumbItem, Breadcrumb,Nav,NavItem,NavLink } from "shards-react";
+import { Container, Card, CardHeader, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormControl, FormSelect, FormLabel, ButtonGroup, Button, ProgressBar, Modal, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import PageTitle from "../components/common/PageTitle";
 import Permission from '../components/layout/Permission';
 import api from '../api/api';
 import swal from 'sweetalert';
 import countryState from '../data/gistfile.json';
-const img = require("../images/avatars/default-avatar.png")
+import avatarImg from "../assets/images/avatars/default-avatar.png"
+
 
 const EditUserDetail = () => {
 
@@ -30,15 +31,15 @@ const EditUserDetail = () => {
   const [allCountry, setAllCountry] = useState([])
   const [allStates, setAllStates] = useState([])
   const [supplierUid, setSupplierUid] = useState("");
-  const [suppliers,setSuppliers] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
 
   const [offer, setOffer] = useState('');
   const [newOffer, setNewOffer] = useState('');
-  const [newOption,setNewOption] = useState('')
-  const [option,setOption] = useState('')
+  const [newOption, setNewOption] = useState('')
+  const [option, setOption] = useState('')
 
   const [avatar, setAvatar] = useState('');
-
+const [userDescription,setUserDescription]=useState("")
 
 
   const [startDate, setStartDate] = useState('');
@@ -124,13 +125,13 @@ const EditUserDetail = () => {
 
   const getSuppliers = async () => {
     await api.get('/admin/suppliers')
-    .then(response =>{
+      .then(response => {
         let suppliersList = response.data.suppliers
         setSuppliers(suppliersList)
-    }).catch(err=>{
+      }).catch(err => {
         console.log(err)
-    })
-}
+      })
+  }
 
   // Activate Subcriptions
 
@@ -384,7 +385,7 @@ const EditUserDetail = () => {
         return "Admin"
       case "ROLE_USER":
         return "User"
-        case "ROLE_SUPPLIER":
+      case "ROLE_SUPPLIER":
         return "SUPPLIER"
       default:
         break;
@@ -403,7 +404,7 @@ const EditUserDetail = () => {
       zip_code: Zip,
       description: description,
       role: currentRole,
-      supplier_uid : supplierUid
+      supplier_uid: supplierUid
     }
     api.post('/admin/edit-profil', dataPost)
       .then(res => {
@@ -430,84 +431,78 @@ const EditUserDetail = () => {
           )
           :
 
-          <Container fluid className="main-content-container px-4">
+          <Container fluid className="main-content-container px-4 mt-3">
             {
               role === 'ROLE_SUPPLIER'
-              ?
-              <Link to='/supplier/users'> Go back</Link>
-              :
-              <Link to='/admin/users'> Go back</Link>
+                ?
+                <Link to='/supplier/users' > Go back</Link>
+                :
+                <Link to='/admin/users' className='my-3'> Go back</Link>
 
             }
-            <Nav justified pills className="bg-white">
-              <NavItem>
-                <NavLink active>
-                  {t('profile')}  
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link to={`/admin/user/${Uid}/farms`}>{t('farms')}</Link>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link to={`/admin/user/${Uid}/fields`}>{t('fields')}</Link>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link to={`/admin/user/${Uid}/sensors`}>{t('sensors')}</Link>
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <Link to={`/admin/user/${Uid}/recommendations`}>{t('recommendations')}</Link>
-                </NavLink>
-              </NavItem>
+            <Nav justified variant="pills" className="bg-white justify-content-between rounded  ">
+              <Nav.Item>
+                <Nav.Link className='m-0 w-100 text-light bg-primary' active>{t('profile')}</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link className='m-0 bg-white ' as={Link} to={`/admin/user/${Uid}/farms`}>
+                  {t('farms')}
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} className='m-0 bg-white' to={`/admin/user/${Uid}/fields`}>
+                  {t('fields')}
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} className='m-0 bg-white' to={`/admin/user/${Uid}/sensors`}>
+                  {t('sensors')}
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link as={Link} className='m-0 bg-white' to={`/admin/user/${Uid}/recommendations`}>
+                  {t('recommendations')}
+                </Nav.Link>
+              </Nav.Item>
             </Nav>
             <Row noGutters className="page-header py-4">
               <PageTitle title={`${name} ${t('profile')} `} subtitle="Overview" md="12" className="ml-sm-auto mr-sm-auto" />
             </Row>
-            <Row>
-              <Col lg="4" >
-                <Card className="mb-4 pt-3">
+            <Row className='gap-2'>
+              <Col lg="3" >
+                <Card className="mb-4 pt-3 px-3">
                   <CardHeader className="text-center">
                     <div className="mb-3 mx-auto" style={{ height: "110px" }}>
                       <img
                         className="rounded-circle h-100"
                         width="110"
-                        src={avatar == null ? img : `${process.env.REACT_APP_BASE_URL}/static/${avatar}`}
+                        src={avatar == null ? avatarImg : `${process.env.REACT_APP_BASE_URL}/static/${avatar}`}
                         alt={name}
                       />
                     </div>
                     <h4 className="mb-0"></h4>
-
-                    <Button pill outline size="sm" className="mb-2" >
-                      {t('avatar')}
-                    </Button>
-                    <Button pill outline size="sm" className="mb-2 success" >{t('upload')}</Button>
-
+                    <div className='d-flex flex-wrap justify-content-center gap-2'>
+                      <Button variant='outline-primary' size="sm" className="mb-2 rounded-pill" >
+                        {t('avatar')}
+                      </Button>
+                      <Button variant='outline-primary' size="sm" className="mb-2  rounded-pill" >{t('upload')}</Button>
+                    </div>
                     <input
 
                       multiple={false}
                       type="file"
                       hidden
                     />
-                    <ListGroup flush>
+                    <ListGroup variant='flush'>
                       <ListGroupItem className="px-4">
-                        <div className="progress-wrapper">
+                        <div className="progress-wrapper ">
                           <strong className="text-muted d-block mb-2">
                             {t('workload')}
                           </strong>
-                          <Progress
-                            className="progress-sm"
-                            value="100"
-                          >
-                            <span className="progress-value">
-                              100%
-                            </span>
-                          </Progress>
+                          <div className="d-flex align-items-center">
+                            <ProgressBar now={100} className="progress-sm flex-grow-1 rounded" />
+                            <span className="ms-2 small text-muted">100%</span>
+                          </div>
                         </div>
                       </ListGroupItem>
                       {/* <ListGroupItem className="p-4">
@@ -519,174 +514,183 @@ const EditUserDetail = () => {
                     </ListGroup>
                   </CardHeader>
                   {
-                   role === "ROLE_SUPPLIER"
-                   ?
-                   null
-                   :                    
-                  <Col lg='12'>
-                    <Card small className="mb-4 pt-2">
-                      <CardHeader className="border-bottom text-center">
-                        <h4 className="mb-4 py-4 ">{t('current_role')} : {roleType()}</h4>
-                        <h6>{t('change_role')}</h6>
-                        <FormSelect
-                          className=" "
-                          onChange={(e) => setNewRole(e.target.value)}
-                        >
-                          <option>Select Role</option>
-                          <option value="ROLE_ADMIN">Admin</option>
-                          <option value="ROLE_USER">User</option>
-                        </FormSelect>
-                        <Button onClick={() => changeRole(newRole, Uid)} title="Change role" outline size="sm" className="mt-2 success"  >Change Role</Button>
-                      </CardHeader>
-                    </Card>
-                  </Col>
+                    role === "ROLE_SUPPLIER"
+                      ?
+                      null
+                      :
+                      <Col lg='12'>
+                        <Card className="mb-4 pt-2">
+                          <CardHeader className=" text-center">
+                            <h4 className="mb-4 py-1 ">{t('current_role')} : {roleType()}</h4>
+                            <h6>{t('change_role')}</h6>
+                            <FormSelect
+                              className=" "
+                              onChange={(e) => setNewRole(e.target.value)}
+                            >
+                              <option>Select Role</option>
+                              <option value="ROLE_ADMIN">Admin</option>
+                              <option value="ROLE_USER">User</option>
+                            </FormSelect>
+                            <Button onClick={() => changeRole(newRole, Uid)} title="Change role" outline size="sm" className="mt-2 success"  >Change Role</Button>
+                          </CardHeader>
+                        </Card>
+                      </Col>
                   }
                 </Card>
               </Col>
               <Col lg="8">
                 <Card small className="mb-4">
-                  <CardHeader className="border-bottom">
-                    <h6 className="m-0"></h6>
-                  </CardHeader>
-                  <ListGroup flush>
-                    <ListGroupItem className="p-3">
-                      <Row>
-                        <Col>
-                          <Form>
-                            <Row form>
-                              {/* First Name */}
-                              <Col md="6" className="form-group">
-                                <label htmlFor="feFirstName">{t('name')} *</label>
-                                <FormInput
-                                  id="feFirstName"
-                                  placeholder={t('name')}
-                                  value={name}
-                                  onChange={(e) => setName(e.target.value)}
-                                  style={{border :'1px solid #0BAECB'}}
 
+                  <Card.Body>
+                    <ListGroup variant='flush'>
+                      <ListGroupItem className="p-3">
+                        <Row>
+                          <Col>
+                            <Form>
+                              <Row form className='gap-2 justify-content-between'>
+                                {/* First Name */}
+                                <Col md="6" className="form-group">
+                                  <label htmlFor="feFirstName">{t('name')} *</label>
+                                  <FormControl
+                                    id="feFirstName"
+                                    placeholder={t('name')}
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    style={{ border: '1px solid #0BAECB' }}
+
+                                  />
+                                </Col>
+                                {/* Email */}
+                                <Col md="5" className="form-group">
+                                  <label htmlFor="feEmail">{t('email')} *</label>
+                                  <FormControl
+                                    type="email"
+                                    id="feEmail"
+                                    placeholder={t('email')}
+                                    autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    style={{ border: '1px solid #0BAECB' }}
+
+                                  />
+                                </Col>
+                              </Row>
+                              <FormGroup>
+                                <label htmlFor="feAddress">{t('address')}</label>
+                                <FormControl
+                                  id="feAddress"
+                                  placeholder={t('address')}
+                                  value={address}
+                                  onChange={(e) => setAddress(e.target.value)}
                                 />
-                              </Col>
-                              {/* Email */}
-                              <Col md="6" className="form-group">
-                                <label htmlFor="feEmail">{t('email')} *</label>
-                                <FormInput
-                                  type="email"
-                                  id="feEmail"
-                                  placeholder={t('email')}
-                                  autoComplete="email"
-                                  value={email}
-                                  onChange={(e) => setEmail(e.target.value)}
-                                  style={{border :'1px solid #0BAECB'}}
-
-                                />
-                              </Col>
-                            </Row>
-                            <FormGroup>
-                              <label htmlFor="feAddress">{t('address')}</label>
-                              <FormInput
-                                id="feAddress"
-                                placeholder={t('address')}
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                              />
-                            </FormGroup>
-                            <Row form>
-                              {/* State */}
-                              <Col md="4" className="form-group">
-                                <label htmlFor="feInputState">{t('state')}</label>
-                                <FormSelect
-                                  placeholder={t('state')}
-                                  value={country}
-                                  // onChange={(e) => setCountry(e.target.value)}
-                                  onChange={(e) => handleCountry(e.target.value)}
-                                >
-                                  {
-                                    allCountry.map((country, i) => {
-
-                                      return (
-                                        <option>{country}</option>
-                                      )
-                                    })
-
-                                  }
-                                </FormSelect>
-                              </Col>
-                              {/* City */}
-                              <Col md="6" className="form-group">
-                                <label htmlFor="feCity">{t('city')}</label>
-                                <FormSelect
-                                  placeholder={t('city')}
-                                  value={city}
-                                  onChange={(e) => setCity(e.target.value)}
-                                >
-                                  {
-                                    allStates.map((state, i) => {
-
-                                      return (
-                                        <option>{state}</option>
-                                      )
-                                    })
-                                  }
-                                </FormSelect>
-                              </Col>
-                              {/* Zip Code */}
-                              <Col md="2" className="form-group">
-                                <label htmlFor="feZipCode">{t('zip')}</label>
-                                <FormInput
-                                  value={Zip}
-                                  onChange={(e) => setZip(e.target.value)}
-                                  id="feZipCode"
-                                  placeholder={t('zip')}
-                                />
-                              </Col>
-                            </Row>
-                            <Row form>
-                              {/* Description */}
-                              <Col md="6" className="form-group">
-                                <label htmlFor="feDescription">{t('desc')}</label>
-                                <FormTextarea id="feDescription" rows="5" />
-                              </Col>
-                              {
-                                role === "ROLE_ADMIN"
-                                ?
-                                <Col md="6">
-                                
-                                <div className='border p-4 '>
-                                  <div className='m-2'>
-                                      <i className='material-icons'>&#xe88e;</i>
-                                      You can assign this user to a Supplier Account 
-                                  </div>
+                              </FormGroup>
+                              <Row form className='mt-3 gap-2 justify-content-between'>
+                                {/* State */}
+                                <Col md="4" className="form-group">
+                                  <label htmlFor="feInputState">{t('state')}</label>
                                   <FormSelect
-                                      value={supplierUid}
-                                      onChange={(e) => setSupplierUid(e.target.value)}
+                                    placeholder={t('state')}
+                                    value={country}
+                                    // onChange={(e) => setCountry(e.target.value)}
+                                    onChange={(e) => handleCountry(e.target.value)}
+                                    style={{ height: "36px" }}
                                   >
-                                      <option value="">Select Supplier</option>
-                                      {
-                                          suppliers.map(supplier => (
-                                              <option key={supplier.uid} value={supplier.id}>
-                                                  {supplier.name}
-                                              </option>
-                                          ))
-                                      }
-                                  </FormSelect>
-                                </div>
+                                    {
+                                      allCountry.map((country, i) => {
 
-                              </Col>
-                                :
-                                  null
-                              }
-                            </Row>
-                            <Button onClick={handlSaveProfil} theme="accent" >{t('update_btn')}</Button>
-                          </Form>
-                        </Col>
-                      </Row>
-                      <hr />
-                    </ListGroupItem>
-                  </ListGroup>
+                                        return (
+                                          <option>{country}</option>
+                                        )
+                                      })
+
+                                    }
+                                  </FormSelect>
+                                </Col>
+                                {/* City */}
+                                <Col md="5" className="form-group">
+                                  <label htmlFor="feCity">{t('city')}</label>
+                                  <FormSelect
+                                    placeholder={t('city')}
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                    style={{ height: "36px" }}
+
+                                  >
+                                    {
+                                      allStates.map((state, i) => {
+
+                                        return (
+                                          <option>{state}</option>
+                                        )
+                                      })
+                                    }
+                                  </FormSelect>
+                                </Col>
+                                {/* Zip Code */}
+                                <Col md="2" className="form-group">
+                                  <label htmlFor="feZipCode">{t('zip')}</label>
+                                  <FormControl
+                                    value={Zip}
+                                    onChange={(e) => setZip(e.target.value)}
+                                    id="feZipCode"
+                                    placeholder={t('zip')}
+                                  />
+                                </Col>
+                              </Row>
+                              <Row form className='gap-2 justify-content-between'>
+                                {/* Description */}
+                                <Col md="6" className="form-group">
+                                  <Form.Label htmlFor="feDescription">{t('desc')}</Form.Label>
+                                  <Form.Control
+                                    as="textarea"
+                                    id="feDescription"
+                                    rows={5}
+                                    value={userDescription}
+                                    onChange={(e) => setUserDescription(e.target.value)}
+                                  />
+                                </Col>
+                                {
+                                  role === "ROLE_ADMIN"
+                                    ?
+                                    <Col md="5">
+
+                                      <div className='border p-4 mt-3 '>
+                                        <div className='m-2'>
+                                          <i className='material-icons'>&#xe88e;</i>
+                                          You can assign this user to a Supplier Account
+                                        </div>
+                                        <FormSelect
+                                          value={supplierUid}
+                                          onChange={(e) => setSupplierUid(e.target.value)}
+                                        >
+                                          <option value="">Select Supplier</option>
+                                          {
+                                            suppliers.map(supplier => (
+                                              <option key={supplier.uid} value={supplier.id}>
+                                                {supplier.name}
+                                              </option>
+                                            ))
+                                          }
+                                        </FormSelect>
+                                      </div>
+
+                                    </Col>
+                                    :
+                                    null
+                                }
+                              </Row>
+                              <Button onClick={handlSaveProfil} theme="accent" className='mt-2'>{t('update_btn')}</Button>
+                            </Form>
+                          </Col>
+                        </Row>
+                     
+                      </ListGroupItem>
+                    </ListGroup>
+                  </Card.Body>
                 </Card>
               </Col>
             </Row>
-            <Row>
+            <Row className='gap-2'>
 
               <Col lg="4">
                 <Card small className="mb-4 pt-3">
@@ -701,10 +705,14 @@ const EditUserDetail = () => {
                       <option value="1">{t('gratuit')}</option>
                       <option value="2">{t('payante')}</option>
                     </FormSelect>
-                    <Button onClick={() => changeOffer(newOffer, Uid)} title="Change offer" outline size="sm" className="mt-2 success"  >Change Offer</Button>
+                    <Button onClick={() => changeOffer(newOffer, Uid)} title="Change offer"
+                      variant="outline-primary "
+                      size="sm"
+                      className="mt-2">Change Offer</Button>
                   </CardHeader>
                 </Card>
-              </Col><Col lg="4">
+              </Col>
+              <Col lg="4">
                 <Card small className="mb-4 pt-3">
                   <CardHeader className="py-4 text-center">
                     <h4 className="mb-4 py-4 border-bottom">{optionType()}</h4>
@@ -722,10 +730,10 @@ const EditUserDetail = () => {
                   </CardHeader>
                 </Card>
               </Col>
-              <Col lg="4">
+              <Col lg="3">
                 <Card small className="mb-4 pt-3">
                   <CardHeader className="py-4 text-center">
-                    <h4 className="mb-4 py-4 border-bottom">{t('subs')}</h4>
+                    <h4 className="mb-4 py-4 ">{t('subs')}</h4>
                     {
                       offer == "2"
                         ?
@@ -795,7 +803,7 @@ const EditUserDetail = () => {
                 </Card>
               </Col>
               <Modal open={toggle} centered={true}>
-                <ModalHeader closeAriaLabel>
+                <Modal.Header closeAriaLabel>
                   <h6 className="m-0">{t('add_sub')}</h6>{" "}
                   <div
                     style={{
@@ -822,13 +830,13 @@ const EditUserDetail = () => {
                       <i class={`fa fa-times mx-2`}></i>
                     </Button>
                   </div>
-                </ModalHeader>
-                <ModalBody>
+                </Modal.Header>
+                <Modal.Body>
                   <Form>
                     <Row form>
                       <Col md="12" className="form-group">
                         <p style={{ margin: "0px" }}>{t('start_date')}</p>
-                        <FormInput
+                        <FormControl
                           type="datetime-local"
                           placeholder="Start Date"
                           value={startDate}
@@ -837,7 +845,7 @@ const EditUserDetail = () => {
                       </Col>
                       <Col md="12" className="form-group">
                         <p style={{ margin: "0px" }}>{t('end_date')}</p>
-                        <FormInput
+                        <FormControl
                           type="datetime-local"
                           placeholder="End Date"
                           value={endDate}
@@ -860,7 +868,7 @@ const EditUserDetail = () => {
                     </Row>
 
                   </Form>
-                </ModalBody>
+                </Modal.Body>
               </Modal>
             </Row>
 

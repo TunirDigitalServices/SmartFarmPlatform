@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import api from '../api/api'
-import { Container, Card, Row, Col, CardHeader, Nav, NavItem, NavLink, CardBody, Button, Form, FormInput, FormSelect, FormGroup } from 'shards-react'
+import { Container, Card, Row, Col, Nav, Button, Form, FormControl, FormSelect } from 'react-bootstrap'
 import PageTitle from '../components/common/PageTitle'
 import { useTranslation } from "react-i18next";
 import FieldList from '../views/FieldList'
@@ -19,7 +19,7 @@ import LeafletMap from '../views/map'
 const FieldsList = () => {
 
   const { t, i18n } = useTranslation();
-  const history = useHistory()
+
   const [toggle, setToggle] = useState(false);
   const [coords, setCoords] = useState({
     Latitude: "",
@@ -320,22 +320,11 @@ const FieldsList = () => {
     getCrops();
     getZones();
     getIrrig();
-    console.log(farms,"farrms");
-    
+    console.log(farms, "farrms");
+
   }, [farms])
 
-  const goProfile = () => {
-    history.push(`/admin/user/${Uid}`);
-    window.location.reload();
-  }
-  const goFarms = () => {
-    history.push(`/admin/user/${Uid}/farms`);
-    window.location.reload();
-  }
-  const goSensor = () => {
-    history.push(`/admin/user/${Uid}/sensors`);
-    window.location.reload();
-  }
+
 
   const handleName = (e) => {
 
@@ -768,11 +757,12 @@ const FieldsList = () => {
         return (
           <div>
             <Card small className="h-100">
-              <CardHeader className="border-bottom">
+              <Card.Header className="border-bottom ">
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "flex-start",
+                    alignItems: "center",
                     width: "auto",
                     float: "left"
                   }}
@@ -784,7 +774,8 @@ const FieldsList = () => {
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
+                    gap: "10px"
                   }}
                 >
                   <Button
@@ -804,8 +795,8 @@ const FieldsList = () => {
                     {t('cancel')}
                   </Button>
                 </div>
-              </CardHeader>
-              <CardBody className="pt-0">
+              </Card.Header>
+              <Card.Body className="pt-0">
                 <div
                   style={{
                     display: "flex",
@@ -815,10 +806,10 @@ const FieldsList = () => {
                 >
                   <Col lg="6" sm="12" md="6">
                     <Form>
-                      <Row>
-                        <Col lg='6' md="6" sm='6' className="form-group">
+                      <Row className='gap-2'>
+                        <Col lg='5' md="6" sm='6' className="form-group">
                           <p style={{ margin: "0px", textAlign: "left" }}>{t('name_field')}</p>
-                          <FormInput
+                          <FormControl
                             value={dataField.name}
                             placeholder={t('name_field')}
                             className={errors.nameError == '' ? '' : 'is-invalid'}
@@ -833,6 +824,7 @@ const FieldsList = () => {
                           <p style={{ margin: "0px", textAlign: "left" }}>{t('name_farm')}</p>
                           <FormSelect
                             value={dataField.farm_uid}
+                            style={{ height: "35px" }}
                             className={errors.farmError == '' ? '' : 'is-invalid'}
                             required
                             onChange={e => setDataField({ ...dataField, farm_uid: e.target.value, })}
@@ -847,7 +839,7 @@ const FieldsList = () => {
                       {/* <Row>
 
                         <Col lg='12' md="6" sm='6'>
-                        <FormGroup>
+                        <Form.Group>
                           <p style={{ margin: "0px",textAlign: "left" }}>{t('desc')}</p>
                           <textarea
                             value={dataField.description}
@@ -856,7 +848,7 @@ const FieldsList = () => {
                             class="form-control"
                             placeholder="Description"
                           ></textarea>
-                        </FormGroup>
+                        </Form.Group>
                         </Col>
                         </Row> */}
                     </Form>
@@ -879,7 +871,7 @@ const FieldsList = () => {
                   />
                 </Row>
 
-              </CardBody>
+              </Card.Body>
             </Card>
           </div>
         )
@@ -887,7 +879,7 @@ const FieldsList = () => {
         return (
           <div style={{ position: "relative" }}>
             <Card small className="h-100">
-              <CardHeader className="border-bottom">
+              <Card.Header className="border-bottom">
                 <div
                   style={{
                     display: "flex",
@@ -899,7 +891,8 @@ const FieldsList = () => {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "flex-end"
+                      justifyContent: "flex-end",
+                      gap: "10px"
                     }}
                   >
                     <Button
@@ -920,8 +913,8 @@ const FieldsList = () => {
                     </Button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardBody className="pt-0">
+              </Card.Header>
+              <Card.Body className="pt-0">
                 <div
                   style={{
                     display: "flex",
@@ -931,22 +924,24 @@ const FieldsList = () => {
                 >
                   <Col lg="12" sm="12" md="6">
                     <Form>
-                      <Row form>
-                        <Col lg='4' md="12" sm="12" className="form-group">
+                      <Row form className='gap-2'>
+                        <Col lg='3' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('soil_zone')}</p>
-                          <FormInput
+                          <FormControl
                             value={soilData.zoneName}
                             placeholder={t('soil_zone')}
                             required
+                            style={{ height: "35px" }}
                             onChange={e => setSoilData({ ...soilData, zoneName: e.target.value })}
 
                           />
                         </Col>
 
-                        <Col lg='4' md="12" sm="12" className="form-group">
+                        <Col lg='3' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('name_field')}</p>
                           <FormSelect
                             value={soilData.field_uid}
+                            style={{ height: "35px" }}
                             onChange={e => setSoilData({ ...soilData, field_uid: e.target.value })}
                             placeholder={t('name_field')}
                           >
@@ -957,9 +952,10 @@ const FieldsList = () => {
                           </FormSelect>
                         </Col>
 
-                        <Col lg='4' md="12" sm="12" className="form-group">
+                        <Col lg='3' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('source')}</p>
                           <FormSelect
+                            style={{ height: "35px" }}
                             value={soilData.source}
                             onChange={e => setSoilData({ ...soilData, source: e.target.value })}
                           >
@@ -968,9 +964,10 @@ const FieldsList = () => {
 
                         </Col>
 
-                        <Col lg='4' md="12" sm="12" className="form-group">
+                        <Col lg='2' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('soil_prop')}</p>
                           <FormSelect
+                            style={{ height: "35px" }}
                             onChange={evt => {
 
                               setSoilType(!isStandardSoil);
@@ -983,13 +980,14 @@ const FieldsList = () => {
                         </Col>
                         {soilTypeForm()}
                       </Row>
-                      <Row form>
+                      <Row form className='gap-2'>
                         <Col lg='4' md="12" sm="12" className="form-group">
                           <div>
                             <p style={{ margin: "0px" }}>{t('soil_type')}</p>
                             <FormSelect
                               value={soilData.soilType}
                               onChange={handleSoilPick}
+                              style={{ height: "35px" }}
                             >
                               <option value="">{t('select_soil')}</option>
                               {
@@ -1002,20 +1000,20 @@ const FieldsList = () => {
                           </div>
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('efficacité_pluie')} (%)</p>
-                            <FormInput type="number" value={soilData.effPluie} onChange={e => setSoilData({ ...soilData, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
+                            <FormControl type="number" style={{ height: "35px" }} value={soilData.effPluie} onChange={e => setSoilData({ ...soilData, effPluie: e.target.value })} id='effPluie' placeholder={t('efficacité_pluie')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>RU max (mm/m)</p>
-                            <FormInput type="number" value={soilData.RUmax} onChange={e => setSoilData({ ...soilData, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
+                            <FormControl type="number" value={soilData.RUmax} style={{ height: "35px" }} onChange={e => setSoilData({ ...soilData, RUmax: e.target.value })} id='ruMax' placeholder="RU max"
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                       </Row>
@@ -1044,7 +1042,7 @@ const FieldsList = () => {
 
                 </Row>
 
-              </CardBody>
+              </Card.Body>
             </Card>
           </div>
         )
@@ -1052,7 +1050,7 @@ const FieldsList = () => {
         return (
           <div>
             <Card small className="h-100">
-              <CardHeader className="border-bottom">
+              <Card.Header className="border-bottom">
                 <div
                   style={{
                     display: "flex",
@@ -1064,7 +1062,8 @@ const FieldsList = () => {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "flex-end"
+                      justifyContent: "flex-end",
+                      gap:"10px"
                     }}
                   >
                     <Button
@@ -1085,8 +1084,8 @@ const FieldsList = () => {
                     </Button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardBody className="pt-0">
+              </Card.Header>
+              <Card.Body className="pt-0">
                 <div
                   style={{
                     display: "flex",
@@ -1096,7 +1095,7 @@ const FieldsList = () => {
                 >
                   <Col lg="12" sm="12" md="6">
                     <Form>
-                      <Row form>
+                      <Row form className='gap-2'>
                         <Col lg='6' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('crop_zone')}</p>
                           <FormSelect
@@ -1115,7 +1114,7 @@ const FieldsList = () => {
 
                           </FormSelect>
                         </Col>
-                        <Col lg='6' md="12" sm="12" className="form-group">
+                        <Col lg='5' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('crop_field')}</p>
                           <FormSelect
                             value={cropData.field_uid}
@@ -1132,7 +1131,7 @@ const FieldsList = () => {
                           </FormSelect>
                         </Col>
                       </Row>
-                      <Row form>
+                      <Row form className='gap-2'>
                         <Col lg='6' md="12" sm="12" className="form-group">
                           <p style={{ margin: "0px" }}>{t('crop_type')}</p>
                           <FormSelect
@@ -1151,8 +1150,8 @@ const FieldsList = () => {
                             }
                           </FormSelect>
                         </Col>
-                        <Col lg="6" md="8" sm="8">
-                          <FormGroup>
+                        <Col lg="5" md="8" sm="8">
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
                             <FormSelect value={cropData.variety} onChange={handleVarietyPick} id="cropVariety">
                               <option value="">{t('crop_variety')}</option>
@@ -1167,7 +1166,7 @@ const FieldsList = () => {
                               checked
                                 ?
 
-                                <FormInput
+                                <FormControl
                                   value={cropData.variety || ""}
                                   placeholder={t('crop_variety')}
                                   id="cropVariety"
@@ -1178,75 +1177,75 @@ const FieldsList = () => {
                                 null
                             }
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                       </Row>
-                      <Row form>
+                      <Row form className='gap-2'>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('depth')} (m)</p>
-                            <FormInput type="number" value={cropData.rootDepth} onChange={e => setCropData({ ...cropData, rootDepth: e.target.value })} id='z' placeholder={t('depth')}
+                            <FormControl type="number" value={cropData.rootDepth} onChange={e => setCropData({ ...cropData, rootDepth: e.target.value })} id='z' placeholder={t('depth')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('Days')}</p>
 
-                            <FormInput type="number" value={cropData.days} id='days' onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
+                            <FormControl type="number" value={cropData.days} id='days' onChange={e => setCropData({ ...cropData, days: e.target.value })} placeholder={t('Days')} />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="12" sm="12">
-                          <FormGroup>
+                        <Col lg="3" md="12" sm="12">
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('planting_date')}</p>
-                            <FormInput type="date" value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} id='planting_date' />
+                            <FormControl type="date" value={cropData.growingDate} onChange={e => setCropData({ ...cropData, growingDate: e.target.value })} id='planting_date' />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col hidden lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('growing_season')}</p>
-                            <FormInput type="date" value={cropData.plantingDate} onChange={e => setCropData({ ...cropData, plantingDate: e.target.value })} id='days' />
+                            <FormControl type="date" value={cropData.plantingDate} onChange={e => setCropData({ ...cropData, plantingDate: e.target.value })} id='days' />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('fraction_pratique')} (%) </p>
-                            <FormInput type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')}
+                            <FormControl type="number" value={cropData.ruPratique} onChange={e => setCropData({ ...cropData, ruPratique: e.target.value })} id='ruPratique' placeholder={t('fraction_pratique')}
                             />
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('ecart_inter')} (m)</p>
-                            <FormInput type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} id='ecartInter' placeholder={t('ecart_inter')}
+                            <FormControl type="number" value={cropData.ecartInter} onChange={e => setCropData({ ...cropData, ecartInter: e.target.value })} id='ecartInter' placeholder={t('ecart_inter')}
                             />
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('ecart_intra')} (m) </p>
-                            <FormInput type="number" value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} id='ecartIntra' placeholder={t('ecart_intra')}
+                            <FormControl type="number" value={cropData.ecartIntra} onChange={e => setCropData({ ...cropData, ecartIntra: e.target.value })} id='ecartIntra' placeholder={t('ecart_intra')}
                             />
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('densité')} (plants/ha)</p>
-                            <FormInput type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} id='densité' placeholder={t('densité')}
+                            <FormControl type="number" value={cropData.density} onChange={e => setCropData({ ...cropData, density: e.target.value })} id='densité' placeholder={t('densité')}
                             />
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                       </Row>
@@ -1271,7 +1270,7 @@ const FieldsList = () => {
                   />
 
                 </Row>
-              </CardBody>
+              </Card.Body>
             </Card>
           </div>
         )
@@ -1279,7 +1278,7 @@ const FieldsList = () => {
         return (
           <div>
             <Card small className="h-100">
-              <CardHeader className="border-bottom">
+              <Card.Header className="border-bottom">
                 <div
                   style={{
                     display: "flex",
@@ -1292,7 +1291,8 @@ const FieldsList = () => {
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "flex-end"
+                      justifyContent: "flex-end",
+                      gap:"10px"
                     }}
                   >
                     <Button
@@ -1313,8 +1313,8 @@ const FieldsList = () => {
                     </Button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardBody className="pt-0">
+              </Card.Header>
+              <Card.Body className="pt-0">
                 <div
                   style={{
                     display: "flex",
@@ -1324,8 +1324,8 @@ const FieldsList = () => {
                 >
                   <Col lg="12" sm="12" md="6">
                     <Form>
-                      <Row form>
-                        <Col md="6" className="form-group">
+                      <Row form className='gap-2'>
+                        <Col md="4" className="form-group">
                           <p style={{ margin: "0px" }}>{t('irrigation_zone')}</p>
                           <FormSelect
                             value={irrigData.zone_uid}
@@ -1341,7 +1341,7 @@ const FieldsList = () => {
 
                           </FormSelect>
                         </Col>
-                        <Col md="6" className="form-group">
+                        <Col md="4" className="form-group">
                           <p style={{ margin: "0px" }}>{t('irrigation_crop')}</p>
                           <FormSelect
                             value={irrigData.crop_uid}
@@ -1363,7 +1363,7 @@ const FieldsList = () => {
                           </FormSelect>
                         </Col>
 
-                        <Col md="6" className="form-group">
+                        <Col md="3" className="form-group">
                           <p style={{ margin: "0px" }}>{t('Irrigation_system_type')}</p>
                           <FormSelect
                             value={irrigData.irrigType}
@@ -1383,39 +1383,39 @@ const FieldsList = () => {
                           </FormSelect>
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('efficience_irrigation')} (%) </p>
-                            <FormInput type="number" value={irrigData.effIrrig} onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
+                            <FormControl type="number" value={irrigData.effIrrig} onChange={e => setIrrigData({ ...irrigData, effIrrig: e.target.value })} id='effIrrig' placeholder={t('efficience_irrigation')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('nbr_ligne')}</p>
-                            <FormInput type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} id='nbr_ligne' placeholder={t('nbr_ligne')}
+                            <FormControl type='number' value={irrigData.linesNumber} onChange={e => setIrrigData({ ...irrigData, linesNumber: e.target.value })} id='nbr_ligne' placeholder={t('nbr_ligne')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
-                        <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                        <Col lg="3" md="8" sm="8">
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('debit_reseau')} (l/s) </p>
-                            <FormInput type="number" value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
+                            <FormControl type="number" value={irrigData.pumpFlow} onChange={e => setIrrigData({ ...irrigData, pumpFlow: e.target.value })} id='debitReseau' placeholder={t('debit_reseau')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         <Col lg="4" md="8" sm="8">
-                          <FormGroup>
+                          <Form.Group>
                             <p style={{ margin: "0px" }}>{t('irrigated_already')}(h) </p>
-                            <FormInput type="number" value={irrigData.irrigated_already} onChange={e => setIrrigData({ ...irrigData, irrigated_already: e.target.value })} id='debitReseau' placeholder={t('irrigated_already')}
+                            <FormControl type="number" value={irrigData.irrigated_already} onChange={e => setIrrigData({ ...irrigData, irrigated_already: e.target.value })} id='debitReseau' placeholder={t('irrigated_already')}
                             />
 
-                          </FormGroup>
+                          </Form.Group>
 
                         </Col>
                         {irrigationMethodForm()}
@@ -1441,7 +1441,7 @@ const FieldsList = () => {
                     Zones={zones}
                   />
                 </Row>
-              </CardBody>
+              </Card.Body>
             </Card>
           </div>
         )
@@ -1449,7 +1449,7 @@ const FieldsList = () => {
         return (
           <div>
             <Card small className="h-100">
-              <CardHeader className="border-bottom">
+              <Card.Header className="border-bottom">
                 <div
                   style={{
                     display: "flex",
@@ -1485,8 +1485,8 @@ const FieldsList = () => {
                     {t('cancel')}
                   </Button>
                 </div>
-              </CardHeader>
-              <CardBody className="pt-0">
+              </Card.Header>
+              <Card.Body className="pt-0">
                 <Row noGutters className="page-header py-4">
                   <PageTitle
                     sm="4"
@@ -1498,13 +1498,13 @@ const FieldsList = () => {
                 {/* <Row>
                       <Col lg="12" md="12" sm="12" className="mb-4">
                         <Card small>
-                          <CardHeader>{t('active_fields')}</CardHeader>
-                          <CardBody>
+                          <Card.Header>{t('active_fields')}</Card.Header>
+                          <Card.Body>
                             <FieldList
                               Fields={getDataFields}
                               FieldsList={farmsData}
                             />
-                          </CardBody>
+                          </Card.Body>
                         </Card>
                       </Col>
                     </Row> */}
@@ -1520,7 +1520,7 @@ const FieldsList = () => {
                       <Row>
                         <Col lg='6' md="6" sm='6' className="form-group">
                           <p style={{ margin: "0px", textAlign: "left" }}>{t('name_field')}</p>
-                          <FormInput
+                          <FormControl
                             value={dataField.name}
                             placeholder={t('name_field')}
                             className={errors.nameError == '' ? '' : 'is-invalid'}
@@ -1549,7 +1549,7 @@ const FieldsList = () => {
                       {/* <Row> */}
 
                       {/* <Col lg='12' md="6" sm='6'>
-                        <FormGroup>
+                        <Form.Group>
                           <p style={{ margin: "0px",textAlign: "left" }}>{t('desc')}</p>
                           <textarea
                             value={dataField.description}
@@ -1558,13 +1558,13 @@ const FieldsList = () => {
                             class="form-control"
                             placeholder="Description"
                           ></textarea>
-                        </FormGroup>
+                        </Form.Group>
                         </Col> */}
                       {/* </Row> */}
                     </Form>
                   </Col>
                 </div>
-              </CardBody>
+              </Card.Body>
             </Card>
           </div>
         )
@@ -1572,57 +1572,62 @@ const FieldsList = () => {
   }
   return (
     <>
-      <Container fluid className="main-content-container py-4">
-        <Nav justified pills className="bg-white">
-          <NavItem>
-            <NavLink>
-              <Link onClick={goProfile}>{t('profile')}</Link>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink>
-              <Link onClick={goFarms}>{t('farms')}</Link>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink active>
-              {t('fields')}
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink>
-              <Link onClick={goSensor}>{t('sensors')}</Link>
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <Row noGutters className="page-header py-4">
-          <PageTitle subtitle={t('fields')} md="12" className="ml-sm-auto mr-sm-auto" />
-        </Row>
-        <Row className=' d-flex justify-content-center align-items-center py-2'>
-          <Col lg='12' md='12' sm='12'>
-            <Nav tabs style={{ paddingBottom: 10 }}>
-              <NavItem>
-                <NavLink id="field" onClick={(e) => setView(e.target.id)} className={`${elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
-                  {t('field_setup')}
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink id="soil" onClick={(e) => setView(e.target.id)} className={`${elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
-                  {t('soil_info')}
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink id="crop" onClick={(e) => setView(e.target.id)} className={`${elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink id="irrig" onClick={(e) => setView(e.target.id)} className={`${elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</NavLink>
-              </NavItem>
-            </Nav>
+      <Container fluid className="main-content-container py-4 mx-2">
+        <Container >
+          <Nav justified variant="pills" className="bg-white justify-content-between rounded mx-2 ">
 
-          </Col>
+            <Nav.Item>
+              <Nav.Link as={Link} className='m-0 bg-white' to={`/admin/user/${Uid}`}>
+                {t('profile')}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className='m-0 bg-white ' as={Link} to={`/admin/user/${Uid}/farms`}>
+                {t('farms')}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className='m-0 w-100 text-light bg-primary' active >
+                {t('fields')}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link className='m-0 bg-white ' as={Link} to={`/admin/user/${Uid}/sensors`}>
+                {t('sensors')}
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Row noGutters className="page-header py-4">
+            <PageTitle subtitle={t('fields')} md="12" className="ml-sm-auto mr-sm-auto" />
+          </Row>
+          <Row className=' d-flex justify-content-center align-items-center py-2'>
+            <Col lg='12' md='12' sm='12'>
+              <Nav tabs style={{ paddingBottom: 10 }}>
+                <Nav.Item>
+                  <Nav.Link id="field" onClick={(e) => setView(e.target.id)} className={`${elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
+                    {t('field_setup')}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link id="soil" onClick={(e) => setView(e.target.id)} className={`${elemValue === "soil" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">
+                    {t('soil_info')}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link id="crop" onClick={(e) => setView(e.target.id)} className={`${elemValue === "crop" ? "bg-info rounded text-dark " : 'rounded text-dark'}`} href="#">{t('crop_info')}</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link id="irrig" onClick={(e) => setView(e.target.id)} className={`${elemValue === "irrig" ? "bg-info rounded text-dark" : 'rounded text-dark'}`} href="#">{t('Irrigation_info')}</Nav.Link>
+                </Nav.Item>
+              </Nav>
 
-        </Row>
-        {renderAddSetup()}
+            </Col>
+
+          </Row>
+
+
+          {renderAddSetup()}
+        </Container>
 
       </Container>
     </>

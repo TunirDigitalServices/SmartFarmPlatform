@@ -28,6 +28,7 @@ import CalculSimulation from "../admin/CalculSimulation"
 import CommandeManagement from "../admin/CommandeManagement"
 import AddEquipmentByAdmin from "../admin/AddEquipment"
 import Configuration from "../admin/Configuration"
+import EditUserDetail from "../admin/EditUserDetail"
 import ConfigurationCities from "../admin/ConfigurationCities"
 import ConfigCitiesWeather from "../admin/ConfigCitiesWeather"
 import ConfigurationCrops from "../admin/ConfigurationCrops"
@@ -40,7 +41,8 @@ import AddFarmField from '../views/AddFarmField';
 import SoilInfo from '../views/SoilInfo';
 import AddCropInfo from '../views/AddCropInfo';
 import AddIrrigation from '../views/AddIrrigation';
-
+import FarmList from "../admin/FarmsList"
+import FieldList from "../admin/FieldsList"
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -128,6 +130,38 @@ const protectedRoutes = [
     roles: ['ROLE_ADMIN'] 
 
   },
+  {
+    name: 'user detail',
+    path : "/admin/user/:uid",
+    element: <EditUserDetail />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'user farm list ',
+    path : "/admin/user/:uid/farms",
+    element: <FarmList />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+  {
+    name: 'user field list ',
+    path : "/admin/user/:uid/fields",
+    element: <FieldList />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+    
+  // {
+  //   path : "/admin/user/:uid/sensors",
+  //   layout : DefaultLayout,
+  //   component : SensorsList
+  // },
+  // {
+  //   path : "/admin/user/:uid/fields",
+  //   layout : DefaultLayout,
+  //   component : FieldsList
+  // },
   {
     name: 'admin Board',
     path : "/admin/sensors",
