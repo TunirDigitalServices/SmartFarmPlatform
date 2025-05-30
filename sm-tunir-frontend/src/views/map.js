@@ -223,7 +223,7 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
 
       case `/admin/user/${uid}/farms`:
-        return data.map((item, indx) => {
+        return data?.map((item, indx) => {
           let coordinates = []
           let coord = JSON.parse(item.coordinates)
           if (coord) {

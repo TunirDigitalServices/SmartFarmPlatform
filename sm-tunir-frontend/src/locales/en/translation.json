@@ -9,6 +9,7 @@
         "crop_field": "Crop Field",
         "crop_type": "Crop Type",
         "prev_type": "Interlayer Crop Type",
+        "add_zone": "Add zone",
         "growth_date": "Growth Dates",
         "gdd": "GDD to maturity",
         "edit_irrigation": "Edit Irrigation",

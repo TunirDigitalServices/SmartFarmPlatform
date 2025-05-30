@@ -302,7 +302,7 @@ const SensorsList = () => {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link  className='m-0 bg-white ' as={Link} to={`/admin/user/${Uid}/fields`}>
+            <Nav.Link className='m-0 bg-white ' as={Link} to={`/admin/user/${Uid}/fields`}>
               {t('fields')}
             </Nav.Link>
           </Nav.Item>
@@ -332,7 +332,7 @@ const SensorsList = () => {
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
-                  gap:"10px"
+                  gap: "10px"
 
                 }}
               >
@@ -362,7 +362,7 @@ const SensorsList = () => {
                   display: "flex",
                   marginTop: "20px",
                   flexWrap: "wrap",
-                  gap:"10px"
+                  gap: "10px"
                 }}
               >
                 <Col lg="6" sm="12" md="12">

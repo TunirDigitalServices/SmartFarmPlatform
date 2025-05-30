@@ -77,6 +77,7 @@
     "group_name": "Nom de Groupe",
     "farm_map": "Carte de la Ferme",
     "add_field": "Ajouter un Terrain",
+    "add_zone": "Ajouter une zone",
     "field_setup": "Configuration du terrain",
     "add_sensor": "Ajouter Capteur",
     "add_crop": "Ajouter Culture",

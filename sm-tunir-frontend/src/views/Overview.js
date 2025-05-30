@@ -452,10 +452,10 @@ const Overview = (props) => {
     window.location.reload()
   }
 
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   const prevStep = () => {
 
@@ -1812,7 +1812,7 @@ const Overview = (props) => {
     <Container fluid className="main-content-container " style={{ overflowX: 'hidden', width: '100%', maxWidth: '100%' }}
     >
       <>
-        <Modal size="lg" show={show} onHide={handleClose}>
+        {/* <Modal size="lg" show={show} onHide={handleClose}>
           <Modal.Header className="d-flex flex-column" >
             <Modal.Title>Farm Configuration</Modal.Title>
             <p style={{ textDecoration: "underline", fontSize: 12, fontWeight: "bold" }}>Each step of this form is dependent on the previous step, so please fill out the fields in the correct order to avoid errors or an incomplete submission.</p>
@@ -1849,7 +1849,7 @@ const Overview = (props) => {
                 null
             }
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </>
       {/* Page Header */}
       <Row noGutters className="page-header py-2 mb-4 d-flex justify-content-between   align-items-center border-bottom">
@@ -1877,12 +1877,24 @@ const Overview = (props) => {
 
           </Dropdown.Toggle>
           <Dropdown.Menu right style={{ zIndex: "10" }} >
-            <Link onClick={handleShow}>
-              <Dropdown.Item>
-                {t('farms')}
+         
+              <Dropdown.Item as={Link} to="/add-farm">
+                {t('add_farm')}
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/add-field">
+                {t('add_field')}
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/add-soil-info">
+                {t('add_zone')}
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/add-crop-info">
+                {t("add_crop")}
+              </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/add-irrigation">
+                {t("add_irrig")}
               </Dropdown.Item>
 
-            </Link>
+           
             <Link onClick={() => ToAddSensorPage()}>
               <Dropdown.Item>
                 {t('sensors')}
