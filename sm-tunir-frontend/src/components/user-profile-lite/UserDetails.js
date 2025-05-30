@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 import img from "../../assets/images/avatars/default-avatar.png"
 
- function UserDetails() {
+function UserDetails() {
 
   const [data, setData] = useState({ name: "", email: "", address: "", upload_file_name: "" });
   const [selectedFile, setSelectedFile] = useState(null);
@@ -113,7 +113,8 @@ import img from "../../assets/images/avatars/default-avatar.png"
         <Button pill variant="outline-primary" size="sm" className="mb-2 mt-2" onClick={() => fileRef.current.click()}>
           {t('avatar')}
         </Button>
-        {selectedFile == null ? '' : <Button pill variant="outline-primary" size="sm" className="mb-2 success" onClick={handleSubmitFile}>{t('upload')}</Button>}
+        {selectedFile == null ? '' : <Button pill variant="outline-primary" size="sm" className="mb-2 success" onClick={handleSubmitFile}>{t('upload')}
+          </Button>}
 
         <input
           ref={fileRef}
@@ -132,8 +133,8 @@ import img from "../../assets/images/avatars/default-avatar.png"
             <div className="">
               <ProgressBar now={100} className="progress-sm" />
               <span className="progress-value">
-            100%
-            </span>
+                100%
+              </span>
             </div>
           </div>
         </ListGroupItem>

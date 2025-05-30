@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Container, Card, CardHeader, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormControl, FormSelect, FormLabel, ButtonGroup, Button, ProgressBar, Modal, Nav } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
@@ -39,13 +39,26 @@ const EditUserDetail = () => {
   const [option, setOption] = useState('')
 
   const [avatar, setAvatar] = useState('');
-const [userDescription,setUserDescription]=useState("")
-
+  const [userDescription, setUserDescription] = useState("")
+  const [msgServer, setMsgServer] = useState("")
+  const [classMsg, setClassMsg] = useState("")
+  const [displayMsg, setDisplayMsg] = useState("hide")
+  const [iconMsg, setIconMsg] = useState("info")
 
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [description, setDesc] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
+
+  const fileRef = useRef();
+
+  const handleChange = async (e) => {
+    const [file] = e.target.files;
+    setSelectedFile(file)
+    //Only .png, .jpg and .jpeg format allowed!
+    //
+  };
   let role = JSON.parse(localStorage.getItem('user')).role
 
 
@@ -64,16 +77,19 @@ const [userDescription,setUserDescription]=useState("")
 
     await api.post('/admin/single-user', data)
       .then(res => {
+        console.log(res, "resz");
+
         let UserData = res.data.user
         setUser(UserData);
         setName(UserData.name);
         setEmail(UserData.email);
         setCity(UserData.city);
         setCountry(UserData.country);
+        setUserDescription(UserData.description)
         setAddress(UserData.address);
         setCurrentRole(UserData.role)
         setAvatar(UserData.upload_file_name);
-        setOffer(UserData.offer_type);
+        setNewOffer(UserData.offer_type);
         setOption(UserData.has_command)
         setSupplierUid(UserData.supplier_id)
         countryState.countries.map((item, indx) => {
@@ -90,18 +106,24 @@ const [userDescription,setUserDescription]=useState("")
       })
   }
 
-  const handleCountry = async (country) => {
-    setCountry(country);
+  const handleCountry = (selectedCountry) => {
+    setCountry(selectedCountry);
 
-    allCountry.map((item, indx) => {
-      if (item == country) {
-        countryState.countries[indx].states.map((state, i) => {
-          liststateSelectedCountry.push(state)
-        })
-      }
-    })
-    setAllStates(liststateSelectedCountry)
-  }
+    const liststateSelectedCountry = [];
+
+    // Find the full country object by name
+    const selectedCountryObj = countryState.countries.find(
+      (item) => item.country === selectedCountry
+    );
+
+    if (selectedCountryObj && selectedCountryObj.states) {
+      selectedCountryObj.states.forEach((state) => {
+        liststateSelectedCountry.push(state);
+      });
+    }
+
+    setAllStates(liststateSelectedCountry);
+  };
 
   const getSubscriptions = async () => {
 
@@ -368,6 +390,60 @@ const [userDescription,setUserDescription]=useState("")
     }
   }
 
+
+   const handleSubmitFile = async (e) => {
+      e.preventDefault();
+    const formData = new FormData();
+    formData.append(
+      "userPhoto",
+      selectedFile,
+      selectedFile.name
+    );
+    let $error = false;
+    const maxSize = 1 * 1024 * 1024; // for 1MB
+    if (selectedFile.size > maxSize) {
+      $error = true;
+      setMsgServer("ERROR - Max size 1MB")
+      setClassMsg("danger")
+      setDisplayMsg("show")
+      setIconMsg("info")
+      return false
+    }
+    if ((selectedFile.type == "image/png" || selectedFile.type == "image/jpg" || selectedFile.type == "image/jpeg") && $error == false) {
+      await api.post('/upload-avatar', formData)
+        .then(response => {
+          if (response.data.type && response.data.type == "success") {
+           console.log(response,"respon");
+           
+            user.avatar = `userPhoto-${user.id}.jpeg`;
+            // localStorage.setItem("user", JSON.stringify(user));
+
+
+            setMsgServer(response.data.message)
+            setClassMsg("success")
+            setDisplayMsg("show")
+            setIconMsg("check")
+            window.location.reload();
+          }
+          if (response.data.type && response.data.type == "danger") {
+            setMsgServer(response.data.message)
+            setClassMsg("danger")
+            setDisplayMsg("show")
+            setIconMsg("info")
+          }
+
+        }).catch(() => {
+          setMsgServer("ERROR - Upload file")
+          setClassMsg("danger")
+          setDisplayMsg("show")
+          setIconMsg("info")
+          return false
+        });
+    } else {
+      setMsgServer("ERROR - Only .png, .jpg and .jpeg format allowed!")
+      return false
+    }
+  }
   const optionType = () => {
     switch (option) {
       case "0":
@@ -402,10 +478,12 @@ const [userDescription,setUserDescription]=useState("")
       city: city,
       country: country,
       zip_code: Zip,
-      description: description,
+      description: userDescription,
       role: currentRole,
       supplier_uid: supplierUid
     }
+    console.log(dataPost, "datapost");
+
     api.post('/admin/edit-profil', dataPost)
       .then(res => {
         if (res.data.type && res.data.type == "danger") {
@@ -482,12 +560,15 @@ const [userDescription,setUserDescription]=useState("")
                     </div>
                     <h4 className="mb-0"></h4>
                     <div className='d-flex flex-wrap justify-content-center gap-2'>
-                      <Button variant='outline-primary' size="sm" className="mb-2 rounded-pill" >
+                      <Button pill variant="outline-primary" size="sm" className="mb-2 mt-2" onClick={() => fileRef.current.click()}>
                         {t('avatar')}
                       </Button>
-                      <Button variant='outline-primary' size="sm" className="mb-2  rounded-pill" >{t('upload')}</Button>
+                      {selectedFile == null ? '' : <Button pill variant="outline-primary" size="sm" className="mb-2 success" onClick={handleSubmitFile}>{t('upload')}
+                      </Button>}
                     </div>
                     <input
+                      ref={fileRef}
+                      onChange={handleChange}
 
                       multiple={false}
                       type="file"
@@ -525,9 +606,10 @@ const [userDescription,setUserDescription]=useState("")
                             <h6>{t('change_role')}</h6>
                             <FormSelect
                               className=" "
+                              value={currentRole}
                               onChange={(e) => setNewRole(e.target.value)}
                             >
-                              <option>Select Role</option>
+                              <option >Select Role</option>
                               <option value="ROLE_ADMIN">Admin</option>
                               <option value="ROLE_USER">User</option>
                             </FormSelect>
@@ -683,7 +765,7 @@ const [userDescription,setUserDescription]=useState("")
                             </Form>
                           </Col>
                         </Row>
-                     
+
                       </ListGroupItem>
                     </ListGroup>
                   </Card.Body>
@@ -699,6 +781,7 @@ const [userDescription,setUserDescription]=useState("")
                     <h6>{t('change_offer')}</h6>
                     <FormSelect
                       className="mt-4 "
+                      value={newOffer}
                       onChange={(e) => setNewOffer(e.target.value)}
                     >
                       <option>Select Offer</option>
@@ -719,7 +802,7 @@ const [userDescription,setUserDescription]=useState("")
                     <h6>{t('change_options')}</h6>
                     <FormSelect
                       className="mt-4 "
-                      value={newOption}
+                      value={option}
                       onChange={(e) => setNewOption(e.target.value)}
                     >
                       <option>Select Option</option>
