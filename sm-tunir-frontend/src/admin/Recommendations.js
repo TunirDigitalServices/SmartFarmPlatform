@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, CardHeader, CardBody, ListGroup, ListGroupItem, Row, Col, Form, FormGroup, FormInput, FormSelect, FormTextarea, ButtonGroup, Button, Progress, Modal, ModalHeader, ModalBody, BreadcrumbItem, Breadcrumb, Nav, NavItem, NavLink } from "shards-react";
+import { Container, Card, Row, Col, Form, FormControl, FormSelect, Button, Breadcrumb, Nav, NavItem, NavLink } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-import defaultAvatar from "../images/avatars/default-avatar.png"
+// import defaultAvatar from "../images/avatars/default-avatar.png"
 import { useParams } from 'react-router-dom';
 import api from '../api/api';
 import swal from 'sweetalert';
-import fieldImg from '../images/field.png'
+import fieldImg from '../assets/images/field.png'
 import { Carousel } from "react-responsive-carousel";
 
 
@@ -33,6 +33,8 @@ const Recommendations = () => {
         await api.get(url)
             .then(response => {
                 if (response.data.type === "success") {
+                    console.log(response,"red");
+                    
                     let FarmsData = response.data.farms
                     setFarms(FarmsData);
                 }
@@ -160,7 +162,7 @@ const Recommendations = () => {
             <Container className="py-4">
                 <Carousel  showIndicators={true} showThumbs={false} showArrows={true} >
                     <Card>
-                        <CardHeader className="border-bottom">
+                        <Card.Header className="border-bottom">
                             <div>
                                 <h5>
                                     Recommendation Info
@@ -168,14 +170,14 @@ const Recommendations = () => {
                                 </h5>
 
                             </div>
-                        </CardHeader>
+                        </Card.Header>
                         <Row>
                             <Col lg="8" md="12" sm="12" className="border-right" >
 
-                                <CardBody>
-                                    <FormGroup>
+                                <Card.Body>
+                                    <Form.Group>
                                         <label htmlFor="title">Title</label>
-                                        <FormInput
+                                        <FormControl
                                             value={title}
                                             onChange={(e) => setTitle(e.target.value)}
                                             id='title'
@@ -184,22 +186,22 @@ const Recommendations = () => {
 
                                         />
                                         <div className="invalid-feedback">{titleErr}</div>
-                                    </FormGroup>
-                                    <FormGroup>
+                                    </Form.Group>
+                                    <Form.Group>
                                         <label htmlFor="feDescription">{t('desc')}</label>
-                                        <FormTextarea
+                                        <Form.Control as="textarea"
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
                                             placeholder={t('desc')}
                                             id="feDescription"
                                             rows="5" />
 
-                                    </FormGroup>
-                                    <FormGroup className='m-2 px-2 d-flex justify-content-center align-items-center'>
+                                    </Form.Group>
+                                    <Form.Group className='m-2 px-2 d-flex justify-content-center align-items-center'>
                                         <Button onClick={submitRecommendation} outline theme="success" className="m-2">Save</Button>
                                         <Button outline theme="danger" className="m-2 ">Cancel</Button>
-                                    </FormGroup>
-                                </CardBody>
+                                    </Form.Group>
+                                </Card.Body>
                             </Col>
 
                             <Col lg="4" md="12" sm="12" className='d-flex justify-content-around align-items-center flex-column' >
@@ -210,7 +212,7 @@ const Recommendations = () => {
                                         src={fieldImg}
                                     />
                                 </div>
-                                <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                     <label htmlFor="field">Select Field</label>
                                     <FormSelect
                                         id='field'
@@ -226,12 +228,12 @@ const Recommendations = () => {
                                         }
 
                                     </FormSelect>
-                                </FormGroup>
+                                </Form.Group>
                             </Col>
                         </Row>
                     </Card>
                     <Card>
-                        <CardHeader className="border-bottom">
+                        <Card.Header className="border-bottom">
                             <div>
                                 <h5>
                                     Notifications Info
@@ -239,16 +241,16 @@ const Recommendations = () => {
                                 </h5>
 
                             </div>
-                        </CardHeader>
+                        </Card.Header>
                         <Row>
                             <Col lg="8" md="12" sm="12" className="border-right" >
 
-                                <CardBody>
-                                    <Row>
+                                <Card.Body>
+                                    <Row className='justify-content-between'>
                                         <Col lg='6'  md="12" sm="12">
-                                        <FormGroup>
+                                        <Form.Group>
                                             <label htmlFor="Object">Object</label>
-                                            <FormInput
+                                            <FormControl
                                                 value={object}
                                                 onChange={(e) => setObject(e.target.value)}
                                                 id='Object'
@@ -257,41 +259,42 @@ const Recommendations = () => {
 
                                             />
                                             <div className="invalid-feedback">{titleErr}</div>
-                                        </FormGroup>
+                                        </Form.Group>
                                         </Col>
-                                        <Col lg='6'  md="12" sm="12">
+                                        <Col lg='5'  md="12" sm="12">
 
-                                        <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                         <label htmlFor="type">Select Type</label>
                                         <FormSelect
                                             id='type'
+                                            style={{height:"35px"}}
                                             value={type}
                                             onChange={(e) => setType(e.target.value)}
                                         >
                                             <option value="Success">Success</option>
                                             <option value="Info">Info</option>
                                         </FormSelect>
-                                    </FormGroup>
+                                    </Form.Group>
                                         </Col>
 
                                     </Row>
                                  
-                                    <FormGroup>
+                                    <Form.Group>
                                         <label htmlFor="feDescription">{t('desc')}</label>
-                                        <FormTextarea
+                                        <Form.Control as="textarea"
                                             value={descNotif}
                                             onChange={(e) => setDescriptionNotif(e.target.value)}
                                             placeholder={t('desc')}
                                             id="feDescription"
                                             rows="5" />
 
-                                    </FormGroup>
-                                    <FormGroup className='m-2 px-2 d-flex justify-content-center align-items-center'>
+                                    </Form.Group>
+                                    <Form.Group className='m-2 px-2 d-flex justify-content-center align-items-center'>
                                         <Button onClick={addNotif} outline theme="success" className="m-2">Save</Button>
                                         <Button outline theme="danger" className="m-2 ">Cancel</Button>
-                                    </FormGroup>
+                                    </Form.Group>
                                       
-                                </CardBody>
+                                </Card.Body>
                             </Col>
 
                             <Col lg="4" md="12" sm="12" className='d-flex justify-content-around align-items-center flex-column' >
@@ -302,7 +305,7 @@ const Recommendations = () => {
                                         src={fieldImg}
                                     />
                                 </div>
-                                {/* <FormGroup className='d-flex justify-content-center align-items-center flex-column'>
+                                {/* <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
                                     <label htmlFor="field">Select Field</label>
                                     <FormSelect
                                         id='field'
@@ -317,7 +320,7 @@ const Recommendations = () => {
                                         }
 
                                     </FormSelect>
-                                </FormGroup> */}
+                                </Form.Group> */}
                             </Col>
                         </Row>
                     </Card>

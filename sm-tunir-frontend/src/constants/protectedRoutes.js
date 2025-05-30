@@ -44,6 +44,7 @@ import AddIrrigation from '../views/AddIrrigation';
 import FarmList from "../admin/FarmsList"
 import FieldList from "../admin/FieldsList"
 import SensorList from "../admin/SensorsList"
+import Recommendations from "../admin/Recommendations"
 // import Profile from '../pages/Profile'
 
 const protectedRoutes = [
@@ -124,6 +125,14 @@ const protectedRoutes = [
     roles: ['ROLE_ADMIN'] 
 
   },
+  {
+    name: 'recommendations',
+    path:"/admin/user/:uid/recommendations",
+    element: <Recommendations />,
+    roles: ['ROLE_ADMIN'] 
+
+  },
+   
   {
     name: 'admin Board',
     path : "/admin/users",

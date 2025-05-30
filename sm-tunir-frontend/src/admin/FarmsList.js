@@ -301,14 +301,15 @@ const FarmsList = () => {
           </table>
           {
             SingleFarm.map(i => (
-              <Modal centered size='lg' open={toggle} >
+              <Modal centered size='lg' show={toggle} >
                 <Modal.Header>
                   <titleClass className="m-0">{t('edit_farm')}</titleClass>
                   {""}
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "flex-end"
+                      justifyContent: "flex-end",
+                      gap:"10px"
 
                     }}
                   >
@@ -334,7 +335,7 @@ const FarmsList = () => {
                 <Modal.Body>
 
                   <Form>
-                    <Row form>
+                    <Row form className='gap-2'>
                       <Col md="6" className="form-group">
                         <p style={{ margin: "0px" }}>{t('name_farm')}</p>
                         <FormControl
@@ -347,7 +348,7 @@ const FarmsList = () => {
                         <div className="invalid-feedback">{t('no_empty')}</div>
 
                       </Col>
-                      <Col md="6" className="form-group">
+                      <Col md="5" className="form-group">
                         <p style={{ margin: "0px" }}>{t('group_name')}</p>
                         <FormControl
                           key={i.id}
