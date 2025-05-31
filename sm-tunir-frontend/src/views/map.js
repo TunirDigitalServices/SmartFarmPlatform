@@ -207,11 +207,11 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
                           >
                             <Popup>{sensor.code}</Popup>
                           </Marker>
-                          <Circle
+                          {/* <Circle
                             center={[sensor.Latitude, sensor.Longitude]}
                             radius={10}
                             pathOptions={{ color: 'blue', fillOpacity: 0.2 }}
-                          />
+                          /> */}
                         </React.Fragment>
                       ))
                     ) : (

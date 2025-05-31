@@ -165,9 +165,9 @@ const SatelliteImages = () => {
     }
   };
   const designationImageMap = {
-    ndvi: "densité de végétation",
+    ndvi: "Santé de végétation",
     ndwi: "Irrigation index",
-    moisture: "humidité",
+    moisture: "humidité a la végétation",
     swir: "stress hydrique"
   };
   const typeIcons = {

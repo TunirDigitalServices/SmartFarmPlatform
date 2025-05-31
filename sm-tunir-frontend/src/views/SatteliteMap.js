@@ -28,13 +28,13 @@ const SatteliteMap = ({
   const [polygonCoords, setPolygonCoords] = useState([]);
   const [markers, setMarkers] = useState([]);
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
-  const [zoomLevel,setZoomLevel] = useState(10);
+  const [zoomLevel, setZoomLevel] = useState(10);
   const mapRef = useRef(null);
   const imageOverlayRef = useRef(null);
   const [bounds, setBounds] = useState(null);
- console.log(selectedImageType,"  selectedImageType legend");
- console.log(selectedImageUrl,"  selectedImageType url");
- 
+  console.log(selectedImageType, "  selectedImageType legend");
+  console.log(selectedImageUrl, "  selectedImageType url");
+
 
   // Initialize map with field data
   useEffect(() => {
@@ -42,22 +42,22 @@ const SatteliteMap = ({
       const field = data[0];
       const latitude = Number(field.Latitude);
       const longitude = Number(field.Longitude);
-      
+
       // Set marker position
       setMarkers([latitude, longitude]);
       setMapCenter([latitude, longitude]);
-      
+
       // Parse and set polygon coordinates
       try {
         if (field.coordinates) {
           const parsedCoords = JSON.parse(field.coordinates);
-          
+
           // Ensure that parsedCoords is an array of objects like [{Lat: xx, Long: xx}, ...]
           if (Array.isArray(parsedCoords)) {
             const formattedCoords = parsedCoords.map(coord => {
               return [coord.Lat, coord.Long]; // Ensure [Lat, Long] format for Leaflet
             });
-            
+
             setPolygonCoords(formattedCoords); // Set the coordinates state
             calculateImageBounds(formattedCoords); // Calculate the bounds based on the coordinates
           }
@@ -67,7 +67,7 @@ const SatteliteMap = ({
       }
     }
   }, [data]);
-  
+
 
   // Handle selected image URL changes
   useEffect(() => {
@@ -76,17 +76,17 @@ const SatteliteMap = ({
       if (imageOverlayRef.current) {
         imageOverlayRef.current.remove();
       }
-      
+
       // Create new image overlay
       imageOverlayRef.current = L.imageOverlay(selectedImageUrl, bounds, {
         opacity: 1,
         interactive: true,
       }).addTo(mapRef.current);
-      
+
       // Fit bounds to show the entire image
       mapRef.current.fitBounds(bounds);
     }
-    
+
     return () => {
       if (imageOverlayRef.current) {
         imageOverlayRef.current.remove();
@@ -95,45 +95,45 @@ const SatteliteMap = ({
   }, [selectedImageUrl, bounds]);
 
   // Calculate bounds from polygon coordinates
-// Calculate bounds from polygon coordinates
-const calculateImageBounds = (coordinates) => {
-  if (!coordinates || coordinates.length === 0) return;
-  
-  const lats = coordinates.map(coord => coord[0]);
-  const lngs = coordinates.map(coord => coord[1]);
-  
-  const newBounds = [
-    [Math.min(...lats), Math.min(...lngs)], // South West corner
-    [Math.max(...lats), Math.max(...lngs)]  // North East corner
-  ];
-  
-  setBounds(newBounds); // Update the bounds state
-};
+  // Calculate bounds from polygon coordinates
+  const calculateImageBounds = (coordinates) => {
+    if (!coordinates || coordinates.length === 0) return;
 
-const getCenterFromField = () => {
-  if (data && data.length > 0) {
-    const firstField = data[0];
-    return [Number(firstField.Latitude), Number(firstField.Longitude)];
-  }
-  return null;
-};
-useEffect(() => {
-  const updateMapCenter = async () => {
-    const centerFromFields = getCenterFromField();
-    if (centerFromFields) {
-      setMapCenter(centerFromFields);
-      setZoomLevel(17)
-      mapRef.current.setView(centerFromFields, zoomLevel);
-    }
+    const lats = coordinates.map(coord => coord[0]);
+    const lngs = coordinates.map(coord => coord[1]);
+
+    const newBounds = [
+      [Math.min(...lats), Math.min(...lngs)], // South West corner
+      [Math.max(...lats), Math.max(...lngs)]  // North East corner
+    ];
+
+    setBounds(newBounds); // Update the bounds state
   };
 
-  updateMapCenter();
-}, [data, mapRef, zoomLevel]);
+  const getCenterFromField = () => {
+    if (data && data.length > 0) {
+      const firstField = data[0];
+      return [Number(firstField.Latitude), Number(firstField.Longitude)];
+    }
+    return null;
+  };
+  useEffect(() => {
+    const updateMapCenter = async () => {
+      const centerFromFields = getCenterFromField();
+      if (centerFromFields) {
+        setMapCenter(centerFromFields);
+        setZoomLevel(17)
+        mapRef.current.setView(centerFromFields, zoomLevel);
+      }
+    };
+
+    updateMapCenter();
+  }, [data, mapRef, zoomLevel]);
 
 
   return (
     <div>
-      <MapContainer 
+      <MapContainer
         ref={mapRef}
         style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300 }}
         className="markercluster-map"
@@ -146,14 +146,14 @@ useEffect(() => {
         <FeatureGroup>
           <ScaleControl position="bottomleft" />
         </FeatureGroup>
-        
+
         <TileLayer
           maxNativeZoom={18}
           maxZoom={20}
           url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
         />
-        
+
         {/* <Legend map={mapRef.current} /> */}
         {/* <LeafletGeoCoder /> */}
 
@@ -162,23 +162,24 @@ useEffect(() => {
             <Popup>My position</Popup>
           </Marker>
         )}
-        
+
         {markers.length > 0 && data && data[0] && (
           <Marker position={[markers[0], markers[1]]}>
             <Popup>{data[0].title}</Popup>
           </Marker>
         )}
-        
+
         {polygonCoords.length > 0 && (
           <Polygon
-            pathOptions={{ color: '#26A6B7', opacity: 0.2 }}
+            pathOptions={{ color: '#28A6B7', weight: 2, fillOpacity: 1 }}
+
             positions={polygonCoords}
             fillColor="none"
           />
         )}
         <Legend map={mapRef.current} selectedType={selectedImageType} />
       </MapContainer>
-      <Row style={{marginTop: "20px",marginRight: "0px",marginLeft: "0px" }}>
+      <Row style={{ marginTop: "20px", marginRight: "0px", marginLeft: "0px" }}>
         {renderImageGallery()}
       </Row>
 

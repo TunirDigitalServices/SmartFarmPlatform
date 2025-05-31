@@ -270,39 +270,42 @@ class AddField extends React.Component {
     })
   }
 
-  getDataCrops = async () => {
-    await api.get('/crop/crops').then(res => {
-      const newDataCrop = res.data;
-      this.setState({ crops: newDataCrop.farms });
-      let Crops = [];
-      this.state.crops.map(item => {
-        let fields = item.fields;
-        if (fields) {
-          fields.map(itemCrop => {
-            let crops = itemCrop.crops;
-            if (crops) {
-              crops.map(i => {
-                Crops.push({
-                  type: i.croptype_id,
-                  croptype: i.croptypes,
-                  address: i.address,
-                  Uid: i.uid,
-                  irrigations: i.irrigations,
-                  Id: i.id,
-                  field_id: i.field_id,
-                  zone_id: i.zone_id,
-                  rootDepth: i.rootDepth //tw ena zedtou
-                });
-              });
-            };
+getDataCrops = async () => {
+  try {
+    const res = await api.get('/crop/crops');
+    const newDataCrop = res.data;
+
+    const Crops = [];
+
+    newDataCrop.farms.forEach(item => {
+      const fields = item.fields || [];
+      fields.forEach(itemCrop => {
+        const crops = itemCrop.crops || [];
+        crops.forEach(i => {
+          Crops.push({
+            type: i.croptype_id,
+            croptype: i.croptypes,
+            address: i.address,
+            Uid: i.uid,
+            irrigations: i.irrigations,
+            Id: i.id,
+            field_id: i.field_id,
+            zone_id: i.zone_id,
+            rootDepth: i.rootDepth
           });
-        };
+        });
       });
+    });
 
+    this.setState({
+      crops: newDataCrop.farms,
+      cropsData: Crops
+    });
 
-      this.setState({ cropsData: Crops })
-    })
+  } catch (error) {
+    console.error('❌ Error fetching crop data:', error);
   }
+};
 
 getDataIrrigations = async () => {
   try {

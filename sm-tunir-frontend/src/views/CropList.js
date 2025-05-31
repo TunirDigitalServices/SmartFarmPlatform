@@ -9,7 +9,7 @@ import { Modal, Form, Row, Col, Button, ButtonGroup } from "react-bootstrap"
 
 
 const CropList = ({ cropsList, Crops, Fields, Zones }) => {
-    console.log(cropsList, "crops");
+
 
 
     const { t, i18n } = useTranslation();
@@ -46,6 +46,10 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
 
 
     const [SingleCrop, setSingleCrop] = useState([])
+useEffect(() => {
+  console.log("Received cropsList prop:", cropsList);
+  setLocalCrops(cropsList); // only works if cropsList truly changes
+}, [cropsList]);
 
     const getVarieties = async () => {
         try {

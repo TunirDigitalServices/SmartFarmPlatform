@@ -6,19 +6,19 @@ const legends = {
     title: 'NDVI',
     gradient: 'linear-gradient(to top, #000000, #8c8c8c, #b6ff00, #4aff00, #009600)',
     labels: ['1', '0.4', '0.2', '0', '-1'],
-    description: `plant health<br>Low = barren/dry<br>High = lush/green`,
+    description: `Low = végétation stressée<br>High = bonne santé`,
   },
   MOISTURE: {
     title: 'MOISTURE',
     gradient: 'linear-gradient(to top, #ff0000, #ffaa7f, #ffffff, #aaffff, #0000ff)',
     labels: ['0.8', '0.24', '0', '-0.24', '-0.8'],
-    description: `vegetation moisture<br>Low = dry<br>High = moist`,
+    description: `Low = besoin d'irrigation<br>High = végétation bien hydratée`,
   },
   NDWI: {
     title: 'NDWI',
     gradient: 'linear-gradient(to bottom, #004cff, #66b2ff, #ffffff, #66ff66, #00cc00)',
     labels:  ['0.8', '0.5', '0', '-0.2', '-0.8'], 
-    description: `water presence<br>Low = dry<br>High = water`,
+    description: `water presence<br>Low =  zones sèches<br>High =zones humides/irriguées`,
   },
 };
 
