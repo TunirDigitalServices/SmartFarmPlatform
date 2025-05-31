@@ -49,7 +49,7 @@ export default function DBSensor({ filteredSensors }) {
   };
 
   return (
-   <div className="row">
+    <div className="row">
       <div className="sensor border p-2 col-12 col-md-6">
         <div className="sensorHeader d-flex">
           <p>QR: {filteredSensors.code}</p>
@@ -73,8 +73,8 @@ export default function DBSensor({ filteredSensors }) {
           </div>
 
         </div>
-       
-       
+
+
         {/* <section className="ProgressBarWrapper">
             <div className="stats-dates">
             <p style={{ fontSize: 13 }}>{t('niveau')} 1</p>
@@ -108,6 +108,8 @@ export default function DBSensor({ filteredSensors }) {
             <div className="stats-dates mt-4">
               <span style={{ fontSize: 14 }}>{t('niveau')} 1</span>
               <div className="Marker-tomorrow" style={{ left: calculateLeftPosition(filteredSensors.humidityMV1) }}>
+                <div className="marker-tooltip " >{filteredSensors.humidityMV1}</div>
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
@@ -142,6 +144,8 @@ export default function DBSensor({ filteredSensors }) {
             <div className="stats-dates" style={{ margin: "-5px 0px" }}>
               <span style={{ fontSize: 14 }}>{t('niveau')} 2</span>
               <div className="Marker" style={{ left: calculateLeftPosition(filteredSensors.humidityMV2) }}>
+                <div className="marker-tooltip " >{filteredSensors.humidityMV2}</div>
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -175,6 +179,8 @@ export default function DBSensor({ filteredSensors }) {
             <div className="stats-dates">
               <span style={{ fontSize: 14 }}>{t('niveau')} 3</span>
               <div className="Marker-yesterday" style={{ left: calculateLeftPosition(filteredSensors.humidityMV3) }}>
+                <div className="marker-tooltip " >{filteredSensors.humidityMV3}</div>
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
@@ -224,7 +230,7 @@ export default function DBSensor({ filteredSensors }) {
         </div>
 
       </div>
-</div>
+    </div>
 
 
 

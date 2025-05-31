@@ -292,6 +292,11 @@ input[type="password"] {
   z-index: 2;
 
 }
+.Marker:hover,
+.Marker-tomorrow:hover,
+.Marker-yesterday:hover {
+  z-index: 10; 
+}
 
 .Marker-tomorrow {
   position: absolute;

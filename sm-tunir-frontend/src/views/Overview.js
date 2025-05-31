@@ -1877,24 +1877,24 @@ const Overview = (props) => {
 
           </Dropdown.Toggle>
           <Dropdown.Menu right style={{ zIndex: "10" }} >
-         
-              <Dropdown.Item as={Link} to="/add-farm">
-                {t('add_farm')}
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/add-field">
-                {t('add_field')}
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/add-soil-info">
-                {t('add_zone')}
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/add-crop-info">
-                {t("add_crop")}
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/add-irrigation">
-                {t("add_irrig")}
-              </Dropdown.Item>
 
-           
+            <Dropdown.Item as={Link} to="/add-farm">
+              {t('add_farm')}
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/add-field">
+              {t('add_field')}
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/add-soil-info">
+              {t('add_zone')}
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/add-crop-info">
+              {t("add_crop")}
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/add-irrigation">
+              {t("add_irrig")}
+            </Dropdown.Item>
+
+
             <Link onClick={() => ToAddSensorPage()}>
               <Dropdown.Item>
                 {t('sensors')}
@@ -1910,7 +1910,7 @@ const Overview = (props) => {
       </Row>
       {/* Small Stats Blocks */}
       <Row className="mt-4 gap-2 align-items-stretch justify-content-center">
-        <Col lg="4"  sm="12" className=" ">
+        <Col lg="4" sm="12" className=" ">
           <p style={{ margin: 0 }} className="mb-2">{t('field_stats')}</p>
           <Card small className="stats-small h-100">
             <Card.Body className="p-2 d-flex  justify-content-center align-items-center">
@@ -2010,7 +2010,7 @@ const Overview = (props) => {
           {/* <h4 style={{ marginBottom: "-15px" }}>{t('map')}</h4> */}
           <p style={{ margin: 0 }} className="mb-2">{t('map')}</p>
 
-                 <LeafletMap data={layerFarm} sensor={sensorStats} draw={configMap.draw} zoom={mapConfig.zoom} center={mapConfig.center} fromAction={mapConfig.fromAction} />
+          <LeafletMap data={layerFarm} sensor={sensorStats} draw={configMap.draw} zoom={mapConfig.zoom} center={mapConfig.center} fromAction={mapConfig.fromAction} />
 
         </Col>
       </Row>
