@@ -46,10 +46,10 @@ const CropList = ({ cropsList, Crops, Fields, Zones }) => {
 
 
     const [SingleCrop, setSingleCrop] = useState([])
-useEffect(() => {
-  console.log("Received cropsList prop:", cropsList);
-  setLocalCrops(cropsList); // only works if cropsList truly changes
-}, [cropsList]);
+    useEffect(() => {
+        console.log("Received cropsList prop:", cropsList);
+        setLocalCrops(cropsList); // only works if cropsList truly changes
+    }, [cropsList]);
 
     const getVarieties = async () => {
         try {
@@ -104,17 +104,6 @@ useEffect(() => {
 
                         }
                     })
-
-                    // setCropData({ rootDepth: CropData.rootDepth })
-                    // setCropData({ days: CropData.days })
-                    // setCropData({ plantingDate: CropData.plantingDate })
-                    // setCropData({ cropVariety: CropData.crop_variety_id })
-                    // setCropData({ density: CropData.density })
-                    // setCropData({ ecartInter: CropData.ecart_inter })
-                    // setCropData({ ecartIntra: CropData.ecart_intra })
-                    // setCropData({ ruPratique: CropData.practical_fraction })
-                    // setCropData({ growingDate: CropData.growingDate })
-                    // setCropData({ surface: CropData.surface })
                     setCropData({
                         cropVariety: CropData.crop_variety_id,
                         days: CropData.days,
@@ -298,54 +287,54 @@ useEffect(() => {
             </div>
             <div style={{ overflowX: 'auto' }}>
 
-            <table className="table mb-4 text-center table-bordered tabel-responsive-lg">
-                <thead className="bg-light">
-                    <tr>
-                        <th scope="col" className="border-0">{t('crop_type')}</th>
-                        <th scope="col" className="border-0">{t('name_field')}</th>
-                        <th scope="col" className="border-0">{t('name_zone')}</th>
-                        <th scope="col" className="border-0"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        localCrops.map((item, indx) => {
-                            let croptype = item.croptype
-                            let nameField = "";
-                            let nameZone = "";
-                            let nameCrop = ""
-                            Fields.map((fieldData) => {
-                                if (fieldData.Id == item.field_id) {
-                                    nameField = fieldData.title
-                                }
+                <table className="table mb-4 text-center table-bordered tabel-responsive-lg">
+                    <thead className="bg-light">
+                        <tr>
+                            <th scope="col" className="border-0">{t('crop_type')}</th>
+                            <th scope="col" className="border-0">{t('name_field')}</th>
+                            <th scope="col" className="border-0">{t('name_zone')}</th>
+                            <th scope="col" className="border-0"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            localCrops.map((item, indx) => {
+                                let croptype = item.croptype
+                                let nameField = "";
+                                let nameZone = "";
+                                let nameCrop = ""
+                                Fields.map((fieldData) => {
+                                    if (fieldData.Id == item.field_id) {
+                                        nameField = fieldData.title
+                                    }
 
-                            })
-                            if (croptype) {
-                                nameCrop = croptype.crop
-                            }
-                            Zones.map((zoneData) => {
-                                if (zoneData.Id == item.zone_id) {
-                                    nameZone = zoneData.name
+                                })
+                                if (croptype) {
+                                    nameCrop = croptype.crop
                                 }
+                                Zones.map((zoneData) => {
+                                    if (zoneData.Id == item.zone_id) {
+                                        nameZone = zoneData.name
+                                    }
 
+                                })
+                                return (
+                                    <tr>
+                                        <td>{nameCrop}</td>
+                                        <td>{nameField}</td>
+                                        <td>{nameZone}</td>
+                                        <td>
+                                            <ButtonGroup size="sm" className="mr-2 gap-2">
+                                                <Button onClick={() => getSingleCrop(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
+                                                <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
+                                            </ButtonGroup>
+                                        </td>
+                                    </tr>
+                                )
                             })
-                            return (
-                                <tr>
-                                    <td>{nameCrop}</td>
-                                    <td>{nameField}</td>
-                                    <td>{nameZone}</td>
-                                    <td>
-                                        <ButtonGroup size="sm" className="mr-2 gap-2">
-                                            <Button onClick={() => getSingleCrop(item.Uid)} squared variant="info"><i className="material-icons">&#xe3c9;</i></Button>
-                                            <Button onClick={() => confirmDelete(item.Uid)} squared variant="danger"><i className="material-icons">&#xe872;</i></Button>
-                                        </ButtonGroup>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+                        }
+                    </tbody>
+                </table>
             </div>
             <Modal size='lg' centered show={toggle} >
                 <Modal.Header>
@@ -434,12 +423,14 @@ useEffect(() => {
                             <Col lg="5" md="8" sm="8">
                                 <Form.Group>
                                     <p style={{ margin: "0px" }}>{t('crop_variety')}</p>
-                                    {console.log(cropData, "cropppppdaata")}
-                                    <Form.Select value={cropData.cropVariety} id="cropVariety" onChange={(e) => setCropData({ ...cropData, cropVariety: e.target.value })}>
+
+                                    <Form.Select value={cropData.cropVariety} id="cropVariety"
+                                        onChange={(e) => setCropData({ ...cropData, cropVariety: e.target.value })}>
                                         <option value="">{t('crop_type')}</option>
+
                                         {
 
-                                            allVarieties.map(variety => (
+                                            allVarieties.filter(variety => variety.crop_id == type).map(variety => (
                                                 <option value={variety.id}>{variety.crop_variety}</option>
                                             ))
                                         }
