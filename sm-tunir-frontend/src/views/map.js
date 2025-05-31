@@ -11,6 +11,7 @@ import { useRef } from "react";
 import LeafletGeoCoder from "./LeafletGeoCoder";
 import icon from "../assets/images/icons/icon.png"
 import sensor from "../assets/images/icons/sensor.png"
+import positioning from "../assets/images/positioning.png"
 const zoomDefault = 14;
 let centerDefault = [36.806389, 10.181667];
 const myIcon = new L.Icon({
@@ -26,6 +27,12 @@ const Iconsensor = new L.Icon({
   iconAnchor: [17, 45],
   popupAnchor: [3, -46]
 })
+const NoSensorIcon = new L.Icon({
+  iconUrl: positioning,
+  iconSize: [40, 42],
+  iconAnchor: [17, 45],
+  popupAnchor: [3, -46]
+});
 
 let currentPage = window.location.pathname
 
@@ -46,12 +53,29 @@ const MapViewUpdater = ({ center, zoom }) => {
 
   return null;
 };
+const FitBounds = ({ points }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (points.length > 0) {
+      const bounds = L.latLngBounds(points);
+      console.log("Fitting bounds:", bounds.toBBoxString());
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+  }, [points, map]);
+
+  return null;
+};
+
 
 
 const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, farms, fields, zoom, center, fromAction, uid }) => {
 
 
   const mapRef = useRef();
+  const sensorFieldsPoints = [];
+  const noSensorFieldsPoints = [];
+
   const [mapCenter, setMapCenter] = useState([36.806389, 10.181667]);
   const [zoomLevel, setZoomLevel] = useState(10);
   const getCenterFromSensors = () => {
@@ -64,26 +88,35 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
     }
     return null;
   };
+  const addPoints = (pointsArray, targetArray) => {
+    pointsArray.forEach((pt) => {
+      if (Array.isArray(pt) && pt.length === 2) {
+        targetArray.push(pt);
+      }
+    });
+  };
+
+
   useEffect(() => {
     const updateMapCenter = async () => {
-      console.log("updatercentermap working");
-
       const centerFromSensors = getCenterFromSensors();
-      if (centerFromSensors) {
+      if (centerFromSensors && centerFromSensors.length === 2 && centerFromSensors.every(coord => typeof coord === "number")) {
         setMapCenter(centerFromSensors);
-        setZoomLevel(16.5)
-        console.log(centerFromSensors, "centerFromSensors");
-        console.log(zoomLevel, "zoomLevel");
-        console.log(mapRef.current, " mapRef.current");
-
-
-        // mapRef.current.setView(centerFromSensors, zoomLevel);
+        setZoomLevel(16.5);
+      } else {
+        setMapCenter([36.806389, 10.181667]); // default fallback
+        setZoomLevel(10);
       }
     };
 
     updateMapCenter();
   }, [sensor, mapRef, zoomLevel]);
   const location = useGeoLocation();
+  const getCentroid = (coords) => {
+    const latSum = coords.reduce((sum, coord) => sum + coord[0], 0);
+    const lngSum = coords.reduce((sum, coord) => sum + coord[1], 0);
+    return [latSum / coords.length, lngSum / coords.length];
+  };
 
   const returnedMap = (L) => {
     switch (currentPage) {
@@ -117,82 +150,88 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
         })
       case '/':
         return data.map((item, indx) => {
-          let coordinates = []
-          let fields = item.fields;
-          let sensorsCoord = []
-          // fields?.map(field => {
-          //   let coord = JSON.parse(field?.coordinates)
-          //   if (coord) {
-          //     coord.map(co => {
-          //       coordinates.push(Object.values(co))
-          //     })
-          //   }
-          fields?.forEach(field => {
-            if (field?.coordinates) {
-              try {
-                let coord = JSON.parse(field.coordinates);
-                coord?.forEach(co => {
-                  coordinates.push(Object.values(co));
-                });
-              } catch (error) {
-                console.error("Invalid JSON in coordinates:", field.coordinates, error);
-              }
-            }
-            let sensors = field?.sensors;
-            if (sensors) {
-
-              sensors.map(sensor => {
-                if (sensor.Latitude && sensor.Longitude) {
-                  sensorsCoord.push({
-                    code: sensor.code,
-                    Latitude: sensor.Latitude,
-                    Longitude: sensor.Longitude
-                  })
-
-                }
-              })
-            }
-          })
-
+          const fields = item.fields;
 
           return (
-            <>
-              <Polygon color="#28A6B7" key={indx} positions={coordinates}>
-                {/* <MarkerObject key={indx} lat={item.Latitude} long={item.Longitude} name={item.name} id={item.id}></MarkerObject> */}
-              </Polygon>
-              {/* <Polygon key={indx} positions={coordinates}> */}
+            <React.Fragment key={indx}>
+              {fields?.map((field, fieldIdx) => {
+                let fieldCoordinates = [];
+                const sensorsCoord = [];
 
-              {/* <Marker key={indx} position={[item.Latitude, item.Longitude]}>
-                      <Popup>{item.name}</Popup>
-                    </Marker> */}
-              {/* </Polygon>  */}
-              {
+                if (field?.coordinates) {
+                  try {
+                    const coord = JSON.parse(field.coordinates);
+                    if (Array.isArray(coord) && coord.length > 0) {
+                      fieldCoordinates = coord.map(co => [co.Lat, co.Long]);
+                      if (field?.sensors && field.sensors.length > 0) {
+                        addPoints(fieldCoordinates, sensorFieldsPoints);
+                      } else {
+                        addPoints(fieldCoordinates, noSensorFieldsPoints);
+                      }
+                    }
 
-                sensor && sensor.map((sensors, indx) => {
-
-                  if (sensors.Latitude && sensors.Longitude) {
-
-                    return (
-                      <Marker icon={Iconsensor} key={indx} position={[sensors.Latitude, sensors.Longitude]}>
-                        <Popup >{sensors.code}</Popup>
-                      </Marker>
-                    )
+                  } catch (error) {
+                    console.error("Invalid field coordinates", error);
                   }
-                  // <MarkerObject key={indx} lat={sensors.Latitude} long={sensors.Longitude} name={sensors.code} id={sensors.id}></MarkerObject>
-
-
-
+                }
+                if (field?.sensors && field.sensors.length > 0) {
+                  field.sensors.forEach(sensor => {
+                    if (sensor.Latitude && sensor.Longitude) {
+                      sensorsCoord.push({
+                        code: sensor.code,
+                        Latitude: sensor.Latitude,
+                        Longitude: sensor.Longitude,
+                      });
+                      addPoints([[sensor.Latitude, sensor.Longitude]], sensorFieldsPoints);
+                    }
+                  });
                 }
 
-                )
 
-              }
-            </>
-          )
+                return (
+                  <React.Fragment key={`${indx}-${fieldIdx}`}>
+                    {fieldCoordinates.length > 2 && (
+                      <Polygon
+                        pathOptions={{ color: '#28A6B7', weight: 2, fillOpacity: 0.5 }}
+                        positions={fieldCoordinates}
+                      />
+                    )}
 
+                    {/* Show sensors if exist */}
+                    {sensorsCoord.length > 0 ? (
+                      sensorsCoord.map((sensor, sensorIdx) => (
+                        <React.Fragment key={sensorIdx}>
+                          <Marker
+                            icon={Iconsensor}
+                            position={[sensor.Latitude, sensor.Longitude]}
+                          >
+                            <Popup>{sensor.code}</Popup>
+                          </Marker>
+                          <Circle
+                            center={[sensor.Latitude, sensor.Longitude]}
+                            radius={10}
+                            pathOptions={{ color: 'blue', fillOpacity: 0.2 }}
+                          />
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      // No sensors: show one marker on field center with different icon
+                      fieldCoordinates.length > 0 && (
+                        <Marker
+                          icon={NoSensorIcon}
+                          position={getCentroid(fieldCoordinates)} // use first coordinate as marker position (or calculate centroid)
+                        >
+                          <Popup>No Sensors in this field</Popup>
+                        </Marker>
+                      )
+                    )}
+                  </React.Fragment>
+                );
+              })}
 
-
-        })
+            </React.Fragment>
+          );
+        });
       case '/Dashboard-supplier':
 
         return (
@@ -306,43 +345,35 @@ const LeafletMap = ({ type, data, _onCreated, _onEdited, draw, edit, sensor, far
 
   let userSensorCenter = getCenterFromSensors()
 
+  console.log("sensorFieldsPoints", sensorFieldsPoints);
+  console.log("noSensorFieldsPoints", noSensorFieldsPoints);
   return (
     <div>
       <MapContainer
         style={{ borderRadius: 20, boxShadow: '1px 1px 10px #bbb', height: 300, zIndex: 1 }}
         className="markercluster-map"
-        zoom={zoomLevel}
-        center={mapCenter}
+        center={mapCenter && mapCenter.length === 2 ? mapCenter : [36.806389, 10.181667]}
+        zoom={zoom || 10}
         maxZoom={18}
         whenCreated={(map) => {
-          mapRef.current = map; // Assign the map instance to mapRef.current
+          mapRef.current = map;
         }}
       >
         <FeatureGroup>
           <EditControl draw={draw} edit={edit} position="topright" onCreated={_onCreated} onEdited={_onEdited} />
         </FeatureGroup>
-        <TileLayer
 
+        <TileLayer
           url='http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
           subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
           attribution="© Google Maps"
         />
-        <LeafletGeoCoder />
-        {location.loaded && !location.error && (
-          <Marker icon={myIcon} position={[location.coordinates.lat, location.coordinates.lng]}>
-            <Popup>My position</Popup>
-          </Marker>
-        )}
-        {
-          fromAction
-            ?
-            <SetViewOnClick center={center.length !== 0 ? center : centerDefault} zoom={zoom === "" ? zoomDefault : zoom} />
-            :
-            null
-        }
 
         {returnedMap(L)}
-        <MapViewUpdater center={mapCenter} zoom={16.5} />
+
+        {/* Fit the map bounds to include all polygons and sensors */}
+        <FitBounds points={sensorFieldsPoints.length > 0 ? sensorFieldsPoints : noSensorFieldsPoints} />
+
       </MapContainer>
     </div>
   );
