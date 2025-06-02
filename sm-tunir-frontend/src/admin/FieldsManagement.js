@@ -19,7 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Pagination from '../views/Pagination';
 import { useNavigate } from 'react-router';
 
-
+import Swal from 'sweetalert2';
 const FieldsManagement = () => {
   const { t, i18n } = useTranslation();
   const [fieldsPerPage, setFieldsPerPage] = useState(10)
@@ -111,6 +111,7 @@ const FieldsManagement = () => {
     try {
       const response = await api.post('/admin/field-sensor-calcul', { fieldId, userId });
       const data = await response.data.data;
+      const feedback = response.data.feedback || [];
       if (data && data.length > 0) {
 
         navigate(`/admin/calcul-fields/${fieldId}`, {
@@ -119,11 +120,39 @@ const FieldsManagement = () => {
           }
         })
       } else {
-        console.error('No data found');
+      // No data – show detailed feedback to user
+      if (feedback.length > 0) {
+        const reasons = feedback.flatMap(f => f.reasons || []);
+        const uniqueReasons = [...new Set(reasons)]; // Remove duplicates
+
+        await Swal.fire({
+          icon: 'info',
+          title: 'Aucune simulation effectuée',
+          html: `
+            <p>Les raisons possibles :</p>
+            <ul style="text-align:left;">
+              ${uniqueReasons.map(reason => `<li>${reason}</li>`).join('')}
+            </ul>
+          `
+        });
+      } else {
+        await Swal.fire({
+          icon: 'info',
+          title: 'Aucune simulation effectuée',
+          text: 'Aucune donnée valide n’a été trouvée pour ce champ.'
+        });
       }
-      setCalculData(data);
+
+      setCalculData([]);
+    }
+
     } catch (error) {
-      console.log(error)
+     console.error(error);
+    await Swal.fire({
+      icon: 'error',
+      title: 'Erreur',
+      text: 'Une erreur est survenue lors du calcul.'
+    });
     }
 
   }
@@ -289,8 +318,8 @@ const FieldsManagement = () => {
 
           </Col>
           <Col lg="5" md="12">
-          <div className='d-flex justify-content-end'>
-            <Button size="small" variant="contained" disabled={isGenerated} onClick={() => generateReport()} endIcon={<AddIcon />}> Generate Reports</Button>
+            <div className='d-flex justify-content-end'>
+              <Button size="small" variant="contained" disabled={isGenerated} onClick={() => generateReport()} endIcon={<AddIcon />}> Generate Reports</Button>
             </div>
           </Col>
         </Row>
