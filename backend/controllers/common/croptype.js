@@ -4,7 +4,7 @@ const getCropType = async (req,res) => {
     
     try {
         const croptype = await new Croptype()
-        .query((qb) => qb.where('deleted_at' , null))
+        .query((qb) => qb.where('deleted_at' , null)).orderBy('crop', 'asc')
 
         .fetchAll({require: false})
         .then(async result => {

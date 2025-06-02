@@ -477,7 +477,7 @@ const getVarieties = async (req, res) => {
         const crops = await new CropVarieties()
             .query((qb) => {
                 qb.where('deleted_at', null)
-            })
+            }).orderBy('crop_variety', 'asc')
             .fetchAll({ require: false })
             .then(async result => {
                 if (result == null) return res.status(404).json({ type: "danger", message: "no_varieties" });

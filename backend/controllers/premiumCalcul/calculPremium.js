@@ -1474,6 +1474,13 @@ const calculBilanHydrique = async (req, res) => {
             })
             .then(async result => {
                 if (result === null) return res.status(404).json({ type: "danger", message: "no_fields" });
+
+
+
+
+
+
+
                 if (result) {
                     let data = JSON.parse(JSON.stringify(result));
                     // generatePDF(data)
@@ -1637,6 +1644,19 @@ const calculBilanHydrique = async (req, res) => {
                     }))
                     return res.status(200).json({ type: "success", message: "ok" });
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
             }).catch(err => {
                 console.log(err)
                 return res.status(500).json({ type: "danger", message: err });
@@ -1660,11 +1680,6 @@ const calculBilanHydriqueByField = async (req, res) => {
     const allowedEndTime = new Date();
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
-
-    // Uncomment this section if you want to restrict execution to Mondays only
-    // if (today.getDay() !== 1 || today !== allowedStartTime) {
-    //     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
-    // }
 
     console.log(fieldId);
     try {
@@ -1691,8 +1706,18 @@ const calculBilanHydriqueByField = async (req, res) => {
 
         let data = JSON.parse(JSON.stringify(field));
         let allCalculations = [];
+        const feedback = []
+
+
+
+
+
+
+
 
         for (let fields of [data]) {
+            let skipReasons = [];
+
             let DataCrops = fields.crops;
             let DataIrrigations = [];
             let RUmax = 0, effPluie = 0, effIrrig = 0, irrigArea = 0, ruPratique = 0;
@@ -1722,6 +1747,8 @@ const calculBilanHydriqueByField = async (req, res) => {
                         irrigArea: irrigArea,
                     });
                 }
+            } else {
+                skipReasons.push("No zones (soil data) defined for the field");
             }
 
             // Crops
@@ -1752,7 +1779,10 @@ const calculBilanHydriqueByField = async (req, res) => {
                         }
                     }
                 }
+            } else {
+                skipReasons.push("No crop data available");
             }
+
 
             // Check if sensors exist
             // if (fields.sensors && fields.sensors.length > 0) {
@@ -1761,73 +1791,35 @@ const calculBilanHydriqueByField = async (req, res) => {
             let city_id = farm ? farm.toJSON().city_id : "";
 
             let rainConfig = await getRainFromConfig(city_id);
-
-            //     for (let sensors of fields.sensors) {
-            //         let codeSensor = sensors.code;
-            //         let user_id = sensors.user_id;
-            //         if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
-            //             let key = fields.id;
-            //             let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, codeSensor);
-
-            //             dataCalcul.push({
-            //                 user_id: user_id,
-            //                 field_id: key,
-            //                 sensor_id: sensors.id,
-            //                 sensor_code: sensors.code,
-            //                 resultCalcul: resultCalcul
-            //             });
-
-            //             if (resultCalcul.length > 0) {
-            //                 const dateStart = new Date();
-            //                 const dateEnd = new Date(dateStart.getTime());
-            //                 dateEnd.setDate(dateEnd.getDate() + 7);
-            //                 inputs.push({
-            //                     ruPratique: ruPratique,
-            //                     RUmax: RUmax,
-            //                     effPluie: effPluie,
-            //                     effIrrig: effIrrig,
-            //                     irrigArea: irrigArea,
-            //                     profondeur: profondeur,
-            //                     plantingDate: plantingDate
-            //                 });
-
-            //                 let calcData = {
-            //                     user_id: user_id,
-            //                     field_id: sensors.field_id,
-            //                     sensor_id: sensors.id,
-            //                     sensor_code: codeSensor,
-            //                     start_date: dateStart,
-            //                     end_date: dateEnd,
-            //                     result: resultCalcul,
-            //                     inputs: inputs
-            //                 };
-            //                 allCalculations.push(calcData);
-            //                 await new CalculSensor()
-            //                                     .query((qb) => {
-            //                                         qb.select('*');
-            //                                         qb.where({ sensor_id: sensors.id });
-            //                                     }).fetchAll({ require: false })
-            //                                     .then(async dataFromCalcul => {
-            //                                         let r = JSON.parse(JSON.stringify(dataFromCalcul))
-            //                                         if (r.length > 0) {
-
-            //                                             await new CalculSensor({ user_id: user_id, field_id: sensors.field_id, sensor_id: sensors.id, sensor_code: codeSensor, start_date: dateStart, end_date: dateEnd, result: resultCalcul, inputs: inputs }).save()
-            //                                         }
-            //                                         if (r.length == 0) {
-            //                                             await new CalculSensor({ user_id: user_id, field_id: sensors.field_id, sensor_id: sensors.id, sensor_code: codeSensor, start_date: dateStart, end_date: dateEnd, result: resultCalcul, inputs: inputs }).save()
-            //                                         }
-            //                                     }).catch(err => {
-            //                                         console.log(err)
-            //                                         return res.status(500).json({ type: "danger", message: "error_select_calcul" });
-
-            //                                     })
-            //             }
-            //         }
-            //     }
-            // } else { 
-            // If no sensors, still perform the calculation using default or minimal values
             console.log(days);
-            if (dataCrop && Object.keys(dataCrop).length > 0 && days > 0 && latField && lonField) {
+
+            let canCalculate = true;
+            if (!dataCrop || Object.keys(dataCrop).length === 0) {
+                skipReasons.push("Missing crop type or variety data");
+                canCalculate = false;
+            }
+            if (!days || days <= 0) {
+                skipReasons.push("Invalid or missing crop duration (days)");
+                canCalculate = false;
+            }
+            if (!latField || !lonField) {
+                skipReasons.push("Missing latitude or longitude");
+                canCalculate = false;
+            }
+            if (!RUmax) {
+                skipReasons.push("Missing soil RUmax value");
+                canCalculate = false;
+            }
+
+
+
+
+
+
+
+
+
+            if (canCalculate) {
                 let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
                 if (resultCalcul.length > 0) {
                     const today = new Date();
@@ -1862,15 +1854,48 @@ const calculBilanHydriqueByField = async (req, res) => {
                     console.log(resultCalcul)
                     allCalculations.push(calcData);
                     savedCalcul = await new CalculSensor(calcData).save();
+                } else {
+                    skipReasons.push("Simulation returned no result");
                 }
             }
+
+            if (skipReasons.length > 0) {
+                feedback.push({
+                    field_id: fields.id,
+                    skipped: true,
+                    reasons: skipReasons
+                });
+            }
+
+
         }
         // }
         if (allCalculations.length > 0) {
             return res.status(201).json({ data: allCalculations, id: savedCalcul.id });
         } else {
-            return res.status(200).json({ type: "success", message: "ok" });
+            return res.status(200).json({
+                type: "info",
+                message: "No valid data found for calculation",
+                feedback
+            });
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     } catch (error) {
         console.error(error);
         return res.status(500).json({ type: "danger", message: "error_calcul" });
