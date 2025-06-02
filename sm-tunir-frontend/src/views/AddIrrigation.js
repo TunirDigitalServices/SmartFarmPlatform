@@ -9,7 +9,7 @@ import PivotForm from "../components/FieldSettingForms/pivotForm";
 import LateralForm from "../components/FieldSettingForms/lateralForm";
 import DripForm from "../components/FieldSettingForms/dripForm";
 import FarmSelect from "../components/FarmSelect";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 
 export default function AddIrrigation() {
@@ -20,11 +20,8 @@ export default function AddIrrigation() {
     const [validated, setValidated] = useState(false);
     const [listIrrigations, setListIrrigations] = useState([])
     const [listCrop, setListCrop] = useState([])
-    // const [zones, setZones] = useState([]);
     const [crops, setCrops] = useState([])
-    // const [selectedZone, setSelectedZone] = useState(null)
-
-
+    const navigate = useNavigate()
     const [irrigData, setIrrigData] = useState({
         irrigType: "",
         zone_uid: zoneId ? zoneId : "",
@@ -61,7 +58,6 @@ export default function AddIrrigation() {
             });
         }
     };
-
     const { t } = useTranslation();
 
 
@@ -166,6 +162,7 @@ export default function AddIrrigation() {
                         flowrate={irrigData.flowrate}
                         drippers={irrigData.drippers}
                         irrigated_already={irrigData.irrigated_already}
+                        drippersSpacing={irrigData.drippersSpacing}
                     />
                 );
         }
@@ -193,7 +190,7 @@ export default function AddIrrigation() {
             lines_number: irrigData.linesNumber,
             drippers_spacing: irrigData.drippersSpacing
         }
-        console.log(data, "deyta");
+
 
 
 
@@ -207,29 +204,12 @@ export default function AddIrrigation() {
                     });
                 }
                 if (res.data.type && res.data.type == "success") {
-                    setValidated(false);
-                    setIrrigData({
-                        irrigType: "",
-                        zone_uid: zoneId ? zoneId : "",
-                        crop_uid: "",
-                        flowrate: "",
-                        irrigated_already: "",
-                        name: "",
-                        pivot_shape: "",
-                        irrigation_syst: "",
-                        pivot_length: "",
-                        pivot_coord: "",
-                        full_runtime: "",
-                        lateral: "",
-                        drippers: "",
-                        effIrrig: "",
-                        pumpFlow: "",
-                        pumpType: "",
-                        linesNumber: "",
-                        drippersSpacing: ""
-                    });
+
                     swal(`${t('irrigation_added')}`, {
                         icon: "success",
+                    }).then(() => {
+                        navigate('/AddField');
+
                     });
 
                 }

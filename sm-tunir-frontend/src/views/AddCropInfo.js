@@ -239,7 +239,9 @@ export default function AddCropInfo() {
 
 
                             navigate('/add-irrigation', { state: { fieldId, fieldName, zoneId, zoneName } });
-                        }
+                        }else {
+                        navigate('/AddField');
+                    }
                     })
 
                 }

@@ -96,7 +96,9 @@ export default function AddFarmField() {
                             const fieldName = res.data.field.name;
 
                             navigate('/add-soil-info', { state: { fieldId, fieldName } });
-                        }
+                        }else {
+                        navigate('/AddField');
+                    }
                     });
 
                     getDataFields()

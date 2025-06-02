@@ -93,6 +93,8 @@ export default function SoilInfo() {
                             console.log(zoneName, "zn");
 
                             navigate('/add-crop-info', { state: { fieldId, fieldName, zoneId, zoneName } });
+                        } else {
+                            navigate('/AddField');
                         }
                     });
                     setSoilParams({
@@ -242,7 +244,7 @@ export default function SoilInfo() {
                                 <Form.Select
                                     value={soilParams.soilType}
                                     onChange={handleSoilPick}
-                                  
+
                                 >
                                     <option value="">{t('select_soil')}</option>
                                     {

@@ -112,6 +112,8 @@ export default function AddFram() {
                         const farmName = response.data.farm.name;
 
                         navigate('/add-field', { state: { farmId, farmName } });
+                    } else {
+                        navigate('/AddField');
                     }
                 });
             }
