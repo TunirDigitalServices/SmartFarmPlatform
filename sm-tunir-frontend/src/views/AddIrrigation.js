@@ -10,7 +10,8 @@ import LateralForm from "../components/FieldSettingForms/lateralForm";
 import DripForm from "../components/FieldSettingForms/dripForm";
 import FarmSelect from "../components/FarmSelect";
 import { useLocation, useNavigate } from "react-router";
-
+import Confetti from 'react-confetti';
+import { useWindowSize } from '@react-hook/window-size';
 
 export default function AddIrrigation() {
     const location = useLocation();
@@ -21,6 +22,8 @@ export default function AddIrrigation() {
     const [listIrrigations, setListIrrigations] = useState([])
     const [listCrop, setListCrop] = useState([])
     const [crops, setCrops] = useState([])
+    const [showConfetti, setShowConfetti] = useState(false);
+    const [width, height] = useWindowSize(); // to set confetti dimensions
     const navigate = useNavigate()
     const [irrigData, setIrrigData] = useState({
         irrigType: "",
@@ -204,15 +207,20 @@ export default function AddIrrigation() {
                     });
                 }
                 if (res.data.type && res.data.type == "success") {
+                    const message = zoneId
+                        ? "Félicitations, vous avez créé une ferme avec succès !"
+                        : "Félicitations, vous avez créé une irrigation avec succès !";
 
-                    swal(`${t('irrigation_added')}`, {
+                    setShowConfetti(true);
+                    swal(message, {
                         icon: "success",
                     }).then(() => {
+                        setShowConfetti(false);
                         navigate('/AddField');
-
                     });
-
                 }
+
+
             })
             .catch((err) => {
 
@@ -459,6 +467,7 @@ export default function AddIrrigation() {
 
                             {irrigationMethodForm()}
                         </Row>
+                        {showConfetti && <Confetti width={width} height={height} />}
 
                         <div className="d-flex justify-content-end">
 
