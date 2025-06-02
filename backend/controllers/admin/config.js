@@ -679,7 +679,7 @@ const getIrrigations = async (req, res) => {
         const Irrigations = await new Irrigationtype()
             .query((qb) => {
                 qb.where('deleted_at', null)
-            })
+            }).orderBy('irrigation', 'asc')
             .fetchAll({ require: false })
             .then(async result => {
                 if (result == null) return res.status(404).json({ type: "danger", message: "no_Irrigation" });
