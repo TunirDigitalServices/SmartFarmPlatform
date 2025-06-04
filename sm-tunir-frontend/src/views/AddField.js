@@ -28,6 +28,7 @@ import api from '../api/api';
 import { withTranslation } from "react-i18next";
 import FieldList from "./FieldList";
 import swal from "sweetalert";
+import FarmList from "./FarmList";
 
 class AddField extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class AddField extends React.Component {
       zoom: "",
       center: [],
       fromAction: false,
-      elemValue: "field",
+      elemValue: "farm",
       depthLevel: props.depth,
       dataChange: props.state,
       setupCardSave: false,
@@ -68,8 +69,8 @@ class AddField extends React.Component {
       farmError: "",
       description: null,
       farmName: "",
-      width:"",
-      length:"",
+      width: "",
+      length: "",
       added: false,
       source: "1",
       soilProperty: "Standard",
@@ -88,7 +89,7 @@ class AddField extends React.Component {
       RUmax: "",
       effPluie: "",
       ruPratique: "",
-      growingDate:"",
+      growingDate: "",
       effIrrig: "",
       density: "",
       ecartInter: "",
@@ -118,7 +119,7 @@ class AddField extends React.Component {
       lateral: null,
       pumpFlow: "",
       pumpType: "",
-      linesNumber:"",
+      linesNumber: "",
       draw: {
         polygon: false,
         circle: false,
@@ -170,9 +171,9 @@ class AddField extends React.Component {
 
   };
 
- 
+
   componentDidMount = async () => {
- 
+
     this.getDataFields();
     this.getDataZones();
     this.getDataCrops();
@@ -180,64 +181,7 @@ class AddField extends React.Component {
     this.getSoils();
 
   }
-   
 
-  // componentWillUnmount() {
-  //   this.setState = (state, callback) => {
-  //     return;
-  //   };
-  // }
- 
-  // componentDidUpdate(prevProps, prevState) {
-  //   // Check if zonesData has actually changed
-  //   if (prevState.zonesData !== this.state.zonesData) {
-  //     console.log('zonesData updated:', this.state.zonesData);
-  //   }
-  // }
-
-  // getDataZones = async () => {
-  //   try {
-  //     const res = await api.get('/zone/zones');
-  //     const newDataZone = res.data;
-  //     console.log("Fetched Data:", newDataZone);  // Log response from API
-
-  //     const Zones = [];
-  //     newDataZone?.farms?.forEach(farm => {
-  //       farm.fields?.forEach(field => {
-  //         field.zones?.forEach(zone => {
-  //           Zones.push({
-  //             id: zone.id,
-  //             name: zone.name,
-  //             Uid: zone.uid,
-  //             source: zone.source,
-  //             description: zone.description,
-  //             depth_data: zone.depth_data,
-  //             field_id: zone.field_id
-  //           });
-  //         });
-  //       });
-  //     });
-
-  //     console.log("Zones array before setState:", Zones);
-
-  //     // Only update if zonesData has changed
-  //     if (Zones.length > 0 && Zones !== this.state.zonesData) {
-  //       this.setState({
-  //         zones: newDataZone.farms,  // New reference for zones
-  //         zonesData: Zones,  // New reference for zonesData
-  //         stateFlag: !this.state.stateFlag  // Force re-render
-  //       }, () => {
-  //         console.log('State after setState:', this.state); // Check the updated state
-  //         this.forceUpdate();  // Force the re-render
-  //       });
-  //     } else {
-  //       console.log("No new zones to update.");
-  //     }
-
-  //   } catch (error) {
-  //     console.error('Error fetching zones:', error);
-  //   }
-  // };
 
   getDataZones = async () => {
     await api.get('/zone/zones').then(res => {
@@ -270,92 +214,92 @@ class AddField extends React.Component {
     })
   }
 
-getDataCrops = async () => {
-  try {
-    const res = await api.get('/crop/crops');
-    const newDataCrop = res.data;
+  getDataCrops = async () => {
+    try {
+      const res = await api.get('/crop/crops');
+      const newDataCrop = res.data;
 
-    const Crops = [];
+      const Crops = [];
 
-    newDataCrop.farms.forEach(item => {
-      const fields = item.fields || [];
-      fields.forEach(itemCrop => {
-        const crops = itemCrop.crops || [];
-        crops.forEach(i => {
-          Crops.push({
-            type: i.croptype_id,
-            croptype: i.croptypes,
-            address: i.address,
-            Uid: i.uid,
-            irrigations: i.irrigations,
-            Id: i.id,
-            field_id: i.field_id,
-            zone_id: i.zone_id,
-            rootDepth: i.rootDepth
+      newDataCrop.farms.forEach(item => {
+        const fields = item.fields || [];
+        fields.forEach(itemCrop => {
+          const crops = itemCrop.crops || [];
+          crops.forEach(i => {
+            Crops.push({
+              type: i.croptype_id,
+              croptype: i.croptypes,
+              address: i.address,
+              Uid: i.uid,
+              irrigations: i.irrigations,
+              Id: i.id,
+              field_id: i.field_id,
+              zone_id: i.zone_id,
+              rootDepth: i.rootDepth
+            });
           });
         });
       });
-    });
 
-    this.setState({
-      crops: newDataCrop.farms,
-      cropsData: Crops
-    });
+      this.setState({
+        crops: newDataCrop.farms,
+        cropsData: Crops
+      });
 
-  } catch (error) {
-    console.error('❌ Error fetching crop data:', error);
-  }
-};
+    } catch (error) {
+      console.error('❌ Error fetching crop data:', error);
+    }
+  };
 
-getDataIrrigations = async () => {
-  try {
-    const res = await api.get('/irrigation/irrigations');
-    const newDataIrrig = res.data;
-    console.log(newDataIrrig,"newdata");
-    
-    this.setState({ irrigation: newDataIrrig });
+  getDataIrrigations = async () => {
+    try {
+      const res = await api.get('/irrigation/irrigations');
+      const newDataIrrig = res.data;
+      console.log(newDataIrrig, "newdata");
 
-    let irrigationsData = [];
+      this.setState({ irrigation: newDataIrrig });
 
-    // Loop through the data more efficiently using nested `forEach` loops
-    newDataIrrig.forEach(item => {
-      const fields = item.fields;
-      if (fields) {
-        fields.forEach(field => {
-          const crops = field.crops;
-          if (crops) {
-            crops.forEach(crop => {
-              const irrigations = crop.irrigations;
-              if (irrigations) {
-                irrigations.forEach(irrigation => {
-                  irrigationsData.push({
-                    type: irrigation.type,
-                    address: irrigation.address,
-                    pivotShape: irrigation.pivot_shape,
-                    flowrate: irrigation.flowrate,
-                    lateral: irrigation.lateral,
-                    Uid: irrigation.uid,
-                    crop_id: irrigation.crop_id,
-                    zone_id: irrigation.zone_id,
+      let irrigationsData = [];
+
+      // Loop through the data more efficiently using nested `forEach` loops
+      newDataIrrig.forEach(item => {
+        const fields = item.fields;
+        if (fields) {
+          fields.forEach(field => {
+            const crops = field.crops;
+            if (crops) {
+              crops.forEach(crop => {
+                const irrigations = crop.irrigations;
+                if (irrigations) {
+                  irrigations.forEach(irrigation => {
+                    irrigationsData.push({
+                      type: irrigation.type,
+                      address: irrigation.address,
+                      pivotShape: irrigation.pivot_shape,
+                      flowrate: irrigation.flowrate,
+                      lateral: irrigation.lateral,
+                      Uid: irrigation.uid,
+                      crop_id: irrigation.crop_id,
+                      zone_id: irrigation.zone_id,
+                    });
                   });
-                });
-              }
-            });
-          }
-        });
-      }
-    });
+                }
+              });
+            }
+          });
+        }
+      });
 
-    console.log("Processed Irrigations Data: ", irrigationsData);
+      console.log("Processed Irrigations Data: ", irrigationsData);
 
-    // Set the processed irrigations data into state
-    this.setState({ irrigationsData });
+      // Set the processed irrigations data into state
+      this.setState({ irrigationsData });
 
-  } catch (error) {
-    console.error("Error fetching irrigations data: ", error);
-    // Optionally handle error state here
+    } catch (error) {
+      console.error("Error fetching irrigations data: ", error);
+      // Optionally handle error state here
+    }
   }
-}
 
 
   getDataFields = async () => {
@@ -1113,11 +1057,126 @@ getDataIrrigations = async () => {
 
 
   render() {
+    console.log(this.state.farms, "far");
+
     const { t } = this.props;
     const renderAddSetup = () => {
-    
+
 
       switch (this.state.elemValue) {
+        case 'farm':
+          return (
+            <div>
+              <Card small className="h-100">
+                <Card.Header className="border-bottom">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      width: "auto",
+                      float: "left"
+                    }}
+                  >
+                    <div>
+                      <h6 className="m-0" style={{ textAlign: "left" }}>{t("farm_setup")}</h6>{" "}
+                    </div>
+                  </div>
+
+                </Card.Header>
+                <Card.Body className="pt-0">
+                  <Row noGutters className="page-header py-4">
+                    <PageTitle
+                      sm="4"
+                      title={t('my_farms')}
+                      className="text-sm-left"
+                    />
+                  </Row>
+                  <Row className='px-2'>
+                    <FarmList
+                      Fields={this.getDataFields}
+                      farmList={this.state.farms}
+                    />
+
+                  </Row>
+                  {/* <div className="d-flex justify-content-center align-items-center">
+                    <Button theme="success" className="rounded-circle" style={{ height: 60, width: 60 }} onClick={this.toggle} title={`${t('add_field')}`}>
+                      <i className="material-icons" style={{ fontSize: 36, display: "flex", justifyContent: "center", alignItems: "center" }}>&#xe145;</i>
+                    </Button>
+
+                  </div> */}
+
+
+                </Card.Body>
+              </Card>
+              <Modal size='lg' centered={true} open={this.state.open} toggle={this.toggle} >
+                <Modal.Header>
+                  <Button
+                    // theme="success"
+                    className="mb-2 mr-1 btn btn-danger"
+                    onClick={this.toggle}
+
+                  >
+                    <i class={`fa fa-times mx-2`}></i>
+                  </Button>
+                </Modal.Header>
+                <Modal.Body>
+                  <Row>
+                    <Col lg='6' md="12" sm="12">
+                      <div
+                        style={{
+                          display: "flex",
+                          marginTop: "20px",
+                          flexWrap: "wrap"
+                        }}
+                      >
+                        <FieldSetupForm
+                          handleDescription={this.handleDescription}
+                          handleName={this.handleName}
+                          handleUidFarm={this.handleUidFarm}
+                          onChange={value => console.log(value)}
+                          saved={this.state.setupCardSave}
+                          nameError={this.state.nameError}
+                          farmError={this.state.farmError}
+                          name={this.state.name}
+                          farm_uid={this.state.farm_uid}
+                          description={this.state.description}
+                          length={this.state.length}
+                          width={this.state.width}
+                          handleWidth={this.handleWidth}
+                          handleLength={this.handleLength}
+                        />
+
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        <Button
+                          onClick={this.handleSubmit}
+                          theme="info"
+                          className="mb-2 mr-1 btn btn-success"
+                          style={{ fontSize: 16, color: "#fff" }}
+                        // disabled={this.state.Latitude !== "" ? false : true}
+                        >
+                          <i class={`fa fa-check mx-2`}></i>
+                          {t('save')}
+                        </Button>
+                      </div>
+                    </Col>
+
+                    {/* <Col lg="6" md="12" sm="12" className="mb-4">
+
+                          <LeafletMap _onCreated={this._onCreated} fields={this.state.farmsData} data={this.state.farms} draw={this.state.draw} edit={this.state.edit} zoom={this.state.zoom} center={this.state.center} fromAction={this.state.fromAction} />
+
+                        </Col> */}
+                  </Row>
+                </Modal.Body>
+              </Modal>
+            </div>
+          )
         case 'field':
           return (
             <div>
@@ -1234,121 +1293,121 @@ getDataIrrigations = async () => {
         case 'soil':
           return (
             <div>
-            <Card small className="h-100">
-              <Card.Header className="border-bottom">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                  }}
-                >
-                  <h6 className="m-0">{t('soil_info')}</h6>
-                 
-                </div>
-              </Card.Header>
-              <Card.Body className="pt-0">
-                    <Row noGutters className="page-header py-4">
-                     <PageTitle
-                       sm="4"
-                       title={t('my_zones')}
-                       className="text-sm-left"
-                     />
-                   </Row>
-                   <Row className="px-2">
- 
-                     <ZoneList
-                       zonesList={this.state.zonesData}
-                       Zones={this.getDataZones}
-                       Fields={this.state.farmsData}
-                       state={this.dataChange}
-                       listSoils={this.state.listSoils}
- 
-                     />
+              <Card small className="h-100">
+                <Card.Header className="border-bottom">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center"
+                    }}
+                  >
+                    <h6 className="m-0">{t('soil_info')}</h6>
 
- 
-                   </Row>
-                   {/* <div className="d-flex justify-content-center align-items-center">
+                  </div>
+                </Card.Header>
+                <Card.Body className="pt-0">
+                  <Row noGutters className="page-header py-4">
+                    <PageTitle
+                      sm="4"
+                      title={t('my_zones')}
+                      className="text-sm-left"
+                    />
+                  </Row>
+                  <Row className="px-2">
+
+                    <ZoneList
+                      zonesList={this.state.zonesData}
+                      Zones={this.getDataZones}
+                      Fields={this.state.farmsData}
+                      state={this.dataChange}
+                      listSoils={this.state.listSoils}
+
+                    />
+
+
+                  </Row>
+                  {/* <div className="d-flex justify-content-center align-items-center">
                   <Button theme="success" className="rounded-circle" style={{ height: 60, width: 60 }} onClick={this.toggle} title={`${t('add_soil')}`}>
                     <i className="material-icons" style={{ fontSize: 36, display: "flex", justifyContent: "center", alignItems: "center" }}>&#xe145;</i>
                   </Button>
 
                 </div> */}
-              </Card.Body>
-            </Card>
-                <Modal size='lg' centered={true} show={this.state.open} toggle={this.toggle} >
-                  <Modal.Header>
+                </Card.Body>
+              </Card>
+              <Modal size='lg' centered={true} show={this.state.open} toggle={this.toggle} >
+                <Modal.Header>
                   <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "flexStart",
-                            alignItems: "center"
-                          }}
-                        >
+                    style={{
+                      display: "flex",
+                      justifyContent: "flexStart",
+                      alignItems: "center"
+                    }}
+                  >
 
-                      <Button
-                          // theme="success"
-                          className="mb-2 mr-1 btn btn-danger"
-                          onClick={this.toggle}
+                    <Button
+                      // theme="success"
+                      className="mb-2 mr-1 btn btn-danger"
+                      onClick={this.toggle}
 
-                        >
-                          <i class={`fa fa-times mx-2`}></i>
-                        </Button>
-                        <Button
-                                  onClick={this.zoneHandleSubmit}
-                                  theme="info"
-                                  className="mb-2 mr-1 btn btn-success"
-                                  style={{ fontSize: 16, color: "#fff" }}
-                                  // disabled={this.state.Latitude !== "" ? false : true}
-                                >
-                                  <i class={`fa fa-check mx-2`}></i>
-                                  {t('save')}
-                          </Button>
-                    
-                          
-                        </div>
-                  </Modal.Header>
-                  <Modal.Body>
-                      <div
-                        style={{
-                          display: "flex",
-                          marginTop: "20px",
-                          flexWrap: "wrap"
-                        }}
-                      >
-                        <FieldSoilForm
-                          handleZoneName={this.handleZoneName}
-                          handleSource={this.handleSource}
-                          handleDepth={this.handleDepth}
-                          handleSoilProprety={this.handleSoilProprety}
-                          handleUidField={this.handleUidField}
-                          handleUidZone={this.handleUidZone}
-                          source={this.state.source}
-                          zones={this.state.zonesData}
-                          ZoneFunction={this.getDataZones}
-                          fields={this.state.farmsData}
-                          onChange={value => console.log(value)}
-                          saved={this.state.soilCardSave}
-                          nameError={this.state.nameError}
-                          modal={false}
-                          zoneName={this.state.zoneName}
-                          listSoils={this.state.listSoils}
-                          // effIrrig={this.state.effIrrig}
-                          effPluie={this.state.effPluie}
-                          ruPratique={this.state.ruPratique}
-                          RUmax={this.state.RUmax}
-                          irrigArea={this.state.irrigArea}
-                          // handleEffIrrig={this.handleEffIrrig}
-                          handleEffRain={this.handleEffRain}
-                          handleIrrigArea={this.handleIrrigArea}
-                          handleRuPractical={this.handleRuPractical}
-                          handleRuMax={this.handleRuMax}
-                        />
-                      </div>
-                          
-                  </Modal.Body>
-                </Modal>
-          </div>
+                    >
+                      <i class={`fa fa-times mx-2`}></i>
+                    </Button>
+                    <Button
+                      onClick={this.zoneHandleSubmit}
+                      theme="info"
+                      className="mb-2 mr-1 btn btn-success"
+                      style={{ fontSize: 16, color: "#fff" }}
+                    // disabled={this.state.Latitude !== "" ? false : true}
+                    >
+                      <i class={`fa fa-check mx-2`}></i>
+                      {t('save')}
+                    </Button>
+
+
+                  </div>
+                </Modal.Header>
+                <Modal.Body>
+                  <div
+                    style={{
+                      display: "flex",
+                      marginTop: "20px",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <FieldSoilForm
+                      handleZoneName={this.handleZoneName}
+                      handleSource={this.handleSource}
+                      handleDepth={this.handleDepth}
+                      handleSoilProprety={this.handleSoilProprety}
+                      handleUidField={this.handleUidField}
+                      handleUidZone={this.handleUidZone}
+                      source={this.state.source}
+                      zones={this.state.zonesData}
+                      ZoneFunction={this.getDataZones}
+                      fields={this.state.farmsData}
+                      onChange={value => console.log(value)}
+                      saved={this.state.soilCardSave}
+                      nameError={this.state.nameError}
+                      modal={false}
+                      zoneName={this.state.zoneName}
+                      listSoils={this.state.listSoils}
+                      // effIrrig={this.state.effIrrig}
+                      effPluie={this.state.effPluie}
+                      ruPratique={this.state.ruPratique}
+                      RUmax={this.state.RUmax}
+                      irrigArea={this.state.irrigArea}
+                      // handleEffIrrig={this.handleEffIrrig}
+                      handleEffRain={this.handleEffRain}
+                      handleIrrigArea={this.handleIrrigArea}
+                      handleRuPractical={this.handleRuPractical}
+                      handleRuMax={this.handleRuMax}
+                    />
+                  </div>
+
+                </Modal.Body>
+              </Modal>
+            </div>
           )
         case 'crop':
           return (
@@ -1706,6 +1765,11 @@ getDataIrrigations = async () => {
             <Row className=' d-flex justify-content-center align-items-center py-2'>
               <Col lg='12' md='12' sm='12'>
                 <Nav tabs style={{ paddingBottom: 10 }}>
+                  <NavItem>
+                    <NavLink id="farm" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "farm" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
+                      {t('farm_setup')}
+                    </NavLink>
+                  </NavItem>
                   <NavItem>
                     <NavLink id="field" onClick={(e) => this.setState({ elemValue: e.target.id })} className={`${this.state.elemValue === "field" ? "bg-info rounded text-dark " : 'rounded text-dark '}`} href="#">
                       {t('field_setup')}

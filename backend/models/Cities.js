@@ -5,6 +5,7 @@ const  Cities = bookshelf.Model.extend({
     citiesWeathers() {
       return this.hasMany(require('./Citiesweather'))
     },
+   
   });
   
   module.exports = Cities;

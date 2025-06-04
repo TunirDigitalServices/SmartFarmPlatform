@@ -7,11 +7,22 @@ const getFarmsByConnectedUser = async (req, res) => {
     const uid = req.userUid;
     try {
         const user = await new User({ 'uid': uid })
-            //get farms with deleted_at null
-            .fetch({ withRelated: [{ 'farms': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields.sensors': (qb) => { qb.where('deleted_at', null); } }], require: false })
+
+            .fetch({
+                withRelated: [
+                    { 'farms': (qb) => { qb.where('deleted_at', null); } }, { 'farms.fields': (qb) => { qb.where('deleted_at', null); } },
+                    { 'farms.fields.sensors': (qb) => { qb.where('deleted_at', null); } }, 'farms.city'], require: false
+            })
             .then(async result => {
                 if (result === null) return res.status(404).json({ type: "danger", message: "no_user_farm" });
-                return res.status(201).json({ farms: result.related('farms') });
+                const farms = result.related('farms').toJSON();
+                const farmsWithUserUid = farms.map(farm => ({
+                    ...farm,
+                    user: { uid: result.get('uid') }
+                }));
+
+                return res.status(201).json({ farms: farmsWithUserUid });
+
             });
     } catch (error) {
         return res.status(500).json({ type: "danger", message: "error_user" });
@@ -28,7 +39,7 @@ const searchFarms = async (req, res) => {
         const user = await new User({ uid: userUid }).fetch({ require: true });
         const role = user.get('role');
         console.log(role);
-        
+
         const farms = await Farm.query(qb => {
             qb.where('deleted_at', null);
             if (role !== "ROLE_ADMIN") {
@@ -144,26 +155,29 @@ const editFarm = async (req, res) => {
 }
 
 const deleteFarm = async (req, res) => {
-    farm_uid = req.body.farm_uid;
+    const { farm_uid } = req.body;
+    
+
+    if (!farm_uid) {
+        return res.status(400).json({ type: "danger", message: "missing_farm_uid" });
+    }
 
     try {
+        const farm = await new Farm({ uid: farm_uid }).fetch({ require: false });
 
-        const farm = new Farm({ 'uid': farm_uid })
-            .fetch({ require: false })
-            .then(async result => {
-                if (result === null) return res.status(404).json({ type: "danger", message: "no_farm" });
-                if (result) {
-                    result.set({ deleted_at: new Date() });
-                    result.save()
-                    return res.status(201).json({ type: "success", message: 'farm_deleted' });
-                }
-            }).catch(err => {
-                return res.status(500).json({ type: "danger", message: 'error_delete_farm' });
-            });;
+        if (!farm) {
+            return res.status(404).json({ type: "danger", message: "no_farm" });
+        }
+
+        await farm.save({ deleted_at: new Date() }, { patch: true });
+
+        return res.status(200).json({ type: "success", message: "farm_deleted" });
     } catch (error) {
-        return res.status(500).json({ type: "danger", message: "error_farm" });
+        console.error("Error deleting farm:", error);
+        return res.status(500).json({ type: "danger", message: "error_delete_farm" });
     }
-}
+};
+
 
 const setFarmPosition = async (req, res) => {
     let idFarm = req.body.idFarm;

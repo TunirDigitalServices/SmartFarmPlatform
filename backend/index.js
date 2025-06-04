@@ -65,6 +65,9 @@ app.use(['/sensor/*'], function (req, res, next) {
   rolePermission.rolePermissionOffer(req, res, next);
 })
 
+
+
+
 app.use('/', userRouters)
 app.use('/', commonRouters)
 app.use('/', adminRouters)
