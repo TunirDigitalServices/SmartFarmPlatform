@@ -326,5 +326,15 @@
         "reports": "Reports",
         "my_company": "My Company",
         "Altitude": "Altitude",
-        "message_image": "Please choose a field from the dropdown above and a date on the calendar to display satellite imagery."
+         "low": "Low",
+  "high": "High",
+        "message_image": "Please choose a field from the dropdown above and a date on the calendar to display satellite imagery.",
+       
+                "ndvititle": "NDVI",
+                "ndvidescription": "Low = stressed vegetation<br>High = healthy vegetation",
+                "moisturetitle": "Moisture",
+                "moisturedescription": "Low = needs irrigation<br>High = well-hydrated vegetation",
+                "ndwititle": "NDWI",
+                "ndwidescription": "Water presence<br>Low = dry areas<br>High = humid/irrigated areas"
+        
 }

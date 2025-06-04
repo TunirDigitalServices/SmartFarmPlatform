@@ -1204,6 +1204,7 @@ const calculSimulation = async (
     fieldsId,
     codeSensor
 ) => {
+
     let dailyDates = [];
     let dailyET0 = [];
 
@@ -1214,6 +1215,8 @@ const calculSimulation = async (
     )
         .then((response) => response.json())
         .then((jsonData) => {
+            console.log(latField, "jsondata");
+
             dailyDates = jsonData.daily.time;
             dailyET0 = jsonData.daily.et0_fao_evapotranspiration;
         });
@@ -1316,9 +1319,18 @@ const calculSimulation = async (
                 });
 
                 prevHourlyBilan = bilanHydrique[bilanHydrique.length - 1].value;
+                console.log(`Day ${i}: Kc = ${dataCrop.all_kc[i - 1]?.kc}`);
+            } else {
+                console.warn(`Day ${i}: Missing Kc value`);
             }
         }
     }
+    console.log("CHECKPOINT: dataCrop.all_kc", dataCrop.all_kc);
+    console.log("CHECKPOINT: days", days);
+    console.log("CHECKPOINT: latField, lonField", latField, lonField);
+    console.log("CHECKPOINT: RuMax", RuMax, "RuMin", RuMin, "ETC values count", sumETC);
+    console.log("CHECKPOINT: Final elements length", elements.length);
+
 
     return elements;
 };
@@ -1802,8 +1814,8 @@ const calculBilanHydriqueByField = async (req, res) => {
                 skipReasons.push("Invalid or missing crop duration (days)");
                 canCalculate = false;
             }
-            if (!latField || !lonField) {
-                skipReasons.push("Missing latitude or longitude");
+            if (latField == null || lonField == null || isNaN(latField) || isNaN(lonField)) {
+                skipReasons.push("Missing or invalid latitude or longitude");
                 canCalculate = false;
             }
             if (!RUmax) {
@@ -1823,8 +1835,8 @@ const calculBilanHydriqueByField = async (req, res) => {
                 let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
                 if (resultCalcul.length > 0) {
                     const today = new Date();
-                    const day = today.getDay(); // 0 (Sun) to 6 (Sat)
-                    const diffToMonday = (day === 0 ? -6 : 1) - day; // Calculate days to subtract to get Monday
+                    const day = today.getDay();
+                    const diffToMonday = (day === 0 ? -6 : 1) - day;
 
                     const start_date = new Date(today);
                     start_date.setDate(today.getDate() + diffToMonday);
@@ -1855,7 +1867,12 @@ const calculBilanHydriqueByField = async (req, res) => {
                     allCalculations.push(calcData);
                     savedCalcul = await new CalculSensor(calcData).save();
                 } else {
-                    skipReasons.push("Simulation returned no result");
+                    let debugMessage = `Simulation returned no result — likely due to missing Kc values or empty ET0/rain data.`;
+                    if (!dataCrop || Object.keys(dataCrop).length === 0) debugMessage += " dataCrop is empty.";
+                    else if (!dataCrop.all_kc || dataCrop.all_kc.length === 0) debugMessage += " all_kc is missing.";
+                    else if (days > dataCrop.all_kc.length) debugMessage += ` all_kc has fewer values (${dataCrop.all_kc.length}) than required days (${days}).`;
+
+                    skipReasons.push(debugMessage);
                 }
             }
 
