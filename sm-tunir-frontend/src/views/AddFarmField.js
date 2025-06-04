@@ -204,9 +204,13 @@ export default function AddFarmField() {
     const handleSubmit = async (event) => {
         event.preventDefault()
         const form = event.currentTarget;
-        if (!form.checkValidity()) {
+           const isLatLngValid = coords.Latitude && coords.Longitude;
+        if (!form.checkValidity()|| !isLatLngValid) {
 
             event.stopPropagation();
+            if (!isLatLngValid) {
+            swal("Error", "Please draw a field on the map to set Latitude and Longitude.", "error");
+        }
             setValidated(true);
         } else {
             await addField();
