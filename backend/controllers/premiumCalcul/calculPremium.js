@@ -2552,4 +2552,3 @@ const getReportsByField = async (req, res) => {
 
 
 module.exports = { calculBilanHydrique, getCalculSensor, addCalculSensorRecommnd, generatePDF, createBulletin, sendSMStoUsers, getReportsByField, sendSMStoSelectedUser, getAllCalculByUser, getAllCalculByField, calculBilanHydriqueByField, EditBilanHydriqueByField }
-
