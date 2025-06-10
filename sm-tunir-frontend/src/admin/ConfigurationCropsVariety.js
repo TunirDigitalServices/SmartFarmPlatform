@@ -116,20 +116,39 @@ const ConfigurationCropsVariety = () => {
                 let dataVarieties = res.data.variety
                 let date = dataVarieties.plant_date
                 setSingleVariety(dataVarieties)
-                // setVarietyData({crop : dataVarieties.crop})
-                setVarietyData({ cropVariety: dataVarieties.crop_variety })
-                setVarietyData({ plantDate: date.slice(0, 10) })
-                setVarietyData({ init: dataVarieties.init })
-                setVarietyData({ dev: dataVarieties.dev })
-                setVarietyData({ mid: dataVarieties.mid })
-                setVarietyData({ late: dataVarieties.late })
-                setVarietyData({ rootMin: dataVarieties.root_min })
-                setVarietyData({ rootMax: dataVarieties.root_max })
-                setVarietyData({ kcInit: dataVarieties.kc_init })
-                setVarietyData({ kcDev: dataVarieties.kc_dev })
-                setVarietyData({ kcMid: dataVarieties.kc_mid })
-                setVarietyData({ kcLate: dataVarieties.kc_late })
-                setVarietyData({ allKcList: dataVarieties.all_kc })
+           
+                // setVarietyData({ cropVariety: dataVarieties.crop_variety })
+                // setVarietyData({ plantDate: date.slice(0, 10) })
+                // setVarietyData({ init: dataVarieties.init })
+                // setVarietyData({ dev: dataVarieties.dev })
+                // setVarietyData({ mid: dataVarieties.mid })
+                // setVarietyData({ late: dataVarieties.late })
+                // setVarietyData({ rootMin: dataVarieties.root_min })
+                // setVarietyData({ rootMax: dataVarieties.root_max })
+                // setVarietyData({ kcInit: dataVarieties.kc_init })
+                // setVarietyData({ kcDev: dataVarieties.kc_dev })
+                // setVarietyData({ kcMid: dataVarieties.kc_mid })
+                // setVarietyData({ kcLate: dataVarieties.kc_late })
+                // setVarietyData({ allKcList: dataVarieties.all_kc })
+
+
+                
+            setVarietyData({
+                cropVariety: dataVarieties.crop_variety,
+                plantDate: date.slice(0, 10),
+                init: dataVarieties.init,
+                dev: dataVarieties.dev,
+                mid: dataVarieties.mid,
+                late: dataVarieties.late,
+                rootMin: dataVarieties.root_min,
+                rootMax: dataVarieties.root_max,
+                kcInit: dataVarieties.kc_init,
+                kcDev: dataVarieties.kc_dev,
+                kcMid: dataVarieties.kc_mid,
+                kcLate: dataVarieties.kc_late,
+                allKcList: dataVarieties.all_kc
+            });
+            
             }).catch(error => {
                 console.log(error)
 
@@ -800,8 +819,8 @@ const ConfigurationCropsVariety = () => {
                     </div>
                 </Modal.Header>
                 <Modal.Body>
-                    <Row className='gap-3'>
-                        <Col lg="8" md="12" sm="12" className="border-right" >
+                    <Row className='gap-2'>
+                        <Col lg="7" md="12" sm="12" className="border-right" >
 
                             <Card.Body>
                                 <Row className='gap-2'>
@@ -895,7 +914,7 @@ const ConfigurationCropsVariety = () => {
                             </Card.Body>
                         </Col>
 
-                        <Col lg="3" md="12" sm="12" className="">
+                        <Col lg="4" md="12" sm="12" className="">
                             <h6>Kc</h6>
                             <div className='d-flex justify-content-center align-items-center'>
 
