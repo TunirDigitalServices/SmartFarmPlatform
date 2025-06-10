@@ -1693,7 +1693,6 @@ const calculBilanHydriqueByField = async (req, res) => {
     allowedEndTime.setHours(3, 0, 0, 0);
     const today = new Date();
 
-    console.log(fieldId);
     try {
         savedCalcul = ''
         const field = await new Field({ 'id': fieldId })

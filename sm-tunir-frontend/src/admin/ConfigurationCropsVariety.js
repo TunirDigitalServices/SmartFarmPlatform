@@ -86,6 +86,8 @@ const ConfigurationCropsVariety = () => {
                 .then(response => {
                     if (response.data.type === "success") {
                         let listVarieties = response.data.Varieties
+                        console.log(listVarieties, "listVarieties");
+
                         setAllVarieties(listVarieties)
 
                     }
@@ -313,7 +315,17 @@ const ConfigurationCropsVariety = () => {
 
     const indexOfLastPost = currentPage * cropsPerPage;
     const indexOfFirstPost = indexOfLastPost - cropsPerPage;
-    const currentVarieties = filteredCrops.slice(indexOfFirstPost, indexOfLastPost);
+    // const currentVarieties = filteredCrops.slice(indexOfFirstPost, indexOfLastPost);
+
+
+    // Sort by crop name (from allCrops)
+    const sortedVarieties = [...filteredCrops].sort((a, b) => {
+        const cropA = allCrops.find(crop => crop.id === a.crop_id)?.crop?.toLowerCase() || '';
+        const cropB = allCrops.find(crop => crop.id === b.crop_id)?.crop?.toLowerCase() || '';
+        return cropA.localeCompare(cropB);
+    });
+
+    const currentVarieties = sortedVarieties.slice(indexOfFirstPost, indexOfLastPost);
 
     const handleKcByDays = () => {
         let DataCropKc = []
@@ -447,6 +459,12 @@ const ConfigurationCropsVariety = () => {
     }
 
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [SearchName]);
+
+
+
     return (
         <>
             <Container className="p-4">
@@ -514,7 +532,10 @@ const ConfigurationCropsVariety = () => {
                                 </tr>
                             </thead>
                             <tbody>
+                                {console.log(currentVarieties, "cur")}
                                 {
+
+
                                     currentVarieties.map(crop => {
                                         let cropName = ''
                                         allCrops.map(crops => {
@@ -554,7 +575,7 @@ const ConfigurationCropsVariety = () => {
                     </Card.Body>
                 </Card>
                 <Row className="py-4 justify-content-center">
-                    <Pagination usersPerPage={cropsPerPage} totalUsers={allCrops.length} paginate={paginate} />
+                    <Pagination usersPerPage={cropsPerPage} totalUsers={filteredCrops.length} paginate={paginate} />
 
                 </Row>
             </Container>
@@ -619,7 +640,7 @@ const ConfigurationCropsVariety = () => {
 
                                             <Form.Control
                                                 id='type'
-                                                style={{height:"40px"}}
+                                                style={{ height: "40px" }}
                                                 value={varietyData.cropVariety}
                                                 onChange={e => setVarietyData({ ...varietyData, cropVariety: e.target.value })}
                                             />
