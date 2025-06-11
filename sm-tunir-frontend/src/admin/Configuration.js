@@ -104,6 +104,7 @@ const Configuration = () => {
         }).catch(error=>{
             console.log(error)
         })
+        setToggle(false)
     }
 
 

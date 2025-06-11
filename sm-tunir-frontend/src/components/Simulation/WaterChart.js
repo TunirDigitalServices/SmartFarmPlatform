@@ -42,7 +42,7 @@ const WaterChart = ({ data }) => {
     const ruMaxArr = [];
     const ruMinArr = [];
 
-    for (let i = 1; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       const hourlyBilan = data[i].bilan;
       for (let j = 0; j < hourlyBilan.length; j++) {
         const hourData = hourlyBilan[j];

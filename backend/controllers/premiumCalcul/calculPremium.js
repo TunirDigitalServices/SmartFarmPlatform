@@ -1688,9 +1688,16 @@ const calculBilanHydriqueByField = async (req, res) => {
     }
 
     const allowedStartTime = new Date();
+
+
     allowedStartTime.setHours(2, 0, 0, 0);
+
+
     const allowedEndTime = new Date();
+    ;
+
     allowedEndTime.setHours(3, 0, 0, 0);
+
     const today = new Date();
 
     try {
@@ -1779,7 +1786,7 @@ const calculBilanHydriqueByField = async (req, res) => {
                     if (crops.dose_efficiency) {
                         dosePercentage = Number(crops.dose_efficiency);
                     }
-                    console.log(crops.croptypes);
+
                 }
 
                 for (let data of DataCrops) {
@@ -1802,7 +1809,7 @@ const calculBilanHydriqueByField = async (req, res) => {
             let city_id = farm ? farm.toJSON().city_id : "";
 
             let rainConfig = await getRainFromConfig(city_id);
-            console.log(days);
+
 
             let canCalculate = true;
             if (!dataCrop || Object.keys(dataCrop).length === 0) {
@@ -1831,7 +1838,9 @@ const calculBilanHydriqueByField = async (req, res) => {
 
 
             if (canCalculate) {
-                let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea, days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
+                let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, 
+                    ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea,
+                      days, profondeur, plantingDate, dataCrop, rainConfig, latField, lonField, fields.id, null);
                 if (resultCalcul.length > 0) {
                     const today = new Date();
                     const day = today.getDay();
@@ -1862,7 +1871,7 @@ const calculBilanHydriqueByField = async (req, res) => {
                         result: resultCalcul,
                         inputs: inputs
                     };
-                    console.log(resultCalcul)
+
                     allCalculations.push(calcData);
                     savedCalcul = await new CalculSensor(calcData).save();
                 } else {
@@ -1887,6 +1896,9 @@ const calculBilanHydriqueByField = async (req, res) => {
         }
         // }
         if (allCalculations.length > 0) {
+            // console.log(allCalculations,"allCalculations");
+            // console.log(savedCalcul.id,"savedCalcul.id");
+            
             return res.status(201).json({ data: allCalculations, id: savedCalcul.id });
         } else {
             return res.status(200).json({
@@ -1938,7 +1950,7 @@ const EditBilanHydriqueByField = async (req, res) => {
     //     return res.status(200).json({ type: 'success', message: 'Calculation skipped. Calculations should start on Mondays.' });
     // }
 
-    console.log(fieldId);
+
     try {
         const field = await new Field({ 'id': fieldId })
             .query(qb => qb.where('deleted_at', null).and.whereNotNull('Latitude').and.whereNotNull('Longitude'))
@@ -2322,7 +2334,22 @@ const getAllCalculByUser = async (req, res) => {
         return res.status(500).json({ type: "danger", message: "error_user" });
     }
 }
-// user calcul by field
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// user calcul by field / calcul field page
 const getAllCalculByField = async (req, res) => {
     if (!(req.userUid) || req.userUid == "") return res.status(404).json({ type: "danger", message: "no_user" });
     const fieldUid = req.params.fieldUid;
@@ -2342,30 +2369,26 @@ const getAllCalculByField = async (req, res) => {
         });
 
         const result = await query.fetchAll({ require: false });
+        console.log(query, "resultttt");
 
         if (result === null || result.length === 0) {
             return res.status(404).json({ type: "danger", message: "no_field_calcul" });
         }
 
         let resultCalcul = JSON.parse(JSON.stringify(result));
+        // console.log(resultCalcul, "result calcull");
+
         let todayDate = new Date();
         let today = todayDate.toISOString().slice(0, 10);
         let filteredResult = [];
         let inputsCalcul = [];
-        console.log(today, "----------today");
-
-        console.log(resultCalcul[resultCalcul.length - 1].start_date, "before tolocalstring date");
-        //    console.log(resultCalcul[resultCalcul.length - 1].start_date.toLocaleString(),"after tolocal string");
-
-        const localDate = new Date(resultCalcul[resultCalcul.length - 1].start_date);
-
-        console.log(localDate.toLocaleString(), "after tolocal string");
-
+console.log(resultCalcul[resultCalcul.length - 1].start_date,"resultCalcul[resultCalcul.length - 1].start_date");
 
         let startDate = new Date(resultCalcul[resultCalcul.length - 1].start_date).toISOString().slice(0, 10);
+        console.log(startDate,"startd");
+        
         let endDate = new Date(resultCalcul[resultCalcul.length - 1].end_date).toISOString().slice(0, 10);
 
-        console.log(startDate, "startDate after isotostring");
 
 
 
