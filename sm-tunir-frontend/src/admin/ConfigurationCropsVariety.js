@@ -10,7 +10,30 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../api/api';
 import swal from 'sweetalert';
 import Pagination from '../views/Pagination';
+import { Line } from 'react-chartjs-2';
 import moment from 'moment';
+
+import {
+    Chart as ChartJS,
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend
+} from 'chart.js';
+
+ChartJS.register(
+    LineElement,
+    PointElement,
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend
+);
+
 
 const ConfigurationCropsVariety = () => {
 
@@ -61,6 +84,48 @@ const ConfigurationCropsVariety = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadedFile, setUploadedFile] = useState({});
+    const chartData = {
+        labels: varietyData?.allKcList?.map(item => `Day ${item.day}`),
+        datasets: [
+            {
+                label: 'Kc',
+                data: varietyData?.allKcList?.map(item => parseFloat(item.kc)),
+                fill: false,
+                pointRadius: 0,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.3
+            }
+        ]
+    };
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            },
+            title: {
+                display: true,
+                text: 'Kc Evolution by Day'
+            }
+        },
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Days'
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Kc'
+                },
+                min: 0,
+                max: 1.2 
+            }
+        }
+    };
 
     const getCrops = async () => {
         try {
@@ -116,39 +181,23 @@ const ConfigurationCropsVariety = () => {
                 let dataVarieties = res.data.variety
                 let date = dataVarieties.plant_date
                 setSingleVariety(dataVarieties)
-           
-                // setVarietyData({ cropVariety: dataVarieties.crop_variety })
-                // setVarietyData({ plantDate: date.slice(0, 10) })
-                // setVarietyData({ init: dataVarieties.init })
-                // setVarietyData({ dev: dataVarieties.dev })
-                // setVarietyData({ mid: dataVarieties.mid })
-                // setVarietyData({ late: dataVarieties.late })
-                // setVarietyData({ rootMin: dataVarieties.root_min })
-                // setVarietyData({ rootMax: dataVarieties.root_max })
-                // setVarietyData({ kcInit: dataVarieties.kc_init })
-                // setVarietyData({ kcDev: dataVarieties.kc_dev })
-                // setVarietyData({ kcMid: dataVarieties.kc_mid })
-                // setVarietyData({ kcLate: dataVarieties.kc_late })
-                // setVarietyData({ allKcList: dataVarieties.all_kc })
 
+                setVarietyData({
+                    cropVariety: dataVarieties.crop_variety,
+                    plantDate: date.slice(0, 10),
+                    init: dataVarieties.init,
+                    dev: dataVarieties.dev,
+                    mid: dataVarieties.mid,
+                    late: dataVarieties.late,
+                    rootMin: dataVarieties.root_min,
+                    rootMax: dataVarieties.root_max,
+                    kcInit: dataVarieties.kc_init,
+                    kcDev: dataVarieties.kc_dev,
+                    kcMid: dataVarieties.kc_mid,
+                    kcLate: dataVarieties.kc_late,
+                    allKcList: dataVarieties.all_kc
+                });
 
-                
-            setVarietyData({
-                cropVariety: dataVarieties.crop_variety,
-                plantDate: date.slice(0, 10),
-                init: dataVarieties.init,
-                dev: dataVarieties.dev,
-                mid: dataVarieties.mid,
-                late: dataVarieties.late,
-                rootMin: dataVarieties.root_min,
-                rootMax: dataVarieties.root_max,
-                kcInit: dataVarieties.kc_init,
-                kcDev: dataVarieties.kc_dev,
-                kcMid: dataVarieties.kc_mid,
-                kcLate: dataVarieties.kc_late,
-                allKcList: dataVarieties.all_kc
-            });
-            
             }).catch(error => {
                 console.log(error)
 
@@ -391,90 +440,117 @@ const ConfigurationCropsVariety = () => {
     }
 
     let KcResults = [];
+   
     useEffect(() => {
-        setResultCalculKc(KcResults)
-    }, [kcByDays])
-    const tableConfigKc = (async) => {
+        if (
+            varietyData.init && varietyData.dev &&
+            varietyData.mid && varietyData.late &&
+            varietyData.kcInit && varietyData.kcMid && varietyData.kcLate &&
+            varietyData.plantDate
+        ) {
+            const { results } = tableConfigKc();
+            setResultCalculKc(results);
+        }
+    }, [
+        varietyData.init,
+        varietyData.dev,
+        varietyData.mid,
+        varietyData.late,
+        varietyData.kcInit,
+        varietyData.kcMid,
+        varietyData.kcLate,
+        varietyData.plantDate
+    ]);
+
+    const tableConfigKc = () => {
         let periods = [];
         let KcValues = [];
+        if (kcByDays.length === 0) return [];
+        kcByDays.forEach(days => {
+            periods.push(parseInt(days.period));
+            KcValues.push(parseFloat(days.kc));
+        });
 
-        if (kcByDays.length > 0) {
-            kcByDays.map(days => {
-                periods.push(days.period)
-                KcValues.push(days.kc)
-            })
-
-
-            let elements = []
-            let result = 0
-            let arrayPeriod = periods
-            let nextKc = 0
-            let nextPeriod = 0
-            let currentPeriod = 0
-            let j = 0
-            let compteur = 1;
-            let ligne = 0;
-            let elment = {}
-            let resultFormule = [];
-            for (let i = 0; i < arrayPeriod.length; i++) {
-                if (i == 0) {
-                    j = 1
-                }
-                if (i > 0) {
-                    j = arrayPeriod[i - 1]
-
-                }
-
-                if (i + 1 in arrayPeriod === true) {
-                    nextKc = KcValues[i + 1]
-                    nextPeriod = arrayPeriod[i + 1]
-                }
-                else {
-                    nextKc = 0
-                    nextPeriod = 0
-                }
-                currentPeriod = arrayPeriod[i]
-                for (let n = 1; n <= currentPeriod; n++) {
-                    ligne = compteur++;
-                    if (nextKc > 0 && nextPeriod > 0) {
-                        result = (parseFloat((nextKc - KcValues[i]) / (nextPeriod)) + parseFloat(KcValues[i]))
+        console.log(periods, "periods");
+        console.log(KcValues, "KcValues");
 
 
-                    } else {
-                        result = parseFloat(KcValues[i]);
-                    }
 
-                    //@TODO ajouter le tableau dans setResultCalculKc
-                    elment = {
-                        "day": ligne,
-                        "kc": result
-                    }
-                    //object result to save in database
-                    KcResults.push(elment)
-                    let dates = moment(varietyData.plantDate).add(ligne - 1, 'days').format("YYYY-MM-DD")
+        let elements = []
+        let results = [];
 
-                    elements.push(
-                        <tbody>
-                            <tr>
-                                <td>{ligne}</td>
-                                <td>{dates}</td>
-                                <td>
-                                    <input
-                                        name={ligne}
-                                        key={ligne}
-                                        className='my-1'
-                                        value={result}
-                                        onChange={(e) => onChangeHandler(e.target.value, ligne)}
-                                    />
-                                </td>
-                            </tr>
+        let compteur = 1;
 
-                        </tbody>
-                    );
-                }
+        let elment = {}
+        const init = parseInt(varietyData.init);
+        const dev = parseInt(varietyData.dev);
+        const mid = parseInt(varietyData.mid);
+        const late = parseInt(varietyData.late);
+
+        const kcInit = parseFloat(varietyData.kcInit);
+        const kcMid = parseFloat(varietyData.kcMid);
+        const kcDev = parseFloat(varietyData.kcDev);
+        const kcLate = parseFloat(varietyData.kcLate);
+        console.log(kcInit, kcDev, kcMid, kcLate, "kcs");
+
+
+        const plantDate = varietyData.plantDate;
+
+        let totalDays = init + dev + mid + late;
+
+
+        for (let day = 1; day <= totalDays; day++) {
+            let kc = 0;
+
+            if (day <= init) {
+                kc = kcInit;
+                console.log(`Day ${day}: Phase = Init → Kc = ${kc}`);
+            } else if (day <= init + dev) {
+                const j = day - init;
+                kc = kcInit + ((kcMid - kcInit) / dev) * j;
+                console.log(`Day ${day}: Phase = Dev`);
+                console.log(`  j = ${j}`);
+                console.log(`Day ${day}: Phase = Dev → Kc = kcInit + ((kcMid - kcInit) / dev) * j`);
+                console.log(`           = ${kcInit} + ((${kcMid} - ${kcInit}) / ${dev}) * ${j} = ${kc}`);
+
+            } else if (day <= init + dev + mid) {
+                kc = kcMid;
+                console.log(`Day ${day}: Phase = Mid → Kc = ${kc}`);
+            } else {
+                const j = day - (init + dev + mid);
+                kc = kcMid - ((kcMid - kcLate) / late) * j;
+                console.log(`Day ${day}: Phase = Late`);
+                console.log(`  j = ${j}`);
+                console.log(`Day ${day}: Phase = Late → Kc = kcMid - ((kcMid - kcLate) / late) * j`);
+                console.log(`            = ${kcMid} - ((${kcMid} - ${kcLate}) / ${late}) * ${j} = ${kc}`);
             }
-            return elements
+
+            kc = parseFloat(kc.toFixed(2));
+
+            const date = moment(plantDate).add(day - 1, 'days').format("YYYY-MM-DD");
+
+            results.push({ day, kc });
+            console.log(results, "res");
+
+            elements.push(
+                <tr key={day}>
+                    <td>{day}</td>
+                    <td>{date}</td>
+                    <td>
+                        <input
+                            name={`kc-${day}`}
+                            value={kc}
+                            onChange={(e) => onChangeHandler(e, day - 1)}
+                            className="my-1"
+                        />
+                    </td>
+                </tr>
+            );
         }
+
+
+        return { elements, results };
+
     }
 
 
@@ -482,7 +558,7 @@ const ConfigurationCropsVariety = () => {
         setCurrentPage(1);
     }, [SearchName]);
 
-
+    const { elements } = tableConfigKc();
 
     return (
         <>
@@ -783,7 +859,9 @@ const ConfigurationCropsVariety = () => {
 
                                     </tr>
                                 </thead>
-                                {tableConfigKc()}
+                                {console.log(elements, "elem")}
+
+                                {elements}
                             </table>
                         </Col>
                     </Row>
@@ -890,6 +968,8 @@ const ConfigurationCropsVariety = () => {
 
                                     <Col lg='6' md="12" sm="12">
                                         <Form.Group>
+                                            {console.log(varietyData, "varietyData")
+                                            }
                                             <label htmlFor="plantDate">Planting Date</label>
                                             <Form.Control
                                                 id='plantDate'
@@ -989,45 +1069,13 @@ const ConfigurationCropsVariety = () => {
                             </div>
                         </Col>
                     </Row>
-                    <Row className="border-top mt-2">
-                        <Col lg='6' md='12' sm='12' className="mt-1" >
-                            {/* <button onClick={() => tableConfigKc()}>Calculer</button> */}
-                            <table className="table mb-0 border text-center  table-responsive">
-                                <thead className="bg-light">
-                                    <tr>
-                                        <th scope="col" className="border-0">{t('Days')}</th>
-                                        <th scope="col" className="border-0">{t('Dates')}</th>
-                                        <th scope="col" className="border-0">{t('Kc')}</th>
+                    <Row>
+                        <Col lg='12' md='12' sm='12' className="mt-1" >
+                            <Line data={chartData} options={chartOptions} />
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        varietyData.allKcList && varietyData.allKcList.map((result, indx) => {
-
-                                            return (
-
-                                                <tr>
-                                                    <td>{result.day}</td>
-                                                    <td>
-                                                        <input
-                                                            name={indx}
-                                                            key={indx}
-                                                            className='my-1'
-                                                            defaultValue={parseFloat(result.kc).toFixed(2)}
-                                                            onChange={(e) => onChangeHandler(e, indx)}
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-
-                                </tbody>
-                            </table>
                         </Col>
                     </Row>
-                </Modal.Body>
+                                   </Modal.Body>
             </Modal>
         </>
     )
