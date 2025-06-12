@@ -52,6 +52,7 @@ const ConfigurationCropsVariety = () => {
 
     const [allCrops, setAllCrops] = useState([])
     const [allVarieties, setAllVarieties] = useState([])
+    const [varietyDataChange, setVarietyDataChange] = useState(false)
 
 
     const [varietyData, setVarietyData] = useState({
@@ -122,7 +123,7 @@ const ConfigurationCropsVariety = () => {
                     text: 'Kc'
                 },
                 min: 0,
-                max: 1.2 
+                max: 1.2
             }
         }
     };
@@ -197,15 +198,16 @@ const ConfigurationCropsVariety = () => {
                     kcLate: dataVarieties.kc_late,
                     allKcList: dataVarieties.all_kc
                 });
+                if (title === 'Edit') {
+                    setToggleEdit(!toggleEdit)
+
+                }
 
             }).catch(error => {
                 console.log(error)
 
             })
-        if (title === 'Edit') {
-            setToggleEdit(!toggleEdit)
 
-        }
 
     }
     const onFileChange = e => {
@@ -440,7 +442,7 @@ const ConfigurationCropsVariety = () => {
     }
 
     let KcResults = [];
-   
+
     useEffect(() => {
         if (
             varietyData.init && varietyData.dev &&
@@ -1075,7 +1077,52 @@ const ConfigurationCropsVariety = () => {
 
                         </Col>
                     </Row>
-                                   </Modal.Body>
+                    <Row className="border-top mt-2">
+                        <Col lg='12' md='12' sm='12' className="mt-1" >
+                            {/* <button onClick={() => tableConfigKc()}>Calculer</button> */}
+                            <table className="table mb-0 border text-center  table-responsive">
+                                <thead className="bg-light">
+                                    <tr>
+                                        <th scope="col" className="border-0">{t('Days')}</th>
+                                        <th scope="col" className="border-0">{t('Dates')}</th>
+                                        <th scope="col" className="border-0">{t('Kc')}</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+
+                                        varietyData.allKcList && varietyData.allKcList?.map((result, indx) => {
+
+                                            return (
+
+                                                <tr>
+                                                    <td>{result.day}</td>
+                                                    <td>{moment(result.plantDate).add(result.day - 1, 'days').format("YYYY-MM-DD")}</td>
+                                                    <td>
+                                                        <input
+                                                            name={indx}
+                                                            key={indx}
+                                                            className='my-1'
+                                                            defaultValue={parseFloat(result.kc)}
+
+                                                            onChange={(e) => onChangeHandler(e, indx)}
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+
+                                </tbody>
+                            </table>
+                            <div className="mt-4">
+                            </div>
+                        </Col>
+
+
+                    </Row>
+                </Modal.Body>
             </Modal>
         </>
     )
