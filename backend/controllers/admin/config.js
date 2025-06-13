@@ -435,6 +435,7 @@ const deleteCrop = async (req, res) => {
 const addVariety = async (req, res) => {
     const { crop_id, plant_date, init, dev, mid, late, kc_init, kc_dev, kc_mid, kc_late, all_kc, crop_variety, root_min, root_max, variety_ar, variety_en } = req.body
     let total = Number(init) + Number(dev) + Number(mid) + Number(late)
+console.log(plant_date,"------------ plant_date");
 
     if (!(req.body.crop_id) || req.body.crop_id == "") return res.status(404).json({ type: "danger", message: "no_crop_selected" });
     try {
@@ -464,6 +465,8 @@ const getSingleCropVariety = async (req, res) => {
             .fetch({ require: false })
             .then(async result => {
                 if (result === null) return res.status(404).json({ type: "danger", message: "no_variety" });
+                console.log(result,"resulttt");
+                
                 return res.status(201).json({ variety: result });
             });
     } catch (error) {

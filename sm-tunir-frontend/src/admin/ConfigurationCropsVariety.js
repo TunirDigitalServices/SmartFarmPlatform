@@ -39,22 +39,18 @@ const ConfigurationCropsVariety = () => {
 
     const [cropsPerPage] = useState(10)
     const [currentPage, setCurrentPage] = useState(1);
-
-    const [kc, setKc] = useState({})
-
     const [SearchName, setSearchName] = useState('')
-
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
-    const { t, i18n } = useTranslation();
-
-
     const [allCrops, setAllCrops] = useState([])
     const [allVarieties, setAllVarieties] = useState([])
-    const [varietyDataChange, setVarietyDataChange] = useState(false)
-
-
+    const [toggle, setToggle] = useState(false)
+    const [toggleEdit, setToggleEdit] = useState(false)
+    const [singleCrop, setSingleVariety] = useState({})
+    const [kcByDays, setKcByDays] = useState([])
+    const [resultCalculKc, setResultCalculKc] = useState([])
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState({});
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+    const { t, i18n } = useTranslation();
     const [varietyData, setVarietyData] = useState({
         crop: '',
         cropVariety: '',
@@ -76,15 +72,6 @@ const ConfigurationCropsVariety = () => {
     })
 
 
-    const [toggle, setToggle] = useState(false)
-    const [toggleEdit, setToggleEdit] = useState(false)
-    const [singleCrop, setSingleVariety] = useState({})
-
-    const [kcByDays, setKcByDays] = useState([])
-    const [resultCalculKc, setResultCalculKc] = useState([])
-
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [uploadedFile, setUploadedFile] = useState({});
     const chartData = {
         labels: varietyData?.allKcList?.map(item => `Day ${item.day}`),
         datasets: [
@@ -185,7 +172,7 @@ const ConfigurationCropsVariety = () => {
 
                 setVarietyData({
                     cropVariety: dataVarieties.crop_variety,
-                    plantDate: date.slice(0, 10),
+
                     init: dataVarieties.init,
                     dev: dataVarieties.dev,
                     mid: dataVarieties.mid,
@@ -196,7 +183,10 @@ const ConfigurationCropsVariety = () => {
                     kcDev: dataVarieties.kc_dev,
                     kcMid: dataVarieties.kc_mid,
                     kcLate: dataVarieties.kc_late,
-                    allKcList: dataVarieties.all_kc
+                    allKcList: dataVarieties.all_kc,
+                    varietyAr: dataVarieties.variety_ar,
+                    varietyEn: dataVarieties.variety_en,
+
                 });
                 if (title === 'Edit') {
                     setToggleEdit(!toggleEdit)
@@ -251,6 +241,8 @@ const ConfigurationCropsVariety = () => {
             root_min: varietyData.rootMin,
             all_kc: resultCalculKc
         }
+        console.log(data, "data for check pd");
+
 
         api.post('/varieties/add-varieties', data)
             .then(response => {
@@ -434,11 +426,16 @@ const ConfigurationCropsVariety = () => {
     const onChangeHandler = async (e, idx) => {
         //modifier le setResultCalculKc pour ensuite ajouter le resultCalculKc dans l'action save pour inserer un objet clé (1,2,3..) valeur (kc dans le tableau html) dans la base de données colonne kc par jour
         // setResultCalculKc(state => ([...state ,{['day'] : day ,  ['kc'] : value }]), [])
-        let clone = [...varietyData.allKcList];
-        let obj = clone[idx];
-        obj.kc = e.target.value;
-        clone[idx] = obj;
-        setResultCalculKc([...clone])
+        const value = e.target.value;
+        const clone = [...varietyData.allKcList];
+        clone[idx] = { ...clone[idx], kc: value };
+
+        setVarietyData(prev => ({
+            ...prev,
+            allKcList: clone,
+        }));
+
+        setResultCalculKc(clone);
     }
 
     let KcResults = [];
@@ -447,11 +444,16 @@ const ConfigurationCropsVariety = () => {
         if (
             varietyData.init && varietyData.dev &&
             varietyData.mid && varietyData.late &&
-            varietyData.kcInit && varietyData.kcMid && varietyData.kcLate &&
-            varietyData.plantDate
+            varietyData.kcInit && varietyData.kcMid && varietyData.kcLate
         ) {
             const { results } = tableConfigKc();
             setResultCalculKc(results);
+            setVarietyData(prev => ({
+                ...prev,
+                allKcList: results,
+            }));
+
+
         }
     }, [
         varietyData.init,
@@ -464,26 +466,29 @@ const ConfigurationCropsVariety = () => {
         varietyData.plantDate
     ]);
 
+
+
+
+
+
     const tableConfigKc = () => {
         let periods = [];
         let KcValues = [];
         if (kcByDays.length === 0) return [];
         kcByDays.forEach(days => {
-            periods.push(parseInt(days.period));
-            KcValues.push(parseFloat(days.kc));
+            // periods.push(parseInt(days.period));
+            // KcValues.push(parseFloat(days.kc));
         });
 
-        console.log(periods, "periods");
-        console.log(KcValues, "KcValues");
+        // console.log(periods, "periods");
+        // console.log(KcValues, "KcValues");
 
 
 
         let elements = []
         let results = [];
 
-        let compteur = 1;
 
-        let elment = {}
         const init = parseInt(varietyData.init);
         const dev = parseInt(varietyData.dev);
         const mid = parseInt(varietyData.mid);
@@ -498,7 +503,7 @@ const ConfigurationCropsVariety = () => {
 
         const plantDate = varietyData.plantDate;
 
-        let totalDays = init + dev + mid + late;
+        let totalDays = 365;
 
 
         for (let day = 1; day <= totalDays; day++) {
@@ -518,13 +523,15 @@ const ConfigurationCropsVariety = () => {
             } else if (day <= init + dev + mid) {
                 kc = kcMid;
                 console.log(`Day ${day}: Phase = Mid → Kc = ${kc}`);
-            } else {
+            } else if (day <= init + dev + mid + late) {
                 const j = day - (init + dev + mid);
                 kc = kcMid - ((kcMid - kcLate) / late) * j;
                 console.log(`Day ${day}: Phase = Late`);
                 console.log(`  j = ${j}`);
                 console.log(`Day ${day}: Phase = Late → Kc = kcMid - ((kcMid - kcLate) / late) * j`);
                 console.log(`            = ${kcMid} - ((${kcMid} - ${kcLate}) / ${late}) * ${j} = ${kc}`);
+            } else {
+                kc = kcLate;
             }
 
             kc = parseFloat(kc.toFixed(2));
@@ -560,7 +567,7 @@ const ConfigurationCropsVariety = () => {
         setCurrentPage(1);
     }, [SearchName]);
 
-    const { elements } = tableConfigKc();
+    // const { elements } = tableConfigKc();
 
     return (
         <>
@@ -603,7 +610,25 @@ const ConfigurationCropsVariety = () => {
                 </Row>
                 <Row form className="py-2 d-flex justify-content-center">
                     <ButtonGroup>
-                        <Button variant='outline-primary' onClick={() => { setToggle(true) }}>Add Variety</Button>
+                        <Button variant='outline-primary' onClick={() => {
+                            setVarietyData({
+                                crop: '',
+                                cropVariety: '',
+                                varietyAr: '',
+                                varietyEn: '',
+                                kcInit: '',
+                                kcMid: '',
+                                kcLate: '',
+                                init: '',
+                                dev: '',
+                                mid: '',
+                                late: '',
+                                rootMin: '',
+                                rootMax: '',
+                                allKcList: []
+                            });
+                            setToggle(true);
+                        }}>Add Variety</Button>
                     </ButtonGroup>
 
                 </Row>
@@ -676,7 +701,7 @@ const ConfigurationCropsVariety = () => {
 
                 </Row>
             </Container>
-            <Modal size='lg' centered={true} show={toggle}>
+            <Modal size='lg' className="custom-modal-height" centered={true} show={toggle}>
                 <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div
                         style={{
@@ -745,32 +770,39 @@ const ConfigurationCropsVariety = () => {
                                     </Col>
 
                                 </Row>
-                                <Row>
+                                <h6 className='mt-2'>Roots</h6>
+                                <Row className='gap-2'>
 
                                     <Col lg='5' md="12" sm="12">
-                                        <Form.Group>
-                                            <label htmlFor="plantDate">Planting Date</label>
+
+                                        <div className='d-flex justify-content-around align-items-center'>
+
                                             <Form.Control
-                                                id='plantDate'
-                                                placeholder="Planting Date"
-                                                type='date'
-                                                value={varietyData.plantDate}
-                                                onChange={e => setVarietyData({ ...varietyData, plantDate: e.target.value })}
+                                                placeholder="Min"
+
+                                                value={varietyData.rootMin}
+                                                onChange={e => setVarietyData({ ...varietyData, rootMin: e.target.value })}
+
                                             />
-                                        </Form.Group>
+
+
+                                        </div>
                                     </Col>
+                                    <Col lg='5' md="12" sm="12">
+
+                                        <div className='d-flex justify-content-around align-items-center'>
+
+
+                                            <Form.Control
+                                                placeholder="Max"
+                                                value={varietyData.rootMax}
+                                                onChange={e => setVarietyData({ ...varietyData, rootMax: e.target.value })}
+                                            />
+
+                                        </div>
+                                    </Col>
+
                                 </Row>
-
-                                <Form.Group>
-                                    <label htmlFor="feDescription">{t('desc')}</label>
-                                    <Form.Control
-                                        as="textarea"
-                                        className=''
-                                        placeholder={t('desc')}
-                                        id="feDescription"
-                                        rows="3" />
-
-                                </Form.Group>
                             </Card.Body>
                         </Col>
 
@@ -784,12 +816,7 @@ const ConfigurationCropsVariety = () => {
                                     value={varietyData.kcInit}
                                     onChange={e => setVarietyData({ ...varietyData, kcInit: e.target.value })}
                                 />
-                                <Form.Control
-                                    placeholder=""
-                                    value={varietyData.kcDev}
-                                    onChange={e => setVarietyData({ ...varietyData, kcDev: e.target.value })}
 
-                                />
                                 <Form.Control
                                     placeholder=""
                                     className="m-1"
@@ -830,46 +857,49 @@ const ConfigurationCropsVariety = () => {
                                     onChange={e => setVarietyData({ ...varietyData, late: e.target.value })}
                                 />
                             </div>
-                            <h6>Roots</h6>
-                            <div className='d-flex justify-content-around align-items-center'>
 
-                                <Form.Control
-                                    placeholder="Min"
-                                    className="m-1"
-                                    value={varietyData.rootMin}
-                                    onChange={e => setVarietyData({ ...varietyData, rootMin: e.target.value })}
-
-                                />
-                                <Form.Control
-                                    placeholder="Max"
-                                    value={varietyData.rootMax}
-                                    onChange={e => setVarietyData({ ...varietyData, rootMax: e.target.value })}
-                                />
-
-                            </div>
                         </Col>
                     </Row>
+                    <Row>
+                      { varietyData.allKcList && varietyData.allKcList.length > 0 && <Col lg='12' md='12' sm='12' className="mt-1" >
+                            <Line data={chartData} options={chartOptions} />
+
+                        </Col>}
+                    </Row>
                     <Row className="border-top mt-2">
-                        <Col lg='12' sm='12' md='12'>
+                       {  varietyData.allKcList && varietyData.allKcList.length > 0 &&  <Col lg='12' sm='12' md='12'>
 
                             <table className="table mb-0 border text-center  table-responsive">
                                 <thead className="bg-light">
                                     <tr>
-                                        <th scope="col" className="border-0">{t('Days')}</th>
-                                        <th scope="col" className="border-0">{t('Dates')}</th>
+                                        <th scope="col" className="border-0">{t('Day')}</th>
+
                                         <th scope="col" className="border-0">{t('Kc')}</th>
 
                                     </tr>
                                 </thead>
-                                {console.log(elements, "elem")}
 
-                                {elements}
+
+                                {varietyData.allKcList && varietyData.allKcList.map((result, indx) => (
+                                    <tr key={result.day}>
+                                        <td>{result.day}</td>
+
+                                        <td>
+                                            <input
+                                                name={`kc-${result.day}`}
+                                                className="my-1"
+                                                value={result.kc}
+                                                onChange={(e) => onChangeHandler(e, indx)}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
                             </table>
-                        </Col>
+                        </Col>}
                     </Row>
                 </Modal.Body>
             </Modal>
-            <Modal size='lg' centered={true} show={toggleEdit}>
+            <Modal className="custom-modal-height" size='lg' centered={true} show={toggleEdit}>
                 <Modal.Header className="d-flex justify-content-between align-items-center">
                     <div
                         style={{
@@ -904,53 +934,47 @@ const ConfigurationCropsVariety = () => {
 
                             <Card.Body>
                                 <Row className='gap-2'>
-                                    {/* <Col lg='6' md="12" sm="12">
-                                        <Form.Group>
-                                            <label htmlFor="crop">Crop Type</label>
-                                            <Form.Control
-                                                id='crop'
-                                                placeholder="Crop Type"
-                                                value={varietyData.crop}
-                                                onChange={e => setVarietyData({...varietyData , crop : e.target.value})}
-                                            />
-                                        </Form.Group>
-                                    </Col> */}
-                                    <Col lg='5' md="12" sm="12">
 
-                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
-                                            <label htmlFor="type">Select Variety Type</label>
+                                    <Row className='gap-2 mt-2 mb-2'>
+                                        <Col lg='5' md="12" sm="12">
 
-                                            <Form.Control
-                                                id='type'
-                                                value={varietyData.cropVariety}
-                                                onChange={e => setVarietyData({ ...varietyData, cropVariety: e.target.value })}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col lg='5' md="12" sm="12">
-                                        <Form.Group>
-                                            <label htmlFor="Varietyar">Variety Type (Ar)</label>
-                                            <Form.Control
-                                                id='Varietyar'
-                                                placeholder="Variety Type"
-                                                value={varietyData.varietyAr}
-                                                onChange={e => setVarietyData({ ...varietyData, varietyAr: e.target.value })}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col lg='5' md="12" sm="12">
-                                        <Form.Group>
-                                            <label htmlFor="Varietyen">Variety Type (En)</label>
-                                            <Form.Control
-                                                id='Varietyen'
-                                                placeholder="Variety Type"
-                                                value={varietyData.varietyEn}
-                                                onChange={e => setVarietyData({ ...varietyData, varietyEn: e.target.value })}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                    <Col lg='5' md="12" sm="12">
-                                        <Form.Group>
+                                            <Form.Group className=''>
+                                                <label htmlFor="type" className=''>Variety Type</label>
+
+                                                <Form.Control
+                                                    id='type'
+                                                    value={varietyData.cropVariety}
+                                                    onChange={e => setVarietyData({ ...varietyData, cropVariety: e.target.value })}
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                        <Col lg='5' md="12" sm="12">
+                                            <Form.Group>
+                                                <label htmlFor="Varietyar">Variety Type (Ar)</label>
+                                                <Form.Control
+                                                    id='Varietyar'
+                                                    placeholder="Variety Type"
+                                                    value={varietyData.varietyAr}
+                                                    onChange={e => setVarietyData({ ...varietyData, varietyAr: e.target.value })}
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
+                                    <Row className='gap-2'>
+                                        <Col lg='5' md="12" sm="12">
+                                            <Form.Group>
+                                                <label htmlFor="Varietyen">Variety Type (En)</label>
+                                                <Form.Control
+                                                    id='Varietyen'
+                                                    placeholder="Variety Type"
+                                                    value={varietyData.varietyEn}
+                                                    onChange={e => setVarietyData({ ...varietyData, varietyEn: e.target.value })}
+                                                />
+                                            </Form.Group>
+                                        </Col>
+
+                                        {/* <Col lg='5' md="12" sm="12"> */}
+                                        {/* <Form.Group>
                                             <label htmlFor="crop">Variety Photo</label>
                                             <Form.Control
                                                 id='crop'
@@ -962,37 +986,24 @@ const ConfigurationCropsVariety = () => {
                                             <button style={{ background: "#E5E5E5", border: "2px solid #d7d7d7", borderRadius: 5, padding: 3, margin: 3 }} onClick={onFileUploadEdit}>Upload</button>
                                             {uploadedFile ? <h6 style={{ fontWeight: "bold" }}>{uploadedFile.message}</h6> : null}
 
-                                        </Form.Group>
-                                    </Col>
+                                        </Form.Group> */}
+                                        {/* </Col> */}
+
+                                    </Row>
+
 
                                 </Row>
-                                <Row>
 
-                                    <Col lg='6' md="12" sm="12">
-                                        <Form.Group>
-                                            {console.log(varietyData, "varietyData")
-                                            }
-                                            <label htmlFor="plantDate">Planting Date</label>
-                                            <Form.Control
-                                                id='plantDate'
-                                                placeholder="Planting Date"
-                                                type='date'
-                                                value={varietyData.plantDate}
-                                                onChange={e => setVarietyData({ ...varietyData, plantDate: e.target.value })}
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
 
-                                <Form.Group>
-                                    <label htmlFor="feDescription">{t('desc')}</label>
+                                {/* <Form.Group> */}
+                                {/* <label htmlFor="feDescription">{t('desc')}</label>
                                     <Form.Control
                                         as="textarea"
                                         placeholder={t('desc')}
                                         id="feDescription"
                                         rows="3" />
 
-                                </Form.Group>
+                                </Form.Group> */}
                             </Card.Body>
                         </Col>
 
@@ -1006,12 +1017,7 @@ const ConfigurationCropsVariety = () => {
                                     value={varietyData.kcInit}
                                     onChange={e => setVarietyData({ ...varietyData, kcInit: e.target.value })}
                                 />
-                                <Form.Control
-                                    placeholder=""
-                                    value={varietyData.kcDev}
-                                    onChange={e => setVarietyData({ ...varietyData, kcDev: e.target.value })}
 
-                                />
                                 <Form.Control
                                     placeholder=""
                                     className="m-1"
@@ -1073,18 +1079,18 @@ const ConfigurationCropsVariety = () => {
                     </Row>
                     <Row>
                         <Col lg='12' md='12' sm='12' className="mt-1" >
-                            <Line data={chartData} options={chartOptions} />
+                           <Line data={chartData} options={chartOptions} />
 
                         </Col>
                     </Row>
                     <Row className="border-top mt-2">
-                        <Col lg='12' md='12' sm='12' className="mt-1" >
+                     <Col lg='12' md='12' sm='12' className="mt-1" >
                             {/* <button onClick={() => tableConfigKc()}>Calculer</button> */}
                             <table className="table mb-0 border text-center  table-responsive">
                                 <thead className="bg-light">
                                     <tr>
-                                        <th scope="col" className="border-0">{t('Days')}</th>
-                                        <th scope="col" className="border-0">{t('Dates')}</th>
+                                        <th scope="col" className="border-0">{t('Day')}</th>
+
                                         <th scope="col" className="border-0">{t('Kc')}</th>
 
                                     </tr>
@@ -1098,14 +1104,13 @@ const ConfigurationCropsVariety = () => {
 
                                                 <tr>
                                                     <td>{result.day}</td>
-                                                    <td>{moment(result.plantDate).add(result.day - 1, 'days').format("YYYY-MM-DD")}</td>
+
                                                     <td>
                                                         <input
                                                             name={indx}
                                                             key={indx}
                                                             className='my-1'
-                                                            defaultValue={parseFloat(result.kc)}
-
+                                                            value={result.kc}
                                                             onChange={(e) => onChangeHandler(e, indx)}
                                                         />
                                                     </td>

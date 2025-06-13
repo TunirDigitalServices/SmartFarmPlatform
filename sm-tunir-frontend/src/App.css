@@ -16,7 +16,16 @@
     opacity: 1;
   }
 }
+.custom-modal-height .modal-dialog {
+  height: 90vh; 
+  display: flex;
+  flex-direction: column;
+}
 
+.custom-modal-height .modal-content {
+  flex: 1 1 auto;
+  overflow-y: auto; /* add scrolling if content exceeds height */
+}
 .cascading-right {
   margin-right: -50px;
 }
