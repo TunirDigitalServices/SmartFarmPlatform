@@ -55,11 +55,10 @@ const ConfigurationCropsVariety = () => {
         dev: "",
         mid: "",
         late: "",
-        plantDate: "",
         rootMin: "",
         rootMax: "",
         kcInit: "",
-        kcDev: "",
+      
         kcMid: "",
         kcLate: "",
         allKcList: [],
@@ -177,7 +176,7 @@ const ConfigurationCropsVariety = () => {
                     rootMin: dataVarieties.root_min,
                     rootMax: dataVarieties.root_max,
                     kcInit: dataVarieties.kc_init,
-                    kcDev: dataVarieties.kc_dev,
+                
                     kcMid: dataVarieties.kc_mid,
                     kcLate: dataVarieties.kc_late,
                     allKcList: dataVarieties.all_kc,
@@ -202,13 +201,12 @@ const ConfigurationCropsVariety = () => {
         let data = {
             crop_id: varietyData.crop,
             crop_variety: varietyData.cropVariety,
-            plant_date: varietyData.plantDate,
             init: varietyData.init,
             dev: varietyData.dev,
             mid: varietyData.mid,
             late: varietyData.late,
             kc_init: varietyData.kcInit,
-            kc_dev: varietyData.kcDev,
+      
             kc_mid: varietyData.kcMid,
             kc_late: varietyData.kcLate,
             root_max: varietyData.rootMax,
@@ -238,13 +236,12 @@ const ConfigurationCropsVariety = () => {
         let data = {
             variety_id: varietyId,
             crop_variety: varietyData.cropVariety,
-            plant_date: varietyData.plantDate,
             init: varietyData.init,
             dev: varietyData.dev,
             mid: varietyData.mid,
             late: varietyData.late,
             kc_init: varietyData.kcInit,
-            kc_dev: varietyData.kcDev,
+          
             kc_mid: varietyData.kcMid,
             kc_late: varietyData.kcLate,
             root_max: varietyData.rootMax,
@@ -395,8 +392,7 @@ const ConfigurationCropsVariety = () => {
         varietyData.late,
         varietyData.kcInit,
         varietyData.kcMid,
-        varietyData.kcLate,
-        varietyData.plantDate
+        varietyData.kcLate
     ]);
 
 
@@ -417,12 +413,10 @@ const ConfigurationCropsVariety = () => {
 
         const kcInit = parseFloat(varietyData.kcInit);
         const kcMid = parseFloat(varietyData.kcMid);
-        const kcDev = parseFloat(varietyData.kcDev);
+     
         const kcLate = parseFloat(varietyData.kcLate);
-        console.log(kcInit, kcDev, kcMid, kcLate, "kcs");
+        console.log(kcInit, kcMid, kcLate, "kcs");
 
-
-        const plantDate = varietyData.plantDate;
 
         let totalDays = 365;
 
@@ -456,16 +450,13 @@ const ConfigurationCropsVariety = () => {
             }
 
             kc = parseFloat(kc.toFixed(2));
-
-            const date = moment(plantDate).add(day - 1, 'days').format("YYYY-MM-DD");
-
             results.push({ day, kc });
             console.log(results, "res");
 
             elements.push(
                 <tr key={day}>
                     <td>{day}</td>
-                    <td>{date}</td>
+                    {/* <td>{date}</td> */}
                     <td>
                         <input
                             name={`kc-${day}`}
@@ -568,7 +559,6 @@ const ConfigurationCropsVariety = () => {
                                 <tr>
                                     <th scope="col" className="border-0">{t('Crop')}</th>
                                     <th scope="col" className="border-0">{t('Crop Variety')}</th>
-                                    <th scope="col" className="border-0">{t('Planting Date')}</th>
                                     <th scope="col" className="border-0"></th>
 
                                 </tr>
@@ -586,14 +576,11 @@ const ConfigurationCropsVariety = () => {
                                             }
 
                                         })
-                                        let plantDate = moment(crop.plant_date).locale('En').format('MMM Do YYYY ')
+                                       
                                         return (
                                             <tr>
                                                 <td>{cropName}</td>
                                                 <td>{crop.crop_variety}</td>
-                                                <td>{plantDate}</td>
-
-
                                                 <td>
 
                                                     <ButtonGroup size="sm" className="mr-2">
