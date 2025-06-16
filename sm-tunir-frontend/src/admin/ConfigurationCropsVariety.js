@@ -45,12 +45,9 @@ const ConfigurationCropsVariety = () => {
     const [toggle, setToggle] = useState(false)
     const [toggleEdit, setToggleEdit] = useState(false)
     const [singleCrop, setSingleVariety] = useState({})
-    const [kcByDays, setKcByDays] = useState([])
     const [resultCalculKc, setResultCalculKc] = useState([])
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [uploadedFile, setUploadedFile] = useState({});
     const paginate = pageNumber => setCurrentPage(pageNumber);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [varietyData, setVarietyData] = useState({
         crop: '',
         cropVariety: '',
@@ -167,7 +164,7 @@ const ConfigurationCropsVariety = () => {
         api.post('/varieties/get-variety', data)
             .then(res => {
                 let dataVarieties = res.data.variety
-                let date = dataVarieties.plant_date
+   
                 setSingleVariety(dataVarieties)
 
                 setVarietyData({
@@ -200,30 +197,7 @@ const ConfigurationCropsVariety = () => {
 
 
     }
-    const onFileChange = e => {
-        setSelectedFile(e.target.files[0]);
-    };
-
-
-    const onFileUploadEdit = async () => {
-        const formData = new FormData();
-        formData.append('photo', selectedFile);
-        formData.append('variety', singleCrop.crop_variety);
-
-        try {
-            const res = await api.post('/variety/upload-photo', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setUploadedFile(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-
-
+   
     const addVarieties = () => {
         let data = {
             crop_id: varietyData.crop,
@@ -377,10 +351,6 @@ const ConfigurationCropsVariety = () => {
 
     const indexOfLastPost = currentPage * cropsPerPage;
     const indexOfFirstPost = indexOfLastPost - cropsPerPage;
-    // const currentVarieties = filteredCrops.slice(indexOfFirstPost, indexOfLastPost);
-
-
-    // Sort by crop name (from allCrops)
     const sortedVarieties = [...filteredCrops].sort((a, b) => {
         const cropA = allCrops.find(crop => crop.id === a.crop_id)?.crop?.toLowerCase() || '';
         const cropB = allCrops.find(crop => crop.id === b.crop_id)?.crop?.toLowerCase() || '';
@@ -389,39 +359,6 @@ const ConfigurationCropsVariety = () => {
 
     const currentVarieties = sortedVarieties.slice(indexOfFirstPost, indexOfLastPost);
 
-    const handleKcByDays = () => {
-        let DataCropKc = []
-        if (varietyData.init != "" && varietyData.dev != "" && varietyData.mid != "" && varietyData.late != "" &&
-            varietyData.kcInit != "" && varietyData.kcDev != "" && varietyData.kcMid != "" && varietyData.kcLate != ""
-
-        ) {
-            DataCropKc = [
-                {
-                    "period": varietyData.init,
-                    "kc": varietyData.kcInit
-                },
-                {
-                    "period": varietyData.dev,
-                    "kc": varietyData.kcDev
-                },
-                {
-                    "period": varietyData.mid,
-                    "kc": varietyData.kcMid
-                },
-                {
-                    "period": varietyData.late,
-                    "kc": varietyData.kcLate
-                }]
-        }
-
-
-
-        setKcByDays(DataCropKc)
-    }
-
-    useEffect(() => {
-        handleKcByDays()
-    }, [varietyData])
 
     const onChangeHandler = async (e, idx) => {
         //modifier le setResultCalculKc pour ensuite ajouter le resultCalculKc dans l'action save pour inserer un objet clé (1,2,3..) valeur (kc dans le tableau html) dans la base de données colonne kc par jour
@@ -438,7 +375,6 @@ const ConfigurationCropsVariety = () => {
         setResultCalculKc(clone);
     }
 
-    let KcResults = [];
 
     useEffect(() => {
         if (
@@ -455,10 +391,7 @@ const ConfigurationCropsVariety = () => {
 
 
         }
-    }, [
-        varietyData.init,
-        varietyData.dev,
-        varietyData.mid,
+    }, [varietyData.init,varietyData.dev,varietyData.mid,
         varietyData.late,
         varietyData.kcInit,
         varietyData.kcMid,
@@ -472,19 +405,7 @@ const ConfigurationCropsVariety = () => {
 
 
     const tableConfigKc = () => {
-        let periods = [];
-        let KcValues = [];
-        if (kcByDays.length === 0) return [];
-        kcByDays.forEach(days => {
-            // periods.push(parseInt(days.period));
-            // KcValues.push(parseFloat(days.kc));
-        });
-
-        // console.log(periods, "periods");
-        // console.log(KcValues, "KcValues");
-
-
-
+      
         let elements = []
         let results = [];
 
@@ -567,7 +488,6 @@ const ConfigurationCropsVariety = () => {
         setCurrentPage(1);
     }, [SearchName]);
 
-    // const { elements } = tableConfigKc();
 
     return (
         <>
@@ -757,8 +677,8 @@ const ConfigurationCropsVariety = () => {
                                     </Col>
                                     <Col lg='5' md="12" sm="12">
 
-                                        <Form.Group className='d-flex justify-content-center align-items-center flex-column'>
-                                            <label htmlFor="type">Select Variety Type</label>
+                                        <Form.Group className='d-flex justify-content-center  flex-column'>
+                                            <label htmlFor="type">Variety Type</label>
 
                                             <Form.Control
                                                 id='type'
