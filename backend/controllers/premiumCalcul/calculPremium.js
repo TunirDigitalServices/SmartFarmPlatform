@@ -20,7 +20,7 @@ const Report = require('../../models/Report')
 const DataMapping = require('../../models/DataMapping')
 const option1 = require('../../reports/option1')
 const Notification = require('../../models/Notification')
-const { log } = require('console')
+
 
 
 const addDays = (date, days) => {
@@ -1829,14 +1829,6 @@ const calculBilanHydriqueByField = async (req, res) => {
                 canCalculate = false;
             }
 
-
-
-
-
-
-
-
-
             if (canCalculate) {
                 let resultCalcul = await calculSimulation(DataIrrigations, DataCrops, 
                     ruPratique, RUmax, dosePercentage, effPluie, effIrrig, irrigArea,
@@ -1910,25 +1902,13 @@ const calculBilanHydriqueByField = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     } catch (error) {
         console.error(error);
         return res.status(500).json({ type: "danger", message: "error_calcul" });
     }
 };
+
+
 
 
 
