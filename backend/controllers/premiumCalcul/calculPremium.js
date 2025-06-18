@@ -1695,12 +1695,10 @@ const calculBilanHydrique = async (req, res) => {
   allowedEndTime.setHours(3, 0, 0, 0);
   const today = new Date();
   if (today.getDay() !== 1 || today !== allowedStartTime) {
-    return res
-      .status(200)
-      .json({
-        type: "success",
-        message: "Calculation skipped. Calculations should start on Mondays.",
-      });
+    return res.status(200).json({
+      type: "success",
+      message: "Calculation skipped. Calculations should start on Mondays.",
+    });
   }
 
   try {
@@ -1966,12 +1964,10 @@ const calculBilanHydrique = async (req, res) => {
                           })
                           .catch((err) => {
                             console.log(err);
-                            return res
-                              .status(500)
-                              .json({
-                                type: "danger",
-                                message: "error_select_calcul",
-                              });
+                            return res.status(500).json({
+                              type: "danger",
+                              message: "error_select_calcul",
+                            });
                           });
                       }
                     }
@@ -2109,7 +2105,13 @@ const calculBilanHydriqueByField = async (req, res) => {
           plantingDate = crops.plantingDate;
           ruPratique = Number(crops.practical_fraction);
           dataCrop = crops.croptypes;
-          if (crops.varieties) {
+         
+
+          if (
+            crops.varieties &&
+            crops.varieties.all_kc.length > 0 &&
+            crops.varieties.all_kc !== null
+          ) {
             dataCrop = crops.varieties;
           }
           if (crops.dose_efficiency) {
@@ -2222,7 +2224,7 @@ const calculBilanHydriqueByField = async (req, res) => {
           else if (days > dataCrop.all_kc.length)
             debugMessage += ` all_kc has fewer values (${dataCrop.all_kc.length}) than required days (${days}).`;
           else debugMessage += `- Possibly empty ET0/rain data from API\n`;
-         skipReasons.push(debugMessage.trim());
+          skipReasons.push(debugMessage.trim());
         }
       }
 

@@ -11,7 +11,13 @@ import {
 } from "react-bootstrap";
 import PageTitle from "../components/common/PageTitle";
 import { useTranslation } from "react-i18next";
-
+import {
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import api from "../api/api";
 import swal from "sweetalert";
 import Pagination from "../views/Pagination";
@@ -79,7 +85,9 @@ const ConfigurationCrops = () => {
     totalHours: "",
     minTemp: "",
   });
-
+  const [isSaving, setIsSaving] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [fieldRows, setFieldRows] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadedFile, setUploadedFile] = useState({});
   const chartData = {
@@ -125,6 +133,13 @@ const ConfigurationCrops = () => {
     },
   };
 
+    const columns = [
+    { field: "fieldId", headerName: "Field ID", width: 130 },
+    { field: "name", headerName: t("Field Name"), flex: 1 },
+    { field: "status", headerName: t("Status"), width: 160 },
+  ];
+
+
   const [toggle, setToggle] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   const [singleCrop, setSingleCrop] = useState({});
@@ -162,23 +177,7 @@ const ConfigurationCrops = () => {
         let dataCrops = res.data.crop;
         let date = dataCrops.plant_date;
         setSingleCrop(dataCrops);
-        // setCropData({ crop: dataCrops.crop })
-        // setCropData({ cropVariety: dataCrops.crop_variety })
-        // setCropData({ fractionRuPratique: dataCrops.practical_fraction })
-        // setCropData({ plantDate: date.slice(0, 10) })
-        // setCropData({ init: dataCrops.init })
-        // setCropData({ dev: dataCrops.dev })
-        // setCropData({ mid: dataCrops.mid })
-        // setCropData({ late: dataCrops.late })
-        // setCropData({ rootMin: dataCrops.root_min })
-        // setCropData({ rootMax: dataCrops.root_max })
-        // setCropData({ minTemp: dataCrops.temperature })
-        // setCropData({ totalHours: dataCrops.hours })
-        // setCropData({ kcInit: dataCrops.kc_init })
-        // setCropData({ kcDev: dataCrops.kc_dev })
-        // setCropData({ kcMid: dataCrops.kc_mid })
-        // setCropData({ kcLate: dataCrops.kc_late })
-        // setCropData({ allKcList: dataCrops.all_kc })
+
         setCropData((prev) => ({
           ...prev,
           crop_id: dataCrops.crop_id,
@@ -300,7 +299,8 @@ const ConfigurationCrops = () => {
   };
 
   const handleEdit = (cropId) => {
-    let isValid = isValidate();
+    
+    setIsSaving(true);
 
     let data = {
       crop_id: cropId,
@@ -326,14 +326,104 @@ const ConfigurationCrops = () => {
     api
       .post("/crops/edit-crop", data)
       .then((response) => {
+        
         if (response.data.type == "success") {
-          swal(" Crop has been updated", {
-            icon: "success",
-          });
+       
+   
+             const recalculation = response.data.recalculation_message;
+            
+             
+                      const successIds = recalculation.successfulFields || []; 
+                      const failedIds = recalculation.failedFields || [];
+                      console.log(successIds);
+                      console.log(failedIds);
+            
+                      // Combine all IDs to fetch field names
+                      const allIds = [...new Set([...successIds, ...failedIds])];
+            
+                      if (allIds.length === 0) {
+                        swal("✅ Updated Crop\n\nNo fields needed recalculation.", {
+                          icon: "success",
+                        });
+                        setToggleEdit(false);
+                        getCrops();
+                        setIsSaving(false);
+                        return;
+                      }
+            
+                      // Fetch names from your new API
+                      api
+                        .post("/fields/by-ids", { fieldIds: allIds })
+                        .then((fieldsRes) => {
+                          const fieldMap = {};
+            
+                          if (
+                            fieldsRes.data &&
+                            fieldsRes.data.type === "success" &&
+                            Array.isArray(fieldsRes.data.fields)
+                          ) {
+                            fieldsRes.data.fields.forEach((field) => {
+                              fieldMap[field.id] = field.name || `Field ${field.id}`;
+                            });
+                          }
+                          // Extract only visible (i.e., returned) field IDs
+                          const visibleIds = Object.keys(fieldMap).map((id) =>
+                            parseInt(id)
+                          );
+            
+                          // Filter visible success/failure
+                          const visibleSuccess = successIds.filter((id) =>
+                            visibleIds.includes(id)
+                          );
+                          const visibleFailed = failedIds.filter((id) =>
+                            visibleIds.includes(id)
+                          );
+            
+                          const skippedIds = allIds.filter(
+                            (id) => !visibleIds.includes(id)
+                          );
+            
+                          const rows = [
+                            ...visibleSuccess,
+                            ...visibleFailed,
+                            ...skippedIds,
+                          ].map((id, index) => ({
+                            id: index + 1,
+                            fieldId: id,
+                            name: fieldMap[id] || `ID: ${id}`,
+                            status: visibleSuccess.includes(id)
+                              ? "✅ " + t("Success")
+                              : visibleFailed.includes(id)
+                              ? "❌ " + t("Error")
+                              : "⚠️ " + t("Deleted"),
+                          }));
+            
+                          setFieldRows(rows);
+                          setToggleEdit(false);
+                          setOpenDialog(true);
+                          getCrops();
+                          setIsSaving(false);
+                        })
+                        .catch((err) => {
+                          console.error("❌ Failed to fetch field names", err);
+                          swal("✅ Crop updated, but failed to fetch field names.", {
+                            icon: "warning",
+                          });
+                         
+                     
+                          setIsSaving(false);
+                        
+                    
+        //   swal(" Crop has been updated", {
+        //     icon: "success",
+        //   });
           setToggleEdit(false);
           getCrops();
+          });
         }
         if (response.data.type && response.data.type == "danger") {
+        console.log(response.data.type,'type');
+
           swal({
             icon: "error",
             title: "Oops...",
@@ -343,6 +433,7 @@ const ConfigurationCrops = () => {
         }
       })
       .catch((error) => {
+          console.error("Error editing crop:", error);
         swal({
           icon: "error",
           title: "Oops...",
@@ -369,11 +460,14 @@ const ConfigurationCrops = () => {
         }
       })
       .catch((error) => {
+          console.error("Error editing crop:", error);
         swal({
           title: "Cannot Delete Crop",
           icon: "error",
           text: "error_delete_crop",
         });
+        setIsSaving(false);
+
       });
   };
 
@@ -647,11 +741,24 @@ const ConfigurationCrops = () => {
               className="mb-2 mr-1 btn btn-success"
             >
               <i class={`fa fa-check mx-2`}></i>
-              {t("save")}
+             {isSaving ? (
+                            <>
+                              <CircularProgress
+                                size={20}
+                                color="inherit"
+                                style={{ marginRight: 8 }}
+                              />
+                              {t("Saving...")}
+                            </>
+                          ) : (
+                            t("save")
+                          )}
             </Button>
             <Button
               // theme="success"
               className="mb-2 mr-1 btn btn-danger"
+              disabled={isSaving}
+
               onClick={() => {
                 setToggle(false);
               }}
@@ -1228,6 +1335,24 @@ const ConfigurationCrops = () => {
           </Row>
         </Modal.Body>
       </Modal>
+       <Dialog
+              open={openDialog}
+              onClose={() => setOpenDialog(false)}
+              fullWidth
+              maxWidth="md"
+            >
+              <DialogTitle>{t("Field Recalculation Report")}</DialogTitle>
+              <DialogContent>
+                <div style={{ height: 500, width: "100%" }}>
+                  <DataGrid
+                    rows={fieldRows}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5, 10]}
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
     </>
   );
 };

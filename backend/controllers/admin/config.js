@@ -484,7 +484,11 @@ const editCrop = async (req, res) => {
           result
             .save()
             .then((result) => {
-              return res.status(201).json({ type: "success", Crop: result });
+              const recalculation = result._recalculationResult || {
+                successfulFields: [],
+                failedFields: [],
+              };
+              return res.status(201).json({ type: "success", Crop: result,recalculation_message: recalculation });
             })
             .catch((err) => {
               return res.status(500).json({ type: "danger", message: err });

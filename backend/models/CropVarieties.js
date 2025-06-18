@@ -1,6 +1,3 @@
-const {
-  calculBilanHydriqueByField,
-} = require("../controllers/premiumCalcul/calculPremium.js");
 const bookshelf = require("./bookshelf.js");
 const Crop = require("./Crop.js");
 const dummyRes = {
@@ -21,6 +18,9 @@ const CropVarieties = bookshelf.Model.extend({
 
   initialize() {
     this.on("saving", async (model) => {
+      const {
+        calculBilanHydriqueByField,
+      } = require("../controllers/premiumCalcul/calculPremium.js");
       if (!model.id) return;
 
       try {
@@ -47,7 +47,6 @@ const CropVarieties = bookshelf.Model.extend({
             "crop.crop_variety_id",
             "crop_variety.id"
           ).where("crop_variety.id", model.id);
-          
         }).fetchAll({ require: false });
 
         // console.log(matchingCrops.toJSON(), "matching");
@@ -75,48 +74,52 @@ const CropVarieties = bookshelf.Model.extend({
         let successfulFields = [];
         let failedFields = [];
 
-       await Promise.all(
-  fieldIds.map((fieldId) => {
-    return new Promise(async (resolve) => {
-      const mockReq = {
-        body: {
-          fieldId,
-          userId: 75,
-        },
-      };
+        await Promise.all(
+          fieldIds.map((fieldId) => {
+            return new Promise(async (resolve) => {
+              const mockReq = {
+                body: {
+                  fieldId,
+                  userId: 75,
+                },
+              };
 
-      let statusCode;
-      let responseData;
+              let statusCode;
+              let responseData;
 
-      const mockRes = {
-        status: (code) => {
-          statusCode = code;
-          return {
-            json: (data) => {
-              responseData = data;
-              return data;
-            },
-          };
-        },
-      };
+              const mockRes = {
+                status: (code) => {
+                  statusCode = code;
+                  return {
+                    json: (data) => {
+                      responseData = data;
+                      return data;
+                    },
+                  };
+                },
+              };
 
-      await calculBilanHydriqueByField(mockReq, mockRes);
+              await calculBilanHydriqueByField(mockReq, mockRes);
 
-      const isFailure =
-        statusCode !== 201 || !responseData?.data || responseData?.data?.length === 0;
+              const isFailure =
+                statusCode !== 201 ||
+                !responseData?.data ||
+                responseData?.data?.length === 0;
 
-      if (isFailure) {
-        failedFields.push(fieldId);
-        console.warn(`❌ Field ${fieldId} skipped or failed:`, responseData?.message || "No data");
-      } else {
-        successfulFields.push(fieldId);
-      }
+              if (isFailure) {
+                failedFields.push(fieldId);
+                console.warn(
+                  `❌ Field ${fieldId} skipped or failed:`,
+                  responseData?.message || "No data"
+                );
+              } else {
+                successfulFields.push(fieldId);
+              }
 
-      resolve();
-    });
-  })
-);
-
+              resolve();
+            });
+          })
+        );
 
         console.log("✅ Successfully recalculated fields:", successfulFields);
         console.log("❌ Failed to recalculate fields:", failedFields);
