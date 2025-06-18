@@ -113,7 +113,7 @@ const getFieldsByIds = async (req, res) => {
 
     const fields = await Field.query((qb) => {
       qb.whereIn("id", fieldIds)
-       
+       qb.where('deleted_at', null);
         
     }).fetchAll({ require: false });
 

@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import PageTitle from "../components/common/PageTitle";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+
 import {
   CircularProgress,
   Dialog,
@@ -24,7 +24,6 @@ import api from "../api/api";
 import swal from "sweetalert";
 import Pagination from "../views/Pagination";
 import { Line } from "react-chartjs-2";
-import moment from "moment";
 
 import {
   Chart as ChartJS,
@@ -331,13 +330,12 @@ const ConfigurationCropsVariety = () => {
                   ? "✅ " + t("Success")
                   : visibleFailed.includes(id)
                   ? "❌ " + t("Error")
-                  : "⚠️ " + t("Skipped"),
+                  : "⚠️ " + t("Deleted"),
               }));
 
-             
               setFieldRows(rows);
               setToggleEdit(false);
-                setOpenDialog(true);
+              setOpenDialog(true);
               getVarieties();
               setIsSaving(false);
             })
@@ -527,7 +525,7 @@ const ConfigurationCropsVariety = () => {
       elements.push(
         <tr key={day}>
           <td>{day}</td>
-          {/* <td>{date}</td> */}
+
           <td>
             <input
               name={`kc-${day}`}
@@ -941,12 +939,11 @@ const ConfigurationCropsVariety = () => {
                 t("save")
               )}
             </Button>
-           
+
             <Button
               // theme="success"
               className="mb-2 mr-1 btn btn-danger"
               disabled={isSaving}
-
               onClick={() => {
                 setToggleEdit(false);
               }}
@@ -1172,24 +1169,24 @@ const ConfigurationCropsVariety = () => {
           </Row>
         </Modal.Body>
       </Modal>
-       <Dialog
-              open={openDialog}
-              onClose={() => setOpenDialog(false)}
-              fullWidth
-              maxWidth="md"
-            >
-              <DialogTitle>{t("Field Recalculation Report")}</DialogTitle>
-              <DialogContent>
-                <div style={{ height: 500, width: "100%" }}>
-                  <DataGrid
-                    rows={fieldRows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5, 10]}
-                  />
-                </div>
-              </DialogContent>
-            </Dialog>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogTitle>{t("Field Recalculation Report")}</DialogTitle>
+        <DialogContent>
+          <div style={{ height: 500, width: "100%" }}>
+            <DataGrid
+              rows={fieldRows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5, 10]}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
