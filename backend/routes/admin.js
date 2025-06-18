@@ -3,7 +3,7 @@ const {getSubscriptions, addSubscription, editSubscriptions, deleteSubscriptions
 const {auth} = require('../middelwares/auth.js')
 const {getAllFarms, getFarmsByUser,deleteFarm,getSingleFarm} = require('../controllers/admin/farm.js')
 const {getSensorsByUser,addSensor,editSensor ,getSingleSensor, getSensors, getSingleSensorByCode, editDataMapping, addMapping, deleteDataMapping, getInactiveSensors} = require('../controllers/admin/sensor.js')
-const {getFieldsByUser, getAllFields, getFieldById, calculSimulation} = require('../controllers/admin/field.js')
+const {getFieldsByUser, getAllFields, getFieldById, calculSimulation, getFieldsByIds} = require('../controllers/admin/field.js')
 const {getUsers , getSingleUser,deleteUser,addUser,editUser,desactiveUser,activeUser,searchUser,changeOffer,changeRole,editProfil, getExistUsers, getExistUsersSuppliers, changeHasCommand, confirmUser} = require('../controllers/admin/users')
 const {getCropsByUser} = require('../controllers/admin/crops')
 const {addFarm,editFarm} = require('../controllers/common/farm')
@@ -168,6 +168,8 @@ router.delete('/cities/delete-city',auth,deleteCities)
 
 router.get('/admin/fields',auth,getAllFields)
 router.get('/admin/fields/:fieldId',auth,getFieldById)
+router.post('/fields/by-ids',auth, getFieldsByIds);
+
 router.post('/admin/calculSimulation',auth,calculSimulation)
 router.post('/admin/fields/single-field',auth,getReportsByField)
 router.post('/admin/send-sms',auth,sendSMStoSelectedUser)

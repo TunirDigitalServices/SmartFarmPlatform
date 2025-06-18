@@ -102,6 +102,32 @@ try {
 
 }
 
+
+const getFieldsByIds = async (req, res) => {
+  try {
+    const { fieldIds } = req.body; 
+
+    if (!Array.isArray(fieldIds) || fieldIds.length === 0) {
+      return res.status(400).json({ type: "danger", message: "No field IDs provided." });
+    }
+
+    const fields = await Field.query((qb) => {
+      qb.whereIn("id", fieldIds)
+       
+        
+    }).fetchAll({ require: false });
+
+    return res.status(200).json({
+      type: "success",
+      fields: fields.toJSON(),
+    });
+  } catch (error) {
+    console.error("❌ Error fetching fields:", error);
+    res.status(500).json({ type: "danger", message: "Server error." });
+  }
+};
+
+
 const calculSimulation = async (res,req) => {
 
     const {   DataIrrigations,
@@ -353,4 +379,4 @@ const getRainFromWeather = async (lat, lon) => {
 
 }
 
-module.exports = {getFieldsByUser,getAllFields , getFieldById , calculSimulation}
+module.exports = {getFieldsByUser,getAllFields , getFieldById , calculSimulation,getFieldsByIds}

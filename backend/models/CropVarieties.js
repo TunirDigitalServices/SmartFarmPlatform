@@ -30,7 +30,7 @@ const CropVarieties = bookshelf.Model.extend({
           .fetch({ require: false });
 
         if (!existing) return;
-        console.log(existing.toJSON(), "existing");
+        // console.log(existing.toJSON(), "existing");
 
         // Step 2: Check if all_kc has changed
         const oldKc = existing.get("all_kc");
@@ -47,9 +47,10 @@ const CropVarieties = bookshelf.Model.extend({
             "crop.crop_variety_id",
             "crop_variety.id"
           ).where("crop_variety.id", model.id);
+          
         }).fetchAll({ require: false });
 
-        console.log(matchingCrops.toJSON(), "matching");
+        // console.log(matchingCrops.toJSON(), "matching");
 
         if (!matchingCrops || matchingCrops.length === 0) {
           console.warn("⚠️ No crops found using the new variety.");
@@ -71,32 +72,58 @@ const CropVarieties = bookshelf.Model.extend({
           "🧮 Recalculating fields for crop variety change:",
           fieldIds
         );
+        let successfulFields = [];
+        let failedFields = [];
 
-        const results = await Promise.all(
-          fieldIds.map(async (fieldId) => {
-            // create a fake req and res
-            const mockReq = {
-              body: {
-                fieldId,
-                userId: 75
-              },
-            };
+       await Promise.all(
+  fieldIds.map((fieldId) => {
+    return new Promise(async (resolve) => {
+      const mockReq = {
+        body: {
+          fieldId,
+          userId: 75,
+        },
+      };
 
-            const mockRes = {
-              status: (code) => ({
-                json: (data) => {
-                  console.log(`ℹ️ Response for field ${fieldId}:`, data);
-                  return data;
-                },
-              }),
-            };
+      let statusCode;
+      let responseData;
 
-            return calculBilanHydriqueByField(mockReq, mockRes);
-          })
-        );
-        console.log("🧮 Calculation results:", results.toJSON());
+      const mockRes = {
+        status: (code) => {
+          statusCode = code;
+          return {
+            json: (data) => {
+              responseData = data;
+              return data;
+            },
+          };
+        },
+      };
 
-        console.log("✅ Field recalculation completed.");
+      await calculBilanHydriqueByField(mockReq, mockRes);
+
+      const isFailure =
+        statusCode !== 201 || !responseData?.data || responseData?.data?.length === 0;
+
+      if (isFailure) {
+        failedFields.push(fieldId);
+        console.warn(`❌ Field ${fieldId} skipped or failed:`, responseData?.message || "No data");
+      } else {
+        successfulFields.push(fieldId);
+      }
+
+      resolve();
+    });
+  })
+);
+
+
+        console.log("✅ Successfully recalculated fields:", successfulFields);
+        console.log("❌ Failed to recalculate fields:", failedFields);
+        model._recalculationResult = {
+          successfulFields,
+          failedFields,
+        };
       } catch (err) {
         console.error("❌ Error during recalculation:", err);
       }
