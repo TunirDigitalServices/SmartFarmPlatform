@@ -2104,18 +2104,29 @@ const calculBilanHydriqueByField = async (req, res) => {
           profondeur = Number(crops.rootDepth);
           plantingDate = crops.plantingDate;
           ruPratique = Number(crops.practical_fraction);
-          dataCrop = crops.croptypes;
-         
+          // dataCrop = crops.croptypes;
 
-          if (
+          // if (
+          //   crops.varieties &&
+          //   crops.varieties.all_kc.length > 0 &&
+          //   crops.varieties.all_kc !== null
+          // ) {
+          //   dataCrop = crops.varieties;
+          // }
+          // if (crops.dose_efficiency) {
+          //   dosePercentage = Number(crops.dose_efficiency);
+          // }
+          if (crops.is_kc_modified) {
+            // use the custom kc values directly from the crop
+            dataCrop = crops;
+          } else if (
             crops.varieties &&
-            crops.varieties.all_kc.length > 0 &&
-            crops.varieties.all_kc !== null
+            crops.varieties.all_kc &&
+            crops.varieties.all_kc.length > 0
           ) {
             dataCrop = crops.varieties;
-          }
-          if (crops.dose_efficiency) {
-            dosePercentage = Number(crops.dose_efficiency);
+          } else {
+            dataCrop = crops.croptypes;
           }
         }
 

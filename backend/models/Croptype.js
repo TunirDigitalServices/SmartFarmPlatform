@@ -44,7 +44,8 @@ const Croptype = bookshelf.Model.extend({
             "croptype",
             "crop.croptype_id",
             "croptype.id"
-          ).where("croptype.id", model.id);
+          ).where("croptype.id", model.id)
+           .andWhere("crop.is_kc_modified", false);
         }).fetchAll({ require: false });
 
         // console.log(matchingCrops.toJSON(), "matching");

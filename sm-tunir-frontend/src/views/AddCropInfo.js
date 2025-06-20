@@ -81,7 +81,7 @@ export default function AddCropInfo() {
         console.log(error);
       }
     };
-  
+
     const getVarieties = async () => {
       try {
         await api
@@ -125,20 +125,25 @@ export default function AddCropInfo() {
       (variety) => variety.id == e.target.value
     );
     console.log(variety, "var");
-     if (variety) {
-    const hasKcValues = variety.kc_init || variety.kc_mid || variety.kc_late ||
-                        variety.init || variety.dev || variety.mid || variety.late;
+    if (variety) {
+      const hasKcValues =
+        variety.kc_init ||
+        variety.kc_mid ||
+        variety.kc_late ||
+        variety.init ||
+        variety.dev ||
+        variety.mid ||
+        variety.late;
 
-    
-    const kcData = {
-      kc_init: hasKcValues ? variety.kc_init : defaultKcPeriod.kc_init,
-      kc_mid: hasKcValues ? variety.kc_mid : defaultKcPeriod.kc_mid,
-      kc_late: hasKcValues ? variety.kc_late : defaultKcPeriod.kc_late,
-      init: hasKcValues ? variety.init : defaultKcPeriod.init,
-      dev: hasKcValues ? variety.dev : defaultKcPeriod.dev,
-      mid: hasKcValues ? variety.mid : defaultKcPeriod.mid,
-      late: hasKcValues ? variety.late : defaultKcPeriod.late,
-    };
+      const kcData = {
+        kc_init: hasKcValues ? variety.kc_init : defaultKcPeriod.kc_init,
+        kc_mid: hasKcValues ? variety.kc_mid : defaultKcPeriod.kc_mid,
+        kc_late: hasKcValues ? variety.kc_late : defaultKcPeriod.kc_late,
+        init: hasKcValues ? variety.init : defaultKcPeriod.init,
+        dev: hasKcValues ? variety.dev : defaultKcPeriod.dev,
+        mid: hasKcValues ? variety.mid : defaultKcPeriod.mid,
+        late: hasKcValues ? variety.late : defaultKcPeriod.late,
+      };
 
       setCropData((prev) => ({
         ...prev,

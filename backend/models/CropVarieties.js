@@ -46,7 +46,8 @@ const CropVarieties = bookshelf.Model.extend({
             "crop_variety",
             "crop.crop_variety_id",
             "crop_variety.id"
-          ).where("crop_variety.id", model.id);
+          ).where("crop_variety.id", model.id)
+           .andWhere("crop.is_kc_modified", false);
         }).fetchAll({ require: false });
 
         // console.log(matchingCrops.toJSON(), "matching");
