@@ -29,10 +29,10 @@ api.interceptors.response.use(function (response) {
         //add here HTML error server not available
     }
 
-    if(error.response.status === 401 && originalRequect.url === "/refresh"){
+    if(error.response?.status === 401 && originalRequect.url === "/refresh"){
         return Promise.reject(error);
     }
-    if(error.response.status === 401 && !originalRequect._retry){
+    if(error.response?.status === 401 && !originalRequect._retry){
         originalRequect._retry = true;
         const refreshToken = localStorage.getItem("refreshToken")
         const user = JSON.parse(localStorage.getItem("user"))
