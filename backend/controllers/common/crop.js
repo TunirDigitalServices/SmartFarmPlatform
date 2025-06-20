@@ -166,6 +166,7 @@ const addCrop = async (req, res) => {
     dev,
     mid,
     late,
+    all_kc,
     is_kc_modified,
   } = req.body;
   const errors = validationResult(req);
@@ -216,6 +217,7 @@ const addCrop = async (req, res) => {
             dev,
             mid,
             late,
+            all_kc,
             is_kc_modified: is_kc_modified || false,
           })
             .save()

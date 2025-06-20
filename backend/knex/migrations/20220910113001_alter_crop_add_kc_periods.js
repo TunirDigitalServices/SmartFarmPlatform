@@ -11,7 +11,7 @@ exports.up = async function(knex) {
   const hasMid = await knex.schema.hasColumn('crop', 'mid');
   const hasLate = await knex.schema.hasColumn('crop', 'late');
   const hasIsKcModified = await knex.schema.hasColumn('crop', 'is_kc_modified');
-
+  const hasAllKc = await knex.schema.hasColumn('crop', 'all_kc');
   return knex.schema.alterTable('crop', function(table) {
     if (!hasKcInit) table.float('kc_init').nullable();
     if (!hasKcMid) table.float('kc_mid').nullable();
@@ -20,6 +20,7 @@ exports.up = async function(knex) {
     if (!hasDev) table.integer('dev').nullable();
     if (!hasMid) table.integer('mid').nullable();
     if (!hasLate) table.integer('late').nullable();
+     if (!hasAllKc) table.json('all_kc').nullable();
     if (!hasIsKcModified) table.boolean('is_kc_modified').defaultTo(false);
   });
 };

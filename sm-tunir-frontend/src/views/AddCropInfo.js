@@ -15,6 +15,28 @@ import swal from "sweetalert";
 import api from "../api/api";
 import FarmSelect from "../components/FarmSelect";
 import { useLocation, useNavigate } from "react-router";
+import { Line } from "react-chartjs-2";
+
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function AddCropInfo() {
   const { t } = useTranslation();
@@ -22,11 +44,11 @@ export default function AddCropInfo() {
   const location = useLocation();
 
   const { fieldId, fieldName, zoneId, zoneName } = location.state || {};
- 
 
   const [validated, setValidated] = useState(false);
   const [listCrop, setListCrop] = useState([]);
   const [allVarieties, setAllVarieties] = useState([]);
+  const [resultCalculKc, setResultCalculKc] = useState([]);
 
   const [checked, setChecked] = useState(false);
   const [zones, setZones] = useState([]);
@@ -57,29 +79,68 @@ export default function AddCropInfo() {
     late: "",
   });
 
-const [cropKcPeriod, setCropKcPeriod] = useState({
-  kc_init: "",
-  kc_mid: "",
-  kc_late: "",
-  init: "",
-  dev: "",
-  mid: "",
-  late: "",
-});
-
-
+  const [cropKcPeriod, setCropKcPeriod] = useState({
+    kc_init: "",
+    kc_mid: "",
+    kc_late: "",
+    init: "",
+    dev: "",
+    mid: "",
+    late: "",
+  });
 
   const [defaultKcPeriod, setDefaultKcPeriod] = useState({
     kc_init: "",
     kc_mid: "",
     kc_late: "",
-   init: "",
-   dev: "",
-   mid: "",
-   late: "",
+    init: "",
+    dev: "",
+    mid: "",
+    late: "",
   });
   const [isKcModified, setIsKcModified] = useState(false);
- 
+  const chartData = {
+    labels: cropData?.allKcList?.map((item) => `Day ${item.day}`),
+    datasets: [
+      {
+        label: "Kc",
+        data: cropData?.allKcList?.map((item) => parseFloat(item.kc)),
+        fill: false,
+        pointRadius: 0,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.3,
+      },
+    ],
+  };
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Kc Evolution by Day",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Days",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Kc",
+        },
+        min: 0,
+        max: 1.2,
+      },
+    },
+  };
 
   useEffect(() => {
     const getCropType = async () => {
@@ -124,7 +185,6 @@ const [cropKcPeriod, setCropKcPeriod] = useState({
         await api
           .post("/field", { field_uid: cropData.field_uid })
           .then((res) => {
-           
             setZones(res.data.field.zones);
             // setCrops(Crops)
           });
@@ -137,7 +197,7 @@ const [cropKcPeriod, setCropKcPeriod] = useState({
     const variety = allVarieties.find(
       (variety) => variety.id == e.target.value
     );
-   
+
     if (variety) {
       const hasKcValues =
         variety.kc_init ||
@@ -158,17 +218,12 @@ const [cropKcPeriod, setCropKcPeriod] = useState({
         late: hasKcValues ? variety.late : cropKcPeriod.late,
       };
       setDefaultKcPeriod(kcData);
-      
-       
-      
 
       setCropData((prev) => ({
         ...prev,
         variety: variety.id,
         ...kcData,
       }));
-
-     
     }
   };
   const handleCropPick = (e) => {
@@ -199,7 +254,7 @@ const [cropKcPeriod, setCropKcPeriod] = useState({
       };
 
       setDefaultKcPeriod(kcs);
-      setCropKcPeriod(kcs);   
+      setCropKcPeriod(kcs);
       const variety = allVarieties.map((variety) => {
         if (variety.crop_id === crop.id) {
           varieties.push({
@@ -247,9 +302,7 @@ const [cropKcPeriod, setCropKcPeriod] = useState({
     cropData.late,
     defaultKcPeriod,
   ]);
-console.log(isKcModified,"isKcModified");
-
-
+  console.log(isKcModified, "isKcModified");
 
   const addCrop = () => {
     let data = {
@@ -274,9 +327,10 @@ console.log(isKcModified,"isKcModified");
       dev: cropData.dev,
       mid: cropData.mid,
       late: cropData.late,
+      all_kc: resultCalculKc,
+
       is_kc_modified: isKcModified,
     };
-  
 
     api
       .post("/crop/add-crop", data)
@@ -291,7 +345,7 @@ console.log(isKcModified,"isKcModified");
           //     icon: "success",
           // });
           setValidated(false);
-    
+
           swal({
             title: `${t("crop_added")}`,
             text: "Would you like to continue to create an irrigation type ?",
@@ -342,7 +396,101 @@ console.log(isKcModified,"isKcModified");
     setValidated(true);
   };
 
- 
+  const onChangeHandler = async (e, idx) => {
+    //modifier le setResultCalculKc pour ensuite ajouter le resultCalculKc dans l'action save pour inserer un objet clé (1,2,3..) valeur (kc dans le tableau html) dans la base de données colonne kc par jour
+    // setResultCalculKc(state => ([...state ,{['day'] : day ,  ['kc'] : value }]), [])
+    const value = e.target.value;
+    const clone = [...cropData.allKcList];
+    clone[idx] = { ...clone[idx], kc: value };
+
+    setCropData((prev) => ({
+      ...prev,
+      allKcList: clone,
+    }));
+
+    setResultCalculKc(clone);
+  };
+  useEffect(() => {
+    if (
+      cropData.init &&
+      cropData.dev &&
+      cropData.mid &&
+      cropData.late &&
+      cropData.kc_init &&
+      cropData.kc_mid &&
+      cropData.kc_late
+    ) {
+      const { results } = tableConfigKc();
+      setResultCalculKc(results);
+      setCropData((prev) => ({
+        ...prev,
+        allKcList: results,
+      }));
+    }
+  }, [
+    cropData.init,
+    cropData.dev,
+    cropData.mid,
+    cropData.late,
+    cropData.kc_init,
+    cropData.kc_mid,
+    cropData.kc_late,
+  ]);
+
+  const tableConfigKc = () => {
+    let elements = [];
+    let results = [];
+
+    const init = parseInt(cropData.init);
+    const dev = parseInt(cropData.dev);
+    const mid = parseInt(cropData.mid);
+    const late = parseInt(cropData.late);
+
+    const kcInit = parseFloat(cropData.kc_init);
+    const kcMid = parseFloat(cropData.kc_mid);
+
+    const kcLate = parseFloat(cropData.kc_late);
+
+    let totalDays = 365;
+
+    for (let day = 1; day <= totalDays; day++) {
+      let kc = 0;
+
+      if (day <= init) {
+        kc = kcInit;
+      } else if (day <= init + dev) {
+        const j = day - init;
+        kc = kcInit + ((kcMid - kcInit) / dev) * j;
+      } else if (day <= init + dev + mid) {
+        kc = kcMid;
+      } else if (day <= init + dev + mid + late) {
+        const j = day - (init + dev + mid);
+        kc = kcMid - ((kcMid - kcLate) / late) * j;
+      } else {
+        kc = kcLate;
+      }
+
+      kc = parseFloat(kc.toFixed(2));
+      results.push({ day, kc });
+
+      elements.push(
+        <tr key={day}>
+          <td>{day}</td>
+
+          <td>
+            <input
+              name={`kc-${day}`}
+              value={kc}
+              onChange={(e) => onChangeHandler(e, day - 1)}
+              className="my-1"
+            />
+          </td>
+        </tr>
+      );
+    }
+
+    return { elements, results };
+  };
 
   return (
     <Container className="p-md-5 p-3">
@@ -461,8 +609,6 @@ console.log(isKcModified,"isKcModified");
                   </option>
 
                   {zones.map((zone) => {
-               
-
                     return <option value={zone.uid}>{zone.name}</option>;
                   })}
                 </Form.Select>
@@ -664,6 +810,11 @@ console.log(isKcModified,"isKcModified");
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
+            <Row>
+              <Col lg="12" md="12" sm="12" className="mt-1">
+                 {cropData.allKcList && cropData.allKcList.length > 0 && (<Line data={chartData} options={chartOptions} />)}
+              </Col>
+            </Row>
             <h6 className="text-muted small mt-5">
               - Kc Values (Crop Coefficient)
             </h6>
@@ -791,6 +942,41 @@ console.log(isKcModified,"isKcModified");
             <div className="d-flex justify-content-end">
               <Button type="submit mt-4">Submit form</Button>
             </div>
+             <Row className="border-top mt-2">
+                        {cropData.allKcList && cropData.allKcList.length > 0 && (
+                          <Col lg="12" sm="12" md="12">
+                            <table className="table mb-0 border text-center  table-responsive">
+                              <thead className="bg-light">
+                                <tr>
+                                  <th scope="col" className="border-0">
+                                    {t("Day")}
+                                  </th>
+            
+                                  <th scope="col" className="border-0">
+                                    {t("Kc")}
+                                  </th>
+                                </tr>
+                              </thead>
+            
+                              {cropData.allKcList &&
+                                cropData.allKcList.map((result, indx) => (
+                                  <tr key={result.day}>
+                                    <td>{result.day}</td>
+            
+                                    <td>
+                                      <input
+                                        name={`kc-${result.day}`}
+                                        className="my-1"
+                                        value={result.kc}
+                                        onChange={(e) => onChangeHandler(e, indx)}
+                                      />
+                                    </td>
+                                  </tr>
+                                ))}
+                            </table>
+                          </Col>
+                        )}
+                      </Row>
           </Form>
         </Card>
       </Row>
