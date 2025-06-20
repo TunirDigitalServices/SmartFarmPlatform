@@ -27,8 +27,7 @@ export default function AddCropInfo() {
   const [validated, setValidated] = useState(false);
   const [listCrop, setListCrop] = useState([]);
   const [allVarieties, setAllVarieties] = useState([]);
-  // const [listIrrigations, setListIrrigations] = useState([])
-  // const [listSoil, setListSoil] = useState([])
+
   const [checked, setChecked] = useState(false);
   const [zones, setZones] = useState([]);
 
@@ -66,6 +65,7 @@ export default function AddCropInfo() {
     period_mid: "",
     period_late: "",
   });
+  const [isKcModified, setIsKcModified] = useState(false);
   console.log(cropData, "cd");
 
   useEffect(() => {
@@ -81,35 +81,7 @@ export default function AddCropInfo() {
         console.log(error);
       }
     };
-    // const getSoils = async () => {
-    //     try {
-    //         await api.get('/soils/get-soils')
-    //             .then(response => {
-    //                 let listSoils = response.data.Soils
-    //                 setListSoil(listSoils)
-
-    //             }).catch(error => {
-    //                 console.log(error)
-    //             })
-
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-    // const getIrrigations = async () => {
-    //     try {
-    //         await api.get('/irrigations/get-irrigations')
-    //             .then(response => {
-    //                 if (response) {
-    //                     let dataIrrig = response.data.Irrigations
-    //                     setListIrrigations(dataIrrig)
-    //                 }
-    //             })
-
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+  
     const getVarieties = async () => {
       try {
         await api
@@ -153,25 +125,30 @@ export default function AddCropInfo() {
       (variety) => variety.id == e.target.value
     );
     console.log(variety, "var");
-      if (variety) {
+     if (variety) {
+    const hasKcValues = variety.kc_init || variety.kc_mid || variety.kc_late ||
+                        variety.init || variety.dev || variety.mid || variety.late;
+
+    
     const kcData = {
-      kc_init: variety.kc_init || defaultKcPeriod.kc_init,
-      kc_mid: variety.kc_mid || defaultKcPeriod.kc_mid,
-      kc_late: variety.kc_late || defaultKcPeriod.kc_late,
-      init: variety.init || defaultKcPeriod.init,
-      dev: variety.dev || defaultKcPeriod.dev,
-      mid: variety.mid || defaultKcPeriod.mid,
-      late: variety.late || defaultKcPeriod.late,
+      kc_init: hasKcValues ? variety.kc_init : defaultKcPeriod.kc_init,
+      kc_mid: hasKcValues ? variety.kc_mid : defaultKcPeriod.kc_mid,
+      kc_late: hasKcValues ? variety.kc_late : defaultKcPeriod.kc_late,
+      init: hasKcValues ? variety.init : defaultKcPeriod.init,
+      dev: hasKcValues ? variety.dev : defaultKcPeriod.dev,
+      mid: hasKcValues ? variety.mid : defaultKcPeriod.mid,
+      late: hasKcValues ? variety.late : defaultKcPeriod.late,
     };
 
-    setCropData((prev) => ({
-      ...prev,
-      variety: variety.id,
-      ...kcData,
-    }));
+      setCropData((prev) => ({
+        ...prev,
+        variety: variety.id,
+        ...kcData,
+      }));
 
-    // setDefaultKcPeriod(kcData); 
-  }};
+      // setDefaultKcPeriod(kcData);
+    }
+  };
   const handleCropPick = (e) => {
     e.preventDefault();
     // props.handleCropType(e)
@@ -218,10 +195,35 @@ export default function AddCropInfo() {
         ruPratique: crop.practical_fraction,
         days: crop.total,
         plantingDate: crop.plant_date.slice(0, 11).replace("T", ""),
-         ...kcs,
+        ...kcs,
       });
     }
   };
+  const checkIfKcModified = () => {
+    if (!defaultKcPeriod) return false;
+
+    return (
+      cropData.kc_init !== defaultKcPeriod.kc_init ||
+      cropData.kc_mid !== defaultKcPeriod.kc_mid ||
+      cropData.kc_late !== defaultKcPeriod.kc_late ||
+      cropData.init !== defaultKcPeriod.init ||
+      cropData.dev !== defaultKcPeriod.dev ||
+      cropData.mid !== defaultKcPeriod.mid ||
+      cropData.late !== defaultKcPeriod.late
+    );
+  };
+  useEffect(() => {
+    setIsKcModified(checkIfKcModified());
+  }, [
+    cropData.kc_init,
+    cropData.kc_mid,
+    cropData.kc_late,
+    cropData.init,
+    cropData.dev,
+    cropData.mid,
+    cropData.late,
+    defaultKcPeriod,
+  ]);
 
   const addCrop = () => {
     let data = {
@@ -239,8 +241,16 @@ export default function AddCropInfo() {
       ecart_intra: cropData.ecartIntra,
       surface: cropData.surface,
       growingDate: cropData.growingDate,
+      kc_init: cropData.kc_init,
+      kc_mid: cropData.kc_mid,
+      kc_late: cropData.kc_late,
+      init: cropData.init,
+      dev: cropData.dev,
+      mid: cropData.mid,
+      late: cropData.late,
+      is_kc_modified: isKcModified,
     };
-    console.log(data, "deyta 2");
+    console.log(data, "submitted crop data");
 
     api
       .post("/crop/add-crop", data)

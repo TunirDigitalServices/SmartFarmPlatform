@@ -2,9 +2,10 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
- exports.up = function(knex) {
-    return knex.schema
-    .createTable('croptype', function (table) {
+exports.up = function(knex) {
+  return knex.schema.hasTable('croptype').then(exists => {
+    if (!exists) {
+      return knex.schema.createTable('croptype', function(table) {
         table.increments('id').primary();
         table.uuid('uid').defaultTo(knex.raw('(UUID())')).notNullable();
         table.string('init').nullable();
@@ -15,8 +16,11 @@
         table.date('plant_date').nullable();
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("deleted_at");
-    });
+     });
+    }
+  });
 };
+
 
 /**
  * @param { import("knex").Knex } knex

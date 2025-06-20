@@ -2,9 +2,10 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
- exports.up = function(knex) {
-    return knex.schema
-    .createTable('recommendation', function (table) {
+exports.up = function(knex) {
+  return knex.schema.hasTable('recommendation').then(function(exists) {
+    if (!exists) {
+      return knex.schema.createTable('recommendation', function(table) {
         table.increments('id').primary();
         table.uuid('uid').defaultTo(knex.raw('(UUID())')).notNullable();
         table.string('title').notNullable();
@@ -17,7 +18,9 @@
         table.foreign('field_id').references('fields.id');
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("deleted_at");
-    });
+   });
+    }
+  });
 };
 
 /**

@@ -3,8 +3,9 @@
  * @returns { Promise<void> }
  */
  exports.up = function(knex) {
-    return knex.schema
-    .createTable('datasensor', function (table) {
+  return knex.schema.hasTable('datasensor').then(exists => {
+    if (!exists) {
+      return knex.schema.createTable('datasensor', function (table) {
         table.increments('id').primary();
         table.uuid('uid').defaultTo(knex.raw('(UUID())')).notNullable();
         table.integer('sensor_id').unsigned().nullable();
@@ -24,8 +25,11 @@
         table.timestamp("deleted_at");
         table.timestamp("updated_at");
 
-    });
+     });
+    }
+  });
 };
+
 
 /**
  * @param { import("knex").Knex } knex
