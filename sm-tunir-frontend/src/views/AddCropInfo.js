@@ -22,7 +22,7 @@ export default function AddCropInfo() {
   const location = useLocation();
 
   const { fieldId, fieldName, zoneId, zoneName } = location.state || {};
-  console.log(zoneId, zoneName);
+ 
 
   const [validated, setValidated] = useState(false);
   const [listCrop, setListCrop] = useState([]);
@@ -56,17 +56,30 @@ export default function AddCropInfo() {
     mid: "",
     late: "",
   });
+
+const [cropKcPeriod, setCropKcPeriod] = useState({
+  kc_init: "",
+  kc_mid: "",
+  kc_late: "",
+  init: "",
+  dev: "",
+  mid: "",
+  late: "",
+});
+
+
+
   const [defaultKcPeriod, setDefaultKcPeriod] = useState({
     kc_init: "",
     kc_mid: "",
     kc_late: "",
-    period_init: "",
-    period_dev: "",
-    period_mid: "",
-    period_late: "",
+   init: "",
+   dev: "",
+   mid: "",
+   late: "",
   });
   const [isKcModified, setIsKcModified] = useState(false);
-  console.log(cropData, "cd");
+ 
 
   useEffect(() => {
     const getCropType = async () => {
@@ -111,7 +124,7 @@ export default function AddCropInfo() {
         await api
           .post("/field", { field_uid: cropData.field_uid })
           .then((res) => {
-            console.log(res.data.field.zones, "--------------res");
+           
             setZones(res.data.field.zones);
             // setCrops(Crops)
           });
@@ -124,7 +137,7 @@ export default function AddCropInfo() {
     const variety = allVarieties.find(
       (variety) => variety.id == e.target.value
     );
-    console.log(variety, "var");
+   
     if (variety) {
       const hasKcValues =
         variety.kc_init ||
@@ -136,14 +149,18 @@ export default function AddCropInfo() {
         variety.late;
 
       const kcData = {
-        kc_init: hasKcValues ? variety.kc_init : defaultKcPeriod.kc_init,
-        kc_mid: hasKcValues ? variety.kc_mid : defaultKcPeriod.kc_mid,
-        kc_late: hasKcValues ? variety.kc_late : defaultKcPeriod.kc_late,
-        init: hasKcValues ? variety.init : defaultKcPeriod.init,
-        dev: hasKcValues ? variety.dev : defaultKcPeriod.dev,
-        mid: hasKcValues ? variety.mid : defaultKcPeriod.mid,
-        late: hasKcValues ? variety.late : defaultKcPeriod.late,
+        kc_init: hasKcValues ? variety.kc_init : cropKcPeriod.kc_init,
+        kc_mid: hasKcValues ? variety.kc_mid : cropKcPeriod.kc_mid,
+        kc_late: hasKcValues ? variety.kc_late : cropKcPeriod.kc_late,
+        init: hasKcValues ? variety.init : cropKcPeriod.init,
+        dev: hasKcValues ? variety.dev : cropKcPeriod.dev,
+        mid: hasKcValues ? variety.mid : cropKcPeriod.mid,
+        late: hasKcValues ? variety.late : cropKcPeriod.late,
       };
+      setDefaultKcPeriod(kcData);
+      
+       
+      
 
       setCropData((prev) => ({
         ...prev,
@@ -151,7 +168,7 @@ export default function AddCropInfo() {
         ...kcData,
       }));
 
-      // setDefaultKcPeriod(kcData);
+     
     }
   };
   const handleCropPick = (e) => {
@@ -182,6 +199,7 @@ export default function AddCropInfo() {
       };
 
       setDefaultKcPeriod(kcs);
+      setCropKcPeriod(kcs);   
       const variety = allVarieties.map((variety) => {
         if (variety.crop_id === crop.id) {
           varieties.push({
@@ -229,6 +247,9 @@ export default function AddCropInfo() {
     cropData.late,
     defaultKcPeriod,
   ]);
+console.log(isKcModified,"isKcModified");
+
+
 
   const addCrop = () => {
     let data = {
@@ -255,7 +276,7 @@ export default function AddCropInfo() {
       late: cropData.late,
       is_kc_modified: isKcModified,
     };
-    console.log(data, "submitted crop data");
+  
 
     api
       .post("/crop/add-crop", data)
@@ -270,8 +291,7 @@ export default function AddCropInfo() {
           //     icon: "success",
           // });
           setValidated(false);
-          console.log(res.data);
-
+    
           swal({
             title: `${t("crop_added")}`,
             text: "Would you like to continue to create an irrigation type ?",
@@ -322,7 +342,7 @@ export default function AddCropInfo() {
     setValidated(true);
   };
 
-  console.log("zone_uid from API:", zones);
+ 
 
   return (
     <Container className="p-md-5 p-3">
@@ -441,7 +461,7 @@ export default function AddCropInfo() {
                   </option>
 
                   {zones.map((zone) => {
-                    console.log(zone.uid, "zone.Uid");
+               
 
                     return <option value={zone.uid}>{zone.name}</option>;
                   })}
